@@ -15,7 +15,7 @@
  */
 
 dockerCompose {
-    setProjectName("sample-plugin")
+    setProjectName("samenwerkfunctionaliteit-plugin")
     isRequiredBy(project.tasks.integrationTesting)
 
     tasks.integrationTesting {

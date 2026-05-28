@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.ritense.valtimoplugins.sampleplugin
+package com.ritense.valtimoplugins.samenwerkfunctionaliteit.autoconfiguration
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.boot.autoconfigure.AutoConfiguration
 
-@SpringBootApplication
-class TestApplication
-
-fun main(args: Array<String>) {
-    runApplication<TestApplication>(*args)
-}
+@AutoConfiguration
+class SamenwerkfunctionaliteitConfiguration
