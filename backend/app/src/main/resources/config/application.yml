@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gzac-plugin-template
+    name: samenwerkfunctionaliteit-plugin
   profiles:
     active: dev
   jackson:
