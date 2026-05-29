@@ -15,11 +15,11 @@
  */
 
 /*
- * Public API Surface of sample-plugin
+ * Public API Surface of samenwerkfunctionaliteit
  */
 
-export * from "./lib/plugins/sample-plugin/models";
-export * from "./lib/plugins/sample-plugin/sample-plugin-module";
-export * from "./lib/plugins/sample-plugin/sample-plugin.specification";
-export * from "./lib/plugins/sample-plugin/components/sample-plugin-configuration/sample-plugin-configuration.component";
-export * from "./lib/plugins/sample-plugin/components/sample-action-configuration/sample-action-configuration.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/models";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit-module";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit.specification";
+export * from "./lib/plugins/samenwerkfunctionaliteit/components/samenwerkfunctionaliteit-configuration/samenwerkfunctionaliteit-configuration.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/components/sample-action-configuration/sample-action-configuration.component";

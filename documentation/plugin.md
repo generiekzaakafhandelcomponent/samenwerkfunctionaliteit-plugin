@@ -31,7 +31,7 @@ In your `app.module.ts`:
 ```typescript
 import {
     SamplePluginModule, samplePluginSpecification,
-} from '@valtimo-plugins/sample-plugin';
+} from '@valtimo-plugins/samenwerkfunctionaliteit';
 
 @NgModule({
     imports: [
