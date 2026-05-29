@@ -19,7 +19,6 @@
  */
 
 export * from "./lib/plugins/samenwerkfunctionaliteit/models";
-export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit-module";
-export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit.specification";
-export * from "./lib/plugins/samenwerkfunctionaliteit/components/samenwerkfunctionaliteit-configuration/samenwerkfunctionaliteit-configuration.component";
-export * from "./lib/plugins/samenwerkfunctionaliteit/components/sample-action-configuration/sample-action-configuration.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit-plugin.module";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit.plugin.specification";
+export * from "./lib/plugins/samenwerkfunctionaliteit/components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component";
