@@ -1,6 +1,6 @@
 [
     {
-        "processDefinitionKey": "example-process",
+        "processDefinitionKey": "samenwerkfunctionaliteit-demo",
         "canInitializeDocument": true,
         "startableByUser": true
     }
