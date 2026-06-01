@@ -1,0 +1,12 @@
+[
+    {
+        "id": "12023724-a4bd-431d-93c0-5ba52049e9cd",
+        "title": "Samenwerkfunctionaliteit",
+        "pluginDefinitionKey": "samenwerkfunctionaliteit",
+        "properties": {
+            "baseUrl": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_BASE_URL}",
+            "certificate": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_CERTIFICATE}",
+            "oinNummer": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_OIN_NUMMER}"
+        }
+    }
+]
