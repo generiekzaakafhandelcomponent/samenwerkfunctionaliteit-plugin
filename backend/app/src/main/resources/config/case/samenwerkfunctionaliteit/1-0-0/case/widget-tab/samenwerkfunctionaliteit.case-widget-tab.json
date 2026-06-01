@@ -34,8 +34,7 @@
                 "properties": {
                     "formDefinitionName": "api-response"
                 }
-            },
-
+            }
         ]
     }
 ]
