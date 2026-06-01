@@ -1,6 +1,6 @@
 {
-    "key": "example",
-    "name": "Example",
+    "key": "samenwerkfunctionaliteit",
+    "name": "Samenwerkfunctionaliteit",
     "versionTag": "1.0.0",
     "final": false,
     "canHaveAssignee": true,
