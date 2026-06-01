@@ -144,7 +144,7 @@
         {
             "title": "Get documenten overzicht",
             "collapsible": false,
-            "key": "pasBestaandDigitaalAdresAan",
+            "key": "getDocumentenOverzicht",
             "conditional": {
                 "show": true,
                 "when": "selectedDemo",
@@ -159,7 +159,7 @@
         {
             "title": "Download document",
             "collapsible": false,
-            "key": "haalDigitaleAdressenOp",
+            "key": "downloadDocument",
             "conditional": {
                 "show": true,
                 "when": "selectedDemo",
@@ -174,7 +174,7 @@
         {
             "title": "Upload document",
             "collapsible": false,
-            "key": "haalDigitaleAdressenOp1",
+            "key": "uploadDocument",
             "conditional": {
                 "show": true,
                 "when": "selectedDemo",
@@ -189,7 +189,7 @@
         {
             "title": "Get samenwerking notificaties",
             "collapsible": false,
-            "key": "haalDigitaleAdressenOp2",
+            "key": "getSamenwerkingNotificaties",
             "conditional": {
                 "show": true,
                 "when": "selectedDemo",
