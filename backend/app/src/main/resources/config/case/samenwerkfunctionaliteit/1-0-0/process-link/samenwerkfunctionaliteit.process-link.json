@@ -3,6 +3,6 @@
         "activityId": "start-event",
         "activityType": "bpmn:StartEvent:start",
         "processLinkType": "form",
-        "formDefinitionName": "demo-start-form"
+        "formDefinitionName": "demo-start"
     }
 ]
