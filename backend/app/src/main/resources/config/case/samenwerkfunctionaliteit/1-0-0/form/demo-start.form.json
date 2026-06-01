@@ -2,27 +2,210 @@
     "display": "form",
     "components": [
         {
-            "key": "html",
-            "type": "htmlelement",
-            "input": false,
-            "label": "Instructions",
-            "content": "Start a new example case. The sample plugin will call a Time API during execution.",
-            "tableView": false,
-            "refreshOnChange": false
+            "label": "selectedDemo",
+            "key": "selectedDemo",
+            "type": "hidden",
+            "input": true,
+            "tableView": false
         },
         {
-            "key": "name",
-            "type": "textfield",
-            "input": true,
-            "label": "Name",
-            "tableView": true,
-            "applyMaskOn": "change"
+            "label": "Selecteer een demo-proces",
+            "optionsLabelPosition": "right",
+            "inline": false,
+            "tableView": false,
+            "defaultValue": false,
+            "values": [
+                {
+                    "label": "Get actieverzoek",
+                    "value": "getActieverzoek",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Get all actieverzoeken",
+                    "value": "getAllActieverzoeken",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Get bericht",
+                    "value": "getBericht",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Post bericht",
+                    "value": "postBericht",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Delete bericht",
+                    "value": "deleteBericht",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Get documenten overzicht",
+                    "value": "getDocumentenOverzicht",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Download document",
+                    "value": "downloadDocument",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Upload document",
+                    "value": "uploadDocument",
+                    "shortcut": ""
+                },
+                {
+                    "label": "Get samenwerking notificaties",
+                    "value": "getSamenwerkingNotificaties",
+                    "shortcut": ""
+                }
+            ],
+            "validateWhenHidden": false,
+            "key": "selectedDemo",
+            "type": "radio",
+            "input": true
+        },
+        {
+            "title": "Get actieverzoek",
+            "collapsible": false,
+            "key": "panel",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "getActieverzoek"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Get all actieverzoeken",
+            "collapsible": false,
+            "key": "panel1",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "getAllActieverzoeken"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Get bericht",
+            "collapsible": false,
+            "key": "klantcontact",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "getBericht"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Post bericht",
+            "collapsible": false,
+            "key": "zetStandaardDigitaalAdres",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "postBericht"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Delete bericht",
+            "collapsible": false,
+            "key": "deleteBericht",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "maakDigitaalAdresAan"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Get documenten overzicht",
+            "collapsible": false,
+            "key": "pasBestaandDigitaalAdresAan",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "getDocumentenOverzicht"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Download document",
+            "collapsible": false,
+            "key": "haalDigitaleAdressenOp",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "downloadDocument"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Upload document",
+            "collapsible": false,
+            "key": "haalDigitaleAdressenOp1",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "uploadDocument"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
+        },
+        {
+            "title": "Get samenwerking notificaties",
+            "collapsible": false,
+            "key": "haalDigitaleAdressenOp2",
+            "conditional": {
+                "show": true,
+                "when": "selectedDemo",
+                "eq": "getSamenwerkingNotificaties"
+            },
+            "type": "panel",
+            "label": "Panel",
+            "input": false,
+            "tableView": false,
+            "components": []
         },
         {
             "key": "submit",
             "type": "button",
             "input": true,
-            "label": "Start",
+            "label": "Creëer dossier",
             "tableView": false,
             "disableOnInvalid": true
         }
