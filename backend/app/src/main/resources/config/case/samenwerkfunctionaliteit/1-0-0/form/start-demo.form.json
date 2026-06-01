@@ -133,7 +133,7 @@
             "conditional": {
                 "show": true,
                 "when": "selectedDemo",
-                "eq": "maakDigitaalAdresAan"
+                "eq": "deleteBericht"
             },
             "type": "panel",
             "label": "Panel",
