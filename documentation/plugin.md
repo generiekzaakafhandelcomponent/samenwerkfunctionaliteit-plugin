@@ -12,7 +12,7 @@ This is a sample plugin demonstrating an API call action. It fetches data from a
 
 ```kotlin
 dependencies {
-    implementation("com.ritense.valtimoplugins:sample-plugin:0.0.1")
+    implementation("com.ritense.valtimoplugins:samenwerkfunctionaliteit-plugin:1.0.0")
 }
 ```
 
@@ -21,7 +21,7 @@ dependencies {
 ```json
 {
   "dependencies": {
-    "@valtimo-plugins/sample-plugin": "0.0.1"
+    "@valtimo-plugins/samenwerkfunctionaliteit-plugin": "1.0.0"
   }
 }
 ```
@@ -30,18 +30,18 @@ In your `app.module.ts`:
 
 ```typescript
 import {
-    SamplePluginModule, samplePluginSpecification,
-} from '@valtimo-plugins/sample-plugin';
+    SamenwerkfunctionaliteitPluginModule, samenwerkfunctionaliteitPluginSpecification,
+} from '@valtimo-plugins/samenwerkfunctionaliteit';
 
 @NgModule({
     imports: [
-        SamplePluginModule,
+        SamenwerkfunctionaliteitPluginModule,
     ],
     providers: [
         {
             provide: PLUGIN_TOKEN,
             useValue: [
-                samplePluginSpecification,
+                samenwerkfunctionaliteitPluginSpecification,
             ]
         }
     ]
@@ -54,7 +54,7 @@ List the plugin configuration properties and how to set them.
 
 | Property | Type   | Required | Description                          |
 |----------|--------|----------|--------------------------------------|
-| apiUrl   | string | Yes      | The URL of the time API to call      |
+|          |        |          |                                      |
 
 ## Actions
 

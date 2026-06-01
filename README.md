@@ -1,7 +1,6 @@
-# GZAC Plugin Template
+# Samenwerkfunctionaliteit Plugin
 
-A template repository for building your own GZAC plugins. Copy this project to get a ready-made structure with build
-configuration, CI/CD workflows, and a working example to start from.
+A Gzac plugin to connect with the DSO-Samenwerkfunctionaliteit API.
 
 ## Getting started
 
