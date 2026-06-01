@@ -1,0 +1,40 @@
+[
+    {
+        "key": "summary",
+        "widgets": [
+            {
+                "type": "fields",
+                "key": "samenwerkfunctionaliteit-result",
+                "title": "Samenwerkfunctionaliteit Result",
+                "width": 2,
+                "highContrast": true,
+                "properties": {
+                    "columns": [
+                        [
+                            {
+                                "key": "selectedDemo",
+                                "title": "Selected Demo",
+                                "value": "doc:selectedDemo",
+                                "displayProperties": {
+                                    "type": "text",
+                                    "hideWhenEmpty": true
+                                }
+                            }
+                        ]
+                    ]
+                }
+            },
+            {
+                "type": "formio",
+                "key": "api-response",
+                "title": "API-response",
+                "icon": "",
+                "width": 2,
+                "highContrast": false,
+                "properties": {
+                    "formDefinitionName": "api-response"
+                }
+            }
+        ]
+    }
+]

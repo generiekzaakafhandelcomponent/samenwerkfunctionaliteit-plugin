@@ -1,0 +1,19 @@
+{
+    "$id": "samenwerkfunctionaliteit.schema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Samenwerkfunctionaliteit",
+    "type": "object",
+    "properties": {
+      "selectedDemo": {
+        "type": "string"
+      },
+      "apiRequest": {
+        "type": "object",
+        "properties": {}
+      },
+      "apiResponse": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+}

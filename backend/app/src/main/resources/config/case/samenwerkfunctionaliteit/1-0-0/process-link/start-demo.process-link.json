@@ -1,0 +1,8 @@
+[
+    {
+        "activityId": "start-demo",
+        "activityType": "bpmn:StartEvent:start",
+        "processLinkType": "form",
+        "formDefinitionName": "start-demo"
+    }
+]
