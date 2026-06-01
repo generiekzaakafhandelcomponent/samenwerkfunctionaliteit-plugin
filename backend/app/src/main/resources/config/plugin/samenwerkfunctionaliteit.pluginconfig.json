@@ -4,9 +4,9 @@
         "title": "Samenwerkfunctionaliteit",
         "pluginDefinitionKey": "samenwerkfunctionaliteit",
         "properties": {
-            "baseUrl": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_BASE_URL}",
-            "certificate": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_CERTIFICATE}",
-            "oinNummer": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKINGFUNCTIONALITEIT_OIN_NUMMER}"
+            "baseUrl": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL}",
+            "certificate": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_CERTIFICATE}",
+            "oinNummer": "${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_OIN_NUMMER}"
         }
     }
 ]
