@@ -2,6 +2,7 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -18,12 +19,10 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
-    ): Actieverzoek {
-        TODO("Not yet implemented")
-    }
+    ): Actieverzoek = this.samenwerkfunctionaliteitClient.getActieverzoek(properties, actieverzoekId).toModel()
 
     override fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<Actieverzoek> {
-        TODO("Not yet implemented")
+        return this.samenwerkfunctionaliteitClient.getAllActieverzoeken(properties).toModel()
     }
 
     override fun getBericht(
