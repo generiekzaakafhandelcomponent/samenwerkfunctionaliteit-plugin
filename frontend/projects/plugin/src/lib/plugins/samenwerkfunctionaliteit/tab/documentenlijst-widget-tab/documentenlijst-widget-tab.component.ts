@@ -3,3 +3,9 @@
 */
 
 import {Component} from '@angular/core';
+
+@Component({
+  template: ``,
+  selector: "documentenlijst-widget-tab",
+})
+export class DocumentenlijstWidgetTabComponent {}
