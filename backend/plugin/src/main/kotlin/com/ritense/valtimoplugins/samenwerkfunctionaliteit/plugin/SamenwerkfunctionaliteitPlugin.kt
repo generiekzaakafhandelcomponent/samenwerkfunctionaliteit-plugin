@@ -2,10 +2,15 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin
 
 import com.ritense.plugin.annotation.Plugin
 import com.ritense.plugin.annotation.PluginAction
+import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentenOverzichtQuery
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
 
 @Plugin(
@@ -77,16 +82,36 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal een overzicht van documenten in de samenwerking op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getDocumentenOverzicht() {
-        @PluginActionProperty samenwerkingId : String,
+    fun getDocumentenOverzicht(
+        execution: DelegateExecution,
         @PluginActionProperty processVariableName: String,
-        @PluginActionProperty aangemaaktDoor: String,
-        @PluginActionProperty negateAangemaaktDoor: Boolean,
-        @PluginActionProperty aangemaaktDoorNaam: String,
-        @PluginActionProperty negateAangemaaktDoorNaam: Boolean,
-        @PluginActionProperty _sort: String,
-        @PluginActionProperty aantal: Integer,
-        @PluginActionProperty pagina: Integer,
+        @PluginActionProperty samenwerkingId : String,
+        @PluginActionProperty aangemaaktDoor: String?,
+        @PluginActionProperty negateAangemaaktDoor: Boolean?,
+        @PluginActionProperty aangemaaktDoorNaam: String?,
+        @PluginActionProperty negateAangemaaktDoorNaam: Boolean?,
+        @PluginActionProperty _sort: String?,
+        @PluginActionProperty aantal: Int?,
+        @PluginActionProperty pagina: Int?,
+    ) {
+        logger.info { "Documentenoverzicht ophalen..." }
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = this.baseUrl,
+            certificate = this.certificate,
+            oinNummer = this.oinNummer)
+        val query = DocumentenOverzichtQuery(
+            aangemaaktDoor = aangemaaktDoor,
+            negateAangemaaktDoor = negateAangemaaktDoor ?: false,
+            aangemaaktDoorNaam = aangemaaktDoorNaam,
+            negateAangemaaktDoorNaam = negateAangemaaktDoorNaam ?: false,
+            sort = sort,
+            aantal = aantal,
+            pagina = pagina)
+        val documentenOverzicht = samenwerkfunctionaliteitService.getDocumentenOverzicht(
+            properties,
+            samenwerkingId,
+            query)
+        logger.info {"Documentenoverzicht succesvol opgehaald."}
     }
 
     @PluginAction(

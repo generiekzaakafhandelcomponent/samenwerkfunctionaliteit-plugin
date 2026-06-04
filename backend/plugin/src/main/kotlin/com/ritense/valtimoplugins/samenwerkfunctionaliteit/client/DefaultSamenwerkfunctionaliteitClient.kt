@@ -6,6 +6,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequ
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentenOverzichtQuery
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
@@ -62,9 +63,38 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
+        query: DocumentenOverzichtQuery,
     ): DocumentenOverzichtResponse {
-        TODO("Not yet implemented")
+        return restClient(properties)
+            .get()
+            .uri { uriBuilder ->
+                uriBuilder
+                    .path("/samenwerkingen/{samenwerkingId}/documenten")
+                    .apply {
+                        query.aangemaaktDoor?.let {
+                            queryParam(if (query.negateAangemaaktDoor) "aangemaaktDoor[not]" else "aangemaaktDoor",it)
+                        }
+                        query.aangemaaktDoorNaam?.let {
+                            queryParam(if (query.negateAangemaaktDoorNaam) "aangemaaktDoorNaam[not]" else "aangemaaktDoorNaam",it)
+                        }
+                        query.sort?.let {
+                            queryParam("_sort", it)
+                        }
+                        query.aantal?.let {
+                            queryParam("aantal", it)
+                        }
+                        query.pagina?.let {
+                            queryParam("pagina", it)
+                        }
+                    }
+                    .build(samenwerkingId)
+            }
+            .retrieve()
+            .body(DocumentenOverzichtResponse::class.java)
+            ?: error("Geen documentenoverzicht ontvangen")
     }
+
+
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,

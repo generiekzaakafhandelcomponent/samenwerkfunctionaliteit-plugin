@@ -6,6 +6,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequ
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentenOverzichtQuery
 import org.springframework.core.io.InputStreamResource
 import java.util.UUID
 
@@ -38,6 +39,7 @@ interface SamenwerkfunctionaliteitClient {
     fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
+        query: DocumentenOverzichtQuery,
     ): DocumentenOverzichtResponse
 
     fun downloadDocument(
