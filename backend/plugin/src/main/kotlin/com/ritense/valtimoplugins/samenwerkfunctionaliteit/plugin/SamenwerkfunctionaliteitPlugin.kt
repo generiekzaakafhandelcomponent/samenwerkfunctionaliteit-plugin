@@ -78,6 +78,15 @@ class SamenwerkfunctionaliteitPlugin(
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
     fun getDocumentenOverzicht() {
+        @PluginActionProperty samenwerkingId : String,
+        @PluginActionProperty processVariableName: String,
+        @PluginActionProperty aangemaaktDoor: String,
+        @PluginActionProperty negateAangemaaktDoor: Boolean,
+        @PluginActionProperty aangemaaktDoorNaam: String,
+        @PluginActionProperty negateAangemaaktDoorNaam: Boolean,
+        @PluginActionProperty _sort: String,
+        @PluginActionProperty aantal: Integer,
+        @PluginActionProperty pagina: Integer,
     }
 
     @PluginAction(
