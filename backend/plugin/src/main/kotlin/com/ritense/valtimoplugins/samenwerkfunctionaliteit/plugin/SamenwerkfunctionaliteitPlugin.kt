@@ -47,6 +47,13 @@ class SamenwerkfunctionaliteitPlugin(
             certificate = certificate,
             oinNummer = oinNummer,
         )
+
+        val actieverzoek = this.samenwerkfunctionaliteitService.getActieverzoek(
+            properties = properties,
+            actieverzoekId = actieverzoekId
+        )
+
+        execution.setVariable(resultPvName, actieverzoek)
     }
 
     @PluginAction(
@@ -59,7 +66,7 @@ class SamenwerkfunctionaliteitPlugin(
         execution: DelegateExecution,
         @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId: UUID,
-        ) {
+    ) {
     }
 
     @PluginAction(
