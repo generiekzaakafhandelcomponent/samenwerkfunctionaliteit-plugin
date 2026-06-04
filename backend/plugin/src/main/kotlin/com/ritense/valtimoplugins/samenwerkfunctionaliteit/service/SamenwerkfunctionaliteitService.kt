@@ -15,7 +15,7 @@ interface SamenwerkfunctionaliteitService {
         actieverzoekId: UUID,
     ): Actieverzoek
 
-    fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<Actieverzoek>
+    fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties, samenwerkingId: UUID): List<Actieverzoek>
 
     fun getBericht(
         properties: SamenwerkfunctionaliteitProperties,

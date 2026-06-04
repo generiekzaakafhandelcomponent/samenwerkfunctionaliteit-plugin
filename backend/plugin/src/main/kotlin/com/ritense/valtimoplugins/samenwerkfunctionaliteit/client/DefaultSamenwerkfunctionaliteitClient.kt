@@ -47,11 +47,14 @@ class DefaultSamenwerkfunctionaliteitClient(
         }
     }
 
-    override fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): ActieverzoekListResponse {
+    override fun getAllActieverzoeken(
+        properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: UUID
+    ): ActieverzoekListResponse {
         try {
             return this.restClient(properties = properties)
                 .get()
-                .uri("/actieverzoeken")
+                .uri("/actieverzoeken?samenwerkingId=$samenwerkingId")
                 .retrieve()
                 .body<ActieverzoekListResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
