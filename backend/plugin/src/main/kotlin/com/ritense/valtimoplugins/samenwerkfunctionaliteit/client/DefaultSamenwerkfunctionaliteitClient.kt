@@ -71,10 +71,10 @@ class DefaultSamenwerkfunctionaliteitClient(
                 uriBuilder
                     .path("/samenwerkingen/{samenwerkingId}/documenten")
                     .apply {
-                        query.aangemaaktDoor?.let {
+                        query.aangemaaktDoor?.takeIf {it.isNotBlank()}?.let {
                             queryParam(if (query.negateAangemaaktDoor) "aangemaaktDoor[not]" else "aangemaaktDoor",it)
                         }
-                        query.aangemaaktDoorNaam?.let {
+                        query.aangemaaktDoorNaam?.takeIf {it.isNotBlank()}?.let {
                             queryParam(if (query.negateAangemaaktDoorNaam) "aangemaaktDoorNaam[not]" else "aangemaaktDoorNaam",it)
                         }
                         query.sort?.let {
@@ -93,8 +93,6 @@ class DefaultSamenwerkfunctionaliteitClient(
             .body(DocumentenOverzichtResponse::class.java)
             ?: error("Geen documentenoverzicht ontvangen")
     }
-
-
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
