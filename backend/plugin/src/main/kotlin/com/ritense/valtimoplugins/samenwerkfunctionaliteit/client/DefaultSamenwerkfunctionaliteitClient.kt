@@ -5,7 +5,11 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificaties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.notificaties.NotificatieService
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.notificaties.NotificatieServiceImpl
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
@@ -83,9 +87,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getSamenwerkingNotificaties(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<NotificatieResponse> {
-        TODO("Not yet implemented")
-    }
+    ): List<Notificatie> = TODO("Provide the return value")
 
     companion object {
         private val logger = KotlinLogging.logger { }

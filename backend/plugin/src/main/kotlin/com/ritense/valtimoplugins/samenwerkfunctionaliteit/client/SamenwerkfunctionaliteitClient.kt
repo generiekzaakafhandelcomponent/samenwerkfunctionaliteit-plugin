@@ -5,6 +5,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import org.springframework.core.io.InputStreamResource
 import java.util.UUID
@@ -53,5 +54,5 @@ interface SamenwerkfunctionaliteitClient {
     fun getSamenwerkingNotificaties(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<NotificatieResponse>
+    ): List<Notificatie>
 }
