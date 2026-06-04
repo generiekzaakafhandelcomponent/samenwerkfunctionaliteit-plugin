@@ -1,7 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
 
-import io.jsonwebtoken.security.Jwks
-import org.joda.time.OffsetDateTime
+import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.OffsetDateTime
 import java.util.UUID
 
 data class Document(
