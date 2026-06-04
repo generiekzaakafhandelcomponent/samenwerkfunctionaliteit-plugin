@@ -3,8 +3,6 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekListResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
-import java.net.URI
-
 
 fun ActieverzoekResponse.toModel(): Actieverzoek =
     Actieverzoek(
