@@ -16,6 +16,14 @@ import java.util.UUID
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {
+
+    private fun restClient(properties: SamenwerkfunctionaliteitProperties): RestClient =
+        restClientBuilder
+            .clone()
+            .baseUrl(properties.baseUrl.toASCIIString())
+            .defaultHeader("x-dienst", "ggd-hl")
+            .build()
+
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
