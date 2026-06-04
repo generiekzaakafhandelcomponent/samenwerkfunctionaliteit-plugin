@@ -18,7 +18,8 @@ interface SamenwerkfunctionaliteitClient {
 
     fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
-        samenwerkingId: UUID
+        samenwerkingId: UUID,
+        isOrganisatieDeOntvanger: Boolean
     ): ActieverzoekListResponse
 
     fun getBericht(
