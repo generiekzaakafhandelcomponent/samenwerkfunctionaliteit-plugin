@@ -1,12 +1,17 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ritense.plugin.annotation.Plugin
 import com.ritense.plugin.annotation.PluginAction
+import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
+import java.util.UUID
 
 @Plugin(
     key = "samenwerkfunctionaliteit",
@@ -32,7 +37,16 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal het actieverzoek op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getActieverzoek() {
+    fun getActieverzoek(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty actieverzoekId: UUID,
+    ) {
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
     }
 
     @PluginAction(
@@ -41,7 +55,11 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal de actieverzoeken van de deelnemer op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getAllActieverzoeken() {
+    fun getAllActieverzoeken(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: UUID,
+        ) {
     }
 
     @PluginAction(
@@ -109,5 +127,6 @@ class SamenwerkfunctionaliteitPlugin(
 
     companion object {
         private val logger = KotlinLogging.logger { }
+        private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
     }
 }
