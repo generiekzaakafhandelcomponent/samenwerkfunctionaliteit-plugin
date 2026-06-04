@@ -37,11 +37,18 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
+      isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
+      samenwerkingId: 'Het samenwerkingId van deze actieverzoeken.',
+      isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie',
 
       // Common
       resultPvName: 'Naam van resultaat-procesvariabele',
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
+
+      //Pluginacties
+      'get-actieverzoek': "Actieverzoek ophalen",
+      'get-all-actieverzoeken': "Alle actieverzoeken ophalen"
     },
 
     en: {
