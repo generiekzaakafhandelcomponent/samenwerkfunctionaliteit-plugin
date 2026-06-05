@@ -1,9 +1,11 @@
 export interface GetDocumentenOverzichtConfig {
-    resultPvName: string;
-    queryParams: KeyValueQueryParam[];
-}
-
-interface KeyValueQueryParam {
-    key: string;
-    value: string;
+  resultPvName: string;
+  samenwerkingId: string;
+  aangemaaktDoor?: string;
+  negateAangemaaktDoor?: boolean;
+  aangemaaktDoorNaam?: string;
+  negateAangemaaktDoorNaam?: boolean;
+  _sort?: string;
+  aantal?: number;
+  pagina?: number;
 }
