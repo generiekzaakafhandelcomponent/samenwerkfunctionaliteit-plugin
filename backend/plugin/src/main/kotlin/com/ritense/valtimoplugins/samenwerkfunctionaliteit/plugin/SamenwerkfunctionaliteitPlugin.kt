@@ -39,7 +39,7 @@ class SamenwerkfunctionaliteitPlugin(
     )
     fun getActieverzoek(
         execution: DelegateExecution,
-        @PluginActionProperty processVariableName: String,
+        @PluginActionProperty resultPvName: String,
         @PluginActionProperty actieverzoekId: UUID,
     ) {
         val properties = SamenwerkfunctionaliteitProperties(
@@ -53,7 +53,7 @@ class SamenwerkfunctionaliteitPlugin(
             actieverzoekId = actieverzoekId
         )
 
-        execution.setVariable(processVariableName, actieverzoek)
+        execution.setVariable(resultPvName, actieverzoek)
     }
 
     @PluginAction(
@@ -64,7 +64,7 @@ class SamenwerkfunctionaliteitPlugin(
     )
     fun getAllActieverzoeken(
         execution: DelegateExecution,
-        @PluginActionProperty processVariableName: String,
+        @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId: UUID,
         @PluginActionProperty isOrganisatieDeOntvanger: Boolean = true,
     ) {
@@ -81,7 +81,7 @@ class SamenwerkfunctionaliteitPlugin(
             isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
         )
 
-        execution.setVariable(processVariableName, actieverzoeken)
+        execution.setVariable(resultPvName, actieverzoeken)
     }
 
     @PluginAction(
