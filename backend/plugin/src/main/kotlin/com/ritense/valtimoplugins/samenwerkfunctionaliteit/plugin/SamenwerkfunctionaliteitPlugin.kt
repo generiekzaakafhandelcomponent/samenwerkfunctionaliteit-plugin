@@ -42,6 +42,7 @@ class SamenwerkfunctionaliteitPlugin(
     fun getActieverzoek(
         execution: DelegateExecution,
         @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
         @PluginActionProperty actieverzoekId: UUID,
     ) {
         val properties = SamenwerkfunctionaliteitProperties(
@@ -71,7 +72,7 @@ class SamenwerkfunctionaliteitPlugin(
     fun getAllActieverzoeken(
         execution: DelegateExecution,
         @PluginActionProperty resultPvName: String,
-        @PluginActionProperty samenwerkingId: UUID,
+        @PluginActionProperty samenwerkingId: String,
         @PluginActionProperty isOrganisatieDeOntvanger: Boolean = true,
     ) {
 
