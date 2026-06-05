@@ -7,6 +7,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentenOverzichtQuery
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -53,8 +54,9 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
+        query: DocumentenOverzichtQuery
     ): List<Document> {
-        TODO("Not yet implemented")
+        return samenwerkfunctionaliteitClient.getDocumentenOverzicht(properties, samenwerkingId, query).documentenOverzicht
     }
 
     override fun downloadDocument(

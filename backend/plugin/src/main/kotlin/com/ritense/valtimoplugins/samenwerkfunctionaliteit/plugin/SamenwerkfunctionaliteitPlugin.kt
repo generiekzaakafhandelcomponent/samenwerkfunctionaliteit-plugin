@@ -8,6 +8,7 @@ import com.ritense.processlink.domain.ActivityTypeWithEventName
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentenOverzichtQuery
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
@@ -21,6 +22,7 @@ import java.net.URI
 @Suppress("UNUSED")
 class SamenwerkfunctionaliteitPlugin(
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
+    private val operatonService : OperatonService
 ) {
     @PluginProperty(key = "baseUrl", secret = false, required = true)
     lateinit var baseUrl: URI
@@ -111,6 +113,7 @@ class SamenwerkfunctionaliteitPlugin(
             properties,
             samenwerkingId,
             query)
+        operatonService.saveToOperaton(execution, resultPvName, documentenOverzicht)
         logger.info {"Documentenoverzicht succesvol opgehaald."}
     }
 
