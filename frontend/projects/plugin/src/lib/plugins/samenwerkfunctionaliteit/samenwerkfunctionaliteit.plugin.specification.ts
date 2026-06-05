@@ -38,8 +38,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
       isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
-      samenwerkingId: 'Het samenwerkingId van deze actieverzoeken.',
+      samenwerkingId: 'Het samenwerkingId van deze actieverzoek(en).',
       isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie',
+      actieverzoekId: 'Het actieverzoekId van dit actieverzoek',
 
       // Common
       resultPvName: 'Naam van resultaat-procesvariabele',
