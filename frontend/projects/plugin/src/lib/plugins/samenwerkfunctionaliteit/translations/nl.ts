@@ -1,6 +1,3 @@
 export const pluginNlTranslations = {
-  samenwerkfunctionaliteit: {
-
-  }
+  samenwerkfunctionaliteit: {}
 };
-
