@@ -56,7 +56,11 @@ class DefaultSamenwerkfunctionaliteitService(
         samenwerkingId: String,
         query: DocumentenOverzichtQuery
     ): List<Document> {
-        return samenwerkfunctionaliteitClient.getDocumentenOverzicht(properties, samenwerkingId, query).documentenOverzicht
+        return samenwerkfunctionaliteitClient.getDocumentenOverzicht(
+            properties,
+            samenwerkingId,
+            query
+        ).embedded?.documenten ?: emptyList()
     }
 
     override fun downloadDocument(
