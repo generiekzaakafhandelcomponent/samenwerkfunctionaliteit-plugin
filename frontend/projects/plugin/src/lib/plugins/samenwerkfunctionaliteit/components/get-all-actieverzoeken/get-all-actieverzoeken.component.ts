@@ -42,8 +42,8 @@ export class GetAllActieverzoekenComponent implements FunctionConfigurationCompo
 
   private handleValid(formOutput: AlleActieverzoekenConfig): void {
     const valid =
-      !!formOutput.resultPvName &&
-      !!formOutput.samenwerkingId
+      !!formOutput.resultPvName.trim() &&
+      !!formOutput.samenwerkingId.trim()
 
     this.valid$.next(valid);
     this.valid.emit(valid);
