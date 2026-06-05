@@ -16,6 +16,15 @@
   ></v-input>
 
   <v-input
+    name="samenwerkingId"
+    [title]="'samenwerkingId' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.samenwerkingId"
+    [disabled]="obs.disabled"
+    [required]="true"
+  ></v-input>
+
+  <v-input
     name="resultPvName"
     [title]="'resultPvName' | pluginTranslate: pluginId | async"
     [margin]="true"
