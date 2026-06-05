@@ -36,7 +36,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         try {
             val response = this.restClient(properties = properties)
                 .get()
-                .uri("/actieverzoeken/${actieverzoekId}")
+                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
@@ -55,7 +55,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     ): ActieverzoekListResponse {
         try {
             val uri = UriComponentsBuilder
-                .fromUriString("/actieverzoeken?samenwerkingId=$samenwerkingId")
+                .fromUriString("${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
                 .apply {
                     if (isOrganisatieDeOntvanger) {
                         queryParam("organisatie", properties.oinNummer)
@@ -129,6 +129,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     }
 
     companion object {
+        private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken/"
         private val logger = KotlinLogging.logger { }
 
 
