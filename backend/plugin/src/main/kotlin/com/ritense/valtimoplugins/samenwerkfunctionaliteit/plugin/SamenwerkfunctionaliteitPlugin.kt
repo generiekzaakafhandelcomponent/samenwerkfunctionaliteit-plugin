@@ -84,7 +84,7 @@ class SamenwerkfunctionaliteitPlugin(
     )
     fun getDocumentenOverzicht(
         execution: DelegateExecution,
-        @PluginActionProperty processVariableName: String,
+        @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId : String,
         @PluginActionProperty aangemaaktDoor: String?,
         @PluginActionProperty negateAangemaaktDoor: Boolean?,
@@ -104,7 +104,7 @@ class SamenwerkfunctionaliteitPlugin(
             negateAangemaaktDoor = negateAangemaaktDoor ?: false,
             aangemaaktDoorNaam = aangemaaktDoorNaam,
             negateAangemaaktDoorNaam = negateAangemaaktDoorNaam ?: false,
-            sort = sort,
+            sort = _sort,
             aantal = aantal,
             pagina = pagina)
         val documentenOverzicht = samenwerkfunctionaliteitService.getDocumentenOverzicht(

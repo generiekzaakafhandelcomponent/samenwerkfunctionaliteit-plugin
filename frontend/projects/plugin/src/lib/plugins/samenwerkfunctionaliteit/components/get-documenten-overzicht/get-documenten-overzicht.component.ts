@@ -1,6 +1,8 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FunctionConfigurationComponent, FunctionConfigurationData} from '@valtimo/plugin';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, Subscription, take} from 'rxjs';
+import { GetDocumentenOverzichtConfig } from '../../models/GetDocumentenOverzichtConfig';
+import { FormOutput } from '@valtimo/components';
 
 @Component({
   selector: 'app-get-documenten-overzicht',
@@ -9,10 +11,51 @@ import {Observable} from 'rxjs';
   styleUrl: './get-documenten-overzicht.component.scss'
 })
 export class GetDocumentenOverzichtComponent implements FunctionConfigurationComponent {
-  configuration: EventEmitter<FunctionConfigurationData>;
-  disabled$: Observable<boolean>;
-  pluginId: string;
-  save$: Observable<void>;
-  valid: EventEmitter<boolean>;
+  @Input() save$: Observable<void>;
+  @Input() disabled$: Observable<boolean>;
+  @Input() pluginId: string;
+  @Input() prefillConfiguration$?: Observable<GetDocumentenOverzichtConfig>;
+  @Output() valid: EventEmitter<boolean>;
+  @Output() configuration: EventEmitter<FunctionConfigurationData>  =
+    new EventEmitter<FunctionConfigurationData>();
+
+    private saveSubscription!: Subscription;
+
+    private readonly config$ =
+      new BehaviorSubject<GetDocumentenOverzichtConfig | null>(null);
+    private readonly valid$ = new BehaviorSubject<boolean>(false);
+
+    ngOnInit(): void {
+      this.openSaveSubscription()
+    }
+
+    ngOnDestroy(): void {
+      this.saveSubscription?.unsubscribe();
+    }
+
+    formValueChange(formOutput: FormOutput): void {
+      this.config$.next(formOutput as GetDocumentenOverzichtConfig);
+      this.handleValid(formOutput as GetDocumentenOverzichtConfig);
+    }
+
+    private handleValid(formOutput: GetDocumentenOverzichtConfig): void {
+      const valid = !!formOutput.resultPvName &&
+        !!formOutput.queryParams;
+
+      this.valid$.next(valid);
+      this.valid.emit(valid);
+    }
+
+    private openSaveSubscription(): void {
+      this.saveSubscription = this.save$?.subscribe((save) => {
+        combineLatest([this.config$, this.valid$])
+          .pipe(take(1))
+          .subscribe(([config, valid]) => {
+            if (valid && config) {
+              this.configuration.emit(config);
+            }
+          });
+      });
+    }
 
 }
