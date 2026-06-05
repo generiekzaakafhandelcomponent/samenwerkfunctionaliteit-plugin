@@ -40,6 +40,15 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       // Common
       resultPvName: 'Naam van resultaat-procesvariabele',
+      samenwerkingId: 'Samenwerking-ID',
+      aangemaaktDoor: 'Aangemaakt door',
+      negateAangemaaktDoor: 'Aangemaakt door uitsluiten',
+      aangemaaktDoorNaam: 'Aangemaakt door naam',
+      negateAangemaaktDoorNaam: 'Aangemaakt door naam uitsluiten',
+      _sort: 'Sortering',
+      aantal: 'Aantal resultaten',
+      pagina: 'Pagina',
+
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
     },
@@ -56,6 +65,15 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       // Common
       resultPvName: 'Result process variable name',
+      samenwerkingId: 'Collaboration ID',
+      aangemaaktDoor: 'Created by',
+      negateAangemaaktDoor: 'Exclude created by',
+      aangemaaktDoorNaam: 'Created by name',
+      negateAangemaaktDoorNaam: 'Exclude created by name',
+      _sort: 'Sort',
+      aantal: 'Number of results',
+      pagina: 'Page',
+
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
     }
