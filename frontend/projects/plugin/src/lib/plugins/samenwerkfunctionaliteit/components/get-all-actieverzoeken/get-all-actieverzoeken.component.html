@@ -26,6 +26,7 @@
   <v-input
     name="isOrganisatieDeOntvanger"
     [title]="'isOrganisatieDeOntvanger' | pluginTranslate: pluginId | async"
+    [tooltip]="'isOrganisatieDeOntvangerTooltip' | pluginTranslate: pluginId | async"
     [margin]="true"
     [defaultValue]="obs.prefill?.isOrganisatieDeOntvanger"
     [disabled]="obs.disabled"
