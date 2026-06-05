@@ -12,6 +12,7 @@ import java.util.UUID
 interface SamenwerkfunctionaliteitService {
     fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
         actieverzoekId: UUID,
     ): Actieverzoek
 
