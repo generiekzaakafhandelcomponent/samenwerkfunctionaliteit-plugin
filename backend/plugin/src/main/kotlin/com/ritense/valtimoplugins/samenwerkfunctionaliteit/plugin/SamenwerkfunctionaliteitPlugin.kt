@@ -53,6 +53,7 @@ class SamenwerkfunctionaliteitPlugin(
 
         val actieverzoek = this.samenwerkfunctionaliteitService.getActieverzoek(
             properties = properties,
+            samenwerkingId = samenwerkingId,
             actieverzoekId = actieverzoekId
         )
 
