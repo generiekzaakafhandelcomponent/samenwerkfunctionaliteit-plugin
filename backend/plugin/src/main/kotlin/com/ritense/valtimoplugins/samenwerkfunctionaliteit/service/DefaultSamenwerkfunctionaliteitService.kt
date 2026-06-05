@@ -18,8 +18,13 @@ class DefaultSamenwerkfunctionaliteitService(
 ) : SamenwerkfunctionaliteitService {
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
         actieverzoekId: UUID,
-    ): Actieverzoek = this.samenwerkfunctionaliteitClient.getActieverzoek(properties, actieverzoekId).toModel()
+    ): Actieverzoek = this.samenwerkfunctionaliteitClient.getActieverzoek(
+        properties = properties,
+        samenwerkingId = samenwerkingId,
+        actieverzoekId = actieverzoekId
+    ).toModel()
 
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
@@ -27,9 +32,9 @@ class DefaultSamenwerkfunctionaliteitService(
         isOrganisatieDeOntvanger: Boolean
     ): List<Actieverzoek> {
         return this.samenwerkfunctionaliteitClient.getAllActieverzoeken(
-            properties,
-            samenwerkingId,
-            isOrganisatieDeOntvanger
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
         ).toModel()
     }
 
