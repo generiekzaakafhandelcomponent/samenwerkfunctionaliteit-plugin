@@ -72,6 +72,12 @@ subprojects {
             }
         }
 
+        dependencyManagement {
+            imports {
+                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2023.0.1")
+            }
+        }
+
         dependencies {
             implementation(platform("com.ritense.valtimo:valtimo-dependency-versions:$valtimoVersion"))
             implementation("cn.lalaki.central:central:$lalakiCentralVersion")

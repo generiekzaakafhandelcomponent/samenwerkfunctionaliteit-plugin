@@ -38,6 +38,8 @@ dependencies {
 
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway")
+
     // Testing
     testImplementation("com.ritense.valtimo:plugin-valtimo")
     testImplementation("com.ritense.valtimo:process-document")
