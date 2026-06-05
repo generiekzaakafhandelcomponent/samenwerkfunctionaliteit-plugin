@@ -50,12 +50,12 @@ class DefaultSamenwerkfunctionaliteitClient(
 
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
-        samenwerkingId: UUID,
+        samenwerkingId: String,
         isOrganisatieDeOntvanger: Boolean
     ): ActieverzoekListResponse {
         try {
             val uri = UriComponentsBuilder
-                .fromUriString("${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
+                .fromUriString("/samenwerkfunctionaliteit/v5/${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
                 .apply {
                     if (isOrganisatieDeOntvanger) {
                         queryParam("organisatie", properties.oinNummer)
@@ -129,7 +129,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     }
 
     companion object {
-        private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken/"
+        private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken"
         private val logger = KotlinLogging.logger { }
 
 
