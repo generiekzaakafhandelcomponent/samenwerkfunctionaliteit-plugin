@@ -26,4 +26,4 @@ fun ActieverzoekResponse.toModel(): Actieverzoek =
         zenderNaam = zenderNaam,
     )
 
-fun ActieverzoekListResponse.toModel(): List<Actieverzoek> = embedded
+fun ActieverzoekListResponse.toModel(): List<Actieverzoek> = embedded?.actieverzoeken ?: emptyList()

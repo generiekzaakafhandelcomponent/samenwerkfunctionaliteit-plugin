@@ -6,7 +6,11 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Links
 
 data class ActieverzoekListResponse(
     @JsonProperty("_embedded")
-    val embedded: List<Actieverzoek>,
+    val embedded: Actieverzoeken? = null,
     @JsonProperty("_links")
     val links: Links? = null,
+)
+
+data class Actieverzoeken(
+    val actieverzoeken: List<Actieverzoek>
 )
