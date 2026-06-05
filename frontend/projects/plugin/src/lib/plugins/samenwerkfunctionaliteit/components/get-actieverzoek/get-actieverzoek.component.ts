@@ -1,18 +1,62 @@
-import {Component, EventEmitter} from '@angular/core';
-import {FunctionConfigurationComponent, FunctionConfigurationData} from '@valtimo/plugin';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {FormModule, FormOutput, InputModule} from "@valtimo/components";
+import {FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule} from '@valtimo/plugin';
+import {BehaviorSubject, combineLatest, Observable, Subscription, take} from 'rxjs';
+import {ActieverzoekConfig} from "../../models/actieverzoek-config";
+import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
-  selector: 'app-get-actieverzoek',
+  selector: 'get-actieverzoek',
+  imports: [
+    FormModule, InputModule, AsyncPipe, PluginTranslatePipeModule, NgIf
+  ],
   templateUrl: './get-actieverzoek.component.html',
-  standalone: true,
   styleUrl: './get-actieverzoek.component.scss'
 })
-export class GetActieverzoekComponent implements FunctionConfigurationComponent {
-  configuration: EventEmitter<FunctionConfigurationData>;
-  disabled$: Observable<boolean>;
-  pluginId: string;
-  save$: Observable<void>;
-  valid: EventEmitter<boolean>;
+export class GetActieverzoekComponent implements FunctionConfigurationComponent, OnInit, OnDestroy {
+  @Input() disabled$: Observable<boolean>;
+  @Input() pluginId: string;
+  @Input() save$: Observable<void>;
+  @Input() prefillConfiguration$?: Observable<ActieverzoekConfig>;
+  @Output() valid: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
 
+  private saveSubscription!: Subscription;
+
+  private readonly config$ = new BehaviorSubject<ActieverzoekConfig | null>(null);
+  private readonly valid$ = new BehaviorSubject<boolean>(false);
+
+  ngOnInit(): void {
+    this.openSaveSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.saveSubscription?.unsubscribe();
+  }
+
+  formValueChange(formOutput: FormOutput): void {
+    this.config$.next(formOutput as ActieverzoekConfig);
+    this.handleValid(formOutput as ActieverzoekConfig);
+  }
+
+  private handleValid(formOutput: ActieverzoekConfig): void {
+    const valid =
+      !!formOutput.resultPvName &&
+      !!formOutput.actieverzoekId
+
+    this.valid$.next(valid);
+    this.valid.emit(valid);
+  }
+
+  private openSaveSubscription(): void {
+    this.saveSubscription = this.save$?.subscribe(save => {
+      combineLatest([this.config$, this.valid$])
+        .pipe(take(1))
+        .subscribe(([config, valid]) => {
+          if (valid && config) {
+            this.configuration.emit(config);
+          }
+        });
+    });
+  }
 }
