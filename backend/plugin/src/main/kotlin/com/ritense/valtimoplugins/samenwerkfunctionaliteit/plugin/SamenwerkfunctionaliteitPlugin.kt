@@ -7,6 +7,7 @@ import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
@@ -21,6 +22,7 @@ import java.util.UUID
 @Suppress("UNUSED")
 class SamenwerkfunctionaliteitPlugin(
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
+    private val operatonService: OperatonService,
 ) {
     @PluginProperty(key = "baseUrl", secret = false, required = true)
     lateinit var baseUrl: URI
@@ -53,7 +55,11 @@ class SamenwerkfunctionaliteitPlugin(
             actieverzoekId = actieverzoekId
         )
 
-        execution.setVariable(resultPvName, actieverzoek)
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoek
+        )
     }
 
     @PluginAction(
@@ -81,7 +87,11 @@ class SamenwerkfunctionaliteitPlugin(
             isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
         )
 
-        execution.setVariable(resultPvName, actieverzoeken)
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoeken
+        )
     }
 
     @PluginAction(
