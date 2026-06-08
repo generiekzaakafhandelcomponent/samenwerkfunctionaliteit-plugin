@@ -1,4 +1,4 @@
-package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
+package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
 data class DocumentenOverzichtQuery(
     val aangemaaktDoor: String? = null,
