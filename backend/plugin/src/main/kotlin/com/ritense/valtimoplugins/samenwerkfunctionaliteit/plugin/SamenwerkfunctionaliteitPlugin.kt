@@ -105,9 +105,9 @@ class SamenwerkfunctionaliteitPlugin(
         val query =
             DocumentenOverzichtQuery(
                 aangemaaktDoor = aangemaaktDoor,
-                negateAangemaaktDoor = negateAangemaaktDoor ?: false,
+                negateAangemaaktDoor = (negateAangemaaktDoor ?: false).toString(),
                 aangemaaktDoorNaam = aangemaaktDoorNaam,
-                negateAangemaaktDoorNaam = negateAangemaaktDoorNaam ?: false,
+                negateAangemaaktDoorNaam = (negateAangemaaktDoorNaam ?: false).toString(),
                 sort = _sort,
                 aantal = aantal,
                 pagina = pagina,

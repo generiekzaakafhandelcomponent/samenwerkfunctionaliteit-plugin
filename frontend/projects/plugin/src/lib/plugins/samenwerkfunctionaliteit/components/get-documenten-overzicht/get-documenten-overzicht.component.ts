@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import {AsyncPipe, NgIf} from '@angular/common';
 import {
   FunctionConfigurationComponent,
   FunctionConfigurationData,
@@ -17,16 +16,14 @@ import { GetDocumentenOverzichtConfig } from "../../models/GetDocumentenOverzich
 
 @Component({
   selector: "get-documentenoverzicht",
-  templateUrl: "./get-documentenoverzicht.component.html",
+  templateUrl: "./get-documenten-overzicht.component.html",
   standalone: true,
   imports: [
      FormModule,
      InputModule,
      PluginTranslatePipeModule,
-     NgIf,
-     AsyncPipe,
    ],
-  styleUrl: "./get-documentenoverzicht.component.scss",
+  styleUrl: "./get-documenten-overzicht.component.scss",
 })
 export class GetDocumentenOverzichtComponent
   implements FunctionConfigurationComponent

@@ -6,7 +6,7 @@ import {GetAllActieverzoekenComponent} from './components/get-all-actieverzoeken
 import {GetBerichtComponent} from './components/get-bericht/get-bericht.component';
 import {PostBerichtComponent} from './components/post-bericht/post-bericht.component';
 import {DeleteBerichtComponent} from './components/delete-bericht/delete-bericht.component';
-import {GetDocumentenOverzichtComponent} from './components/get-documentenoverzicht/get-documentenoverzicht.component';
+import {GetDocumentenOverzichtComponent} from './components/get-documenten-overzicht/get-documenten-overzicht.component';
 import {DownloadDocumentComponent} from './components/download-document/download-document.component';
 import {UploadDocumentComponent} from './components/upload-document/upload-document.component';
 import {GetSamenwerkingNotificatiesComponent} from './components/get-samenwerking-notificaties/get-samenwerking-notificaties.component';

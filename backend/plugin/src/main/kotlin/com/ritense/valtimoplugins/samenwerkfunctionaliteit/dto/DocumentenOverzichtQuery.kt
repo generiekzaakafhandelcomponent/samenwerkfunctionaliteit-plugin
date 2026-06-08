@@ -2,9 +2,9 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
 data class DocumentenOverzichtQuery(
     val aangemaaktDoor: String? = null,
-    val negateAangemaaktDoor: Boolean = false,
+    val negateAangemaaktDoor: String = "false",
     val aangemaaktDoorNaam: String? = null,
-    val negateAangemaaktDoorNaam: Boolean = false,
+    val negateAangemaaktDoorNaam: String = "false",
     val sort: String? = null,
     val aantal: Int? = null,
     val pagina: Int? = null,

@@ -11,6 +11,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import org.springframework.web.util.UriBuilder
 import java.util.UUID
 
 @Component
@@ -70,24 +71,19 @@ class DefaultSamenwerkfunctionaliteitClient(
                 uriBuilder
                     .path("/samenwerkingen/{samenwerkingId}/documenten")
                     .apply {
-                        query.aangemaaktDoor?.takeIf { it.isNotBlank() }?.let {
-                            queryParam(if (query.negateAangemaaktDoor) "aangemaaktDoor[not]" else "aangemaaktDoor", it)
-                        }
-                        query.aangemaaktDoorNaam?.takeIf { it.isNotBlank() }?.let {
-                            queryParam(
-                                if (query.negateAangemaaktDoorNaam) "aangemaaktDoorNaam[not]" else "aangemaaktDoorNaam",
-                                it,
-                            )
-                        }
-                        query.sort?.let {
-                            queryParam("_sort", it)
-                        }
-                        query.aantal?.let {
-                            queryParam("aantal", it)
-                        }
-                        query.pagina?.let {
-                            queryParam("pagina", it)
-                        }
+                        queryParamWithNegation(
+                            "aangemaaktDoor",
+                            query.aangemaaktDoor,
+                            query.negateAangemaaktDoor,
+                        )
+                        queryParamWithNegation(
+                            "aangemaaktDoorNaam",
+                            query.aangemaaktDoorNaam,
+                            query.negateAangemaaktDoorNaam,
+                        )
+                        queryParamIfNotNull("_sort", query.sort)
+                        queryParamIfNotNull("aantal", query.aantal)
+                        queryParamIfNotNull("pagina", query.pagina)
                     }.build(samenwerkingId)
             }.retrieve()
             .body(DocumentenOverzichtResponse::class.java)
@@ -112,6 +108,23 @@ class DefaultSamenwerkfunctionaliteitClient(
         samenwerkingId: String,
     ): List<NotificatieResponse> {
         TODO("Not yet implemented")
+    }
+
+    private fun UriBuilder.queryParamIfNotNull(
+        name: String,
+        value: Any?,
+    ) = apply {
+        value?.let { queryParam(name, it) }
+    }
+
+    private fun UriBuilder.queryParamWithNegation(
+        name: String,
+        value: String?,
+        negate: String?,
+    ) = apply {
+        value
+            ?.takeIf { it.isNotBlank() }
+            ?.let { queryParam(if (negate.toBoolean()) "$name[not]" else name, it) }
     }
 
     companion object {
