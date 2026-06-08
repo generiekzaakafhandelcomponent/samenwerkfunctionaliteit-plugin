@@ -5,7 +5,6 @@ import com.ritense.plugin.annotation.PluginAction
 import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
