@@ -16,5 +16,23 @@
         "key": "audit",
         "type": "standard",
         "contentKey": "audit"
+    },
+    {
+        "key": "documentenlijstwidget",
+        "name": "Documentenlijst",
+        "type": "custom",
+        "contentKey": "documentenlijst-widget-tab"
+    },
+    {
+        "key": "notificatiestab",
+        "name": "Notificaties",
+        "type": "custom",
+        "contentKey": "notificaties-custom-tab"
+    },
+    {
+        "key": "samenwerkingwidget",
+        "name": "Samenwerking",
+        "type": "custom",
+        "contentKey": "samenwerking-widget-tab"
     }
 ]
