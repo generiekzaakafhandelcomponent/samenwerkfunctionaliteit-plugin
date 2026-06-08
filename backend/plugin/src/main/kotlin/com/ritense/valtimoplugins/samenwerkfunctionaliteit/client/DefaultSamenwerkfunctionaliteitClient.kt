@@ -14,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.client.body
+import org.springframework.web.util.UriBuilder
 import java.util.UUID
 
 @Component
@@ -49,7 +50,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisatieDeOntvanger: Boolean
+        organisatie: String?
     ): ActieverzoekListResponse {
         try {
             return restClient(properties = properties)
@@ -57,12 +58,8 @@ class DefaultSamenwerkfunctionaliteitClient(
                 .uri { uriBuilder ->
                     uriBuilder
                         .path(SWF_ACTIEVERZOEK_PATH)
-                        .apply {
-                            queryParam("samenwerkingId", samenwerkingId)
-                            if (isOrganisatieDeOntvanger) {
-                                queryParam("organisatie", properties.oinNummer)
-                            }
-                        }
+                        .queryParam(SAMENWERKING_ID, samenwerkingId)
+                        .queryParamNotNull(name = ORGANISATIE, query = organisatie)
                         .build()
                 }
                 .retrieve()
@@ -127,8 +124,16 @@ class DefaultSamenwerkfunctionaliteitClient(
         TODO("Not yet implemented")
     }
 
+    fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
+        if (query != null) {
+            queryParam(name, query)
+        }
+    }
+
     companion object {
         private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken"
+        private const val SAMENWERKING_ID = "samenwerkingId"
+        private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
 
 

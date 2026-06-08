@@ -29,10 +29,11 @@ class DefaultSamenwerkfunctionaliteitService(
         samenwerkingId: String,
         isOrganisatieDeOntvanger: Boolean
     ): List<Actieverzoek> {
+        val organisatie = if (isOrganisatieDeOntvanger) properties.oinNummer else null
         return samenwerkfunctionaliteitClient.getAllActieverzoeken(
             properties = properties,
             samenwerkingId = samenwerkingId,
-            isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
+            organisatie = organisatie
         ).toModel()
     }
 
