@@ -9,11 +9,13 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieRespon
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.client.body
+import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriBuilder
 import java.util.UUID
 
@@ -41,9 +43,9 @@ class DefaultSamenwerkfunctionaliteitClient(
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
-            throw e
+            handleInternalServerError(e)
         } catch (e: RestClientResponseException) {
-            throw e
+            handleResponseException(e, "Error getting Actieverzoek.")
         }
     }
 
@@ -66,9 +68,9 @@ class DefaultSamenwerkfunctionaliteitClient(
                 .body<GetActieverzoekenResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
-            throw e
+            handleInternalServerError(e)
         } catch (e: RestClientResponseException) {
-            throw e
+            handleResponseException(e, "Error getting all actieverzoeken.")
         }
     }
 
@@ -128,6 +130,29 @@ class DefaultSamenwerkfunctionaliteitClient(
         if (query != null) {
             queryParam(name, query)
         }
+    }
+
+    private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        logger.error(e) { "Internal Server Error calling SWF-API" }
+        throw ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Internal Server Error calling OpenKlant",
+            e,
+        )
+    }
+
+    private fun handleResponseException(
+        e: RestClientResponseException,
+        reason: String,
+    ): Nothing {
+        logger.warn(e) { "Client error calling SWF-API" }
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        throw ResponseStatusException(
+            e.statusCode,
+            reason,
+            e,
+        )
     }
 
     companion object {
