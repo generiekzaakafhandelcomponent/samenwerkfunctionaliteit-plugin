@@ -14,7 +14,6 @@ import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.client.body
-import org.springframework.web.util.UriComponentsBuilder
 import java.util.UUID
 
 @Component
@@ -55,18 +54,18 @@ class DefaultSamenwerkfunctionaliteitClient(
         isOrganisatieDeOntvanger: Boolean
     ): ActieverzoekListResponse {
         try {
-            val uri = UriComponentsBuilder
-                .fromUriString("/samenwerkfunctionaliteit/v5/${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
-                .apply {
-                    if (isOrganisatieDeOntvanger) {
-                        queryParam("organisatie", properties.oinNummer)
-                    }
-                }.build()
-                .toUri()
-
             return this.restClient(properties = properties)
                 .get()
-                .uri(uri)
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path("${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
+                        .apply {
+                            if (isOrganisatieDeOntvanger) {
+                                queryParam("organisatie", properties.oinNummer)
+                            }
+                        }
+                        .build()
+                }
                 .retrieve()
                 .body<ActieverzoekListResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
