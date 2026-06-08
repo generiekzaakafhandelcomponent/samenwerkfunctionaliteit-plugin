@@ -3,10 +3,10 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
@@ -17,7 +17,6 @@ import java.util.UUID
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {
-
     private fun restClient(properties: SamenwerkfunctionaliteitProperties): RestClient =
         restClientBuilder
             .clone()
@@ -64,18 +63,21 @@ class DefaultSamenwerkfunctionaliteitClient(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
         query: DocumentenOverzichtQuery,
-    ): DocumentenOverzichtResponse {
-        return restClient(properties)
+    ): DocumentenOverzichtResponse =
+        restClient(properties)
             .get()
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/samenwerkingen/{samenwerkingId}/documenten")
                     .apply {
-                        query.aangemaaktDoor?.takeIf {it.isNotBlank()}?.let {
-                            queryParam(if (query.negateAangemaaktDoor) "aangemaaktDoor[not]" else "aangemaaktDoor",it)
+                        query.aangemaaktDoor?.takeIf { it.isNotBlank() }?.let {
+                            queryParam(if (query.negateAangemaaktDoor) "aangemaaktDoor[not]" else "aangemaaktDoor", it)
                         }
-                        query.aangemaaktDoorNaam?.takeIf {it.isNotBlank()}?.let {
-                            queryParam(if (query.negateAangemaaktDoorNaam) "aangemaaktDoorNaam[not]" else "aangemaaktDoorNaam",it)
+                        query.aangemaaktDoorNaam?.takeIf { it.isNotBlank() }?.let {
+                            queryParam(
+                                if (query.negateAangemaaktDoorNaam) "aangemaaktDoorNaam[not]" else "aangemaaktDoorNaam",
+                                it,
+                            )
                         }
                         query.sort?.let {
                             queryParam("_sort", it)
@@ -86,13 +88,10 @@ class DefaultSamenwerkfunctionaliteitClient(
                         query.pagina?.let {
                             queryParam("pagina", it)
                         }
-                    }
-                    .build(samenwerkingId)
-            }
-            .retrieve()
+                    }.build(samenwerkingId)
+            }.retrieve()
             .body(DocumentenOverzichtResponse::class.java)
             ?: error("Geen documentenoverzicht ontvangen")
-    }
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,

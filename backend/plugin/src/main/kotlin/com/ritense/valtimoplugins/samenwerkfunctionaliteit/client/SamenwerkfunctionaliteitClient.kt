@@ -3,10 +3,10 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import org.springframework.core.io.InputStreamResource
 import java.util.UUID
 

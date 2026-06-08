@@ -2,12 +2,12 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -54,14 +54,15 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        query: DocumentenOverzichtQuery
-    ): List<Document> {
-        return samenwerkfunctionaliteitClient.getDocumentenOverzicht(
-            properties,
-            samenwerkingId,
-            query
-        ).embedded?.documenten ?: emptyList()
-    }
+        query: DocumentenOverzichtQuery,
+    ): List<Document> =
+        samenwerkfunctionaliteitClient
+            .getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            ).embedded
+            ?.documenten ?: emptyList()
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,

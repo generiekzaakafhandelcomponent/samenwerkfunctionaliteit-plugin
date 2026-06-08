@@ -5,10 +5,10 @@ import com.ritense.plugin.annotation.PluginAction
 import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
@@ -21,7 +21,7 @@ import java.net.URI
 @Suppress("UNUSED")
 class SamenwerkfunctionaliteitPlugin(
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
-    private val operatonService : OperatonService
+    private val operatonService: OperatonService,
 ) {
     @PluginProperty(key = "baseUrl", secret = false, required = true)
     lateinit var baseUrl: URI
@@ -86,7 +86,7 @@ class SamenwerkfunctionaliteitPlugin(
     fun getDocumentenOverzicht(
         execution: DelegateExecution,
         @PluginActionProperty resultPvName: String,
-        @PluginActionProperty samenwerkingId : String,
+        @PluginActionProperty samenwerkingId: String,
         @PluginActionProperty aangemaaktDoor: String?,
         @PluginActionProperty negateAangemaaktDoor: Boolean?,
         @PluginActionProperty aangemaaktDoorNaam: String?,
@@ -96,24 +96,30 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty pagina: Int?,
     ) {
         logger.info { "Documentenoverzicht ophalen..." }
-        val properties = SamenwerkfunctionaliteitProperties(
-            baseUrl = this.baseUrl,
-            certificate = this.certificate,
-            oinNummer = this.oinNummer)
-        val query = DocumentenOverzichtQuery(
-            aangemaaktDoor = aangemaaktDoor,
-            negateAangemaaktDoor = negateAangemaaktDoor ?: false,
-            aangemaaktDoorNaam = aangemaaktDoorNaam,
-            negateAangemaaktDoorNaam = negateAangemaaktDoorNaam ?: false,
-            sort = _sort,
-            aantal = aantal,
-            pagina = pagina)
-        val documentenOverzicht = samenwerkfunctionaliteitService.getDocumentenOverzicht(
-            properties,
-            samenwerkingId,
-            query)
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = this.baseUrl,
+                certificate = this.certificate,
+                oinNummer = this.oinNummer,
+            )
+        val query =
+            DocumentenOverzichtQuery(
+                aangemaaktDoor = aangemaaktDoor,
+                negateAangemaaktDoor = negateAangemaaktDoor ?: false,
+                aangemaaktDoorNaam = aangemaaktDoorNaam,
+                negateAangemaaktDoorNaam = negateAangemaaktDoorNaam ?: false,
+                sort = _sort,
+                aantal = aantal,
+                pagina = pagina,
+            )
+        val documentenOverzicht =
+            samenwerkfunctionaliteitService.getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            )
         operatonService.saveToOperaton(execution, resultPvName, documentenOverzicht)
-        logger.info {"Documentenoverzicht succesvol opgehaald."}
+        logger.info { "Documentenoverzicht succesvol opgehaald." }
     }
 
     @PluginAction(

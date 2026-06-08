@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component
 class SamenwerkfunctionaliteitPluginFactory(
     pluginService: PluginService,
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
-    private val operatonService: OperatonService
+    private val operatonService: OperatonService,
 ) : PluginFactory<SamenwerkfunctionaliteitPlugin>(pluginService) {
     override fun create() =
         SamenwerkfunctionaliteitPlugin(
             samenwerkfunctionaliteitService,
-            operatonService
+            operatonService,
         )
 }

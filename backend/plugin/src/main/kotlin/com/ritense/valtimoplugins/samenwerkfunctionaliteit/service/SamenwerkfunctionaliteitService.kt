@@ -1,12 +1,12 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import org.springframework.core.io.InputStreamResource
 import java.util.UUID
 
