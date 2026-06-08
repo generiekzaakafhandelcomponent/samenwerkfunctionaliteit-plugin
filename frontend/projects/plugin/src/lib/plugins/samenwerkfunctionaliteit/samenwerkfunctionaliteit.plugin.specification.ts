@@ -45,7 +45,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       negateAangemaaktDoor: 'Aangemaakt door uitsluiten',
       aangemaaktDoorNaam: 'Aangemaakt door naam',
       negateAangemaaktDoorNaam: 'Aangemaakt door naam uitsluiten',
-      _sort: 'Sortering',
+      sort: 'Sortering',
       aantal: 'Aantal resultaten',
       pagina: 'Pagina',
 
@@ -70,7 +70,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       negateAangemaaktDoor: 'Exclude created by',
       aangemaaktDoorNaam: 'Created by name',
       negateAangemaaktDoorNaam: 'Exclude created by name',
-      _sort: 'Sort',
+      sort: 'Sort',
       aantal: 'Number of results',
       pagina: 'Page',
 

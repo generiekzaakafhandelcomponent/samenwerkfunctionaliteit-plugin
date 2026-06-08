@@ -5,7 +5,7 @@ export interface GetDocumentenOverzichtConfig {
   negateAangemaaktDoor?: string;
   aangemaaktDoorNaam?: string;
   negateAangemaaktDoorNaam?: string;
-  _sort?: string;
+  sort?: string;
   aantal?: string;
   pagina?: string;
 }

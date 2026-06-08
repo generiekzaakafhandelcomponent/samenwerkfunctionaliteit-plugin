@@ -91,7 +91,7 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty negateAangemaaktDoor: Boolean?,
         @PluginActionProperty aangemaaktDoorNaam: String?,
         @PluginActionProperty negateAangemaaktDoorNaam: Boolean?,
-        @PluginActionProperty _sort: String?,
+        @PluginActionProperty sort: String?,
         @PluginActionProperty aantal: Int?,
         @PluginActionProperty pagina: Int?,
     ) {
@@ -108,7 +108,7 @@ class SamenwerkfunctionaliteitPlugin(
                 negateAangemaaktDoor = (negateAangemaaktDoor ?: false).toString(),
                 aangemaaktDoorNaam = aangemaaktDoorNaam,
                 negateAangemaaktDoorNaam = (negateAangemaaktDoorNaam ?: false).toString(),
-                sort = _sort,
+                sort = sort,
                 aantal = aantal,
                 pagina = pagina,
             )
