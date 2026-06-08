@@ -58,8 +58,9 @@ class DefaultSamenwerkfunctionaliteitClient(
                 .get()
                 .uri { uriBuilder ->
                     uriBuilder
-                        .path("${SWF_ACTIEVERZOEK_PATH}?samenwerkingId=$samenwerkingId")
+                        .path(SWF_ACTIEVERZOEK_PATH)
                         .apply {
+                            queryParam("samenwerkingId", samenwerkingId)
                             if (isOrganisatieDeOntvanger) {
                                 queryParam("organisatie", properties.oinNummer)
                             }
