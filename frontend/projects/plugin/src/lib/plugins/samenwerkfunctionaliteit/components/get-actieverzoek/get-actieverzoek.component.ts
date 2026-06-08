@@ -42,8 +42,7 @@ export class GetActieverzoekComponent implements FunctionConfigurationComponent,
   private handleValid(formOutput: ActieverzoekConfig): void {
     const valid =
       !!formOutput.resultPvName.trim() &&
-      !!formOutput.actieverzoekId.trim() &&
-      !!formOutput.samenwerkingId.trim()
+      !!formOutput.actieverzoekId.trim()
 
     this.valid$.next(valid);
     this.valid.emit(valid);
