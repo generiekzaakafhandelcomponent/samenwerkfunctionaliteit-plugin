@@ -1,6 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekListResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
@@ -20,7 +20,7 @@ interface SamenwerkfunctionaliteitClient {
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
         organisatie: String?
-    ): ActieverzoekListResponse
+    ): GetActieverzoekenResponse
 
     fun getBericht(
         properties: SamenwerkfunctionaliteitProperties,

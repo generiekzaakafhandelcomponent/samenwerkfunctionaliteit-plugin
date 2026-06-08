@@ -1,6 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekListResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 
@@ -26,4 +26,4 @@ fun ActieverzoekResponse.toModel(): Actieverzoek =
         zenderNaam = zenderNaam,
     )
 
-fun ActieverzoekListResponse.toModel(): List<Actieverzoek> = embedded?.actieverzoeken ?: emptyList()
+fun GetActieverzoekenResponse.toModel(): List<Actieverzoek> = embedded?.actieverzoeken ?: emptyList()
