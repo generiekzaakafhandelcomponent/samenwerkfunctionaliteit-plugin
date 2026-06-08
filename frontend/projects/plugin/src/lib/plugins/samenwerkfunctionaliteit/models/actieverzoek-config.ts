@@ -9,7 +9,7 @@ interface ActieverzoekConfig extends PluginConfigurationData {
 interface AlleActieverzoekenConfig extends PluginConfigurationData {
   resultPvName: string;
   samenwerkingId: string;
-  isOrganisatieDeOntvanger: boolean;
+  isOrganisatieDeOntvanger: string;
 }
 
 export {ActieverzoekConfig, AlleActieverzoekenConfig};
