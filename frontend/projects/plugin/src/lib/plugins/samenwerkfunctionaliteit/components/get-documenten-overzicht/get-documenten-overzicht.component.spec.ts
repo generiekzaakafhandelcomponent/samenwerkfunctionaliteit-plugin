@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetDocumentenOverzichtComponent } from './get-documenten-overzicht.component';
+import { GetDocumentenOverzichtComponent } from './get-documentenoverzicht.component';
 
 describe('GetDocumentenOverzichtComponent', () => {
   let component: GetDocumentenOverzichtComponent;

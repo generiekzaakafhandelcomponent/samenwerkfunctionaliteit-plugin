@@ -16,8 +16,8 @@ import {
 import { GetDocumentenOverzichtConfig } from "../../models/GetDocumentenOverzichtConfig";
 
 @Component({
-  selector: "app-get-documenten-overzicht",
-  templateUrl: "./get-documenten-overzicht.component.html",
+  selector: "get-documentenoverzicht",
+  templateUrl: "./get-documentenoverzicht.component.html",
   standalone: true,
   imports: [
      FormModule,
@@ -26,7 +26,7 @@ import { GetDocumentenOverzichtConfig } from "../../models/GetDocumentenOverzich
      NgIf,
      AsyncPipe,
    ],
-  styleUrl: "./get-documenten-overzicht.component.scss",
+  styleUrl: "./get-documentenoverzicht.component.scss",
 })
 export class GetDocumentenOverzichtComponent
   implements FunctionConfigurationComponent

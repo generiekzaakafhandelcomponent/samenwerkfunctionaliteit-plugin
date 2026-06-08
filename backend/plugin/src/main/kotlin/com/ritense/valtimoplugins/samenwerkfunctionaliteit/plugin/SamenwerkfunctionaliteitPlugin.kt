@@ -78,7 +78,7 @@ class SamenwerkfunctionaliteitPlugin(
     }
 
     @PluginAction(
-        key = "get-documenten-overzicht",
+        key = "get-documentenoverzicht",
         title = "Get documenten overzicht",
         description = "Haal een overzicht van documenten in de samenwerking op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
