@@ -39,7 +39,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       oinNummer: 'OIN-Nummer',
       isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
       samenwerkingId: 'Het samenwerkingId van deze actieverzoek(en).',
-      isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie',
+      isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
       actieverzoekId: 'Het actieverzoekId van dit actieverzoek',
 
       // Common
@@ -61,11 +61,20 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit URL',
       certificate: 'Certificate',
       oinNummer: 'OIN-Number',
+      isOrganisatieDeOntvangerTooltip: 'Filters on actieverzoek of which the current organisation is the receiver.',
+      samenwerkingId: 'The samenwerkingId of the requested actieverzoek(en).',
+      isOrganisatieDeOntvanger: 'If the actieverzoek should be filtered on organisation.',
+      actieverzoekId: 'The actieverzoekId of this actieverzoek.',
 
       // Common
       resultPvName: 'Result process variable name',
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
+
+      //Pluginacties
+      'get-actieverzoek': "Request a single actieverzoek.",
+      'get-all-actieverzoeken': "Request all actieverzoeken for a given samenwerkingId."
+
     }
   },
 };
