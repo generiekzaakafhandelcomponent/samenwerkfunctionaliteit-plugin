@@ -33,13 +33,12 @@ class DefaultSamenwerkfunctionaliteitClient(
         actieverzoekId: UUID,
     ): ActieverzoekResponse {
         try {
-            val response = this.restClient(properties = properties)
+            return restClient(properties = properties)
                 .get()
                 .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
-            return response
         } catch (e: HttpServerErrorException.InternalServerError) {
             throw e
         } catch (e: RestClientResponseException) {
@@ -53,7 +52,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         isOrganisatieDeOntvanger: Boolean
     ): ActieverzoekListResponse {
         try {
-            return this.restClient(properties = properties)
+            return restClient(properties = properties)
                 .get()
                 .uri { uriBuilder ->
                     uriBuilder
