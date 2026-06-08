@@ -2,10 +2,10 @@ export interface GetDocumentenOverzichtConfig {
   resultPvName: string;
   samenwerkingId: string;
   aangemaaktDoor?: string;
-  negateAangemaaktDoor?: boolean;
+  negateAangemaaktDoor?: string;
   aangemaaktDoorNaam?: string;
-  negateAangemaaktDoorNaam?: boolean;
+  negateAangemaaktDoorNaam?: string;
   _sort?: string;
-  aantal?: number;
-  pagina?: number;
+  aantal?: string;
+  pagina?: string;
 }
