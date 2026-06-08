@@ -30,13 +30,12 @@ class DefaultSamenwerkfunctionaliteitClient(
 
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
-        samenwerkingId: String,
         actieverzoekId: UUID,
     ): ActieverzoekResponse {
         try {
             val response = this.restClient(properties = properties)
                 .get()
-                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}?samenwerkingId=$samenwerkingId")
+                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")

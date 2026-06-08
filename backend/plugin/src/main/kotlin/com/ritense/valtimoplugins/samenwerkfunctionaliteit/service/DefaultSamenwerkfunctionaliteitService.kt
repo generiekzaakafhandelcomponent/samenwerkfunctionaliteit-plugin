@@ -18,11 +18,9 @@ class DefaultSamenwerkfunctionaliteitService(
 ) : SamenwerkfunctionaliteitService {
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
-        samenwerkingId: String,
         actieverzoekId: UUID,
     ): Actieverzoek = this.samenwerkfunctionaliteitClient.getActieverzoek(
         properties = properties,
-        samenwerkingId = samenwerkingId,
         actieverzoekId = actieverzoekId
     ).toModel()
 
