@@ -69,3 +69,26 @@ Sends a GET request to the configured API URL and returns the timezone response.
 ## Usage
 
 Explain how to use the plugin in a process, with examples if applicable.
+
+#### Tabblad Config
+Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden gekoppeld aan het dossier
+```json
+{
+    "changesetId": "samenwerkingfunctionaliteit.case-tabs.1768982327099",
+    "case-definitions": [
+        {
+            "key": "samenwerkingfunctionaliteit",
+            "tabs": [
+                {
+                    "key": "documentenlijstwidget",
+                    "name": "Documentenlijst",
+                    "type": "custom",
+                    "contentKey": "documentenlijst-widget-tab"
+                }
+            ]
+        }
+    ]
+}
+```
+
+_Zie [toevoegen van plugins](https://docs.valtimo.nl/features/plugins/plugins/custom-plugin-definition#adding-the-plugin-module-to-the-ngmodule) en [toevoegen van case tabs](https://docs.valtimo.nl/features/case/for-developers/case-tabs) in de Valtimo docs._
