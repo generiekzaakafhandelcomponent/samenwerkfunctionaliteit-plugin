@@ -84,6 +84,18 @@ Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden ge
                     "name": "Documentenlijst",
                     "type": "custom",
                     "contentKey": "documentenlijst-widget-tab"
+                },
+                {
+                    "key": "notificatiestab",
+                    "name": "Notificaties",
+                    "type": "custom",
+                    "contentKey": "notificaties-custom-tab"
+                },
+                {
+                    "key": "samenwerkingwidget",
+                    "name": "Samenwerking",
+                    "type": "custom",
+                    "contentKey": "samenwerking-widget-tab"
                 }
             ]
         }
