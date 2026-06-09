@@ -1,28 +1,30 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
-import org.springframework.cloud.gateway.route.RouteLocator
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
+import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
+import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.env.Environment
+import org.springframework.web.servlet.function.RequestPredicates.path
+import org.springframework.web.servlet.function.RouterFunction
+import org.springframework.web.servlet.function.ServerResponse
 
 @Configuration
 class GatewayConfig(
-    private val env: Environment,
+    @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL}")
+    private val apiUrl: String,
     private val authorizationFilter: AuthorizationFilter,
 ) {
     @Bean
-    fun samenwerkfunctionaliteitRoutes(builder: RouteLocatorBuilder): RouteLocator {
-        val apiUrl = env.getProperty("AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL")
-        return builder
-            .routes()
-            .route(
-                "samenwerkfunctionaliteit",
-            ) { route ->
-                route
-                    .path("/samenwerkfunctionaliteit/v5/**")
-                    .filters { it.filter(authorizationFilter) }
-                    .uri(apiUrl)
-            }.build()
+    fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
+        route("samenwerkfunctionaliteit")
+            .route(path(INPUT_URL), http())
+            .before(uri(apiUrl))
+            .filter(authorizationFilter)
+            .build()
+
+    companion object {
+        const val INPUT_URL = "/samenwerkfunctionaliteit/v5/**"
     }
 }
