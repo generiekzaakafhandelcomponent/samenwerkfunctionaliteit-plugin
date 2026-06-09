@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { AsyncPipe, NgIf } from "@angular/common";
 import {
   FunctionConfigurationComponent,
   FunctionConfigurationData,
@@ -21,7 +22,9 @@ import { GetDocumentenOverzichtConfig } from "../../models/GetDocumentenOverzich
   imports: [
      FormModule,
      InputModule,
-     PluginTranslatePipeModule,
+    PluginTranslatePipeModule,
+    NgIf,
+    AsyncPipe,
    ],
   styleUrl: "./get-documenten-overzicht.component.scss",
 })

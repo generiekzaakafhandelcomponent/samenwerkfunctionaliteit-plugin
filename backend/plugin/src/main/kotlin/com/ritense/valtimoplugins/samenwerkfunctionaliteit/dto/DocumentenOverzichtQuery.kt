@@ -6,6 +6,6 @@ data class DocumentenOverzichtQuery(
     val aangemaaktDoorNaam: String? = null,
     val negateAangemaaktDoorNaam: String = "false",
     val sort: String? = null,
-    val aantal: Int? = null,
-    val pagina: Int? = null,
+    val aantal: String? = null,
+    val pagina: String? = null,
 )

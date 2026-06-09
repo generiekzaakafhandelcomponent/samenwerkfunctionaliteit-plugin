@@ -88,12 +88,12 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId: String,
         @PluginActionProperty aangemaaktDoor: String?,
-        @PluginActionProperty negateAangemaaktDoor: Boolean?,
+        @PluginActionProperty negateAangemaaktDoor: String?,
         @PluginActionProperty aangemaaktDoorNaam: String?,
-        @PluginActionProperty negateAangemaaktDoorNaam: Boolean?,
+        @PluginActionProperty negateAangemaaktDoorNaam: String?,
         @PluginActionProperty sort: String?,
-        @PluginActionProperty aantal: Int?,
-        @PluginActionProperty pagina: Int?,
+        @PluginActionProperty aantal: String?,
+        @PluginActionProperty pagina: String?,
     ) {
         logger.info { "Documentenoverzicht ophalen..." }
         val properties =
