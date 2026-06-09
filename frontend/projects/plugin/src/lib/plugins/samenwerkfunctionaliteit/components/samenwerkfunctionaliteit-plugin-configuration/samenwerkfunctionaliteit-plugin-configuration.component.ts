@@ -59,6 +59,8 @@ export class SamenwerkfunctionaliteitPluginConfigurationComponent
   }
 
   formValueChange(formValue: Config): void {
+    this.formValue$.next(formValue);
+
     const valid = !!(
       formValue.samenwerkfunctionaliteitUrl && formValue.certificate
     );
@@ -72,7 +74,7 @@ export class SamenwerkfunctionaliteitPluginConfigurationComponent
       combineLatest([this.formValue$, this.valid$])
         .pipe(take(1))
         .subscribe(([formValue, valid]) => {
-          if (valid) {
+          if (valid && formValue) {
             this.configuration.emit(formValue);
           }
         });
