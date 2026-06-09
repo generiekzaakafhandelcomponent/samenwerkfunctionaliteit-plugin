@@ -1,30 +1,28 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
-import org.springframework.cloud.gateway.filter.GatewayFilter
-import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.http.HttpStatus
-import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.stereotype.Component
-import org.springframework.web.server.ServerWebExchange
-import reactor.core.publisher.Mono
+import org.springframework.web.servlet.function.HandlerFilterFunction
+import org.springframework.web.servlet.function.HandlerFunction
+import org.springframework.web.servlet.function.ServerRequest
+import org.springframework.web.servlet.function.ServerResponse
 
 @Component
-class AuthorizationFilter : GatewayFilter {
+class AuthorizationFilter : HandlerFilterFunction<ServerResponse, ServerResponse> {
     override fun filter(
-        exchange: ServerWebExchange,
-        chain: GatewayFilterChain,
-    ): Mono<Void?>? {
-        val request = exchange.request
+        request: ServerRequest,
+        next: HandlerFunction<ServerResponse>,
+    ): ServerResponse {
+        val isAllowed = checkAuthorization(request)
 
-        val allowed = checkAuthorization(request)
-
-        return if (!allowed) {
-            exchange.response.statusCode = HttpStatus.FORBIDDEN
-            exchange.response.setComplete()
+        return if (isAllowed) {
+            next.handle(request)
         } else {
-            chain.filter(exchange)
+            ServerResponse
+                .status(HttpStatus.FORBIDDEN)
+                .body("Access Denied: Not allowed to route.")
         }
     }
 
-    private fun checkAuthorization(request: ServerHttpRequest): Boolean = true
+    private fun checkAuthorization(request: ServerRequest): Boolean = true
 }
