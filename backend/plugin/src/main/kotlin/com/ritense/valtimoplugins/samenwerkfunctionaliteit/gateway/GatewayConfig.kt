@@ -1,6 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
@@ -17,6 +18,7 @@ class GatewayConfig(
     private val authorizationFilter: AuthorizationFilter,
 ) {
     @Bean
+    @ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route("samenwerkfunctionaliteit")
             .route(path(INPUT_URL), http())

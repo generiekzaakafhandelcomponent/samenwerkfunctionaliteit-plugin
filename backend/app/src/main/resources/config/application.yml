@@ -67,6 +67,8 @@ server:
         min-response-size: 1024
 
 valtimo:
+    samenwerkfunctionaliteit:
+        enableGateway: true
     database: postgres
     app:
         scheme: http
