@@ -13,14 +13,15 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.notificaties.
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
+import org.springframework.web.client.RestClientResponseException
 import java.util.UUID
 
 @Component
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {
-
     private fun restClient(properties: SamenwerkfunctionaliteitProperties): RestClient =
         restClientBuilder
             .clone()
@@ -87,7 +88,23 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getSamenwerkingNotificaties(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<Notificatie> = TODO("Provide the return value")
+    ): GetNotificatiesResponse {
+        try {
+            return restClient(properties = properties)
+                .get()
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path("/samenwerkingen/$samenwerkingId/notificaties")
+                        .build()
+                }.retrieve()
+                .body<GetNotificatiesResponse>()
+                ?: throw IllegalStateException("Error fetching notificaties: response body was null")
+        } catch (e: HttpServerErrorException.InternalServerError) {
+            handleInternalServerError(e)
+        } catch (e: RestClientResponseException) {
+            handleResponseException(e, "Error getting all notificaties.")
+        }
+    }
 
     companion object {
         private val logger = KotlinLogging.logger { }
