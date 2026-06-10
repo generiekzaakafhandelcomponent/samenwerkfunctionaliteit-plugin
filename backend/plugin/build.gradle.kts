@@ -35,6 +35,8 @@ dependencies {
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
 
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 
