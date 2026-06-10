@@ -16,19 +16,15 @@ class GatewayConfig(
     @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL}")
     private val apiUrl: String,
     @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_GATEWAY_ENDPOINT}")
-    private val proxyEndpoint: String,
+    private val endpoint: String,
     private val authorizationFilter: AuthorizationFilter,
 ) {
     @Bean
     @ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
-            .route(path(proxyEndpoint), http())
+            .route(path(endpoint), http())
             .before(uri(apiUrl))
             .filter(authorizationFilter)
             .build()
-
-    companion object {
-        const val INPUT_URL = "/samenwerkfunctionaliteit/v5/**"
-    }
 }
