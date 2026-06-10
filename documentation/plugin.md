@@ -56,6 +56,10 @@ valtimo:
         enableGateway: true
 ```
 
+The endpoint where the requests can be sent, can be set up at .env.properties
+```yaml
+AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_GATEWAY_ENDPOINT=/samenwerkfunctionaliteit/v5/**
+```
 ## Configuration
 
 List the plugin configuration properties and how to set them.

@@ -15,13 +15,15 @@ import org.springframework.web.servlet.function.ServerResponse
 class GatewayConfig(
     @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL}")
     private val apiUrl: String,
+    @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_GATEWAY_ENDPOINT}")
+    private val proxyEndpoint: String,
     private val authorizationFilter: AuthorizationFilter,
 ) {
     @Bean
     @ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
-            .route(path(INPUT_URL), http())
+            .route(path(proxyEndpoint), http())
             .before(uri(apiUrl))
             .filter(authorizationFilter)
             .build()
