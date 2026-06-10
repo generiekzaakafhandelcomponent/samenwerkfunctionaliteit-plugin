@@ -1,7 +1,9 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
+
 
 data class Links(
-    private val _additionalProperties: Map<String, Link> = mutableMapOf()
-
+    @JsonProperty("_additionalProperties")
+    val additionalProperties: Map<String, Link> = mutableMapOf()
 )

@@ -2,6 +2,7 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
 
 import java.time.OffsetDateTime
 import java.util.UUID
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.Document
 
 data class Actieverzoek(
     val links: Links? = null,
