@@ -4,18 +4,17 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekRespo
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificaties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetNotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.notificaties.NotificatieService
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.notificaties.NotificatieServiceImpl
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientResponseException
+import org.springframework.web.client.body
+import org.springframework.web.server.ResponseStatusException
 import java.util.UUID
 
 @Component
@@ -88,7 +87,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getSamenwerkingNotificaties(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): GetNotificatiesResponse {
+    ): GetNotificatieResponse {
         try {
             return restClient(properties = properties)
                 .get()
@@ -97,13 +96,36 @@ class DefaultSamenwerkfunctionaliteitClient(
                         .path("/samenwerkingen/$samenwerkingId/notificaties")
                         .build()
                 }.retrieve()
-                .body<GetNotificatiesResponse>()
+                .body<GetNotificatieResponse>()
                 ?: throw IllegalStateException("Error fetching notificaties: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
             handleInternalServerError(e)
         } catch (e: RestClientResponseException) {
             handleResponseException(e, "Error getting all notificaties.")
         }
+    }
+
+    private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        logger.error(e) { "Internal Server Error calling SWF-API" }
+        throw ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Internal Server Error calling OpenKlant",
+            e,
+        )
+    }
+
+    private fun handleResponseException(
+        e: RestClientResponseException,
+        reason: String,
+    ): Nothing {
+        logger.warn(e) { "Client error calling SWF-API" }
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        throw ResponseStatusException(
+            e.statusCode,
+            reason,
+            e,
+        )
     }
 
     companion object {
