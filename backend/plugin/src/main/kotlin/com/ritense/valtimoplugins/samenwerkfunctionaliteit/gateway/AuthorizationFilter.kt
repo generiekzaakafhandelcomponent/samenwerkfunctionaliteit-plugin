@@ -24,5 +24,6 @@ class AuthorizationFilter : HandlerFilterFunction<ServerResponse, ServerResponse
         }
     }
 
+    // TODO Will be implemented in DGS-601
     private fun checkAuthorization(request: ServerRequest): Boolean = true
 }
