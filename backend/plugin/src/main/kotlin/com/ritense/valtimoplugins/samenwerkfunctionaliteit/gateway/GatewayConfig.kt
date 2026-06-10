@@ -20,7 +20,7 @@ class GatewayConfig(
     @Bean
     @ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
-        route("samenwerkfunctionaliteit")
+        route()
             .route(path(INPUT_URL), http())
             .before(uri(apiUrl))
             .filter(authorizationFilter)
