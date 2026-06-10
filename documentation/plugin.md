@@ -48,6 +48,14 @@ import {
 })
 ```
 
+### API Gateway
+To enable the API proxy from the backend to the Samenwerkfunctionaliteit API, use to following settings in the **application.yml**:
+```yaml
+valtimo:
+    samenwerkfunctionaliteit:
+        enableGateway: true
+```
+
 ## Configuration
 
 List the plugin configuration properties and how to set them.
