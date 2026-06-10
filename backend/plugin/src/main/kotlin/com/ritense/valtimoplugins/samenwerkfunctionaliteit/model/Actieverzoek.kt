@@ -18,17 +18,17 @@ data class Actieverzoek(
     val ontvangerNaam: String? = null,
     val productId: String? = null,
     val samenwerkingId: String? = null,
-    val status: Status? = null,
+    val status: ActieverzoekStatus? = null,
     val titel: String? = null,
     val zender: String? = null,
     val zenderNaam: String? = null
-)
-
-enum class Status {
-    OPEN,
-    IN_BEHANDELING,
-    GEWEIGERD,
-    INGETROKKEN,
-    GEREEDGEMELD,
-    GEREED
+) {
+    enum class ActieverzoekStatus {
+        OPEN,
+        IN_BEHANDELING,
+        GEWEIGERD,
+        INGETROKKEN,
+        GEREEDGEMELD,
+        GEREED
+    }
 }
