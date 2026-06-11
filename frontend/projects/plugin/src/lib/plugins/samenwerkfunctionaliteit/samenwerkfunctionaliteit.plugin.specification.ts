@@ -37,8 +37,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
+      "get-documentenoverzicht": "Documenten overzicht ophalen",
 
-      // Common
+      // Get Documents:
       resultPvName: 'Naam van resultaat-procesvariabele',
       samenwerkingId: 'Samenwerking-ID',
       aangemaaktDoor: 'Aangemaakt door',
@@ -62,8 +63,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit URL',
       certificate: 'Certificate',
       oinNummer: 'OIN-Number',
+      "get-documentenoverzicht": "Retrieve document list",
 
-      // Common
+      // Get Documents:
       resultPvName: 'Result process variable name',
       samenwerkingId: 'Collaboration ID',
       aangemaaktDoor: 'Created by',
