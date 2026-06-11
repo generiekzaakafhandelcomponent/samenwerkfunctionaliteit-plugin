@@ -22,7 +22,6 @@ data class Document(
     val formaat: String?,
     val documentHash: String?,
 
-    @JsonProperty("_links")
     val links: DocumentLinksResponse? = null,
 )
 
