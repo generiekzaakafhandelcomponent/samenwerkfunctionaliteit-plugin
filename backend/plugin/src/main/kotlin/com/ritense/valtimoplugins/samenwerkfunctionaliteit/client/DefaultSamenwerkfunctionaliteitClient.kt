@@ -72,18 +72,18 @@ class DefaultSamenwerkfunctionaliteitClient(
                     .path("/samenwerkingen/{samenwerkingId}/documenten")
                     .apply {
                         queryParamWithNegation(
-                            "aangemaaktDoor",
+                            DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
                             query.aangemaaktDoor,
                             query.negateAangemaaktDoor,
                         )
                         queryParamWithNegation(
-                            "aangemaaktDoorNaam",
+                            DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
                             query.aangemaaktDoorNaam,
                             query.negateAangemaaktDoorNaam,
                         )
-                        queryParamIfNotNull("_sort", query.sort)
-                        queryParamIfNotNull("aantal", query.aantal)
-                        queryParamIfNotNull("pagina", query.pagina)
+                        queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
+                        queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
+                        queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
                     }.build(samenwerkingId)
             }.retrieve()
             .body(DocumentenOverzichtResponse::class.java)
@@ -111,20 +111,33 @@ class DefaultSamenwerkfunctionaliteitClient(
     }
 
     private fun UriBuilder.queryParamIfNotNull(
-        name: String,
+        name: DocumentenOverzichtQueryParam,
         value: Any?,
     ) = apply {
-        value?.let { queryParam(name, it) }
+        value?.let { queryParam(name.paramName, it) }
     }
 
     private fun UriBuilder.queryParamWithNegation(
-        name: String,
+        name: DocumentenOverzichtQueryParam,
         value: String?,
         negate: String?,
     ) = apply {
         value
             ?.takeIf { it.isNotBlank() }
-            ?.let { queryParam(if (negate.toBoolean()) "$name[not]" else name, it) }
+            ?.let { queryParam(if (negate.toBoolean()) name.negated() else name.paramName, it) }
+    }
+
+    private enum class DocumentenOverzichtQueryParam(
+        val paramName: String,
+    ) {
+        AANGEMAAKT_DOOR("aangemaaktDoor"),
+        AANGEMAAKT_DOOR_NAAM("aangemaaktDoorNaam"),
+        SORT("_sort"),
+        AANTAL("aantal"),
+        PAGINA("pagina"),
+        ;
+
+        fun negated(): String = "$paramName[not]"
     }
 
     companion object {
