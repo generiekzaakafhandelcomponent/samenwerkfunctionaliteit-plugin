@@ -13,7 +13,7 @@
         "pluginActionDefinitionKey": "get-documentenoverzicht",
         "actionProperties": {
             "resultPvName": "documentenoverzicht",
-            "samenwerkingId": "SAM-66497"
+            "samenwerkingId": "pv:samenwerkingId"
         }
     }
 ]
