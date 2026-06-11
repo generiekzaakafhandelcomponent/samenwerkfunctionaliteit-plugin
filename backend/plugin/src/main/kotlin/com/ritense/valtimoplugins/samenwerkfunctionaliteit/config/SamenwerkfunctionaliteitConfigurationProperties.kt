@@ -5,6 +5,6 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "valtimo.samenwerkfunctionaliteit")
-class SamenwerkfunctionaliteitProperties {
+class SamenwerkfunctionaliteitConfigurationProperties {
     var customHeaders: Map<String, String> = emptyMap()
 }
