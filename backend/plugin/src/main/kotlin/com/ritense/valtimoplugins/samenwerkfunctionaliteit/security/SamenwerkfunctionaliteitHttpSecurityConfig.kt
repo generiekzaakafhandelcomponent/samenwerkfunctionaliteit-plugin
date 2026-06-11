@@ -1,7 +1,5 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.security
 
-import com.ritense.valtimo.contract.authentication.AuthoritiesConstants.ADMIN
-import com.ritense.valtimo.contract.authentication.AuthoritiesConstants.USER
 import com.ritense.valtimo.contract.security.config.HttpConfigurerConfigurationException
 import com.ritense.valtimo.contract.security.config.HttpSecurityConfigurer
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -19,7 +17,7 @@ class SamenwerkfunctionaliteitHttpSecurityConfig : HttpSecurityConfigurer {
             http.authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers(HttpMethod.GET, "samenwerkfunctionaliteit/v5/**")
-                    .hasAnyAuthority(ADMIN, USER)
+                    .permitAll()
             }
         } catch (e: Exception) {
             throw HttpConfigurerConfigurationException(e)
