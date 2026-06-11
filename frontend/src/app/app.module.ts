@@ -64,6 +64,7 @@ import {DashboardManagementModule} from "@valtimo/dashboard-management";
 import {DashboardModule} from "@valtimo/dashboard";
 import {DecisionModule} from "@valtimo/decision";
 import {
+  CASE_TAB_TOKEN,
   CaseDetailTabAuditComponent,
   CaseDetailTabDocumentsComponent,
   CaseDetailTabProgressComponent,
@@ -99,6 +100,15 @@ import {environment} from "../environments/environment";
 import {registerDocumentenApiFormioUploadComponent, ZgwModule} from "@valtimo/zgw";
 
 import {SamenwerkfunctionaliteitPluginModule, samenwerkfunctionaliteitPluginSpecification,} from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
+import {
+  DocumentenlijstWidgetTabComponent
+} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/documentenlijst-widget-tab/documentenlijst-widget-tab.component";
+import {
+  NotificatiesCustomTabComponent
+} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/notificaties-custom-tab/notificaties-custom-tab.component";
+import {
+  SamenwerkingWidgetTabComponent
+} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/samenwerking-widget-tab/samenwerking-widget-tab.component";
 
 export function tabsFactory() {
   return new Map<string, object>([
@@ -192,8 +202,17 @@ export function tabsFactory() {
         openZaakPluginSpecification,
         samenwerkfunctionaliteitPluginSpecification,
         zakenApiPluginSpecification,
+
       ],
     },
+    {
+      provide: CASE_TAB_TOKEN,
+      useValue: {
+        'documentenlijst-widget-tab': DocumentenlijstWidgetTabComponent,
+        'notificaties-custom-tab': NotificatiesCustomTabComponent,
+        'samenwerking-widget-tab': SamenwerkingWidgetTabComponent
+      }
+    }
   ],
   bootstrap: [AppComponent],
 })

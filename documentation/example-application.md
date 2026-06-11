@@ -1,10 +1,10 @@
 # Example Application
 
-This project also contains a working example application which is meant to showcase the plugin.
+This project also contains a working example application which is meant to showcase the samenwerkfunctionaliteit plugin.
 
 ## Running the example application
 
-All commands below should be run from the **project root** directory.
+The docker and backend commands below should be run from the **project root** directory.
 
 ### Prerequisites
 
@@ -31,6 +31,7 @@ By gradle script:
 
 ### Start frontend
 
+Navigate to the **frontend** directory
 ```shell
 nvm use 20
 npm run clean
