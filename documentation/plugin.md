@@ -49,24 +49,52 @@ import {
 ```
 
 ### API Gateway
-To enable the API proxy from the backend to the Samenwerkfunctionaliteit API, use to following settings in the **application.yml**:
+
+To enable the API proxy from the backend to the Samenwerkfunctionaliteit API, use to following settings in the *
+*application.yml**:
+
 ```yaml
 valtimo:
-    samenwerkfunctionaliteit:
-        enableGateway: true
+  samenwerkfunctionaliteit:
+    gateway:
+      enabled: true
 ```
 
-The endpoint where the requests can be sent, can be set up at .env.properties
+The endpoint where the requests can be sent, can also be set at the _"application.yml"_.
+The default value is `/samenwerkfunctionaliteit/v1/**`
 ```yaml
-AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_GATEWAY_ENDPOINT=/samenwerkfunctionaliteit/v5/**
+valtimo:
+  samenwerkfunctionaliteit:
+    gateway:
+      endpoint: "/samenwerkfunctionaliteit/v5/**"
 ```
+
+Additional headers can be added to the gateway via `customHeaders`in the _"application.yml"_.
+```yaml
+valtimo:
+  samenwerkfunctionaliteit:
+    gateway:
+      customHeaders:
+        header-name-1: "header-value-1"
+        header-name-2: "header-value-2"
+```
+
+By default,  the baseurl of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
+This can be overridden in the _"application.yml"_ with the baseUrl property:
+```yaml
+valtimo:
+  samenwerkfunctionaliteit:
+    gateway:
+      baseUrl: "https://example.com/samenwerkfunctionaliteit/v5"
+```
+
 ## Configuration
 
 List the plugin configuration properties and how to set them.
 
-| Property | Type   | Required | Description                          |
-|----------|--------|----------|--------------------------------------|
-|          |        |          |                                      |
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+|          |      |          |             |
 
 ## Actions
 
