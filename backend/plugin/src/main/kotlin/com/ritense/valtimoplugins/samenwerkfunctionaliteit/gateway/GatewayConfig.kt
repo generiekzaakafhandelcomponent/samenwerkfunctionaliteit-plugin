@@ -39,7 +39,7 @@ class GatewayConfig(
             gatewayProperties.baseUrl ?: getApiUrlFromPluginService()
 
         if (urlAsString.isNullOrBlank()) {
-            throw IllegalStateException("Missing or invalid base URL configuration for Samenwerkfunctionaliteit")
+            throw IllegalStateException("Missing or invalid base API URL configuration for Samenwerkfunctionaliteit")
         }
 
         return URI.create(urlAsString)
