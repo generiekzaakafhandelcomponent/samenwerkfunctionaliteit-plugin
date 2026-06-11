@@ -1,8 +1,8 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Links
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.Document
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.Links
 
 data class DocumentenOverzichtResponse(
     @JsonProperty("_embedded")
@@ -12,5 +12,5 @@ data class DocumentenOverzichtResponse(
 )
 
 data class Documenten(
-    val documenten: List<Document>
+    val documenten: List<Document>,
 )

@@ -1,4 +1,6 @@
-package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
+package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
+
+import com.fasterxml.jackson.annotation.JsonInclude
 
 data class Link(
     val deprecation: String? = null,
@@ -8,5 +10,6 @@ data class Link(
     val profile: String? = null,
     val templated: Boolean? = null,
     val title: String? = null,
+    @field:JsonInclude(JsonInclude.Include.NON_NULL)
     val type: String? = null,
 )
