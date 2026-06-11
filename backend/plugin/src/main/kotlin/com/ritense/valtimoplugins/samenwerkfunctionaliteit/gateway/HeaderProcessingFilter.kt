@@ -1,6 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.SamenwerkfunctionaliteitConfigurationProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.GatewayProperties
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.HandlerFilterFunction
 import org.springframework.web.servlet.function.HandlerFunction
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.function.ServerResponse
 
 @Component
 class HeaderProcessingFilter(
-    private val properties: SamenwerkfunctionaliteitConfigurationProperties,
+    private val properties: GatewayProperties,
 ) : HandlerFilterFunction<ServerResponse, ServerResponse> {
     override fun filter(
         request: ServerRequest,
