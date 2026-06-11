@@ -70,21 +70,20 @@ class DefaultSamenwerkfunctionaliteitClient(
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/samenwerkingen/{samenwerkingId}/documenten")
-                    .apply {
-                        queryParamWithNegation(
-                            DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
-                            query.aangemaaktDoor,
-                            query.negateAangemaaktDoor,
-                        )
-                        queryParamWithNegation(
-                            DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
-                            query.aangemaaktDoorNaam,
-                            query.negateAangemaaktDoorNaam,
-                        )
-                        queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
-                        queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
-                        queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
-                    }.build(samenwerkingId)
+                    .queryParamWithNegation(
+                        DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
+                        query.aangemaaktDoor,
+                        query.negateAangemaaktDoor,
+                    )
+                    .queryParamWithNegation(
+                        DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
+                        query.aangemaaktDoorNaam,
+                        query.negateAangemaaktDoorNaam,
+                    )
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
+                    .build(samenwerkingId)
             }.retrieve()
             .body(DocumentenOverzichtResponse::class.java)
             ?: error("No list of Documents received.")
