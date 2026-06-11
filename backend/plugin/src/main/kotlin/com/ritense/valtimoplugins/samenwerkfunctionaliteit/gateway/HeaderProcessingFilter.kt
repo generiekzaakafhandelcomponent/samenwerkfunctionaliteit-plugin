@@ -1,5 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.SamenwerkfunctionaliteitProperties
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.HandlerFilterFunction
 import org.springframework.web.servlet.function.HandlerFunction
@@ -7,17 +8,19 @@ import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 
 @Component
-class HeaderProcessingFilter : HandlerFilterFunction<ServerResponse, ServerResponse> {
+class HeaderProcessingFilter(
+    private val properties: SamenwerkfunctionaliteitProperties,
+) : HandlerFilterFunction<ServerResponse, ServerResponse> {
     override fun filter(
         request: ServerRequest,
         next: HandlerFunction<ServerResponse>,
     ): ServerResponse {
-        val headers = emptyMap<String, String>()
+        val headersToAdd = properties.customHeaders
         val newRequest =
             ServerRequest
                 .from(request)
                 .removeHeader(AUTHORIZATION_HEADER_NAME)
-                .addHeaders(headers)
+                .addHeaders(headersToAdd)
                 .build()
         return next.handle(newRequest)
     }
