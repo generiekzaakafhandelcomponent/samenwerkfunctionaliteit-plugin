@@ -126,7 +126,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         TODO("Not yet implemented")
     }
 
-    fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
+    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
         if (query != null) {
             queryParam(name, query)
         }

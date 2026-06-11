@@ -52,6 +52,7 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("io.mockk:mockk:1.13.9")
 
     testImplementation("org.postgresql:postgresql")
 
