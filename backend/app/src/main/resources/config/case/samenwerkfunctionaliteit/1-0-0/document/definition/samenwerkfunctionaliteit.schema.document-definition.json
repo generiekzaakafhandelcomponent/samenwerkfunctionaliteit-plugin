@@ -4,16 +4,19 @@
     "title": "Samenwerkfunctionaliteit",
     "type": "object",
     "properties": {
-      "selectedDemo": {
-        "type": "string"
-      },
-      "apiRequest": {
-        "type": "object",
-        "properties": {}
-      },
-      "apiResponse": {
-        "type": "object",
-        "properties": {}
-      }
+        "selectedDemo": {
+            "type": "string"
+        },
+        "apiRequest": {
+            "type": "object",
+            "properties": {}
+        },
+        "apiResponse": {
+            "type": [
+                "object",
+                "array"
+            ],
+            "properties": {}
+        }
     }
 }

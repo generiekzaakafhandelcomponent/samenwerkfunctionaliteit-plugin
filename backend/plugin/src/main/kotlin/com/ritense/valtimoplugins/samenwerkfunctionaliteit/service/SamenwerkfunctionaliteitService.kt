@@ -1,6 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -38,6 +39,7 @@ interface SamenwerkfunctionaliteitService {
     fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
+        query: DocumentenOverzichtQuery,
     ): List<Document>
 
     fun downloadDocument(

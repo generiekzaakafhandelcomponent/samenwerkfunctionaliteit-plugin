@@ -21,7 +21,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
     'get-bericht': GetBerichtComponent,
     'post-bericht': PostBerichtComponent,
     'delete-bericht': DeleteBerichtComponent,
-    'get-documenten-overzicht': GetDocumentenOverzichtComponent,
+    'get-documentenoverzicht': GetDocumentenOverzichtComponent,
     'download-document': DownloadDocumentComponent,
     'upload-document': UploadDocumentComponent,
     'get-samenwerking-notificaties': GetSamenwerkingNotificatiesComponent
@@ -38,8 +38,18 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
 
-      // Common
+      // Get Documents:
+      "get-documentenoverzicht": "Documenten overzicht ophalen",
       resultPvName: 'Naam van resultaat-procesvariabele',
+      samenwerkingId: 'Samenwerking-ID',
+      aangemaaktDoor: 'Aangemaakt door',
+      negateAangemaaktDoor: 'Aangemaakt door uitsluiten',
+      aangemaaktDoorNaam: 'Aangemaakt door naam',
+      negateAangemaaktDoorNaam: 'Aangemaakt door naam uitsluiten',
+      sort: 'Sortering',
+      aantal: 'Aantal resultaten',
+      pagina: 'Pagina',
+
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
     },
@@ -54,8 +64,18 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       certificate: 'Certificate',
       oinNummer: 'OIN-Number',
 
-      // Common
+      // Get Documents:
+      "get-documentenoverzicht": "Retrieve document list",
       resultPvName: 'Result process variable name',
+      samenwerkingId: 'Collaboration ID',
+      aangemaaktDoor: 'Created by',
+      negateAangemaaktDoor: 'Exclude created by',
+      aangemaaktDoorNaam: 'Created by name',
+      negateAangemaaktDoorNaam: 'Exclude created by name',
+      sort: 'Sort',
+      aantal: 'Number of results',
+      pagina: 'Page',
+
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
     }

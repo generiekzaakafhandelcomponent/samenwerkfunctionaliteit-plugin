@@ -6,11 +6,13 @@ import org.operaton.bpm.engine.delegate.DelegateExecution
 import org.springframework.stereotype.Service
 
 @Service
-class DefaultOperatonService(private val objectMapper: ObjectMapper) : OperatonService {
+class DefaultOperatonService(
+    private val objectMapper: ObjectMapper,
+) : OperatonService {
     override fun <T> saveToOperaton(
         execution: DelegateExecution,
         resultPvName: String,
-        result: T
+        result: T,
     ) {
         val resultToJson = objectMapper.valueToTree<JsonNode>(result)
         execution.setVariable(resultPvName, resultToJson)
