@@ -99,16 +99,14 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {environment} from "../environments/environment";
 import {registerDocumentenApiFormioUploadComponent, ZgwModule} from "@valtimo/zgw";
 
-import {SamenwerkfunctionaliteitPluginModule, samenwerkfunctionaliteitPluginSpecification,} from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
 import {
-  DocumentenlijstWidgetTabComponent
-} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/documentenlijst-widget-tab/documentenlijst-widget-tab.component";
-import {
-  NotificatiesCustomTabComponent
-} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/notificaties-custom-tab/notificaties-custom-tab.component";
-import {
-  SamenwerkingWidgetTabComponent
-} from "../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/tab/samenwerking-widget-tab/samenwerking-widget-tab.component";
+  SamenwerkfunctionaliteitPluginModule,
+  samenwerkfunctionaliteitPluginSpecification,
+  DocumentenlijstWidgetTabComponent,
+  NotificatiesCustomTabComponent,
+  SamenwerkingWidgetTabComponent,
+  BerichtenCustomTabComponent
+} from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
 
 export function tabsFactory() {
   return new Map<string, object>([
@@ -208,9 +206,10 @@ export function tabsFactory() {
     {
       provide: CASE_TAB_TOKEN,
       useValue: {
+        'berichten-custom-tab': BerichtenCustomTabComponent,
         'documentenlijst-widget-tab': DocumentenlijstWidgetTabComponent,
         'notificaties-custom-tab': NotificatiesCustomTabComponent,
-        'samenwerking-widget-tab': SamenwerkingWidgetTabComponent
+        'samenwerking-widget-tab': SamenwerkingWidgetTabComponent,
       }
     }
   ],
