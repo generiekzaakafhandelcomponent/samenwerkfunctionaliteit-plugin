@@ -1,6 +1,5 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.GatewayProperties
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.HandlerFilterFunction
 import org.springframework.web.servlet.function.HandlerFunction
