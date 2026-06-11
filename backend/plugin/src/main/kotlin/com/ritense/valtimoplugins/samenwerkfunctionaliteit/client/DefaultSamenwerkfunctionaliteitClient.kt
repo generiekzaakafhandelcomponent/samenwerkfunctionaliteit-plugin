@@ -87,7 +87,7 @@ class DefaultSamenwerkfunctionaliteitClient(
                     }.build(samenwerkingId)
             }.retrieve()
             .body(DocumentenOverzichtResponse::class.java)
-            ?: error("Geen documentenoverzicht ontvangen")
+            ?: error("No list of Documents received.")
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,

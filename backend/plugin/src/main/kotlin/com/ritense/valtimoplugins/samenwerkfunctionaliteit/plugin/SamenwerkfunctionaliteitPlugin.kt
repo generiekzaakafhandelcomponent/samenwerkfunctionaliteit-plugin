@@ -95,7 +95,7 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty aantal: String?,
         @PluginActionProperty pagina: String?,
     ) {
-        logger.info { "Documentenoverzicht ophalen..." }
+        logger.info { "Retrieveing Documents..." }
         val properties =
             SamenwerkfunctionaliteitProperties(
                 baseUrl = this.baseUrl,
@@ -119,7 +119,7 @@ class SamenwerkfunctionaliteitPlugin(
                 query,
             )
         operatonService.saveToOperaton(execution, resultPvName, documentenOverzicht)
-        logger.info { "Documentenoverzicht succesvol opgehaald." }
+        logger.info { "Successfully retrieved list of Documents." }
     }
 
     @PluginAction(
