@@ -18,6 +18,7 @@ class GatewayConfig(
     @param:Value("\${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_GATEWAY_ENDPOINT}")
     private val endpoint: String,
     private val permissionFilter: PermissionFilter,
+    private val headerProcessingFilter: HeaderProcessingFilter,
 ) {
     @Bean
     @ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
@@ -26,5 +27,6 @@ class GatewayConfig(
             .route(path(endpoint), http())
             .before(uri(apiUrl))
             .filter(permissionFilter)
+            .filter(headerProcessingFilter)
             .build()
 }
