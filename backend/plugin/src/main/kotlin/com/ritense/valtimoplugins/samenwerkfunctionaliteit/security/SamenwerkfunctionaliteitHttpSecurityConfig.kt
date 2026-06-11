@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 
 @Order(1)
 @Component
-@ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit", name = ["enableGateway"], havingValue = "true")
+@ConditionalOnProperty(prefix = "valtimo.samenwerkfunctionaliteit.gateway", name = ["enabled"], havingValue = "true")
 class SamenwerkfunctionaliteitHttpSecurityConfig : HttpSecurityConfigurer {
     override fun configure(http: HttpSecurity) {
         try {
