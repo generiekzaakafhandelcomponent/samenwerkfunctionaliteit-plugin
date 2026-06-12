@@ -1,7 +1,7 @@
 
 
 export interface Status{
-  status: string;
+  status: "INITIALISATIE" | "OPEN" | "GESLOTEN";
 }
 
 export interface ActieverzoekStatus{
