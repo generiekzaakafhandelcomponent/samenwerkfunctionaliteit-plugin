@@ -24,7 +24,7 @@ export class SamenwerkingsinformatiepaginaClient {
       aangemaaktDoorNaam: "gemeente Westland",
       aangemaaktDoor: "00000001812579446000",
       status: {
-        status: "OPEN"
+        status: "INITIALISATIE"
       },
       samenwerkVorm: "SAMENWERKEN_AAN_BEHANDELEN",
       creatieDatumTijd: "2026-06-04T10:45:01.933+02:00",
