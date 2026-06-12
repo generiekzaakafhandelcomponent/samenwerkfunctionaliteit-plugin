@@ -2,11 +2,11 @@ import {Status} from "./status.model";
 import {Links} from "./links.model";
 
 export interface Samenwerking{
-  links: Links
+  _links: Links
   aangemaaktDoor: string
   aangemaaktDoorNaam: string
-  aantalActieverzoeken: string
-  aantalNotificaties: string
+  aantalActieverzoeken: number
+  aantalNotificaties: number
   beschrijving: string
   bronVerzoek: string
   contactpersoonEmailadres: string
