@@ -1,9 +1,14 @@
-import {Injectable} from "@angular/core";
+import {inject, Injectable} from "@angular/core";
+import {SamenwerkingsinformatiepaginaClient} from "../client/samenwerkingsinformatiepagina.client";
 
 
 @Injectable({
-    providedIn: "root",
+  providedIn: "root",
 })
 export class SamenwerkingsinformatiepaginaService {
+  samenwerkingClient = inject(SamenwerkingsinformatiepaginaClient);
 
+  getSamenwerking(samenwerkingId: string) {
+    return this.samenwerkingClient.getSamenwerking(samenwerkingId).pipe();
+  }
 }
