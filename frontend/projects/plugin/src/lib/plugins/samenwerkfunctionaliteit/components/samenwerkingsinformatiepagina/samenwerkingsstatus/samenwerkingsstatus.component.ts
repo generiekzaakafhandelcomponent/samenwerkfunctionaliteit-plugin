@@ -14,5 +14,4 @@ import { InputModule } from 'carbon-components-angular';
 })
 export class SamenwerkingsStatusComponent {
   status = input.required<Status>();
-
 }

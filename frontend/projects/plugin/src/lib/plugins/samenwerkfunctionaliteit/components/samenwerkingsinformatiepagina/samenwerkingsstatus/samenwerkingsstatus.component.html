@@ -1,17 +1,5 @@
-
 <div class="status-card">
   <div class="status-card__header-container">
-    <h4 class="status-card__header-title">Samenwerkingsstatus</h4>
-  </div>
-
-  <div class="status-card__data-container">
-    <cds-text-label>
-      Status
-      <input
-        cdsText
-        readonly="readonly"
-        [value]="status().status"
-      >
-    </cds-text-label>
+    <h4 class="status-card__header-title">Samenwerkingsstatus: </h4> <h4 class="status-card__data-container">{{ status().status }}</h4>
   </div>
 </div>
