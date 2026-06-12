@@ -3,6 +3,7 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
@@ -10,13 +11,13 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import org.springframework.web.util.UriBuilder
 import java.util.UUID
 
 @Component
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {
-
     private fun restClient(properties: SamenwerkfunctionaliteitProperties): RestClient =
         restClientBuilder
             .clone()
@@ -62,9 +63,30 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): DocumentenOverzichtResponse {
-        TODO("Not yet implemented")
-    }
+        query: DocumentenOverzichtQuery,
+    ): DocumentenOverzichtResponse =
+        restClient(properties)
+            .get()
+            .uri { uriBuilder ->
+                uriBuilder
+                    .path("/samenwerkingen/{samenwerkingId}/documenten")
+                    .queryParamWithNegation(
+                        DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
+                        query.aangemaaktDoor,
+                        query.negateAangemaaktDoor,
+                    )
+                    .queryParamWithNegation(
+                        DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
+                        query.aangemaaktDoorNaam,
+                        query.negateAangemaaktDoorNaam,
+                    )
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
+                    .build(samenwerkingId)
+            }.retrieve()
+            .body(DocumentenOverzichtResponse::class.java)
+            ?: error("No list of Documents received.")
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
@@ -85,6 +107,36 @@ class DefaultSamenwerkfunctionaliteitClient(
         samenwerkingId: String,
     ): List<NotificatieResponse> {
         TODO("Not yet implemented")
+    }
+
+    private fun UriBuilder.queryParamIfNotNull(
+        name: DocumentenOverzichtQueryParam,
+        value: Any?,
+    ) = apply {
+        value?.let { queryParam(name.paramName, it) }
+    }
+
+    private fun UriBuilder.queryParamWithNegation(
+        name: DocumentenOverzichtQueryParam,
+        value: String?,
+        negate: String?,
+    ) = apply {
+        value
+            ?.takeIf { it.isNotBlank() }
+            ?.let { queryParam(if (negate.toBoolean()) name.negated() else name.paramName, it) }
+    }
+
+    private enum class DocumentenOverzichtQueryParam(
+        val paramName: String,
+    ) {
+        AANGEMAAKT_DOOR("aangemaaktDoor"),
+        AANGEMAAKT_DOOR_NAAM("aangemaaktDoorNaam"),
+        SORT("_sort"),
+        AANTAL("aantal"),
+        PAGINA("pagina"),
+        ;
+
+        fun negated(): String = "$paramName[not]"
     }
 
     companion object {
