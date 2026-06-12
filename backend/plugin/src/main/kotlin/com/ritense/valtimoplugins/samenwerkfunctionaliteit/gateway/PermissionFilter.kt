@@ -8,12 +8,12 @@ import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 
 @Component
-class AuthorizationFilter : HandlerFilterFunction<ServerResponse, ServerResponse> {
+class PermissionFilter : HandlerFilterFunction<ServerResponse, ServerResponse> {
     override fun filter(
         request: ServerRequest,
         next: HandlerFunction<ServerResponse>,
     ): ServerResponse {
-        val isAllowed = checkAuthorization(request)
+        val isAllowed = checkPermissions(request)
 
         return if (isAllowed) {
             next.handle(request)
@@ -25,5 +25,5 @@ class AuthorizationFilter : HandlerFilterFunction<ServerResponse, ServerResponse
     }
 
     // TODO Will be implemented in DGS-601
-    private fun checkAuthorization(request: ServerRequest): Boolean = true
+    private fun checkPermissions(request: ServerRequest): Boolean = true
 }
