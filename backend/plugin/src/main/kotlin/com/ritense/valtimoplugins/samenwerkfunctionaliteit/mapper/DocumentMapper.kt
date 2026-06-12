@@ -1,8 +1,8 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.DocumentLinksResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.LinkResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document.DocumentLinksResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document.LinkResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.Document as DocumentResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentLinksResponse as DocumentLinksDto
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.LinkResponse as LinkDto
