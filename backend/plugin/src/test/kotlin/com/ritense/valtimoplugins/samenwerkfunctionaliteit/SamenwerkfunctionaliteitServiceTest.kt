@@ -27,12 +27,13 @@ class SamenwerkfunctionaliteitServiceTest {
     @DisplayName("Should map documenten overzicht response to documents")
     fun ShouldMapResponseToDocuments() {
 
+        // Arrange
         val properties = SamenwerkfunctionaliteitProperties(
             baseUrl = URI("https://example.com"),
             certificate = "certificate",
             oinNummer = "oin-123",
         )
-        val samenwerkingId = "swf-123"
+        val samenwerkingId = "SAM-123"
         val query =
             DocumentenOverzichtQuery(
                 aangemaaktDoor = "user-id",
@@ -77,12 +78,14 @@ class SamenwerkfunctionaliteitServiceTest {
             )
         ).thenReturn(response)
 
+        // Act
         val result = service.getDocumentenOverzicht(
             properties,
             samenwerkingId,
             query,
         )
 
+        // Assert
         assertEquals(1, result.size)
         val document = result.single()
         assertEquals(documentId, document.documentId)
@@ -103,19 +106,19 @@ class SamenwerkfunctionaliteitServiceTest {
             samenwerkingId,
             query,
         )
-
     }
 
     @Test
     @DisplayName("Should return empty list when documenten overzicht response has no embedded documents")
     fun ShouldReturnEmptyListWhenNoEmbeddedDocs() {
 
+        // Arrange
         val properties = SamenwerkfunctionaliteitProperties(
             baseUrl = URI("https://example.com"),
             certificate = "certificate",
             oinNummer = "oin-123",
         )
-        val samenwerkingId = "swf-123"
+        val samenwerkingId = "SAM-123"
         val query =
             DocumentenOverzichtQuery(
                 aangemaaktDoor = "user-id",
@@ -136,12 +139,14 @@ class SamenwerkfunctionaliteitServiceTest {
             )
         ).thenReturn(response)
 
+        // Act
         val result = service.getDocumentenOverzicht(
             properties,
             samenwerkingId,
             query,
         )
 
+        // Assert
         assertTrue(result.isEmpty())
     }
 }

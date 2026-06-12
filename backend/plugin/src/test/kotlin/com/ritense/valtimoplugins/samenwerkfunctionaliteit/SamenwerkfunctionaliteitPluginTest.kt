@@ -6,6 +6,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin.Samenwerkfunct
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -26,16 +27,21 @@ class SamenwerkfunctionaliteitPluginTest {
             samenwerkfunctionaliteitService,
             operatonService,
         )
+    val resultPvName = "documenten"
+    val samenwerkingId = "SAM-123"
+
+    @BeforeEach
+    fun configurePlugin() {
+        plugin.baseUrl = URI("https://example.com")
+        plugin.certificate = "certificate"
+        plugin.oinNummer = "oin-123"
+    }
 
     @Test
     @DisplayName("Should get documenten overzicht and save result to document")
     fun ShouldGetDocumentenoverzichtAndSaveResult() {
-        plugin.baseUrl = URI("https://example.com")
-        plugin.certificate = "certificate"
-        plugin.oinNummer = "oin-123"
 
-        val resultPvName = "documenten"
-        val samenwerkingId = "swf-123"
+        // Arrange
         val query =
             DocumentenOverzichtQuery(
                 aangemaaktDoor = "user-id",
@@ -77,6 +83,7 @@ class SamenwerkfunctionaliteitPluginTest {
             ),
         ).thenReturn(documents)
 
+        // Act
         plugin.getDocumentenOverzicht(
             execution = execution,
             resultPvName = resultPvName,
@@ -90,6 +97,7 @@ class SamenwerkfunctionaliteitPluginTest {
             pagina = "1",
         )
 
+        // Assert
         verify(samenwerkfunctionaliteitService).getDocumentenOverzicht(
             any(),
             eq(samenwerkingId),
@@ -106,13 +114,8 @@ class SamenwerkfunctionaliteitPluginTest {
     @Test
     @DisplayName("Should default negate filters to false when not provided")
     fun `ShouldDefaultNegateFiltersToFalse`() {
-        plugin.baseUrl = URI("https://example.com")
-        plugin.certificate = "certificate"
-        plugin.oinNummer = "oin-123"
 
-        val resultPvName = "documenten"
-        val samenwerkingId = "swf-123"
-
+        // Arrange
         val expectedQuery =
             DocumentenOverzichtQuery(
                 aangemaaktDoor = "user-id",
@@ -134,6 +137,7 @@ class SamenwerkfunctionaliteitPluginTest {
             ),
         ).thenReturn(documents)
 
+        // Act
         plugin.getDocumentenOverzicht(
             execution = execution,
             resultPvName = resultPvName,
@@ -147,6 +151,7 @@ class SamenwerkfunctionaliteitPluginTest {
             pagina = "1",
         )
 
+        // Assert
         verify(samenwerkfunctionaliteitService).getDocumentenOverzicht(
             any(),
             eq(samenwerkingId),
