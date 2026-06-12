@@ -14,5 +14,4 @@ import {Samenwerking} from "../model/samenwerking.model";
 })
 export class SamenwerkingComponent {
   samenwerking = input.required<Samenwerking>();
-  samenwerkingId = input.required<string>();
 }
