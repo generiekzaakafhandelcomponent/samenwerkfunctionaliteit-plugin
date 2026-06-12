@@ -1,7 +1,14 @@
 .section {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   gap: 2rem;
-  width: 50%;
+  width: 100%;
+}
+
+.samenwerking-card,
+.status-card {
+  width: auto;
+  flex: 2;
 }
