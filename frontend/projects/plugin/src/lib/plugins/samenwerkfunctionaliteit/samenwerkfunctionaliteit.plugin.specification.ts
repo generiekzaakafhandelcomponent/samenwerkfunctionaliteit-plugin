@@ -34,7 +34,6 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
         'Een plugin voor het verwerken van gegevens binnen de Samenwerkfunctionaliteit-API binnen het Digitaal Stelsel Omgevingswet (DSO).',
       configurationTitleTooltip:
         'In dit onderdeel configureer je de Samenwerkfunctionaliteit-plugin om eenvoudig gegevens te kunnen verzenden en ophalen.',
-      samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
       isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
@@ -46,6 +45,8 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       resultPvName: 'Naam van resultaat-procesvariabele',
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
+      samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
+
 
       //Pluginacties
       'get-actieverzoek': "Actieverzoek ophalen",
