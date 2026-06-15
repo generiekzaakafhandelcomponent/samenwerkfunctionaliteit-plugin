@@ -1,6 +1,6 @@
 import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from "@angular/core";
 import {SamenwerkingsStatusComponent} from "../samenwerkingsstatus/samenwerkingsstatus.component";
-import {SamenwerkingsinformatiepaginaService} from "../service/samenwerkingsinformatiepagina.service";
+import {SamenwerkingService} from "../../../service/samenwerking.service";
 import {skipWhile, Subject, takeUntil} from "rxjs";
 import {Samenwerking} from "../model/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
@@ -17,7 +17,7 @@ import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
   styleUrl: './swf-informatie-pagina.component.scss'
 })
 export class SwfInformatiePaginaComponent implements OnInit {
-  samenwerkingService = inject(SamenwerkingsinformatiepaginaService);
+  samenwerkingService = inject(SamenwerkingService);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   isLoading: WritableSignal<boolean> = signal(true);
