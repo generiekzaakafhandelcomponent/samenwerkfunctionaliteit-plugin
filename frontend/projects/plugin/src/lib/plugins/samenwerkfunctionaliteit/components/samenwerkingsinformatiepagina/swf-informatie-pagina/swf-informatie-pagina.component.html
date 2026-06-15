@@ -1,3 +1,16 @@
+<div
+  [ngClass]="{
+    'contact-history-spinner': true,
+    'refresh-container': true,
+  }"
+>
+  <cds-loading
+    [size]="'sm'"
+    [isActive]="isLoading()"
+    [overlay]="false"
+  ></cds-loading>
+</div>
+
 <section>
   @if (!isLoading()) {
     <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>

@@ -4,6 +4,8 @@ import {SamenwerkingService} from "../../../service/samenwerking.service";
 import {skipWhile, Subject, takeUntil} from "rxjs";
 import {Samenwerking} from "../model/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
+import {LoadingModule} from "carbon-components-angular";
+import {NgClass} from "@angular/common";
 
 
 @Component({
@@ -13,6 +15,8 @@ import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
   imports: [
     SamenwerkingsStatusComponent,
     SamenwerkingComponent,
+    LoadingModule,
+    NgClass,
   ],
   styleUrl: './swf-informatie-pagina.component.scss'
 })
@@ -46,7 +50,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
       },
       error: (error: Error) => {
         this.hasError.set(true);
-        this.errorMessage.set(error.message);
+        this.errorMessage.set(error.stack);
       }
     })
   }
