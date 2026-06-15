@@ -1,7 +1,7 @@
 import {Status} from "./status.model";
 import {Links} from "./links.model";
 
-export interface Samenwerking{
+export interface Samenwerking {
   _links: Links
   aangemaaktDoor: string
   aangemaaktDoorNaam: string
