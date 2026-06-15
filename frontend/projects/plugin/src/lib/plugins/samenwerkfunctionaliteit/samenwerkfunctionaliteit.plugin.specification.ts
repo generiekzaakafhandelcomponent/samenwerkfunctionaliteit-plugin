@@ -37,6 +37,10 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
+      isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
+      samenwerkingId: 'Het samenwerkingId van deze actieverzoek(en).',
+      isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
+      actieverzoekId: 'Het actieverzoekId van dit actieverzoek',
 
       // Get Documents:
       "get-documentenoverzicht": "Documenten overzicht ophalen",
@@ -52,6 +56,10 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
+
+      //Pluginacties
+      'get-actieverzoek': "Actieverzoek ophalen",
+      'get-all-actieverzoeken': "Alle actieverzoeken ophalen"
     },
 
     en: {
@@ -63,6 +71,10 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit URL',
       certificate: 'Certificate',
       oinNummer: 'OIN-Number',
+      isOrganisatieDeOntvangerTooltip: 'Filters on actieverzoek of which the current organisation is the receiver.',
+      samenwerkingId: 'The samenwerkingId of the requested actieverzoek(en).',
+      isOrganisatieDeOntvanger: 'If the actieverzoek should be filtered on organisation.',
+      actieverzoekId: 'The actieverzoekId of this actieverzoek.',
 
       // Get Documents:
       "get-documentenoverzicht": "Retrieve document list",
@@ -78,6 +90,11 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
+
+      //Pluginacties
+      'get-actieverzoek': "Request a single actieverzoek.",
+      'get-all-actieverzoeken': "Request all actieverzoeken for a given samenwerkingId."
+
     }
   },
 };

@@ -20,12 +20,22 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
-    ): Actieverzoek {
-        TODO("Not yet implemented")
-    }
+    ): Actieverzoek = samenwerkfunctionaliteitClient.getActieverzoek(
+        properties = properties,
+        actieverzoekId = actieverzoekId
+    ).toModel()
 
-    override fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<Actieverzoek> {
-        TODO("Not yet implemented")
+    override fun getAllActieverzoeken(
+        properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
+        isOrganisatieDeOntvanger: Boolean
+    ): List<Actieverzoek> {
+        val organisatie = if (isOrganisatieDeOntvanger) properties.oinNummer else null
+        return samenwerkfunctionaliteitClient.getAllActieverzoeken(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            organisatie = organisatie
+        ).toModel()
     }
 
     override fun getBericht(

@@ -1,5 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ritense.plugin.annotation.Plugin
 import com.ritense.plugin.annotation.PluginAction
 import com.ritense.plugin.annotation.PluginActionProperty
@@ -12,6 +13,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.Samenwerkfunc
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
+import java.util.UUID
 
 @Plugin(
     key = "samenwerkfunctionaliteit",
@@ -38,7 +40,27 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal het actieverzoek op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getActieverzoek() {
+    fun getActieverzoek(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty actieverzoekId: UUID,
+    ) {
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
+
+        val actieverzoek = this.samenwerkfunctionaliteitService.getActieverzoek(
+            properties = properties,
+            actieverzoekId = actieverzoekId
+        )
+
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoek
+        )
     }
 
     @PluginAction(
@@ -47,7 +69,30 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal de actieverzoeken van de deelnemer op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getAllActieverzoeken() {
+    fun getAllActieverzoeken(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
+        @PluginActionProperty isOrganisatieDeOntvanger: Boolean = true,
+    ) {
+
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
+
+        val actieverzoeken = this.samenwerkfunctionaliteitService.getAllActieverzoeken(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
+        )
+
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoeken
+        )
     }
 
     @PluginAction(
@@ -151,5 +196,6 @@ class SamenwerkfunctionaliteitPlugin(
 
     companion object {
         private val logger = KotlinLogging.logger { }
+        private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
     }
 }

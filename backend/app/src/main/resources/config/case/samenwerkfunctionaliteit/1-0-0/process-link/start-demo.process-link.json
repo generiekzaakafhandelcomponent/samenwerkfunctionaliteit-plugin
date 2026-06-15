@@ -15,5 +15,28 @@
             "resultPvName": "documentenoverzicht",
             "samenwerkingId": "pv:samenwerkingId"
         }
+    },
+    {
+        "activityId": "Activity_00fynp6",
+        "activityType": "bpmn:ServiceTask:start",
+        "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
+        "pluginActionDefinitionKey": "get-actieverzoek",
+        "actionProperties": {
+            "resultPvName": "actieverzoek",
+            "actieverzoekId": "pv:actieverzoekId"
+        },
+        "processLinkType": "plugin"
+    },
+    {
+        "activityId": "Activity_0uwens5",
+        "activityType": "bpmn:ServiceTask:start",
+        "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
+        "pluginActionDefinitionKey": "get-all-actieverzoeken",
+        "actionProperties": {
+            "resultPvName": "actieverzoek",
+            "samenwerkingId": "pv:samenwerkingId",
+            "isOrganisatieDeOntvanger": "pv:isOrganisatieDeOntvanger"
+        },
+        "processLinkType": "plugin"
     }
 ]
