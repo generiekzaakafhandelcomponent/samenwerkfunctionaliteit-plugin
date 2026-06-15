@@ -134,11 +134,12 @@ Voorbeeld `*.processlink.json`:
 Explain how to use the plugin in a process, with examples if applicable.
 
 1. **Configure the Plugin**
-   Set the `apiUrl` property in the plugin configuration to the base URL of your API.
+   Set the `baseUrl` property in the plugin configuration to the base URL of your API.
 
 2. **Add Actions to Operation Service Tasks**
     - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operation service task.
     - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operation service task.
+    - Set the **isOrganisatieDeOntvanger** variable to true or false, depending on whether you would like to receive all actieverzoeken based on if your organisation is the receiver. This variable defaults to true. 
 
 3. **Store the Results**
     - The result of **GET getActieverzoek** must be stored in an operation process variable named **"actieverzoek"**.
