@@ -54,10 +54,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       // Haal alle actieverzoeken op
       'get-all-actieverzoeken': "Alle actieverzoeken ophalen",
-      isOrganisatieDeOntvangerTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
-      isOrganisatieDeOntvanger: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
+      isOrganisationTheReceiverTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
+      isOrganisationTheReceiver: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
       samenwerkingId: 'Het samenwerkingId van deze actieverzoek(en).',
-
     },
 
     en: {
@@ -83,10 +82,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       // Get all actieverzoeken
       'get-all-actieverzoeken': "Request all actieverzoeken for a given samenwerkingId.",
-      isOrganisatieDeOntvangerTooltip: 'Filters on actieverzoek of which the current organisation is the receiver.',
+      isOrganisationTheReceiverTooltip: 'Filters on actieverzoek of which the current organisation is the receiver.',
       samenwerkingId: 'The samenwerkingId of the requested actieverzoek(en).',
-      isOrganisatieDeOntvanger: 'If the actieverzoek should be filtered on organisation.',
-
+      isOrganisationTheReceiver: 'If the actieverzoek should be filtered on organisation.',
     }
   },
 };

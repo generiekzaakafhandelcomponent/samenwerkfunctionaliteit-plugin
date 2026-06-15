@@ -27,9 +27,9 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisatieDeOntvanger: Boolean
+        isOrganisationTheReceiver: Boolean
     ): List<Actieverzoek> {
-        val organisatie = if (isOrganisatieDeOntvanger) properties.oinNummer else null
+        val organisatie = if (isOrganisationTheReceiver) properties.oinNummer else null
         return samenwerkfunctionaliteitClient.getAllActieverzoeken(
             properties = properties,
             samenwerkingId = samenwerkingId,

@@ -106,7 +106,7 @@ stored in an **operaton process variable**, for example **"actieverzoeken"**.
 |--------------------------|------|----------|--------------------------------------------------------------------------------------------------------------------------------|
 | resultPvName             | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in.                                          |
 | samenwerkingId           | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.                                                      |
-| isOrganisatieDeOntvanger | Text | No       | If the requested actieverzoeken should be filtered for the requesting organisatie. An optional boolean which defaults to true. |
+| isOrganisationTheReceiver | Text | No       | If the requested actieverzoeken should be filtered for the requesting organisatie. An optional boolean which defaults to true. |
 
 Voorbeeld `*.processlink.json`:
 
@@ -119,7 +119,7 @@ Voorbeeld `*.processlink.json`:
   "actionProperties": {
     "resultPvName": "actieverzoek",
     "samenwerkingId": "pv:samenwerkingId",
-    "isOrganisatieDeOntvanger": "pv:isOrganisatieDeOntvanger"
+    "isOrganisationTheReceiver": "pv:isOrganisationTheReceiver"
   },
   "processLinkType": "plugin"
 }
@@ -139,7 +139,7 @@ Explain how to use the plugin in a process, with examples if applicable.
 2. **Add Actions to Operation Service Tasks**
     - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operation service task.
     - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operation service task.
-    - Set the **isOrganisatieDeOntvanger** variable to true or false, depending on whether you would like to receive all actieverzoeken based on if your organisation is the receiver. This variable defaults to true. 
+    - Set the **isOrganisationTheReceiver** variable to true or false, depending on whether you would like to receive all actieverzoeken based on if your organisation is the receiver. This variable defaults to true. 
 
 3. **Store the Results**
     - The result of **GET getActieverzoek** must be stored in an operation process variable named **"actieverzoek"**.
