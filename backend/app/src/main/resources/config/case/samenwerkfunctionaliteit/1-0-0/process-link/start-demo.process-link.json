@@ -15,5 +15,11 @@
             "resultPvName": "documentenoverzicht",
             "samenwerkingId": "pv:samenwerkingId"
         }
+    },
+    {
+        "activityId": "Activity_start_get_documentenoverzicht",
+        "activityType": "bpmn:UserTask:create",
+        "processLinkType": "form",
+        "formDefinitionName": "start-get-documentenoverzicht"
     }
 ]

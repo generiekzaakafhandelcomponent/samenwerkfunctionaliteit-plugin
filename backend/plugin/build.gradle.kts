@@ -60,6 +60,8 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    testImplementation("org.operaton.bpm:operaton-engine:$operatonVersion")
 }
 
 apply(from = "gradle/publishing.gradle")
