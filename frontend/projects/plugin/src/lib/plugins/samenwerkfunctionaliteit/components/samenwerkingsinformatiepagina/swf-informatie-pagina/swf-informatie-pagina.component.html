@@ -1,6 +1,11 @@
 <section>
-  <samenwerkingsstatus [status]="this.samenwerking().status"></samenwerkingsstatus>
-  <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
-  <!--  <documentenlijst></documentenlijst>-->
+  @if (!isLoading()) {
+    <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
+    <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
+    <!--  <documentenlijst></documentenlijst>-->
+  }
+  @if (hasError()) {
+    <p>{{ this.errorMessage() }}</p>
+  }
 </section>
 
