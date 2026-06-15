@@ -13,7 +13,14 @@
         "pluginActionDefinitionKey": "get-documentenoverzicht",
         "actionProperties": {
             "resultPvName": "documentenoverzicht",
-            "samenwerkingId": "pv:samenwerkingId"
+            "samenwerkingId": "pv:samenwerkingId",
+            "aangemaaktDoor": "pv:aangemaaktDoor",
+            "negateAangemaaktDoor": "pv:negateAangemaaktDoor",
+            "aangemaaktDoorNaam": "pv:aangemaaktDoorNaam",
+            "negateAangemaaktDoorNaam": "pv:negateAangemaaktDoorNaam",
+            "sort": "pv:sortering",
+            "aantal": "pv:aantal",
+            "pagina": "pv:pagina"
         }
     },
     {
