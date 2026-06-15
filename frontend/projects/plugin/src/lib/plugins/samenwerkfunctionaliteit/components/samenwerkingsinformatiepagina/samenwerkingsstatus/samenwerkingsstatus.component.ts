@@ -1,6 +1,6 @@
 import {Component, input} from "@angular/core";
-import {Status} from "../model/status.model";
-import { InputModule } from 'carbon-components-angular';
+import {InputModule} from 'carbon-components-angular';
+import {Samenwerking} from "../model/samenwerking.model";
 
 
 @Component({
@@ -13,5 +13,5 @@ import { InputModule } from 'carbon-components-angular';
   ]
 })
 export class SamenwerkingsStatusComponent {
-  status = input.required<Status>();
+  samenwerking = input.required<Samenwerking>();
 }
