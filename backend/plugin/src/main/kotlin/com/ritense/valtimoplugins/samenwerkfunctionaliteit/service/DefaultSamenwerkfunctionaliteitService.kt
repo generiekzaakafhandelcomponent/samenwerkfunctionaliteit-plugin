@@ -2,6 +2,8 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -53,9 +55,17 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<Document> {
-        TODO("Not yet implemented")
-    }
+        query: DocumentenOverzichtQuery,
+    ): List<Document> =
+        samenwerkfunctionaliteitClient
+            .getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            ).embedded
+            ?.documenten
+            ?.map { it.toModel() }
+            ?: emptyList()
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
