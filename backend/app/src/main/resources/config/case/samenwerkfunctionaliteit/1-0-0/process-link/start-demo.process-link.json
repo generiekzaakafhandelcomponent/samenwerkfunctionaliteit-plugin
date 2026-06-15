@@ -24,7 +24,7 @@
         "actionProperties": {
             "resultPvName": "actieverzoeken",
             "samenwerkingId": "pv:samenwerkingId",
-            "isOrganisatieDeOntvanger": "pv:isOrganisationTheReceiver"
+            "isOrganisationTheReceiver": "pv:isOrganisationTheReceiver"
         },
         "processLinkType": "plugin"
     }
