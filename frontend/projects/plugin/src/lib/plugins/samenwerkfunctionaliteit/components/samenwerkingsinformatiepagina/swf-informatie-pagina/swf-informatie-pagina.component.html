@@ -1,14 +1,16 @@
-<div
-  [ngClass]="{
+@if (isLoading()) {
+  <div
+    [ngClass]="{
     'refresh-container': true,
   }"
->
-  <cds-loading
-    [size]="'sm'"
-    [isActive]="isLoading()"
-    [overlay]="false"
-  ></cds-loading>
-</div>
+  >
+    <cds-loading
+      [size]="'sm'"
+      [isActive]="isLoading()"
+      [overlay]="false"
+    ></cds-loading>
+  </div>
+}
 
 <section>
   @if (!isLoading()) {
