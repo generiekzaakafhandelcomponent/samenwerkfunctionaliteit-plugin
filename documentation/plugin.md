@@ -157,7 +157,7 @@ Voorbeeld `*.processlink.json`:
   "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
   "pluginActionDefinitionKey": "get-all-actieverzoeken",
   "actionProperties": {
-    "resultPvName": "actieverzoek",
+    "resultPvName": "actieverzoeken",
     "samenwerkingId": "pv:samenwerkingId",
     "isOrganisationTheReceiver": "pv:isOrganisationTheReceiver"
   },
