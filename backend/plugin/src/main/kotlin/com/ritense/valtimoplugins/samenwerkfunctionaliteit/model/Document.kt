@@ -1,6 +1,5 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.OffsetDateTime
 import java.util.UUID
 
@@ -21,17 +20,15 @@ data class Document(
     val taal: String?,
     val formaat: String?,
     val documentHash: String?,
-
-    @JsonProperty("_links")
     val links: DocumentLinksResponse? = null,
-)
+) {
+    data class DocumentLinksResponse(
+        val self: LinkResponse? = null,
+        val content: LinkResponse? = null,
+        val ontkoppelenVanActieverzoek: LinkResponse? = null,
+    )
 
-data class DocumentLinksResponse(
-    val self: LinkResponse? = null,
-    val content: LinkResponse? = null,
-    val ontkoppelenVanActieverzoek: LinkResponse? = null,
-)
-
-data class LinkResponse(
-    val href: String,
-)
+    data class LinkResponse(
+        val href: String,
+    )
+}

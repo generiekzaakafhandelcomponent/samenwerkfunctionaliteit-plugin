@@ -35,6 +35,9 @@ dependencies {
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webmvc")
 
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 
@@ -58,6 +61,8 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    testImplementation("org.operaton.bpm:operaton-engine:$operatonVersion")
 }
 
 apply(from = "gradle/publishing.gradle")

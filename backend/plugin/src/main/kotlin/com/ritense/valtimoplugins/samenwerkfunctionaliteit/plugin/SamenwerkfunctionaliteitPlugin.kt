@@ -6,6 +6,7 @@ import com.ritense.plugin.annotation.PluginAction
 import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
@@ -122,12 +123,48 @@ class SamenwerkfunctionaliteitPlugin(
     }
 
     @PluginAction(
-        key = "get-documenten-overzicht",
+        key = "get-documentenoverzicht",
         title = "Get documenten overzicht",
         description = "Haal een overzicht van documenten in de samenwerking op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getDocumentenOverzicht() {
+    fun getDocumentenOverzicht(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
+        @PluginActionProperty aangemaaktDoor: String?,
+        @PluginActionProperty negateAangemaaktDoor: String?,
+        @PluginActionProperty aangemaaktDoorNaam: String?,
+        @PluginActionProperty negateAangemaaktDoorNaam: String?,
+        @PluginActionProperty sort: String?,
+        @PluginActionProperty aantal: String?,
+        @PluginActionProperty pagina: String?,
+    ) {
+        logger.info { "Retrieveing Documents..." }
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = this.baseUrl,
+                certificate = this.certificate,
+                oinNummer = this.oinNummer,
+            )
+        val query =
+            DocumentenOverzichtQuery(
+                aangemaaktDoor = aangemaaktDoor,
+                negateAangemaaktDoor = (negateAangemaaktDoor ?: false).toString(),
+                aangemaaktDoorNaam = aangemaaktDoorNaam,
+                negateAangemaaktDoorNaam = (negateAangemaaktDoorNaam ?: false).toString(),
+                sort = sort,
+                aantal = aantal,
+                pagina = pagina,
+            )
+        val documentenOverzicht =
+            samenwerkfunctionaliteitService.getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            )
+        operatonService.saveToOperaton(execution, resultPvName, documentenOverzicht)
+        logger.info { "Successfully retrieved list of Documents." }
     }
 
     @PluginAction(

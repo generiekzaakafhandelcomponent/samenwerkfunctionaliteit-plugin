@@ -64,6 +64,7 @@ import {DashboardManagementModule} from "@valtimo/dashboard-management";
 import {DashboardModule} from "@valtimo/dashboard";
 import {DecisionModule} from "@valtimo/decision";
 import {
+  CASE_TAB_TOKEN,
   CaseDetailTabAuditComponent,
   CaseDetailTabDocumentsComponent,
   CaseDetailTabProgressComponent,
@@ -98,7 +99,14 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {environment} from "../environments/environment";
 import {registerDocumentenApiFormioUploadComponent, ZgwModule} from "@valtimo/zgw";
 
-import {SamenwerkfunctionaliteitPluginModule, samenwerkfunctionaliteitPluginSpecification,} from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
+import {
+  SamenwerkfunctionaliteitPluginModule,
+  samenwerkfunctionaliteitPluginSpecification,
+  DocumentenlijstWidgetTabComponent,
+  NotificatiesCustomTabComponent,
+  SamenwerkingWidgetTabComponent,
+  BerichtenCustomTabComponent
+} from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
 
 export function tabsFactory() {
   return new Map<string, object>([
@@ -192,8 +200,18 @@ export function tabsFactory() {
         openZaakPluginSpecification,
         samenwerkfunctionaliteitPluginSpecification,
         zakenApiPluginSpecification,
+
       ],
     },
+    {
+      provide: CASE_TAB_TOKEN,
+      useValue: {
+        'berichten-custom-tab': BerichtenCustomTabComponent,
+        'documentenlijst-widget-tab': DocumentenlijstWidgetTabComponent,
+        'notificaties-custom-tab': NotificatiesCustomTabComponent,
+        'samenwerking-widget-tab': SamenwerkingWidgetTabComponent,
+      }
+    }
   ],
   bootstrap: [AppComponent],
 })
