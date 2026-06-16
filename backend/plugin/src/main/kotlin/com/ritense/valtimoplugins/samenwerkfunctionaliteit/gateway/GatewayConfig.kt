@@ -2,12 +2,14 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
+import com.ritense.valtimo.contract.event.ApplicationFullyReadyEvent
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.event.EventListener
 import org.springframework.web.servlet.function.RequestPredicates.path
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
@@ -18,9 +20,11 @@ class GatewayConfig(
     private val gatewayProperties: GatewayProperties,
     private val permissionFilter: PermissionFilter,
     private val headerProcessingFilter: HeaderProcessingFilter,
+    private val responseFilter: ResponseFilter,
     private val pluginService: PluginService,
 ) {
     @Bean
+    @EventListener(ApplicationFullyReadyEvent::class)
     @ConditionalOnProperty(
         prefix = "valtimo.samenwerkfunctionaliteit.gateway",
         name = ["enabled"],
@@ -32,6 +36,7 @@ class GatewayConfig(
             .before(uri(getApiUrl()))
             .filter(permissionFilter)
             .filter(headerProcessingFilter)
+            .filter(responseFilter)
             .build()
 
     private fun getApiUrl(): URI {
