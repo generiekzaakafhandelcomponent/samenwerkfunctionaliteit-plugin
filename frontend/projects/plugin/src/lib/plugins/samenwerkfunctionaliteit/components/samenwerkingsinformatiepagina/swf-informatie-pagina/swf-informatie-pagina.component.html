@@ -11,15 +11,17 @@
     ></cds-loading>
   </div>
 }
-
-<section>
-  @if (!isLoading()) {
-    <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
-    <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
-    <!--  <documentenlijst></documentenlijst>-->
-  }
-  @if (hasError()) {
-    <p>{{ this.errorMessage() }}</p>
-  }
-</section>
-
+<div class="sections-container">
+  <section class="samenwerking-section">
+    @if (!isLoading()) {
+      <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
+      <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
+    }
+    @if (hasError()) {
+      <p>{{ this.errorMessage() }}</p>
+    }
+  </section>
+  <section>
+    <documentenlijst></documentenlijst>
+  </section>
+</div>

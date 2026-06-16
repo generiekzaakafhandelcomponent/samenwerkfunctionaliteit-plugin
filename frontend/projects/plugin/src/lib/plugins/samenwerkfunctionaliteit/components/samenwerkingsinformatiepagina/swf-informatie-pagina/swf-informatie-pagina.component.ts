@@ -6,6 +6,7 @@ import {Samenwerking} from "../model/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
 import {LoadingModule} from "carbon-components-angular";
 import {NgClass} from "@angular/common";
+import {DocumentenlijstComponent} from "../documentenlijst/documentenlijst.component";
 
 
 @Component({
@@ -17,6 +18,7 @@ import {NgClass} from "@angular/common";
     SamenwerkingComponent,
     LoadingModule,
     NgClass,
+    DocumentenlijstComponent,
   ],
   styleUrl: './swf-informatie-pagina.component.scss'
 })
