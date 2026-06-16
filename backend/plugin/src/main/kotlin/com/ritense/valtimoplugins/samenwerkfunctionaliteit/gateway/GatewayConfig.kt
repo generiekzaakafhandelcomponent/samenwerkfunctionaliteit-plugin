@@ -2,16 +2,14 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
-import com.ritense.valtimo.contract.event.ApplicationFullyReadyEvent
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.event.EventListener
 import org.springframework.web.servlet.function.RequestPredicates.path
 import org.springframework.web.servlet.function.RouterFunction
+import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 import java.net.URI
 
@@ -24,7 +22,6 @@ class GatewayConfig(
     private val pluginService: PluginService,
 ) {
     @Bean
-    @EventListener(ApplicationFullyReadyEvent::class)
     @ConditionalOnProperty(
         prefix = "valtimo.samenwerkfunctionaliteit.gateway",
         name = ["enabled"],
@@ -33,8 +30,10 @@ class GatewayConfig(
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
             .route(path(gatewayProperties.endpoint), http())
-            .before(uri(getApiUrl()))
-            .filter(permissionFilter)
+            .before { request ->
+                val targetUri = getApiUrl()
+                ServerRequest.from(request).uri(targetUri).build()
+            }.filter(permissionFilter)
             .filter(headerProcessingFilter)
             .filter(responseFilter)
             .build()
@@ -50,7 +49,7 @@ class GatewayConfig(
         return URI.create(urlAsString)
     }
 
-    private fun getApiUrlFromPluginService(): String? =
+    fun getApiUrlFromPluginService(): String? =
         pluginService
             .getPluginConfigurations(
                 PluginConfigurationSearchParameters(
