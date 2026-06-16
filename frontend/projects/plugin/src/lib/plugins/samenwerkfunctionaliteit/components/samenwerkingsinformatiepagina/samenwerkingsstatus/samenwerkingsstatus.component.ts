@@ -1,6 +1,7 @@
 import {Component, input} from "@angular/core";
 import {InputModule} from 'carbon-components-angular';
 import {Samenwerking} from "../model/samenwerking.model";
+import {TitleCasePipe} from "@angular/common";
 
 
 @Component({
@@ -9,7 +10,8 @@ import {Samenwerking} from "../model/samenwerking.model";
   standalone: true,
   styleUrl: './samenwerkingsstatus.component.scss',
   imports: [
-    InputModule
+    InputModule,
+    TitleCasePipe
   ]
 })
 export class SamenwerkingsStatusComponent {
