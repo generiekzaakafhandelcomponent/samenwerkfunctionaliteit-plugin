@@ -13,7 +13,20 @@
         "pluginActionDefinitionKey": "get-documentenoverzicht",
         "actionProperties": {
             "resultPvName": "documentenoverzicht",
-            "samenwerkingId": "pv:samenwerkingId"
+            "samenwerkingId": "pv:samenwerkingId",
+            "aangemaaktDoor": "pv:aangemaaktDoor",
+            "negateAangemaaktDoor": "pv:negateAangemaaktDoor",
+            "aangemaaktDoorNaam": "pv:aangemaaktDoorNaam",
+            "negateAangemaaktDoorNaam": "pv:negateAangemaaktDoorNaam",
+            "sort": "pv:sortering",
+            "aantal": "pv:aantal",
+            "pagina": "pv:pagina"
         }
+    },
+    {
+        "activityId": "Activity_start_get_documentenoverzicht",
+        "activityType": "bpmn:UserTask:create",
+        "processLinkType": "form",
+        "formDefinitionName": "start-get-documentenoverzicht"
     }
 ]
