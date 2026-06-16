@@ -132,6 +132,12 @@ Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden ge
                     "contentKey": "notificaties-custom-tab"
                 },
                 {
+                    "key": "berichtentab",
+                    "name": "Berichten",
+                    "type": "custom",
+                    "contentKey": "berichten-custom-tab"
+                },
+                {
                     "key": "samenwerkingwidget",
                     "name": "Samenwerking",
                     "type": "custom",
