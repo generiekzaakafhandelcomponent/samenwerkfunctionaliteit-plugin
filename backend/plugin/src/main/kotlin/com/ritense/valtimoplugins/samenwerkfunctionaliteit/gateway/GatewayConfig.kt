@@ -7,12 +7,10 @@ import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
-import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.method
 import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
 import java.net.URI
@@ -33,8 +31,9 @@ class GatewayConfig(
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
             .route(path(gatewayProperties.endpoint), http())
-            .before(uri(getApiUrl()))
-            .filter(permissionFilter)
+            .before { request ->
+                uri(getApiUrl()).apply(request)
+            }.filter(permissionFilter)
             .filter(headerProcessingFilter)
             .after(removeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
             .build()
