@@ -1,11 +1,11 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetNotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -38,7 +38,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         try {
             return restClient(properties = properties)
                 .get()
-                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
+                .uri("${SWF_ACTIEVERZOEK_PATH}/$actieverzoekId")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
@@ -52,7 +52,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        organisatie: String?
+        organisatie: String?,
     ): GetActieverzoekenResponse {
         try {
             return restClient(properties = properties)
@@ -63,8 +63,7 @@ class DefaultSamenwerkfunctionaliteitClient(
                         .queryParam(SAMENWERKING_ID, samenwerkingId)
                         .queryParamNotNull(name = ORGANISATIE, query = organisatie)
                         .build()
-                }
-                .retrieve()
+                }.retrieve()
                 .body<GetActieverzoekenResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
@@ -112,13 +111,11 @@ class DefaultSamenwerkfunctionaliteitClient(
                         DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
                         query.aangemaaktDoor,
                         query.negateAangemaaktDoor,
-                    )
-                    .queryParamWithNegation(
+                    ).queryParamWithNegation(
                         DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
                         query.aangemaaktDoorNaam,
                         query.negateAangemaaktDoorNaam,
-                    )
-                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
+                    ).queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
                     .queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
                     .queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
                     .build(samenwerkingId)
@@ -161,29 +158,6 @@ class DefaultSamenwerkfunctionaliteitClient(
         }
     }
 
-    private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
-        logger.warn { "Response body:  ${e.responseBodyAsString}" }
-        logger.error(e) { "Internal Server Error calling SWF-API" }
-        throw ResponseStatusException(
-            HttpStatus.INTERNAL_SERVER_ERROR,
-            "Internal Server Error calling OpenKlant",
-            e,
-        )
-    }
-
-    private fun handleResponseException(
-        e: RestClientResponseException,
-        reason: String,
-    ): Nothing {
-        logger.warn(e) { "Client error calling SWF-API" }
-        logger.warn { "Response body:  ${e.responseBodyAsString}" }
-        throw ResponseStatusException(
-            e.statusCode,
-            reason,
-            e,
-        )
-    }
-
     private fun UriBuilder.queryParamIfNotNull(
         name: DocumentenOverzichtQueryParam,
         value: Any?,
@@ -214,7 +188,10 @@ class DefaultSamenwerkfunctionaliteitClient(
         fun negated(): String = "$paramName[not]"
     }
 
-    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
+    private fun <T> UriBuilder.queryParamNotNull(
+        name: String,
+        query: T?,
+    ) = apply {
         if (query != null) {
             queryParam(name, query)
         }
@@ -248,7 +225,5 @@ class DefaultSamenwerkfunctionaliteitClient(
         private const val SAMENWERKING_ID = "samenwerkingId"
         private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
-
-
     }
 }
