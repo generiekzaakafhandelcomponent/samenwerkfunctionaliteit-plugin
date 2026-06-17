@@ -70,6 +70,8 @@ valtimo:
     samenwerkfunctionaliteit:
         gateway:
             enabled: true
+            endpoint: "/samenwerkfunctionaliteit/v5/**"
+            baseurl: ${AUTODEPLOYMENT_PLUGINCONFIG_SAMENWERKFUNCTIONALITEIT_BASE_URL}
     database: postgres
     app:
         scheme: http
