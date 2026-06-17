@@ -3,13 +3,16 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.removeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
+import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.method
+import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpHeaders
-import org.springframework.web.servlet.function.RequestPredicates.path
+import org.springframework.http.HttpMethod
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
 import java.net.URI
@@ -33,10 +36,8 @@ class GatewayConfig(
             .before(uri(getApiUrl()))
             .filter(permissionFilter)
             .filter(headerProcessingFilter)
-            .after { _, response ->
-                response.headers().remove(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN)
-                response
-            }.build()
+            .after(removeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
+            .build()
 
     private fun getApiUrl(): URI {
         val urlAsString =
