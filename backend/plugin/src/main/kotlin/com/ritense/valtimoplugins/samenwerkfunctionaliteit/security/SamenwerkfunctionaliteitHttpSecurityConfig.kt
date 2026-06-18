@@ -21,7 +21,7 @@ class SamenwerkfunctionaliteitHttpSecurityConfig(
         try {
             http.authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(gatewayProperties.endpoint)
+                    .requestMatchers("${gatewayProperties.gatewayEndpoint}/**")
                     .hasAnyAuthority(ADMIN, USER)
             }
         } catch (e: Exception) {
