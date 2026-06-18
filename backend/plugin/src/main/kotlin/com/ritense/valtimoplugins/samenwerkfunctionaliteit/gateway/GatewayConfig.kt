@@ -5,6 +5,8 @@ import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.removeResponseHeader
+import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath
+import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.setPath
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
@@ -31,10 +33,15 @@ class GatewayConfig(
     )
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
-            .route(path(gatewayProperties.endpoint), http())
+            .route(path("${gatewayProperties.gatewayEndpoint}/**"), http())
             .before { request ->
                 uri(getApiUrl()).apply(request)
-            }.filter(permissionFilter)
+            }.before(
+                rewritePath(
+                    "${gatewayProperties.gatewayEndpoint}(?<segment>/?.*)",
+                    "${gatewayProperties.apiEndpoint}\${segment}",
+                ),
+            ).filter(permissionFilter)
             .filter(headerProcessingFilter)
             .after(dedupeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
             .build()

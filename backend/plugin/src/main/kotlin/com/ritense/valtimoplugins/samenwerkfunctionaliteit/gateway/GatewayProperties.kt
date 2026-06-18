@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 @ConfigurationProperties(prefix = "valtimo.samenwerkfunctionaliteit.gateway")
 class GatewayProperties {
     var customHeaders: Map<String, String> = emptyMap()
-    var endpoint: String = "/samenwerkfunctionaliteit/v1/**"
+    var gatewayEndpoint: String = "/samenwerkfunctionaliteit/v1"
     var baseUrl: String? = null
+    var apiEndpoint: String = "/samenwerkfunctionaliteit/v5"
 }
