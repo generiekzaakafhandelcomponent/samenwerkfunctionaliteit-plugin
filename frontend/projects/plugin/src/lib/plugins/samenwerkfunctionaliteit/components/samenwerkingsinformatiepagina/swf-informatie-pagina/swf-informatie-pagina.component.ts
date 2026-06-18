@@ -52,7 +52,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
       },
       error: (error: Error) => {
         this.hasError.set(true);
-        this.errorMessage.set(error.stack);
+        this.errorMessage.set(error.message);
       }
     })
   }
