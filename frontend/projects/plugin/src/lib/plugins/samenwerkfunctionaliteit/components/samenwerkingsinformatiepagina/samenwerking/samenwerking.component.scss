@@ -1,10 +1,14 @@
+:root {
+  --border-color: #e3e3e3;
+}
+
 .samenwerking-card {
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 
-  border: 2px solid #e3e3e3;
+  border: 2px solid var(--border-color);
   border-radius: 0.25rem;
   box-sizing: border-box;
 
