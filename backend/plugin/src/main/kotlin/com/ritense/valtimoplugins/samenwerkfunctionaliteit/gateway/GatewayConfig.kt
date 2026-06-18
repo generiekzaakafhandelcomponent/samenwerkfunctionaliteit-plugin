@@ -4,9 +4,7 @@ import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
-import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.removeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath
-import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.setPath
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
@@ -36,12 +34,12 @@ class GatewayConfig(
             .route(path("${gatewayProperties.gatewayEndpoint}/**"), http())
             .before { request ->
                 uri(getApiUrl()).apply(request)
-            }.before(
+            }.before { request ->
                 rewritePath(
                     "${gatewayProperties.gatewayEndpoint}(?<segment>/?.*)",
-                    "${gatewayProperties.apiEndpoint}\${segment}",
-                ),
-            ).filter(permissionFilter)
+                    "${getApiPath()}\${segment}",
+                ).apply(request)
+            }.filter(permissionFilter)
             .filter(headerProcessingFilter)
             .after(dedupeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
             .build()
@@ -56,6 +54,12 @@ class GatewayConfig(
 
         return URI.create(urlAsString)
     }
+
+    private fun getApiPath(): String =
+        gatewayProperties.apiEndpoint ?: getApiPathFromPluginService()
+            ?: throw IllegalStateException("Missing or invalid base API Endpoint")
+
+    private fun getApiPathFromPluginService(): String? = getApiUrlFromPluginService()?.let { URI(it).path }
 
     private fun getApiUrlFromPluginService(): String? =
         pluginService

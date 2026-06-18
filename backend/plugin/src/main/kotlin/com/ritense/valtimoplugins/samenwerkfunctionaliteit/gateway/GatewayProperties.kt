@@ -9,5 +9,5 @@ class GatewayProperties {
     var customHeaders: Map<String, String> = emptyMap()
     var gatewayEndpoint: String = "/samenwerkfunctionaliteit/v1"
     var baseUrl: String? = null
-    var apiEndpoint: String = "/samenwerkfunctionaliteit/v5"
+    var apiEndpoint: String? = null
 }
