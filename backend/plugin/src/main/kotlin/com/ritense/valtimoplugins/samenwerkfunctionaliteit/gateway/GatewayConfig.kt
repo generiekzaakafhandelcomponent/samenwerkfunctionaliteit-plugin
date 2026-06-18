@@ -3,6 +3,7 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.removeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
@@ -35,7 +36,7 @@ class GatewayConfig(
                 uri(getApiUrl()).apply(request)
             }.filter(permissionFilter)
             .filter(headerProcessingFilter)
-            .after(removeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
+            .after(dedupeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
             .build()
 
     private fun getApiUrl(): URI {
