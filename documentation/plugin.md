@@ -76,7 +76,7 @@ This can be overridden in the _"application.yml"_ with the baseUrl property:
 valtimo:
   samenwerkfunctionaliteit:
     gateway:
-      apiEndpoint: "/samenwerkfunctionaliteit/v5/**"
+      apiEndpoint: "/samenwerkfunctionaliteit/v5"
 ```
 
 By default,  the baseurl of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
