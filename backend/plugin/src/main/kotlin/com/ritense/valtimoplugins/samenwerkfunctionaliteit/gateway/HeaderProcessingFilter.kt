@@ -1,5 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
+import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.HandlerFilterFunction
 import org.springframework.web.servlet.function.HandlerFunction
@@ -18,9 +19,10 @@ class HeaderProcessingFilter(
         val newRequest =
             ServerRequest
                 .from(request)
-                .removeHeader(AUTHORIZATION_HEADER_NAME)
+                .removeHeader(HttpHeaders.AUTHORIZATION)
                 .addHeaders(headersToAdd)
                 .build()
+
         return next.handle(newRequest)
     }
 
@@ -33,8 +35,4 @@ class HeaderProcessingFilter(
         headers {
             headersToAdd.forEach(it::add)
         }
-
-    companion object {
-        const val AUTHORIZATION_HEADER_NAME = "Authorization"
-    }
 }
