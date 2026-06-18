@@ -1,6 +1,6 @@
 import {inject, Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Samenwerking} from "../components/samenwerkingsinformatiepagina/model/samenwerking.model";
+import {HttpClient} from "@angular/common/http";
+import {Samenwerking} from "../components/samenwerkingsinformatiepagina/dto/samenwerking.dto";
 import {Observable} from "rxjs";
 
 
@@ -12,9 +12,6 @@ export class SamenwerkingClient {
   private readonly SAMENWERKINGEN_URL = "samenwerkfunctionaliteit/v5/samenwerkingen"
 
   getSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
-    const httpHeaders = new HttpHeaders({
-      "x-dienst": "ggd-hl"
-    })
-    return this.http.get<Samenwerking>(`/${this.SAMENWERKINGEN_URL}/${samenwerkingId}`, {headers: httpHeaders})
+    return this.http.get<Samenwerking>(`/${this.SAMENWERKINGEN_URL}/${samenwerkingId}`)
   }
 }
