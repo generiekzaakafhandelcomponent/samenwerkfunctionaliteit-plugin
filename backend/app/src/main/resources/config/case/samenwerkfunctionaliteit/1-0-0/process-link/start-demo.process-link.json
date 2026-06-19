@@ -13,8 +13,21 @@
         "pluginActionDefinitionKey": "get-documentenoverzicht",
         "actionProperties": {
             "resultPvName": "documentenoverzicht",
-            "samenwerkingId": "pv:samenwerkingId"
+            "samenwerkingId": "pv:samenwerkingId",
+            "aangemaaktDoor": "pv:aangemaaktDoor",
+            "negateAangemaaktDoor": "pv:negateAangemaaktDoor",
+            "aangemaaktDoorNaam": "pv:aangemaaktDoorNaam",
+            "negateAangemaaktDoorNaam": "pv:negateAangemaaktDoorNaam",
+            "sort": "pv:sortering",
+            "aantal": "pv:aantal",
+            "pagina": "pv:pagina"
         }
+    },
+    {
+        "activityId": "Activity_start_get_documentenoverzicht",
+        "activityType": "bpmn:UserTask:create",
+        "processLinkType": "form",
+        "formDefinitionName": "start-get-documentenoverzicht"
     },
     {
         "activityId": "Activity_00fynp6",
@@ -33,9 +46,9 @@
         "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
         "pluginActionDefinitionKey": "get-all-actieverzoeken",
         "actionProperties": {
-            "resultPvName": "actieverzoek",
+            "resultPvName": "actieverzoeken",
             "samenwerkingId": "pv:samenwerkingId",
-            "isOrganisatieDeOntvanger": "pv:isOrganisatieDeOntvanger"
+            "isOrganisationTheReceiver": "pv:isOrganisationTheReceiver"
         },
         "processLinkType": "plugin"
     }

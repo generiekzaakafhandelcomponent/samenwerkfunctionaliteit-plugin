@@ -31,6 +31,12 @@
         "contentKey": "notificaties-custom-tab"
     },
     {
+        "key": "berichtentab",
+        "name": "Berichten",
+        "type": "custom",
+        "contentKey": "berichten-custom-tab"
+    },
+    {
         "key": "samenwerkingwidget",
         "name": "Samenwerking",
         "type": "custom",

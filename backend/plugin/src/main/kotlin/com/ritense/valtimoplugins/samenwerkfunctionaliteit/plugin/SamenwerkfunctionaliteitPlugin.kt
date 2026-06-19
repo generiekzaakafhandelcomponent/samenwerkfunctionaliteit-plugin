@@ -73,7 +73,7 @@ class SamenwerkfunctionaliteitPlugin(
         execution: DelegateExecution,
         @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId: String,
-        @PluginActionProperty isOrganisatieDeOntvanger: Boolean = true,
+        @PluginActionProperty isOrganisationTheReceiver: Boolean = true,
     ) {
 
         val properties = SamenwerkfunctionaliteitProperties(
@@ -85,7 +85,7 @@ class SamenwerkfunctionaliteitPlugin(
         val actieverzoeken = this.samenwerkfunctionaliteitService.getAllActieverzoeken(
             properties = properties,
             samenwerkingId = samenwerkingId,
-            isOrganisatieDeOntvanger = isOrganisatieDeOntvanger
+            isOrganisationTheReceiver = isOrganisationTheReceiver
         )
 
         operatonService.saveToOperaton(

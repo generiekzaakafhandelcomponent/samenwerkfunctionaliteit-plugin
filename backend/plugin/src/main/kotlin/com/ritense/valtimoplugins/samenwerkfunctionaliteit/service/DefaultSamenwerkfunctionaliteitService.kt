@@ -2,8 +2,8 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -28,9 +28,9 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisatieDeOntvanger: Boolean
+        isOrganisationTheReceiver: Boolean
     ): List<Actieverzoek> {
-        val organisatie = if (isOrganisatieDeOntvanger) properties.oinNummer else null
+        val organisatie = if (isOrganisationTheReceiver) properties.oinNummer else null
         return samenwerkfunctionaliteitClient.getAllActieverzoeken(
             properties = properties,
             samenwerkingId = samenwerkingId,

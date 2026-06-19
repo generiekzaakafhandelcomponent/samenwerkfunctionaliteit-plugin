@@ -1,5 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
@@ -38,7 +39,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         try {
             return restClient(properties = properties)
                 .get()
-                .uri("${SWF_ACTIEVERZOEK_PATH}/$actieverzoekId")
+                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
@@ -52,7 +53,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        organisatie: String?,
+        organisatie: String?
     ): GetActieverzoekenResponse {
         try {
             return restClient(properties = properties)
@@ -63,7 +64,8 @@ class DefaultSamenwerkfunctionaliteitClient(
                         .queryParam(SAMENWERKING_ID, samenwerkingId)
                         .queryParamNotNull(name = ORGANISATIE, query = organisatie)
                         .build()
-                }.retrieve()
+                }
+                .retrieve()
                 .body<GetActieverzoekenResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
@@ -188,10 +190,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         fun negated(): String = "$paramName[not]"
     }
 
-    private fun <T> UriBuilder.queryParamNotNull(
-        name: String,
-        query: T?,
-    ) = apply {
+    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
         if (query != null) {
             queryParam(name, query)
         }
@@ -225,5 +224,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         private const val SAMENWERKING_ID = "samenwerkingId"
         private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
+
+
     }
 }

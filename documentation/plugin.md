@@ -146,7 +146,7 @@ stored in an **operaton process variable**, for example **"actieverzoeken"**.
 |--------------------------|------|----------|--------------------------------------------------------------------------------------------------------------------------------|
 | resultPvName             | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in.                                          |
 | samenwerkingId           | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.                                                      |
-| isOrganisatieDeOntvanger | Text | No       | If the requested actieverzoeken should be filtered for the requesting organisatie. An optional boolean which defaults to true. |
+| isOrganisationTheReceiver | Text | No       | If the requested actieverzoeken should be filtered for the requesting organisatie. An optional boolean which defaults to true. |
 
 Voorbeeld `*.processlink.json`:
 
@@ -157,9 +157,9 @@ Voorbeeld `*.processlink.json`:
   "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
   "pluginActionDefinitionKey": "get-all-actieverzoeken",
   "actionProperties": {
-    "resultPvName": "actieverzoek",
+    "resultPvName": "actieverzoeken",
     "samenwerkingId": "pv:samenwerkingId",
-    "isOrganisatieDeOntvanger": "pv:isOrganisatieDeOntvanger"
+    "isOrganisationTheReceiver": "pv:isOrganisationTheReceiver"
   },
   "processLinkType": "plugin"
 }
@@ -214,6 +214,12 @@ Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden ge
                     "contentKey": "notificaties-custom-tab"
                 },
                 {
+                    "key": "berichtentab",
+                    "name": "Berichten",
+                    "type": "custom",
+                    "contentKey": "berichten-custom-tab"
+                },
+                {
                     "key": "samenwerkingwidget",
                     "name": "Samenwerking",
                     "type": "custom",
@@ -226,3 +232,23 @@ Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden ge
 ```
 
 _Zie [toevoegen van plugins](https://docs.valtimo.nl/features/plugins/plugins/custom-plugin-definition#adding-the-plugin-module-to-the-ngmodule) en [toevoegen van case tabs](https://docs.valtimo.nl/features/case/for-developers/case-tabs) in de Valtimo docs._
+
+1. **Configure the Plugin**
+   Set the `baseUrl` property in the plugin configuration to the base URL of your API.
+
+2. **Add Actions to Operation Service Tasks**
+    - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operation service task.
+    - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operation service task.
+    - Set the **isOrganisationTheReceiver** variable to true or false, depending on whether you would like to receive all actieverzoeken based on if your organisation is the receiver. This variable defaults to true. 
+
+3. **Store the Results**
+    - The result of **GET getActieverzoek** must be stored in an operation process variable named **"actieverzoek"**.
+    - The result of **GET getAlleActieverzoeken** must be stored in an operation process variable named **"
+      actieverzoeken"**.
+
+4. **Example Process Flow**
+    - Start the process.
+    - Add an **operation service task** and select the **GET getActieverzoek** or **GET getAlleActieverzoeken** action.
+    - Map the result to the respective operation process variable (**actieverzoek** or **actieverzoeken**).
+    - Proceed with the rest of the process logic using the stored data.
+
