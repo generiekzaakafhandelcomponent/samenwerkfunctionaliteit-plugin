@@ -1,6 +1,4 @@
-:root {
-  --border-color: #e3e3e3;
-}
+@use '@carbon/styles/scss/colors' as carbon-color;
 
 .status-card {
   padding: 24px;
@@ -9,7 +7,7 @@
   gap: 16px;
   margin-bottom: 1em;
 
-  border: 2px solid var(--border-color);
+  border: 2px solid carbon-color.$gray-10;
   border-radius: 0.25rem;
   box-sizing: border-box;
 

@@ -1,6 +1,4 @@
-:root {
-  --border-color: #e3e3e3;
-}
+@use '@carbon/styles/scss/colors' as carbon-color;
 
 .samenwerking-card {
   padding: 24px;
@@ -8,7 +6,7 @@
   flex-direction: column;
   gap: 16px;
 
-  border: 2px solid var(--border-color);
+  border: 2px solid carbon-color.$gray-10;
   border-radius: 0.25rem;
   box-sizing: border-box;
 
