@@ -147,11 +147,15 @@ class DefaultSamenwerkfunctionaliteitClient(
         TODO("Not yet implemented")
     }
 
-    private fun UriBuilder.queryParamIfNotNull(
+    private fun <T> UriBuilder.queryParamIfNotNull(
         name: DocumentenOverzichtQueryParam,
-        value: Any?,
-    ) = apply {
-        value?.let { queryParam(name.paramName, it) }
+        value: T?,
+    ) = queryParamNotNull(name.paramName, value)
+
+    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
+        if (query != null) {
+            queryParam(name, query)
+        }
     }
 
     private fun UriBuilder.queryParamWithNegation(
@@ -177,11 +181,6 @@ class DefaultSamenwerkfunctionaliteitClient(
         fun negated(): String = "$paramName[not]"
     }
 
-    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
-        if (query != null) {
-            queryParam(name, query)
-        }
-    }
 
     private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
         logger.warn { "Response body:  ${e.responseBodyAsString}" }
