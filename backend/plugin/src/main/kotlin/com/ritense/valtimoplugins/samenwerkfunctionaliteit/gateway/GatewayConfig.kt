@@ -3,12 +3,15 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
+import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
+import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
+import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.function.RequestPredicates.path
+import org.springframework.http.HttpHeaders
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
 import java.net.URI
@@ -28,10 +31,17 @@ class GatewayConfig(
     )
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
-            .route(path(gatewayProperties.endpoint), http())
-            .before(uri(getApiUrl()))
-            .filter(permissionFilter)
+            .route(path("${gatewayProperties.gatewayEndpoint}/**"), http())
+            .before { request ->
+                uri(getApiUrl()).apply(request)
+            }.before { request ->
+                rewritePath(
+                    "${gatewayProperties.gatewayEndpoint}(?<segment>/?.*)",
+                    "${getApiPath()}\${segment}",
+                ).apply(request)
+            }.filter(permissionFilter)
             .filter(headerProcessingFilter)
+            .after(dedupeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
             .build()
 
     private fun getApiUrl(): URI {
@@ -44,6 +54,12 @@ class GatewayConfig(
 
         return URI.create(urlAsString)
     }
+
+    private fun getApiPath(): String =
+        gatewayProperties.apiEndpoint ?: getApiPathFromPluginService()
+            ?: throw IllegalStateException("Missing or invalid base API Endpoint")
+
+    private fun getApiPathFromPluginService(): String? = getApiUrlFromPluginService()?.let { URI(it).path }
 
     private fun getApiUrlFromPluginService(): String? =
         pluginService

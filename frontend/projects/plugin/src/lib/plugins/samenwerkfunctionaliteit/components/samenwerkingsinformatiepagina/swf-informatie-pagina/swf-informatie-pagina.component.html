@@ -1,0 +1,27 @@
+@if (isLoading()) {
+  <div
+    [ngClass]="{
+    'refresh-container': true,
+  }"
+  >
+    <cds-loading
+      [size]="'sm'"
+      [isActive]="isLoading()"
+      [overlay]="false"
+    ></cds-loading>
+  </div>
+}
+<div class="sections-container">
+  <section class="samenwerking-section">
+    @if (!isLoading()) {
+      <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
+      <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
+    }
+    @if (hasError()) {
+      <p>{{ this.errorMessage() }}</p>
+    }
+  </section>
+  <section>
+    <documentenlijst></documentenlijst>
+  </section>
+</div>
