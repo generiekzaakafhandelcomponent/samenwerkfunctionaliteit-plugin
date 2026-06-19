@@ -1,5 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
@@ -9,8 +10,13 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieRespon
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
+import org.springframework.web.client.RestClientResponseException
+import org.springframework.web.client.body
+import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriBuilder
 import java.util.UUID
 
@@ -29,11 +35,43 @@ class DefaultSamenwerkfunctionaliteitClient(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
     ): ActieverzoekResponse {
-        TODO("Not yet implemented")
+        try {
+            return restClient(properties = properties)
+                .get()
+                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
+                .retrieve()
+                .body<ActieverzoekResponse>()
+                ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
+        } catch (e: HttpServerErrorException.InternalServerError) {
+            handleInternalServerError(e)
+        } catch (e: RestClientResponseException) {
+            handleResponseException(e, "Error getting Actieverzoek.")
+        }
     }
 
-    override fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<ActieverzoekResponse> {
-        TODO("Not yet implemented")
+    override fun getAllActieverzoeken(
+        properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
+        organisatie: String?
+    ): ActieverzoekenGetResponse {
+        try {
+            return restClient(properties = properties)
+                .get()
+                .uri { uriBuilder ->
+                    uriBuilder
+                        .path(SWF_ACTIEVERZOEK_PATH)
+                        .queryParam(SAMENWERKING_ID, samenwerkingId)
+                        .queryParamNotNull(name = ORGANISATIE, query = organisatie)
+                        .build()
+                }
+                .retrieve()
+                .body<ActieverzoekenGetResponse>()
+                ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
+        } catch (e: HttpServerErrorException.InternalServerError) {
+            handleInternalServerError(e)
+        } catch (e: RestClientResponseException) {
+            handleResponseException(e, "Error getting all actieverzoeken.")
+        }
     }
 
     override fun getBericht(
@@ -109,11 +147,15 @@ class DefaultSamenwerkfunctionaliteitClient(
         TODO("Not yet implemented")
     }
 
-    private fun UriBuilder.queryParamIfNotNull(
+    private fun <T> UriBuilder.queryParamIfNotNull(
         name: DocumentenOverzichtQueryParam,
-        value: Any?,
-    ) = apply {
-        value?.let { queryParam(name.paramName, it) }
+        value: T?,
+    ) = queryParamNotNull(name.paramName, value)
+
+    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
+        if (query != null) {
+            queryParam(name, query)
+        }
     }
 
     private fun UriBuilder.queryParamWithNegation(
@@ -139,7 +181,36 @@ class DefaultSamenwerkfunctionaliteitClient(
         fun negated(): String = "$paramName[not]"
     }
 
+
+    private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        logger.error(e) { "Internal Server Error calling SWF-API" }
+        throw ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Internal Server Error calling OpenKlant",
+            e,
+        )
+    }
+
+    private fun handleResponseException(
+        e: RestClientResponseException,
+        reason: String,
+    ): Nothing {
+        logger.warn(e) { "Client error calling SWF-API" }
+        logger.warn { "Response body:  ${e.responseBodyAsString}" }
+        throw ResponseStatusException(
+            e.statusCode,
+            reason,
+            e,
+        )
+    }
+
     companion object {
+        private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken"
+        private const val SAMENWERKING_ID = "samenwerkingId"
+        private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
+
+
     }
 }

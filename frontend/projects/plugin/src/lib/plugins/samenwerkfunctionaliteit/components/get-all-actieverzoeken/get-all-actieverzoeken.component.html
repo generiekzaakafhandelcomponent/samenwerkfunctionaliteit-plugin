@@ -1,1 +1,35 @@
-<p>get-all-actieverzoeken works!</p>
+<v-form
+  (valueChange)="formValueChange($event)"
+  *ngIf="{
+    disabled: disabled$ | async,
+    prefill: prefillConfiguration$ ? (prefillConfiguration$ | async) : null,
+  } as obs"
+>
+  <v-input
+    name="resultPvName"
+    [title]="'resultPvName' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.resultPvName"
+    [disabled]="obs.disabled"
+    [required]="true"
+  ></v-input>
+
+  <v-input
+    name="samenwerkingId"
+    [title]="'samenwerkingId' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.samenwerkingId"
+    [disabled]="obs.disabled"
+    [required]="true"
+  ></v-input>
+
+  <v-input
+    name="isOrganisationTheReceiver"
+    [title]="'isOrganisationTheReceiver' | pluginTranslate: pluginId | async"
+    [tooltip]="'isOrganisationTheReceiverTooltip' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.isOrganisationTheReceiver"
+    [disabled]="obs.disabled"
+    [required]="false"
+  ></v-input>
+</v-form>

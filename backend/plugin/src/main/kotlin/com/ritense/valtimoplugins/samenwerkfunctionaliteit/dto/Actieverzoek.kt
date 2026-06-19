@@ -1,11 +1,9 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.OffsetDateTime
 import java.util.UUID
 
-data class ActieverzoekResponse(
-    @JsonProperty("_links")
+data class Actieverzoek(
     val links: Links? = null,
     val aantalBerichten: Int? = null,
     val actieverzoekId: UUID? = null,
@@ -20,8 +18,18 @@ data class ActieverzoekResponse(
     val ontvangerNaam: String? = null,
     val productId: String? = null,
     val samenwerkingId: String? = null,
-    val status: Actieverzoek.ActieverzoekStatus? = null,
+    val status: ActieverzoekStatus? = null,
     val titel: String? = null,
     val zender: String? = null,
     val zenderNaam: String? = null
-)
+){
+
+    enum class ActieverzoekStatus {
+        OPEN,
+        IN_BEHANDELING,
+        GEWEIGERD,
+        INGETROKKEN,
+        GEREEDGEMELD,
+        GEREED,
+    }
+}

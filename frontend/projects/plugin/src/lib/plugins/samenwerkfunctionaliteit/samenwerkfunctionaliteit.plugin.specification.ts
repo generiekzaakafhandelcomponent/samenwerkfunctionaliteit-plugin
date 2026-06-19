@@ -1,5 +1,7 @@
 import {PluginSpecification} from "@valtimo/plugin";
-import {SamenwerkfunctionaliteitPluginConfigurationComponent} from './components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component';
+import {
+  SamenwerkfunctionaliteitPluginConfigurationComponent
+} from './components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component';
 import {SAMENWERKFUNCTIONALITEIT_PLUGIN_LOGO_BASE64} from './assets/samenwerkfunctionaliteit-plugin-logo';
 import {GetActieverzoekComponent} from './components/get-actieverzoek/get-actieverzoek.component';
 import {GetAllActieverzoekenComponent} from './components/get-all-actieverzoeken/get-all-actieverzoeken.component';
@@ -34,7 +36,6 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
         'Een plugin voor het verwerken van gegevens binnen de Samenwerkfunctionaliteit-API binnen het Digitaal Stelsel Omgevingswet (DSO).',
       configurationTitleTooltip:
         'In dit onderdeel configureer je de Samenwerkfunctionaliteit-plugin om eenvoudig gegevens te kunnen verzenden en ophalen.',
-      samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
 
@@ -52,6 +53,20 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       variableFieldTooltip:
         'Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. \'pv:/resultaat\')',
+      samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
+
+      // Pluginacties
+
+      // Actieverzoeken
+      // Haal een specifiek actieverzoek op
+      'get-actieverzoek': "Actieverzoek ophalen",
+      actieverzoekId: 'Het actieverzoekId van dit actieverzoek',
+
+      // Haal alle actieverzoeken op
+      'get-all-actieverzoeken': "Alle actieverzoeken ophalen",
+      isOrganisationTheReceiverTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
+      isOrganisationTheReceiver: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
+      samenwerkingId: 'Het samenwerkingId van deze actieverzoek(en).',
     },
 
     en: {
@@ -78,6 +93,18 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
+
+      // Pluginacties
+      // Actieverzoeken
+      // Get a specific actieverzoek
+      'get-actieverzoek': "Request a single actieverzoek.",
+      actieverzoekId: 'The actieverzoekId of this actieverzoek.',
+
+      // Get all actieverzoeken
+      'get-all-actieverzoeken': "Request all actieverzoeken for a given samenwerkingId.",
+      isOrganisationTheReceiverTooltip: 'Filters on actieverzoek of which the current organisation is the receiver.',
+      samenwerkingId: 'The samenwerkingId of the requested actieverzoek(en).',
+      isOrganisationTheReceiver: 'If the actieverzoek should be filtered on organisation.',
     }
   },
 };
