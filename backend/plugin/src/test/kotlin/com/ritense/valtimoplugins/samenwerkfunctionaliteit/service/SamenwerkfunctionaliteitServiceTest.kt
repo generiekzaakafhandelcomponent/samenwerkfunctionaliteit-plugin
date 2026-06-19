@@ -2,7 +2,7 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.mockk.every
@@ -48,7 +48,7 @@ class SamenwerkfunctionaliteitServiceTest {
         val properties = SamenwerkfunctionaliteitProperties(URI("http://example.com"), "cert", "oin123")
         val samenwerkingId = "samenwerking123"
         val isOrganisatieDeOntvanger = true
-        val responseList = GetActieverzoekenResponse()
+        val responseList = ActieverzoekenGetResponse()
         val expectedModelList = listOf<Actieverzoek>()
 
         every { mockClient.getAllActieverzoeken(properties, samenwerkingId, properties.oinNummer) } returns responseList
@@ -69,7 +69,7 @@ class SamenwerkfunctionaliteitServiceTest {
         val properties = SamenwerkfunctionaliteitProperties(URI("http://example.com"), "cert", "oin123")
         val samenwerkingId = "samenwerking123"
         val isOrganisatieDeOntvanger = false
-        val responseList = GetActieverzoekenResponse()
+        val responseList = ActieverzoekenGetResponse()
         val expectedModelList = listOf<Actieverzoek>()
 
         every { mockClient.getAllActieverzoeken(properties, samenwerkingId, null) } returns responseList

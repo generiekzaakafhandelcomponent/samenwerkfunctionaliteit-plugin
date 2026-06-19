@@ -1,6 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.GetActieverzoekenResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
@@ -53,7 +53,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
         organisatie: String?
-    ): GetActieverzoekenResponse {
+    ): ActieverzoekenGetResponse {
         try {
             return restClient(properties = properties)
                 .get()
@@ -65,7 +65,7 @@ class DefaultSamenwerkfunctionaliteitClient(
                         .build()
                 }
                 .retrieve()
-                .body<GetActieverzoekenResponse>()
+                .body<ActieverzoekenGetResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
             handleInternalServerError(e)
