@@ -42,8 +42,3 @@ data class Notificatie(
     @get:JsonProperty("_links")@field:JsonProperty("_links")
     val links: Links? = null,
 )
-
-data class Links(
-    val self: Actieverzoek? = null,
-    val actieverzoek: Actieverzoek? = null,
-)
