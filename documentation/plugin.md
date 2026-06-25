@@ -70,15 +70,6 @@ valtimo:
         header-name-2: "header-value-2"
 ```
 
-By default,  the endpoint of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
-This can be overridden in the _"application.yml"_ with the baseUrl property:
-```yaml
-valtimo:
-  samenwerkfunctionaliteit:
-    gateway:
-      apiEndpoint: "/samenwerkfunctionaliteit/v5/**"
-```
-
 By default,  the baseurl of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
 This can be overridden in the _"application.yml"_ with the baseUrl property:
 ```yaml
