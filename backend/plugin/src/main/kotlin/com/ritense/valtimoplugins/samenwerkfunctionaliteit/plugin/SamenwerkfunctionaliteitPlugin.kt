@@ -1,12 +1,19 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ritense.plugin.annotation.Plugin
 import com.ritense.plugin.annotation.PluginAction
+import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import io.github.oshai.kotlinlogging.KotlinLogging
+import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
+import java.util.UUID
 
 @Plugin(
     key = "samenwerkfunctionaliteit",
@@ -16,6 +23,7 @@ import java.net.URI
 @Suppress("UNUSED")
 class SamenwerkfunctionaliteitPlugin(
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
+    private val operatonService: OperatonService,
 ) {
     @PluginProperty(key = "baseUrl", secret = false, required = true)
     lateinit var baseUrl: URI
@@ -32,7 +40,27 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal het actieverzoek op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getActieverzoek() {
+    fun getActieverzoek(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty actieverzoekId: UUID,
+    ) {
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
+
+        val actieverzoek = this.samenwerkfunctionaliteitService.getActieverzoek(
+            properties = properties,
+            actieverzoekId = actieverzoekId
+        )
+
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoek
+        )
     }
 
     @PluginAction(
@@ -41,7 +69,30 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal de actieverzoeken van de deelnemer op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getAllActieverzoeken() {
+    fun getAllActieverzoeken(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
+        @PluginActionProperty isOrganisationTheReceiver: Boolean = true,
+    ) {
+
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
+
+        val actieverzoeken = this.samenwerkfunctionaliteitService.getAllActieverzoeken(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            isOrganisationTheReceiver = isOrganisationTheReceiver
+        )
+
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = actieverzoeken
+        )
     }
 
     @PluginAction(
@@ -72,12 +123,48 @@ class SamenwerkfunctionaliteitPlugin(
     }
 
     @PluginAction(
-        key = "get-documenten-overzicht",
+        key = "get-documentenoverzicht",
         title = "Get documenten overzicht",
         description = "Haal een overzicht van documenten in de samenwerking op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getDocumentenOverzicht() {
+    fun getDocumentenOverzicht(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
+        @PluginActionProperty aangemaaktDoor: String?,
+        @PluginActionProperty negateAangemaaktDoor: String?,
+        @PluginActionProperty aangemaaktDoorNaam: String?,
+        @PluginActionProperty negateAangemaaktDoorNaam: String?,
+        @PluginActionProperty sort: String?,
+        @PluginActionProperty aantal: String?,
+        @PluginActionProperty pagina: String?,
+    ) {
+        logger.info { "Retrieveing Documents..." }
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = this.baseUrl,
+                certificate = this.certificate,
+                oinNummer = this.oinNummer,
+            )
+        val query =
+            DocumentenOverzichtQuery(
+                aangemaaktDoor = aangemaaktDoor,
+                negateAangemaaktDoor = (negateAangemaaktDoor ?: false).toString(),
+                aangemaaktDoorNaam = aangemaaktDoorNaam,
+                negateAangemaaktDoorNaam = (negateAangemaaktDoorNaam ?: false).toString(),
+                sort = sort,
+                aantal = aantal,
+                pagina = pagina,
+            )
+        val documentenOverzicht =
+            samenwerkfunctionaliteitService.getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            )
+        operatonService.saveToOperaton(execution, resultPvName, documentenOverzicht)
+        logger.info { "Successfully retrieved list of Documents." }
     }
 
     @PluginAction(
@@ -109,5 +196,6 @@ class SamenwerkfunctionaliteitPlugin(
 
     companion object {
         private val logger = KotlinLogging.logger { }
+        private val objectMapper = jacksonObjectMapper().findAndRegisterModules()
     }
 }

@@ -1,0 +1,30 @@
+@use '@carbon/styles/scss/themes';
+
+.refresh-container {
+  height: 3rem;
+  transition: height 0.6s cubic-bezier(.08, .82, .17, 1);
+  transition-delay: 1200ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.samenwerking-section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 50%;
+}
+
+.section {
+  width: 50%;
+}
+
+.sections-container {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}

@@ -1,8 +1,10 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
@@ -15,7 +17,11 @@ interface SamenwerkfunctionaliteitClient {
         actieverzoekId: UUID,
     ): ActieverzoekResponse
 
-    fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<ActieverzoekResponse>
+    fun getAllActieverzoeken(
+        properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
+        organisatie: String?
+    ): ActieverzoekenGetResponse
 
     fun getBericht(
         properties: SamenwerkfunctionaliteitProperties,
@@ -38,6 +44,7 @@ interface SamenwerkfunctionaliteitClient {
     fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
+        query: DocumentenOverzichtQuery,
     ): DocumentenOverzichtResponse
 
     fun downloadDocument(

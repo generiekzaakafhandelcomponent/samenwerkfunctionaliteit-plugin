@@ -2,6 +2,8 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -18,12 +20,22 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
-    ): Actieverzoek {
-        TODO("Not yet implemented")
-    }
+    ): Actieverzoek = samenwerkfunctionaliteitClient.getActieverzoek(
+        properties = properties,
+        actieverzoekId = actieverzoekId
+    ).toModel()
 
-    override fun getAllActieverzoeken(properties: SamenwerkfunctionaliteitProperties): List<Actieverzoek> {
-        TODO("Not yet implemented")
+    override fun getAllActieverzoeken(
+        properties: SamenwerkfunctionaliteitProperties,
+        samenwerkingId: String,
+        isOrganisationTheReceiver: Boolean
+    ): List<Actieverzoek> {
+        val organisatie = if (isOrganisationTheReceiver) properties.oinNummer else null
+        return samenwerkfunctionaliteitClient.getAllActieverzoeken(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            organisatie = organisatie
+        ).toModel()
     }
 
     override fun getBericht(
@@ -53,9 +65,17 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getDocumentenOverzicht(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<Document> {
-        TODO("Not yet implemented")
-    }
+        query: DocumentenOverzichtQuery,
+    ): List<Document> =
+        samenwerkfunctionaliteitClient
+            .getDocumentenOverzicht(
+                properties,
+                samenwerkingId,
+                query,
+            ).embedded
+            ?.documenten
+            ?.map { it.toModel() }
+            ?: emptyList()
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
