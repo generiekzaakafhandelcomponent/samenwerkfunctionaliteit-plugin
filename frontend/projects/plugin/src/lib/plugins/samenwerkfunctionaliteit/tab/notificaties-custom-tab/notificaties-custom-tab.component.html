@@ -1,5 +1,5 @@
-
-
-<swf-notificatie
-  [inputs]="inputs"
-></swf-notificatie>
+@for (input of this.inputs(); track input.notificatieId) {
+  <swf-notificatie
+    [inputs]="input"
+  ></swf-notificatie>
+}

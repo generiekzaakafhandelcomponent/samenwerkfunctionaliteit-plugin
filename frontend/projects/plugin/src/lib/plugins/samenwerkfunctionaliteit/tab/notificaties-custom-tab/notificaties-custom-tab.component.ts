@@ -1,6 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {NotificatieComponent} from "../../components/notificaties-lijst/notificatie/notificatie.component";
-import {NotificatieCardInput, NotificatieType} from "../../components/notificaties-lijst/interface/notificatie-card.interface";
+import {NotificatieCardInput, NotificatieCardType} from "../../components/notificaties-lijst/interface/notificatie-card.interface";
+import {NotificatieService} from "../../service/notificatie.service";
+import {take} from "rxjs";
+import {Notificatie} from "../../models/notificatie.model";
+import {getNotificationCardTypeByNotificationType} from "../../components/notificaties-lijst/config/notificatie-type-config";
 
 @Component({
   templateUrl: `notificaties-custom-tab.component.html`,
@@ -8,20 +12,54 @@ import {NotificatieCardInput, NotificatieType} from "../../components/notificati
   selector: "notificaties-custom-tab",
 })
 export class NotificatiesCustomTabComponent {
+  notificatieService: NotificatieService = inject(NotificatieService);
+  notifications: WritableSignal<Notificatie[]> = signal<Notificatie[]>([]);
+  inputs: WritableSignal<NotificatieCardInput[]> = signal<NotificatieCardInput[]>([]);
 
-  inputs: NotificatieCardInput = {
-    notificatieId: "eb53b7c5-ea64-4c49-94db-67aa7cac8e05",
-    type: NotificatieType.BERICHT,
-    colorCode: "BLUE",
-    title: "Actieverzoek ontvangen",
-    eventDateTime: new Date(),
-    initiatorNaam: "Omgevingsdienst Rommelerwaard",
-    content: "Omgevingsdienst Rommelerwaard heeft u het\n" +
-      "actieverzoek \"Adviesaanvraag bouwwerkzaamheden Berkendaal\"\n" +
-      "gestuurd",
+  ngOnInit() {
+    this.loadNotifications();
   }
 
-  ngOnInit(){
+  loadNotifications() {
+    this.notificatieService.getNotificaties()
+      .pipe(take(1))
+      .subscribe(notificaties => {
+        this.notifications.set(notificaties)
+        this.loadInputs(this.notifications());
+      })
+  }
 
+  loadInputs(notificaties: Notificatie[]) {
+    this.inputs.set(notificaties.map((notificatie) => {
+      return this.mapNotificatieToNotificatieCardInput(notificatie)
+    }))
+  }
+
+  private mapNotificatieToNotificatieCardInput(
+    notificatie: Notificatie
+  ): NotificatieCardInput {
+    const type = getNotificationCardTypeByNotificationType(notificatie.notificatieType)
+
+    const eventDateTime = new Date(notificatie.eventDatumTijd);
+
+    return {
+      notificatieId: notificatie.notificatieId,
+      type: type,
+      colorCode: this.getColorCodeForType(type),
+      title: notificatie.notificatieTitel,
+      eventDateTime: eventDateTime,
+      initiatorNaam: notificatie.eventInitiatorNaam,
+      content: notificatie.notificatieTekst,
+    };
+  }
+
+  private getColorCodeForType(type: NotificatieCardType): string {
+    const colorMap: Record<NotificatieCardType, string> = {
+      STATUS: "#1976d2",
+      DOCUMENT: "#9c27b0",
+      SYSTEEM: "#388e3c",
+      BERICHT: "#ff9800",
+    };
+    return colorMap[type];
   }
 }
