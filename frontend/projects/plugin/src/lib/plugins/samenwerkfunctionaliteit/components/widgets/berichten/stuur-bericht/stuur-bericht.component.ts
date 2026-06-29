@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { Document as ValtimoDocument, DocumentService } from "@valtimo/document";
 import { take } from "rxjs";
+import { BerichtenService } from "./../../../../service/berichten.service"
 
 type SwfContent = {
   samenwerkfunctionaliteit?: { actieverzoekId: string };
@@ -30,6 +31,7 @@ export class StuurBerichtComponent {
   constructor(
     private route: ActivatedRoute,
     private documentService: DocumentService,
+    private berichtenService: BerichtenService,
     private readonly logger: NGXLogger,
     private readonly iconService: IconService,
   ) {
@@ -50,8 +52,13 @@ export class StuurBerichtComponent {
 
   onClick() {
     if (!this.actieverzoekId) {
-      this.logger.warn("No actieverzoekID found, unable to post message.");
+      this.logger.warn("No actieverzoekId found, unable to post message.");
       return;
     }
+    if (this.message.trim().length === 0) {
+      this.logger.info("Can not post an empty message.");
+      return;
+    }
+    this.berichtenService.postBericht(this.actieverzoekId, this.message.trim())
   }
 }
