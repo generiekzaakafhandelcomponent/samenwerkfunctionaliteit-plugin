@@ -4,7 +4,6 @@ import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
-import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.rewritePath
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http
@@ -31,14 +30,9 @@ class GatewayConfig(
     )
     fun samenwerkfunctionaliteitRoute(): RouterFunction<ServerResponse> =
         route()
-            .route(path("${gatewayProperties.gatewayEndpoint}/**"), http())
+            .route(path("${SAMENWERKFUNCTIONALITEIT_PATH}/**"), http())
             .before { request ->
                 uri(getApiUrl()).apply(request)
-            }.before { request ->
-                rewritePath(
-                    "${gatewayProperties.gatewayEndpoint}(?<segment>/?.*)",
-                    "${getApiPath()}\${segment}",
-                ).apply(request)
             }.filter(permissionFilter)
             .filter(headerProcessingFilter)
             .after(dedupeResponseHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN))
@@ -55,12 +49,6 @@ class GatewayConfig(
         return URI.create(urlAsString)
     }
 
-    private fun getApiPath(): String =
-        gatewayProperties.apiEndpoint ?: getApiPathFromPluginService()
-            ?: throw IllegalStateException("Missing or invalid base API Endpoint")
-
-    private fun getApiPathFromPluginService(): String? = getApiUrlFromPluginService()?.let { URI(it).path }
-
     private fun getApiUrlFromPluginService(): String? =
         pluginService
             .getPluginConfigurations(
@@ -75,6 +63,7 @@ class GatewayConfig(
             }
 
     companion object {
+        const val SAMENWERKFUNCTIONALITEIT_PATH = "samenwerkfunctionaliteit"
         const val SAMENWERKFUNCTIONALITEIT_PLUGIN_KEY = "samenwerkfunctionaliteit"
         const val SAMENWERKFUNCTIONALITEIT_PLUGIN_BASEURL_PROPERTY_NAME = "baseUrl"
     }

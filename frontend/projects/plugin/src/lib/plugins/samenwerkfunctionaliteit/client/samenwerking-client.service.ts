@@ -9,7 +9,7 @@ import {Observable} from "rxjs";
 })
 export class SamenwerkingClient {
   private readonly http: HttpClient = inject(HttpClient);
-  private readonly SAMENWERKINGEN_URL = "samenwerkfunctionaliteit/v1/samenwerkingen"
+  private readonly SAMENWERKINGEN_URL = "samenwerkfunctionaliteit/v5/samenwerkingen"
 
   getSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
     return this.http.get<Samenwerking>(`/${this.SAMENWERKINGEN_URL}/${samenwerkingId}`)
