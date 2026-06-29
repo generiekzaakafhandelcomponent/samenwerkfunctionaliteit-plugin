@@ -1,0 +1,24 @@
+<div>
+  <!-- <cds-textarea-label class="message-label">
+    Bericht versturen:
+  </cds-textarea-label> -->
+  <textarea
+    cdsTextArea
+    class="textarea-field message-body"
+    [placeholder]="placeholder"
+    [rows]="rows"
+    [maxLength]="maxLength"
+    [(ngModel)]="message"
+  ></textarea>
+  <cds-icon-button
+    description="Bericht versturen"
+    [disabled]="!message.trim()"
+    (click)="onClick()"
+  >
+  <svg
+    cdsIcon="send"
+    size="32"
+    class="cds--btn__icon">
+  </svg>
+  </cds-icon-button>
+</div>
