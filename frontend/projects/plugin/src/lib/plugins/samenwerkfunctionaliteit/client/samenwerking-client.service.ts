@@ -1,6 +1,6 @@
 import {inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Samenwerking} from "../components/samenwerkingsinformatiepagina/dto/samenwerking.dto";
+import {Samenwerking} from "../dto/samenwerking.dto";
 import {Observable} from "rxjs";
 
 

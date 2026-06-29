@@ -1,6 +1,6 @@
 import {Component, input} from "@angular/core";
 import {InputModule} from 'carbon-components-angular';
-import {Samenwerking} from "../model/samenwerking.model";
+import {Samenwerking} from "../../../models/samenwerking.model";
 
 
 @Component({
