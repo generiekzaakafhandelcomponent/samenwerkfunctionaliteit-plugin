@@ -108,6 +108,9 @@ import {
   BerichtenCustomTabComponent
 } from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
 
+import { CUSTOM_WIDGET_TOKEN } from '@valtimo/layout';
+import { StuurBerichtComponent } from './../../projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/components/widgets/berichten/stuur-bericht/stuur-bericht.component'
+
 export function tabsFactory() {
   return new Map<string, object>([
     [DefaultTabs.summary, CaseDetailTabSummaryComponent],
@@ -211,7 +214,13 @@ export function tabsFactory() {
         'notificaties-custom-tab': NotificatiesCustomTabComponent,
         'samenwerking-widget-tab': SamenwerkingWidgetTabComponent,
       }
-    }
+    },
+    {
+        provide: CUSTOM_WIDGET_TOKEN,
+        useValue: {
+          stuurBerichtComponent: StuurBerichtComponent
+        }
+    },
   ],
   bootstrap: [AppComponent],
 })
