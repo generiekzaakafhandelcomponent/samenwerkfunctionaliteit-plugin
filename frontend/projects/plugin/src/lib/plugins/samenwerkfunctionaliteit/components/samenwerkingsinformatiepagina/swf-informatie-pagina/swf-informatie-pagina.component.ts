@@ -2,7 +2,7 @@ import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from "@an
 import {SamenwerkingsStatusComponent} from "../samenwerkingsstatus/samenwerkingsstatus.component";
 import {SamenwerkingService} from "../../../service/samenwerking.service";
 import {skipWhile, Subject, takeUntil} from "rxjs";
-import {Samenwerking} from "../model/samenwerking.model";
+import {Samenwerking} from "../../../models/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
 import {LoadingModule} from "carbon-components-angular";
 import {NgClass} from "@angular/common";
