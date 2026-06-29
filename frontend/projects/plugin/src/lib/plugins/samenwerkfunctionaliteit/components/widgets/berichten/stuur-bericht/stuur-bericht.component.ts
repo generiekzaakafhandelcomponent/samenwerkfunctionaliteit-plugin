@@ -8,7 +8,7 @@ import { Document as ValtimoDocument, DocumentService } from "@valtimo/document"
 import { take } from "rxjs";
 
 type SwfContent = {
-  samenwerkfunctionaliteit?: { actieverzoekId: string  };
+  samenwerkfunctionaliteit?: { actieverzoekId: string };
 };
 
 @Component({
@@ -37,16 +37,21 @@ export class StuurBerichtComponent {
   }
 
   ngOnInit() {
-    this._documentId = this.route.snapshot.paramMap.get('documentId') || '';
-    this.documentService.getDocument(this._documentId).pipe(take(1)).subscribe(doc => {
-      this._document = doc;
-      const documentContent = this._document.content as Partial<SwfContent>
-      this.actieverzoekId = documentContent?.samenwerkfunctionaliteit?.actieverzoekId ?? null;
-    });
+    this._documentId = this.route.snapshot.paramMap.get("documentId") || "";
+    this.documentService
+      .getDocument(this._documentId)
+      .pipe(take(1))
+      .subscribe((doc) => {
+        this._document = doc;
+        const documentContent = this._document.content as Partial<SwfContent>;
+        this.actieverzoekId = documentContent?.samenwerkfunctionaliteit?.actieverzoekId ?? null;
+      });
   }
 
   onClick() {
-    this.logger.info(this.actieverzoekId);
-    this.logger.info(this.message);
+    if (!this.actieverzoekId) {
+      this.logger.warn("No actieverzoekID found, unable to post message.");
+      return;
+    }
   }
 }
