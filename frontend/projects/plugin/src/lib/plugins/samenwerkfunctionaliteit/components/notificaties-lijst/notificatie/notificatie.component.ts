@@ -1,10 +1,11 @@
-import {NotificatieCard, NotificatieCardInput, NotificatieType} from '../interface/notificatie-card.interface'
+import {NotificatieCard, NotificatieCardInput, NotificatieCardType} from '../interface/notificatie-card.interface'
 import {Component, input} from "@angular/core";
 
 
 
 @Component({
-  templateUrl: `notificaties.component.html`,
+  templateUrl: `./notificatie.component.html`,
+  styleUrls: ['./notificatie.component.scss'],
   selector: "swf-notificatie",
 })
 export class NotificatieComponent implements NotificatieCard {
@@ -15,6 +16,10 @@ export class NotificatieComponent implements NotificatieCard {
     eventDateTime: new Date(),
     initiatorNaam: "",
     title: "",
-    type: NotificatieType.STATUS
+    type: NotificatieCardType.STATUS
   });
+
+  getTypeClass(type: NotificatieCardType): string {
+    return NotificatieCardType[type].toLowerCase();
+  }
 }

@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
 
-</body>
-</html>
+
+<div class="notificatie-card" [style.border-left-color]="inputs().colorCode">
+  <div class="notificatie-header">
+    <span class="notificatie-type" [class]="getTypeClass(inputs().type)">
+      {{ inputs().type }}
+    </span>
+    <span class="notificatie-title">{{ inputs().title }}</span>
+  </div>
+
+  <div class="notificatie-meta">
+    <span class="notificatie-date">
+      {{ inputs().eventDateTime }}
+    </span>
+    <span class="notificatie-initiator">
+      {{ inputs().initiatorNaam }}
+    </span>
+  </div>
+
+  <div class="notificatie-content">
+    {{ inputs().content }}
+  </div>
+</div>
