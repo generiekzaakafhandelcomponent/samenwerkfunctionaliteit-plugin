@@ -1,6 +1,19 @@
 :host ::ng-deep .message-label .cds--label {
   font-size: 1.5rem;
 }
+.stuur-bericht {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.stuur-bericht cds-icon-button {
+  align-self: flex-end;
+}
+textarea {
+  width: 100%;
+}
 
 textarea.message-body {
   padding: 0.5rem;
