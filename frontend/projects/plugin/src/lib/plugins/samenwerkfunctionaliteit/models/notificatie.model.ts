@@ -1,8 +1,9 @@
 import {Links} from "./links.model";
+import {NotificatieType} from "../components/notificaties-lijst/interface/notificatie-card.interface";
 
 export interface Notificatie {
   notificatieId: string,
-  notificatieType: string,
+  notificatieType: NotificatieType,
   samenwerkingId: string,
   samenwerkVorm: string,
   notificatieTitel: string,

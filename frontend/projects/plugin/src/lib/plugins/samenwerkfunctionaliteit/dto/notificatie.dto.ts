@@ -1,8 +1,18 @@
 import {Links} from "./links.dto";
+import {Page} from "./page.dto";
+import {NotificatieType} from "../components/notificaties-lijst/interface/notificatie-card.interface";
+
+export interface NotificatieResponse {
+  page: Page
+  _embedded: {
+    notificaties: Notificatie[]
+  };
+  _links: Links;
+}
 
 export interface Notificatie {
   notificatieId: string,
-  notificatieType: string,
+  notificatieType: NotificatieType,
   samenwerkingId: string,
   samenwerkVorm: string,
   notificatieTitel: string,
