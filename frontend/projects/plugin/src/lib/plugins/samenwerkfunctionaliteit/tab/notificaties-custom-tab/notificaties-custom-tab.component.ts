@@ -21,7 +21,7 @@ export class NotificatiesCustomTabComponent {
   }
 
   loadNotifications() {
-    this.notificatieService.getNotificaties()
+    this.notificatieService.getNotificaties("SAM-66497")
       .pipe(take(1))
       .subscribe(notificaties => {
         this.notifications.set(notificaties)
