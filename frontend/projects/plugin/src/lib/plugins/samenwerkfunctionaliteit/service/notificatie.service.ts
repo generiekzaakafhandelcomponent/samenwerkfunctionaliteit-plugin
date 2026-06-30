@@ -10,10 +10,15 @@ import {Notificatie} from "../models/notificatie.model"
 export class NotificatieService {
   notificatieClient = inject(NotificatieClient);
 
-  getNotificaties(): Observable<Notificatie[]> {
+  getNotificaties(samenwerkingId: string): Observable<Notificatie[]> {
     return this.notificatieClient.getNotificaties().pipe(
       map((response: NotificatieResponse) => {
         return mapNotificatieResponseToModels(response)
+      }),
+      map((notificaties: Notificatie[]) => {
+        return notificaties.filter((notificatie) => {
+          return notificatie.samenwerkingId === samenwerkingId
+        })
       })
     );
   }
