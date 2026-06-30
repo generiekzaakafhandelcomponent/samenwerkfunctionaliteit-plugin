@@ -21,7 +21,7 @@ type SwfContent = {
 export class StuurBerichtComponent {
   private _documentId: string | undefined;
   private _document: ValtimoDocument | undefined;
-  private actieverzoekId: string | null;
+  private actieverzoekId: string | null | undefined;
   placeholder = "Type hier uw bericht";
   rows = 5;
   enableCounter = true;
