@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { InputModule, ButtonModule, IconModule, IconService } from "carbon-components-angular";
 import { FormsModule } from "@angular/forms";
 import { Send32 } from "@carbon/icons";
@@ -7,6 +7,7 @@ import { NGXLogger } from "ngx-logger";
 import { Document as ValtimoDocument, DocumentService } from "@valtimo/document";
 import { take } from "rxjs";
 import { BerichtenService } from "./../../../../service/berichten.service"
+import {CustomWidget} from '@valtimo/layout';
 
 type SwfContent = {
   samenwerkfunctionaliteit?: { actieverzoekId: string };
@@ -19,6 +20,8 @@ type SwfContent = {
   styleUrl: "./stuur-bericht.component.scss",
 })
 export class StuurBerichtComponent {
+  @Input() public widgetConfiguration: CustomWidget | null = null;
+
   private _documentId: string | undefined;
   private _document: ValtimoDocument | undefined;
   private actieverzoekId: string | null | undefined;
