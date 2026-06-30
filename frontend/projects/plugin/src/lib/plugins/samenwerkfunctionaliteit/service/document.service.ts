@@ -1,4 +1,4 @@
-import {inject, Injectable, OnDestroy, signal} from "@angular/core";
+import {inject, Injectable, OnDestroy, signal, WritableSignal} from "@angular/core";
 import {BusinessKey} from "../models/business-key.model";
 import {SamenwerkingIds} from "../models/samenwerking-ids.model";
 import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
@@ -10,10 +10,10 @@ import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.
   providedIn: "root",
 })
 export class DocumentService implements OnDestroy {
-  private valtimoDocumentService = inject(ValtimoDocumentService)
-  private samenwerkingIdsCache = new Map<string, SamenwerkingIds>()
-  private isSamenwerkingIdsFetched = signal(false);
-  destroy$ = new Subject<void>();
+  private valtimoDocumentService: ValtimoDocumentService = inject(ValtimoDocumentService)
+  private samenwerkingIdsCache: Map<string, SamenwerkingIds> = new Map<string, SamenwerkingIds>()
+  private isSamenwerkingIdsFetched: WritableSignal<boolean> = signal(false);
+  destroy$: Subject<void> = new Subject<void>();
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -51,7 +51,7 @@ export class DocumentService implements OnDestroy {
     return null;
   }
 
-  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey) {
+  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): void {
     this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
       .pipe(
         takeUntil(this.destroy$),
@@ -68,7 +68,7 @@ export class DocumentService implements OnDestroy {
       )
   }
 
-  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingIds: SamenwerkingIds) {
+  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingIds: SamenwerkingIds): void {
     this.samenwerkingIdsCache.set(valtimoBusinessKey.value, samenwerkingIds);
   }
 }
