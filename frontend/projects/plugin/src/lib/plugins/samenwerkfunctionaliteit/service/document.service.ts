@@ -44,8 +44,8 @@ export class DocumentService implements OnDestroy {
     this.fetchIdsFromDocument(valtimoBusinessKey);
 
     if (this.isSamenwerkingIdsFetched()) {
+      this.isSamenwerkingIdsFetched.set(false);
       return this.samenwerkingIdsCache.get(valtimoBusinessKey.value).samenwerkingId;
-
     }
 
     return null;
