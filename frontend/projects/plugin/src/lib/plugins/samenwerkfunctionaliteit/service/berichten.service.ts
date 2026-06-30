@@ -7,7 +7,7 @@ export class BerichtenService {
   berichtenClient = inject(BerichtenClient);
 
   postBericht(actieverzoekId: string, bericht: string) {
-    let berichtBody: PostBerichtRequest = {
+    const berichtBody: PostBerichtRequest = {
       bericht: bericht
     }
     return this.berichtenClient.postBericht(actieverzoekId, berichtBody);
