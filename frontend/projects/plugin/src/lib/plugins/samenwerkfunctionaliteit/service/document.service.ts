@@ -3,7 +3,7 @@ import {BusinessKey} from "../models/business-key.model";
 import {SamenwerkingIds} from "../models/samenwerking-ids.model";
 import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
 import {RouteContext} from "../interface/route-context.interface";
-import {map, Subject, takeUntil} from "rxjs";
+import {catchError, map, Subject, takeUntil, tap, throwError} from "rxjs";
 import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.interface";
 
 @Injectable({
@@ -57,12 +57,23 @@ export class DocumentService implements OnDestroy {
         takeUntil(this.destroy$),
         map((document: ValtimoDocument) => {
           return document.content as DocumentContentWithSamenwerkingIds;
+        }),
+        tap((content) => {
+          if (!content.samenwerkingIds) {
+            throw new Error('Document content does not have samenwerkingIds.');
+          }
+        }),
+        catchError((error: Error) => {
+          return throwError(() => error);
         })
       )
       .subscribe({
           next: (content: DocumentContentWithSamenwerkingIds) => {
             this.loadIdsIntoCache(valtimoBusinessKey, content.samenwerkingIds)
             this.isSamenwerkingIdsFetched.set(true);
+          },
+          error: (error: Error) => {
+            console.error('Failed to fetch: ', error.message);
           }
         }
       )
