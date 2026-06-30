@@ -55,10 +55,6 @@ export class StuurBerichtComponent {
       this.logger.warn("No actieverzoekId found, unable to post message.");
       return;
     }
-    if (this.message.trim().length === 0) {
-      this.logger.info("Can not post an empty message.");
-      return;
-    }
-    this.berichtenService.postBericht(this.actieverzoekId, this.message.trim())
+    this.berichtenService.postBericht(this.actieverzoekId, this.message)
   }
 }

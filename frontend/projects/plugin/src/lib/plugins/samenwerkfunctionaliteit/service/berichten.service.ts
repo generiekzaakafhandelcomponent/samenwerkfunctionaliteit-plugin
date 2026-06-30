@@ -8,7 +8,7 @@ export class BerichtenService {
 
   postBericht(actieverzoekId: string, bericht: string) {
     const berichtBody: PostBerichtRequest = {
-      bericht: bericht
+      bericht: bericht.trim()
     }
     return this.berichtenClient.postBericht(actieverzoekId, berichtBody);
   }
