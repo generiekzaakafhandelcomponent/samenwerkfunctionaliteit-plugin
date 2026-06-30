@@ -1,0 +1,74 @@
+import {inject, Injectable, OnDestroy, signal} from "@angular/core";
+import {BusinessKey} from "../models/business-key.model";
+import {SamenwerkingIds} from "../models/samenwerking-ids.model";
+import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
+import {RouteContext} from "../interface/route-context.interface";
+import {map, Subject, takeUntil} from "rxjs";
+import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.interface";
+
+@Injectable({
+  providedIn: "root",
+})
+export class DocumentService implements OnDestroy {
+  private valtimoDocumentService = inject(ValtimoDocumentService)
+  private samenwerkingIdsCache = new Map<string, SamenwerkingIds>()
+  private isSamenwerkingIdsFetched = signal(false);
+  destroy$ = new Subject<void>();
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  /**
+   * Extracts a route parameter from the caller's ActivatedRoute.
+   * @param context The caller's context(this), which must have an ActivatedRoute injected.
+   * @param paramName The name of the route parameter to extract.
+   * @returns The parameter value as a string, or null if not found.
+   */
+  getParam<T extends RouteContext>(context: T, paramName: string): string | null {
+    return context.route.snapshot.paramMap.get(paramName);
+  }
+
+  /**
+   * Gets the samenwerkingId for a given documentId.
+   * If the documentId is not in the cache, returns null.
+   * @param valtimoBusinessKey The document ID to look up.
+   * @returns The samenwerkingId, or null if not found.
+   */
+  getSamenwerkingId(valtimoBusinessKey: BusinessKey): string | null {
+    const samenwerkingId = this.samenwerkingIdsCache.get(valtimoBusinessKey.value).samenwerkingId;
+    if (samenwerkingId !== null) {
+      return samenwerkingId;
+    }
+
+    this.fetchIdsFromDocument(valtimoBusinessKey);
+
+    if (this.isSamenwerkingIdsFetched()) {
+      return this.samenwerkingIdsCache.get(valtimoBusinessKey.value).samenwerkingId;
+
+    }
+
+    return null;
+  }
+
+  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey) {
+    this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
+      .pipe(
+        takeUntil(this.destroy$),
+        map((document: ValtimoDocument) => {
+          return document.content as DocumentContentWithSamenwerkingIds;
+        })
+      )
+      .subscribe({
+          next: (content: DocumentContentWithSamenwerkingIds) => {
+            this.loadIdsIntoCache(valtimoBusinessKey, content.samenwerkingIds)
+            this.isSamenwerkingIdsFetched.set(true);
+          }
+        }
+      )
+  }
+
+  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingIds: SamenwerkingIds) {
+    this.samenwerkingIdsCache.set(valtimoBusinessKey.value, samenwerkingIds);
+  }
+}
