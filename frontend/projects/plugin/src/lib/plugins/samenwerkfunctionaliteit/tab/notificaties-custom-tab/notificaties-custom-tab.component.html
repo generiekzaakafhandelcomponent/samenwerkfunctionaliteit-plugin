@@ -1,5 +1,20 @@
-@for (input of this.inputs(); track input.notificatieId) {
-  <swf-notificatie
-    [inputs]="input"
-  ></swf-notificatie>
+@if (this.isLoading()) {
+  <div
+    [ngClass]="{
+    'refresh-container': true,
+  }"
+  >
+    <cds-loading
+      [size]="'sm'"
+      [isActive]="this.isLoading()"
+      [overlay]="false"
+    ></cds-loading>
+  </div>
+}
+@if (!this.isLoading()) {
+  @for (input of this.inputs(); track input.notificatieId) {
+    <swf-notificatie
+      [inputs]="input"
+    ></swf-notificatie>
+  }
 }

@@ -5,16 +5,19 @@ import {NotificatieService} from "../../service/notificatie.service";
 import {take} from "rxjs";
 import {Notificatie} from "../../models/notificatie.model";
 import {getNotificationCardTypeByNotificationType} from "../../components/notificaties-lijst/config/notificatie-type-config";
+import {LoadingModule} from "carbon-components-angular";
+import {NgClass} from "@angular/common";
 
 @Component({
   templateUrl: `notificaties-custom-tab.component.html`,
-  imports: [NotificatieComponent],
+  imports: [NotificatieComponent, LoadingModule, NgClass],
   selector: "notificaties-custom-tab",
 })
 export class NotificatiesCustomTabComponent {
   notificatieService: NotificatieService = inject(NotificatieService);
   notifications: WritableSignal<Notificatie[]> = signal<Notificatie[]>([]);
   inputs: WritableSignal<NotificatieCardInput[]> = signal<NotificatieCardInput[]>([]);
+  isLoading: WritableSignal<boolean> = signal(true);
 
   ngOnInit() {
     this.loadNotifications();
@@ -33,6 +36,7 @@ export class NotificatiesCustomTabComponent {
     this.inputs.set(notificaties.map((notificatie) => {
       return this.mapNotificatieToNotificatieCardInput(notificatie)
     }))
+    this.isLoading.set(false);
   }
 
   private mapNotificatieToNotificatieCardInput(
