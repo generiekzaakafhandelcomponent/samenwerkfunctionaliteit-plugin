@@ -6,8 +6,6 @@ import com.ritense.plugin.service.PluginService
 import com.ritense.valtimo.contract.database.QueryDialectHelper
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.specification.GatewaySpecificationFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.boot.autoconfigure.domain.EntityScan
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
 import org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route
@@ -16,7 +14,6 @@ import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPred
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Lazy
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.http.HttpHeaders
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
