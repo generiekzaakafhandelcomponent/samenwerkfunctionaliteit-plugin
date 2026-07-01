@@ -23,9 +23,6 @@ import org.springframework.web.servlet.function.ServerResponse
 import java.net.URI
 
 @Configuration
-@EnableConfigurationProperties
-@EntityScan(basePackages = ["com.ritense.valtimoplugins.samenwerkfunctionaliteit"])
-@EnableJpaRepositories(basePackages = ["com.ritense.valtimoplugins.samenwerkfunctionaliteit"])
 class GatewayConfig(
     private val gatewayProperties: GatewayProperties,
     private val permissionFilter: PermissionFilter,
