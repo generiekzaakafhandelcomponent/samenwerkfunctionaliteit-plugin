@@ -1,9 +1,9 @@
-import {inject, Injectable, OnDestroy, signal, WritableSignal} from "@angular/core";
+import {inject, Injectable, OnDestroy} from "@angular/core";
 import {BusinessKey} from "../models/business-key.model";
 import {SamenwerkingIds} from "../models/samenwerking-ids.model";
 import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
 import {RouteContext} from "../interface/route-context.interface";
-import {catchError, map, Subject, takeUntil, tap, throwError} from "rxjs";
+import {catchError, map, Observable, of, Subject, takeUntil, tap, throwError} from "rxjs";
 import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.interface";
 
 @Injectable({
@@ -12,7 +12,6 @@ import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.
 export class SwfDocumentService implements OnDestroy {
   private valtimoDocumentService: ValtimoDocumentService = inject(ValtimoDocumentService)
   private samenwerkingIdsCache: Map<string, SamenwerkingIds> = new Map<string, SamenwerkingIds>()
-  private isSamenwerkingIdsFetched: WritableSignal<boolean> = signal(false);
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnDestroy(): void {
@@ -35,47 +34,31 @@ export class SwfDocumentService implements OnDestroy {
    * @param valtimoBusinessKey The document ID to look up.
    * @returns The samenwerkingId, or null if not found.
    */
-  getSamenwerkingId(valtimoBusinessKey: BusinessKey): string | null {
-    const samenwerkingId = this.samenwerkingIdsCache.get(valtimoBusinessKey.value).samenwerkingId;
-    if (samenwerkingId !== null) {
-      return samenwerkingId;
+  getSamenwerkingIds(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingIds> {
+    const samenwerkingIds = this.samenwerkingIdsCache.get(valtimoBusinessKey.value);
+    if (samenwerkingIds) {
+      return of(samenwerkingIds);
     }
-
-    this.fetchIdsFromDocument(valtimoBusinessKey);
-
-    if (this.isSamenwerkingIdsFetched()) {
-      this.isSamenwerkingIdsFetched.set(false);
-      return this.samenwerkingIdsCache.get(valtimoBusinessKey.value).samenwerkingId;
-    }
-
-    return null;
+    return this.fetchIdsFromDocument(valtimoBusinessKey);
   }
 
-  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): void {
-    this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
+  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingIds> {
+    return this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
       .pipe(
         takeUntil(this.destroy$),
         map((document: ValtimoDocument) => {
-          return document.content as DocumentContentWithSamenwerkingIds;
+          const documentContentWithSamenwerkingIds = document.content as DocumentContentWithSamenwerkingIds
+          return documentContentWithSamenwerkingIds.samenwerkingIds;
         }),
-        tap((content) => {
-          if (!content.samenwerkingIds) {
+        tap((samenwerkingIds) => {
+          if (!samenwerkingIds) {
             throw new Error('Document content does not have samenwerkingIds.');
           }
+          this.loadIdsIntoCache(valtimoBusinessKey, samenwerkingIds)
         }),
         catchError((error: Error) => {
           return throwError(() => error);
         })
-      )
-      .subscribe({
-          next: (content: DocumentContentWithSamenwerkingIds) => {
-            this.loadIdsIntoCache(valtimoBusinessKey, content.samenwerkingIds)
-            this.isSamenwerkingIdsFetched.set(true);
-          },
-          error: (error: Error) => {
-            console.error('Failed to fetch: ', error.message);
-          }
-        }
       )
   }
 
