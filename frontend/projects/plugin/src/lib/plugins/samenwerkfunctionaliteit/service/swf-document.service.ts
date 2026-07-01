@@ -29,8 +29,8 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   /**
-   * Gets the samenwerkingId for a given documentId.
-   * If the documentId is not in the cache, returns null.
+   * Gets the samenwerkingIds for a given documentId.
+   * If the documentId is not in the cache, it fetches from source.
    * @param valtimoBusinessKey The document ID to look up.
    * @returns The samenwerkingId, or null if not found.
    */
