@@ -9,7 +9,7 @@ import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.
 @Injectable({
   providedIn: "root",
 })
-export class DocumentService implements OnDestroy {
+export class SwfDocumentService implements OnDestroy {
   private valtimoDocumentService: ValtimoDocumentService = inject(ValtimoDocumentService)
   private samenwerkingIdsCache: Map<string, SamenwerkingIds> = new Map<string, SamenwerkingIds>()
   private isSamenwerkingIdsFetched: WritableSignal<boolean> = signal(false);
