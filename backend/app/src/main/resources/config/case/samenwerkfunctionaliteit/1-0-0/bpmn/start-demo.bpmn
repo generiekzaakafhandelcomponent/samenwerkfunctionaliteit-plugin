@@ -60,14 +60,17 @@
     <bpmn:serviceTask id="Activity_00fynp6" name="Get actieverzoek" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="actieverzoek">a10c7e62-3b2d-4889-b54d-0b6321a8b725</camunda:inputParameter>
+          <camunda:inputParameter name="actieverzoekId">a10c7e62-3b2d-4889-b54d-0b6321a8b725</camunda:inputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0kf1q5n</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0uwens5" name="Get actieverzoeken" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
-        <camunda:inputOutput />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="samenwerkingId">SAM-66497</camunda:inputParameter>
+          <camunda:inputParameter name="isOrganisationTheReceiver">true</camunda:inputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1xn3bpf</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -188,10 +191,7 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_09n22xl" name="Log API Response" camunda:expression="${valueResolverDelegateService.handleValue(execution, &#34;doc:/apiResponse&#34;, actieverzoeken)}">
       <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="samenwerkingId">SAM-66497</camunda:inputParameter>
-          <camunda:inputParameter name="isOrganisationTheReceiver">true</camunda:inputParameter>
-        </camunda:inputOutput>
+        <camunda:inputOutput />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1xn3bpf</bpmn:incoming>
       <bpmn:outgoing>Flow_1w5y4v5</bpmn:outgoing>
