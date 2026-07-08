@@ -1,5 +1,5 @@
-import {SamenwerkingIds} from "../models/samenwerking-ids.model";
+import {SamenwerkingProperties} from "../models/samenwerking-properties.model";
 
 export interface DocumentContentWithSamenwerkingIds {
-  samenwerkingIds: SamenwerkingIds
+  samenwerkingProperties: SamenwerkingProperties
 }
