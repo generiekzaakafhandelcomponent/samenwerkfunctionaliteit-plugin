@@ -1,4 +1,4 @@
-export interface SamenwerkingIds {
+export interface SamenwerkingProperties {
   samenwerkingId: string;
   actieverzoekId: string;
 }
