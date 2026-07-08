@@ -1,5 +1,4 @@
 @if (isLoading()) {
-
   <div class="notificatie-card skeleton-card">
     @for (item of itemsPerPageArray; track $index) {
       <cds-skeleton-text [maxLineWidth]="600" [minLineWidth]="100" [lines]="6"></cds-skeleton-text>
