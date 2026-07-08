@@ -1,5 +1,5 @@
 import {SamenwerkingProperties} from "../models/samenwerking-properties.model";
 
-export interface DocumentContentWithSamenwerkingIds {
+export interface SamenwerkfunctionaliteitDocument {
   samenwerkingProperties: SamenwerkingProperties
 }
