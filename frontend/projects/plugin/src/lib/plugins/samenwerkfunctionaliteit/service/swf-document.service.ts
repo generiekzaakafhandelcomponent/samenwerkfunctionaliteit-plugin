@@ -54,7 +54,7 @@ export class SwfDocumentService implements OnDestroy {
           if (!samenwerkingProperties) {
             throw new Error('Document content does not have samenwerking properties.');
           }
-          this.loadIdsIntoCache(valtimoBusinessKey, samenwerkingProperties)
+          this.loadPropsIntoCache(valtimoBusinessKey, samenwerkingProperties)
         }),
         catchError((error: Error) => {
           return throwError(() => error);
@@ -62,7 +62,7 @@ export class SwfDocumentService implements OnDestroy {
       )
   }
 
-  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingProperties: SamenwerkingProperties): void {
+  private loadPropsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingProperties: SamenwerkingProperties): void {
     this.samenwerkingIdsCache.set(valtimoBusinessKey.value, samenwerkingProperties);
   }
 }
