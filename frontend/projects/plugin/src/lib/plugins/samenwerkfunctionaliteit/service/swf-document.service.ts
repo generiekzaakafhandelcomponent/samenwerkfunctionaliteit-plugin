@@ -1,6 +1,6 @@
 import {inject, Injectable, OnDestroy} from "@angular/core";
 import {BusinessKey} from "../models/business-key.model";
-import {SamenwerkingIds} from "../models/samenwerking-ids.model";
+import {SamenwerkingProperties} from "../models/samenwerking-properties.model";
 import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
 import {RouteContext} from "../interface/route-context.interface";
 import {catchError, map, Observable, of, Subject, takeUntil, tap, throwError} from "rxjs";
@@ -11,7 +11,7 @@ import {DocumentContentWithSamenwerkingIds} from "../interface/document-content.
 })
 export class SwfDocumentService implements OnDestroy {
   private valtimoDocumentService: ValtimoDocumentService = inject(ValtimoDocumentService)
-  private samenwerkingIdsCache: Map<string, SamenwerkingIds> = new Map<string, SamenwerkingIds>()
+  private samenwerkingIdsCache: Map<string, SamenwerkingProperties> = new Map<string, SamenwerkingProperties>()
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnDestroy(): void {
@@ -34,7 +34,7 @@ export class SwfDocumentService implements OnDestroy {
    * @param valtimoBusinessKey The document ID to look up.
    * @returns The samenwerkingId, or null if not found.
    */
-  getSamenwerkingIds(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingIds> {
+  getSamenwerkingIds(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingProperties> {
     const samenwerkingIds = this.samenwerkingIdsCache.get(valtimoBusinessKey.value);
     if (samenwerkingIds) {
       return of(samenwerkingIds);
@@ -42,13 +42,13 @@ export class SwfDocumentService implements OnDestroy {
     return this.fetchIdsFromDocument(valtimoBusinessKey);
   }
 
-  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingIds> {
+  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingProperties> {
     return this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
       .pipe(
         takeUntil(this.destroy$),
         map((document: ValtimoDocument) => {
           const documentContentWithSamenwerkingIds = document.content as DocumentContentWithSamenwerkingIds
-          return documentContentWithSamenwerkingIds.samenwerkingIds;
+          return documentContentWithSamenwerkingIds.samenwerkingProperties;
         }),
         tap((samenwerkingIds) => {
           if (!samenwerkingIds) {
@@ -62,7 +62,7 @@ export class SwfDocumentService implements OnDestroy {
       )
   }
 
-  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingIds: SamenwerkingIds): void {
+  private loadIdsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingIds: SamenwerkingProperties): void {
     this.samenwerkingIdsCache.set(valtimoBusinessKey.value, samenwerkingIds);
   }
 }
