@@ -7,3 +7,9 @@
   justify-content: center;
   overflow: hidden;
 }
+
+.notificatiecard-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}

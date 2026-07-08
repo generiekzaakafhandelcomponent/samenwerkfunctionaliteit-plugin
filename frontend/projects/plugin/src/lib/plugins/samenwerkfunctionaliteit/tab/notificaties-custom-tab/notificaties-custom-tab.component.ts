@@ -5,12 +5,12 @@ import {NotificatieService} from "../../service/notificatie.service";
 import {take} from "rxjs";
 import {Notificatie} from "../../models/notificatie.model";
 import {getNotificationCardTypeByNotificationType} from "../../components/notificaties-lijst/config/notificatie-type-config";
-import {LoadingModule} from "carbon-components-angular";
-import {NgClass} from "@angular/common";
+import {LoadingModule, SkeletonModule} from "carbon-components-angular";
 
 @Component({
   templateUrl: `notificaties-custom-tab.component.html`,
-  imports: [NotificatieComponent, LoadingModule, NgClass],
+  styleUrl: './notificaties-custom-tab.component.scss',
+  imports: [NotificatieComponent, LoadingModule, SkeletonModule],
   selector: "notificaties-custom-tab",
 })
 export class NotificatiesCustomTabComponent {
@@ -18,6 +18,8 @@ export class NotificatiesCustomTabComponent {
   notifications: WritableSignal<Notificatie[]> = signal<Notificatie[]>([]);
   inputs: WritableSignal<NotificatieCardInput[]> = signal<NotificatieCardInput[]>([]);
   isLoading: WritableSignal<boolean> = signal(true);
+  itemsPerPage = 10;
+  itemsPerPageArray: number[] = Array.from({length: this.itemsPerPage});
 
   ngOnInit() {
     this.loadNotifications();

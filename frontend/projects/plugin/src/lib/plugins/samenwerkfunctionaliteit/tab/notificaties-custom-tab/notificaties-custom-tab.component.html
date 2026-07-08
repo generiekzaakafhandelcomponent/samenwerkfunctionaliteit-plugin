@@ -1,20 +1,17 @@
-@if (this.isLoading()) {
-  <div
-    [ngClass]="{
-    'refresh-container': true,
-  }"
-  >
-    <cds-loading
-      [size]="'sm'"
-      [isActive]="this.isLoading()"
-      [overlay]="false"
-    ></cds-loading>
+@if (isLoading()) {
+
+  <div class="notificatie-card skeleton-card">
+    @for (item of itemsPerPageArray; track $index) {
+      <cds-skeleton-text [maxLineWidth]="600" [minLineWidth]="100" [lines]="6"></cds-skeleton-text>
+    }
   </div>
 }
 @if (!this.isLoading()) {
-  @for (input of this.inputs(); track input.notificatieId) {
-    <swf-notificatie
-      [inputs]="input"
-    ></swf-notificatie>
-  }
+  <div class="notificatiecard-list">
+    @for (input of this.inputs(); track input.notificatieId) {
+      <swf-notificatie
+        [inputs]="input"
+      ></swf-notificatie>
+    }
+  </div>
 }
