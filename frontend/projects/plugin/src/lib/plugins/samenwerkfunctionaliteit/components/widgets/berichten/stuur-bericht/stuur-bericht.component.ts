@@ -9,12 +9,9 @@ import { finalize, take, tap } from "rxjs";
 import { BerichtenService } from "./../../../../service/berichten.service";
 import { SwfDocumentService } from "./../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
+import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
 
-type BerichtNotification = {
-  type: "success" | "error";
-  title: string;
-  message: string;
-};
+
 
 @Component({
   selector: "stuur-bericht",
