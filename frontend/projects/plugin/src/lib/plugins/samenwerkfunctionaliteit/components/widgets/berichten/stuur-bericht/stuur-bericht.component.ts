@@ -1,4 +1,4 @@
-import { Component, Input, signal } from "@angular/core";
+import { Component, inject, Input, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { InputModule, ButtonModule, IconModule, IconService, NotificationModule } from "carbon-components-angular";
 import { FormsModule } from "@angular/forms";
@@ -6,13 +6,10 @@ import { Send32 } from "@carbon/icons";
 import { ActivatedRoute } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { Document as ValtimoDocument, DocumentService } from "@valtimo/document";
-import { finalize, take } from "rxjs";
+import { finalize, take, tap } from "rxjs";
 import { BerichtenService } from "./../../../../service/berichten.service";
+import { SwfDocumentService } from "./../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
-
-type SwfContent = {
-  samenwerkfunctionaliteit?: { actieverzoekId: string };
-};
 
 type BerichtNotification = {
   type: "success" | "error";
@@ -29,8 +26,7 @@ type BerichtNotification = {
 export class StuurBerichtComponent {
   @Input() public widgetConfiguration: CustomWidget | null = null;
 
-  private documentId: string | undefined;
-  private document: ValtimoDocument | undefined;
+  private documentId: string | null;
   private actieverzoekId: string | null | undefined;
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private readonly notificationTimeoutDuration = 4500;
@@ -58,25 +54,24 @@ export class StuurBerichtComponent {
   message = "";
 
   constructor(
-    private route: ActivatedRoute,
-    private documentService: DocumentService,
+
     private berichtenService: BerichtenService,
+    private swfService: SwfDocumentService,
     private readonly logger: NGXLogger,
     private readonly iconService: IconService,
   ) {
     this.iconService.registerAll([Send32]);
   }
 
+  route =  inject(ActivatedRoute)
+
   ngOnInit() {
-    this.documentId = this.route.snapshot.paramMap.get("documentId") || "";
-    this.documentService
-      .getDocument(this.documentId)
-      .pipe(take(1))
-      .subscribe((doc) => {
-        this.document = doc;
-        const documentContent = this.document.content as Partial<SwfContent>;
-        this.actieverzoekId = documentContent?.samenwerkfunctionaliteit?.actieverzoekId ?? null;
-      });
+    this.documentId = this.swfService.getParam(this, "documentId")
+    this.swfService.getSamenwerkingProperties({ value: this.documentId! })
+      .pipe(take(1), tap((props) => {
+        this.actieverzoekId = props.actieverzoekId
+      }))
+      .subscribe()
   }
 
   onClick() {
