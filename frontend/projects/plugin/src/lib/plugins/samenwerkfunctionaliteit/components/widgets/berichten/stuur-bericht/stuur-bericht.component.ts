@@ -6,8 +6,8 @@ import { Send32 } from "@carbon/icons";
 import { ActivatedRoute } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
 import { finalize, take, tap } from "rxjs";
-import { BerichtenService } from "./../../../../service/berichten.service";
-import { SwfDocumentService } from "./../../../../service/swf-document.service";
+import { BerichtenService } from "../../../../service/berichten.service";
+import { SwfDocumentService } from "../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
 import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
 
