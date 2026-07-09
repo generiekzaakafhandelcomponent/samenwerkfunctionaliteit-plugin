@@ -18,14 +18,17 @@
     class="cds--btn__icon">
   </svg>
   </cds-icon-button>
-  <cds-notification
-    *ngIf="notification() as activeNotification"
-    [notificationObj]="{
-      type: activeNotification.type,
-      title: activeNotification.title,
-      message: activeNotification.message,
-      showClose: true
-    }"
-    (close)="notification.set(null)"
-  ></cds-notification>
+
+  @if(notification()) {
+    <cds-notification
+      *ngIf="notification() as activeNotification"
+      [notificationObj]="{
+        type: activeNotification.type,
+        title: activeNotification.title,
+        message: activeNotification.message,
+        showClose: true
+      }"
+      (close)="notification.set(null)"
+    ></cds-notification>
+  }
 </div>
