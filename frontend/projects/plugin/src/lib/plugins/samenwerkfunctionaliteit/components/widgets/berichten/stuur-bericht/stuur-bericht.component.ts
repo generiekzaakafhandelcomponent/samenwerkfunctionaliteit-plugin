@@ -5,7 +5,6 @@ import { FormsModule } from "@angular/forms";
 import { Send32 } from "@carbon/icons";
 import { ActivatedRoute } from "@angular/router";
 import { NGXLogger } from "ngx-logger";
-import { Document as ValtimoDocument, DocumentService } from "@valtimo/document";
 import { finalize, take, tap } from "rxjs";
 import { BerichtenService } from "./../../../../service/berichten.service";
 import { SwfDocumentService } from "./../../../../service/swf-document.service";
