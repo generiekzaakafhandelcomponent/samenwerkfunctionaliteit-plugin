@@ -10,7 +10,7 @@ import { BerichtenService } from "../../../../service/berichten.service";
 import { SwfDocumentService } from "../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
 import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
-import { BusinessKey } from "../../../../models/business-key.model"
+import { BusinessKey } from "../../../../models/business-key.model";
 
 @Component({
   selector: "stuur-bericht",
@@ -56,8 +56,8 @@ export class StuurBerichtComponent {
 
   ngOnInit() {
     this.iconService.registerAll([Send32]);
-    this.documentId = this.swfService.getParam(this, "documentId")
-    this.retrieveActieverzoekId()
+    this.documentId = this.swfService.getParam(this, "documentId");
+    this.retrieveActieverzoekId();
   }
 
   onClick() {
@@ -90,12 +90,16 @@ export class StuurBerichtComponent {
   }
 
   private retrieveActieverzoekId() {
-    const valtimoBusinessKey: BusinessKey = {value: this.documentId!}
-    this.swfService.getSamenwerkingProperties(valtimoBusinessKey)
-      .pipe(take(1), tap((props) => {
-        this.actieverzoekId = props.actieverzoekId
-      }))
-      .subscribe()
+    const valtimoBusinessKey: BusinessKey = { value: this.documentId! };
+    this.swfService
+      .getSamenwerkingProperties(valtimoBusinessKey)
+      .pipe(
+        take(1),
+        tap((props) => {
+          this.actieverzoekId = props.actieverzoekId;
+        }),
+      )
+      .subscribe();
   }
 
   private showNotification(notification: BerichtNotification, autoClose: boolean) {
