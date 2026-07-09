@@ -11,7 +11,7 @@ import {SamenwerkfunctionaliteitDocument} from "../interface/document-content.in
 })
 export class SwfDocumentService implements OnDestroy {
   private valtimoDocumentService: ValtimoDocumentService = inject(ValtimoDocumentService)
-  private samenwerkingIdsCache: Map<string, SamenwerkingProperties> = new Map<string, SamenwerkingProperties>()
+  private samenwerkingPropsCache: Map<string, SamenwerkingProperties> = new Map<string, SamenwerkingProperties>()
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnDestroy(): void {
@@ -35,14 +35,14 @@ export class SwfDocumentService implements OnDestroy {
    * @returns The samenwerkingId, or null if not found.
    */
   getSamenwerkingProperties(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingProperties> {
-    const samenwerkingProperties = this.samenwerkingIdsCache.get(valtimoBusinessKey.value);
+    const samenwerkingProperties = this.samenwerkingPropsCache.get(valtimoBusinessKey.value);
     if (samenwerkingProperties) {
       return of(samenwerkingProperties);
     }
-    return this.fetchIdsFromDocument(valtimoBusinessKey);
+    return this.fetchPropsFromDocument(valtimoBusinessKey);
   }
 
-  private fetchIdsFromDocument(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingProperties> {
+  private fetchPropsFromDocument(valtimoBusinessKey: BusinessKey): Observable<SamenwerkingProperties> {
     return this.valtimoDocumentService.getDocument(valtimoBusinessKey.value)
       .pipe(
         takeUntil(this.destroy$),
@@ -63,6 +63,6 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   private loadPropsIntoCache(valtimoBusinessKey: BusinessKey, samenwerkingProperties: SamenwerkingProperties): void {
-    this.samenwerkingIdsCache.set(valtimoBusinessKey.value, samenwerkingProperties);
+    this.samenwerkingPropsCache.set(valtimoBusinessKey.value, samenwerkingProperties);
   }
 }
