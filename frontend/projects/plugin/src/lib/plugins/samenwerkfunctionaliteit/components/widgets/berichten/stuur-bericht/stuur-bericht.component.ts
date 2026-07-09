@@ -52,25 +52,16 @@ export class StuurBerichtComponent {
   maxLength = 512;
   message = "";
 
-  constructor(
-
-    private berichtenService: BerichtenService,
-    private swfService: SwfDocumentService,
-    private readonly logger: NGXLogger,
-    private readonly iconService: IconService,
-  ) {
-    this.iconService.registerAll([Send32]);
-  }
-
-  route =  inject(ActivatedRoute)
+  route = inject(ActivatedRoute);
+  private berichtenService = inject(BerichtenService);
+  private swfService = inject(SwfDocumentService);
+  private readonly logger = inject(NGXLogger);
+  private readonly iconService = inject(IconService);
 
   ngOnInit() {
+    this.iconService.registerAll([Send32]);
     this.documentId = this.swfService.getParam(this, "documentId")
-    this.swfService.getSamenwerkingProperties({ value: this.documentId! })
-      .pipe(take(1), tap((props) => {
-        this.actieverzoekId = props.actieverzoekId
-      }))
-      .subscribe()
+    this.retrieveActieverzoekId()
   }
 
   onClick() {
@@ -100,6 +91,14 @@ export class StuurBerichtComponent {
           this.showNotification(this.errorNotification, false);
         },
       });
+  }
+
+  private retrieveActieverzoekId() {
+    this.swfService.getSamenwerkingProperties({ value: this.documentId! })
+      .pipe(take(1), tap((props) => {
+        this.actieverzoekId = props.actieverzoekId
+      }))
+      .subscribe()
   }
 
   private showNotification(notification: BerichtNotification, autoClose: boolean) {
