@@ -24,7 +24,7 @@ export class StuurBerichtComponent {
   private documentId: string | null;
   private actieverzoekId: string | null | undefined;
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
-  private readonly notificationTimeoutDuration = 4500;
+  private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
 
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
@@ -102,7 +102,7 @@ export class StuurBerichtComponent {
       .subscribe();
   }
 
-  private showNotification(notification: BerichtNotification, autoClose: boolean) {
+  private showNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
     if (this.notificationTimeoutId) {
       clearTimeout(this.notificationTimeoutId);
       this.notificationTimeoutId = null;
@@ -110,11 +110,11 @@ export class StuurBerichtComponent {
 
     this.notification.set(notification);
 
-    if (autoClose) {
+    if (shouldCloseAutomatically) {
       this.notificationTimeoutId = setTimeout(() => {
         this.notification.set(null);
         this.notificationTimeoutId = null;
-      }, this.notificationTimeoutDuration);
+      }, this.NOTIFICATION_TIMEOUT_DURATION);
     }
   }
 }
