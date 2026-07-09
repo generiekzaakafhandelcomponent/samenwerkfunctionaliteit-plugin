@@ -10,8 +10,7 @@ import { BerichtenService } from "../../../../service/berichten.service";
 import { SwfDocumentService } from "../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
 import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
-
-
+import { BusinessKey } from "../../../../models/business-key.model"
 
 @Component({
   selector: "stuur-bericht",
@@ -91,7 +90,8 @@ export class StuurBerichtComponent {
   }
 
   private retrieveActieverzoekId() {
-    this.swfService.getSamenwerkingProperties({ value: this.documentId! })
+    const valtimoBusinessKey: BusinessKey = {value: this.documentId!}
+    this.swfService.getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(take(1), tap((props) => {
         this.actieverzoekId = props.actieverzoekId
       }))
