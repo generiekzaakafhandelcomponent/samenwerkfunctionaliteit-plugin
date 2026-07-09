@@ -17,6 +17,17 @@
                 "array"
             ],
             "properties": {}
+        },
+        "samenwerkingIds": {
+            "type": "object",
+            "properties": {
+                "actieverzoekId": {
+                    "type": "string"
+                },
+                "samenwerkingId": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

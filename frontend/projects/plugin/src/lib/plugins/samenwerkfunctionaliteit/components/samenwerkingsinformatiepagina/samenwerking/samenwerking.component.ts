@@ -1,6 +1,7 @@
 import {Component, input} from "@angular/core";
 import {InputModule} from 'carbon-components-angular';
 import {Samenwerking} from "../../../models/samenwerking.model";
+import {DatePipe} from "@angular/common";
 
 
 @Component({
@@ -10,6 +11,7 @@ import {Samenwerking} from "../../../models/samenwerking.model";
   styleUrl: './samenwerking.component.scss',
   imports: [
     InputModule,
+    DatePipe
   ]
 })
 export class SamenwerkingComponent {
