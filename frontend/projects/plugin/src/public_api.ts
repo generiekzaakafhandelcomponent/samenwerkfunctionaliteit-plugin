@@ -26,3 +26,4 @@ export * from "./lib/plugins/samenwerkfunctionaliteit/tab/berichten-custom-tab/b
 export * from "./lib/plugins/samenwerkfunctionaliteit/tab/documentenlijst-widget-tab/documentenlijst-widget-tab.component";
 export * from "./lib/plugins/samenwerkfunctionaliteit/tab/notificaties-custom-tab/notificaties-custom-tab.component";
 export * from "./lib/plugins/samenwerkfunctionaliteit/tab/samenwerking-widget-tab/samenwerking-widget-tab.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/components/widgets/berichten/stuur-bericht/stuur-bericht.component";
