@@ -11,6 +11,22 @@
 .stuur-bericht cds-icon-button {
   align-self: flex-end;
 }
+
+:host ::ng-deep .stuur-bericht cds-icon-button .cds--btn--icon-only {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+:host ::ng-deep .stuur-bericht cds-icon-button .cds--btn__icon {
+  position: static;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+}
+
 textarea {
   width: 100%;
 }
