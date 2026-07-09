@@ -32,15 +32,16 @@ export class StuurBerichtComponent {
   private documentId: string | undefined;
   private document: ValtimoDocument | undefined;
   private actieverzoekId: string | null | undefined;
+  private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private readonly notificationTimeoutDuration = 4500;
 
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
 
-  succesNotification: BerichtNotification = {
+  successNotification: BerichtNotification = {
     type: "success",
     title: "Verzonden:",
-    message:
-      "Het bericht is succesvol verzonden.",
+    message: "Het bericht is succesvol verzonden.",
   };
 
   errorNotification: BerichtNotification = {
@@ -81,9 +82,9 @@ export class StuurBerichtComponent {
   onClick() {
     this.notification.set(null);
 
-    if (!this.actieverzoekId) {
+    if (!this.actieverzoekId?.trim()) {
       this.logger.warn("Unable to post message: No actieverzoekId available.");
-      this.notification.set(this.succesNotification);
+      this.showNotification(this.errorNotification, false);
       return;
     }
     this.isSubmitting.set(true);
@@ -96,9 +97,30 @@ export class StuurBerichtComponent {
         }),
       )
       .subscribe({
-        error: () => {
-          this.notification.set(this.errorNotification);
+        next: () => {
+          this.showNotification(this.successNotification, true);
+          this.message = "";
+        },
+        error: (response) => {
+          this.logger.debug(response);
+          this.showNotification(this.errorNotification, false);
         },
       });
+  }
+
+  private showNotification(notification: BerichtNotification, autoClose: boolean) {
+    if (this.notificationTimeoutId) {
+      clearTimeout(this.notificationTimeoutId);
+      this.notificationTimeoutId = null;
+    }
+
+    this.notification.set(notification);
+
+    if (autoClose) {
+      this.notificationTimeoutId = setTimeout(() => {
+        this.notification.set(null);
+        this.notificationTimeoutId = null;
+      }, this.notificationTimeoutDuration);
+    }
   }
 }
