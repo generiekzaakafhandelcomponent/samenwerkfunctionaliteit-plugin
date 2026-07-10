@@ -1,7 +1,10 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
+import com.ritense.authorization.specification.AuthorizationSpecificationFactory
 import com.ritense.plugin.service.PluginConfigurationSearchParameters
 import com.ritense.plugin.service.PluginService
+import com.ritense.valtimo.contract.database.QueryDialectHelper
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.specification.GatewaySpecificationFactory
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.cloud.gateway.server.mvc.filter.AfterFilterFunctions.dedupeResponseHeader
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions.uri
@@ -10,6 +13,7 @@ import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.htt
 import org.springframework.cloud.gateway.server.mvc.predicate.GatewayRequestPredicates.path
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Lazy
 import org.springframework.http.HttpHeaders
 import org.springframework.web.servlet.function.RouterFunction
 import org.springframework.web.servlet.function.ServerResponse
@@ -20,6 +24,7 @@ class GatewayConfig(
     private val gatewayProperties: GatewayProperties,
     private val permissionFilter: PermissionFilter,
     private val headerProcessingFilter: HeaderProcessingFilter,
+    @Lazy
     private val pluginService: PluginService,
 ) {
     @Bean
@@ -48,6 +53,14 @@ class GatewayConfig(
 
         return URI.create(urlAsString)
     }
+
+    @Bean
+    fun gatewaySpecificationFactory(
+        queryDialectHelper: QueryDialectHelper,
+    ): AuthorizationSpecificationFactory<GatewayProperties> =
+        GatewaySpecificationFactory(
+            queryDialectHelper,
+        )
 
     private fun getApiUrlFromPluginService(): String? =
         pluginService
