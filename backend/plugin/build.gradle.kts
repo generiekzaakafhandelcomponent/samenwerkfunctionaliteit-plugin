@@ -32,10 +32,12 @@ dependencies {
     compileOnly("com.ritense.valtimo:plugin-valtimo")
     compileOnly("com.ritense.valtimo:process-document")
     compileOnly("com.ritense.valtimo:contract")
+    compileOnly("com.ritense.valtimo:authorization")
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-security")
+    compileOnly("org.springframework.boot:spring-boot-starter-data-jpa")
 
     implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webmvc")
 
