@@ -11,8 +11,9 @@ import { SwfDocumentService } from "../../../../service/swf-document.service";
 import { CustomWidget } from "@valtimo/layout";
 import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
 import { BusinessKey } from "../../../../models/business-key.model";
+import { SamenwerkingProperties } from "../../../../models/samenwerking-properties.model";
 
-type DocumentPropertiesState =  "available" | "unavailable";
+type DocumentPropertiesState = "available" | "unavailable";
 
 @Component({
   selector: "stuur-bericht",
@@ -28,9 +29,9 @@ export class StuurBerichtComponent {
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
 
-  documentPropertiesState = signal<DocumentPropertiesState>("unavailable");
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
+  isMissingActieverzoekId = signal<boolean>(false);
 
   successNotification: BerichtNotification = {
     type: "success",
@@ -95,18 +96,23 @@ export class StuurBerichtComponent {
   private retrieveActieverzoekId() {
     const valtimoBusinessKey: BusinessKey = { value: this.documentId! };
     this.swfService
-       .getSamenwerkingProperties(valtimoBusinessKey)
-       .pipe(take(1))
-       .subscribe({
-         next: (props) => {
-           this.actieverzoekId = props.actieverzoekId;
-           this.documentPropertiesState.set("available");
-         },
-         error: (error) => {
-           this.logger.error("Unable to retrieve samenwerking properties", error);
-           this.documentPropertiesState.set("unavailable");
-         },
-       });
+      .getSamenwerkingProperties(valtimoBusinessKey)
+      .pipe(
+        take(1),
+        tap((props: SamenwerkingProperties) => {
+          if (props.actieverzoekId) {
+            this.actieverzoekId = props.actieverzoekId;
+          } else {
+            throw new Error("Document content does not have samenwerking properties.");
+          }
+        }),
+      )
+      .subscribe({
+        error: (error) => {
+          this.logger.error("Unable to retrieve samenwerking properties", error);
+          this.isMissingActieverzoekId.set(true);
+        },
+      });
   }
 
   private assignNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
