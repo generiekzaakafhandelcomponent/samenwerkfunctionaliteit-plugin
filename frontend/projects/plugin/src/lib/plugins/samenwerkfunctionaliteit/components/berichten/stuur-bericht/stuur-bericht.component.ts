@@ -20,7 +20,6 @@ import { SamenwerkingProperties } from "../../../models/samenwerking-properties.
 })
 export class StuurBerichtComponent {
 
-  private documentId: string | null = null;
   private actieverzoekId: string | null | undefined;
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
@@ -56,8 +55,8 @@ export class StuurBerichtComponent {
 
   ngOnInit() {
     this.iconService.registerAll([Send32]);
-    this.documentId = this.swfService.getParam(this.route, "documentId");
-    this.retrieveActieverzoekId();
+    const documentId = this.swfService.getParam(this.route, "documentId");
+    this.retrieveActieverzoekId(documentId);
   }
 
   onClick() {
@@ -89,8 +88,8 @@ export class StuurBerichtComponent {
       });
   }
 
-  private retrieveActieverzoekId() {
-    const valtimoBusinessKey: BusinessKey = { value: this.documentId! };
+  private retrieveActieverzoekId(documentId: string) {
+    const valtimoBusinessKey: BusinessKey = { value: documentId };
     this.swfService
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(
