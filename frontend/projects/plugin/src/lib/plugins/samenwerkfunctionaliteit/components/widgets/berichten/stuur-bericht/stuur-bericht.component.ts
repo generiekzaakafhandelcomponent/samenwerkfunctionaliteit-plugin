@@ -65,7 +65,7 @@ export class StuurBerichtComponent {
 
     if (!this.actieverzoekId?.trim()) {
       this.logger.warn("Unable to post message: No actieverzoekId available.");
-      this.showNotification(this.errorNotification, false);
+      this.assignNotification(this.errorNotification, false);
       return;
     }
     this.isSubmitting.set(true);
@@ -79,12 +79,12 @@ export class StuurBerichtComponent {
       )
       .subscribe({
         next: () => {
-          this.showNotification(this.successNotification, true);
+          this.assignNotification(this.successNotification, true);
           this.message = "";
         },
         error: (response) => {
           this.logger.debug(response);
-          this.showNotification(this.errorNotification, false);
+          this.assignNotification(this.errorNotification, false);
         },
       });
   }
@@ -102,7 +102,7 @@ export class StuurBerichtComponent {
       .subscribe();
   }
 
-  private showNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
+  private assignNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
     if (this.notificationTimeoutId) {
       clearTimeout(this.notificationTimeoutId);
       this.notificationTimeoutId = null;
