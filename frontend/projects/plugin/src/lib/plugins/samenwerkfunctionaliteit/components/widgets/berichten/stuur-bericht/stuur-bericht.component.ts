@@ -13,8 +13,6 @@ import { BerichtNotification } from "../../../../interface/bericht-notification.
 import { BusinessKey } from "../../../../models/business-key.model";
 import { SamenwerkingProperties } from "../../../../models/samenwerking-properties.model";
 
-type DocumentPropertiesState = "available" | "unavailable";
-
 @Component({
   selector: "stuur-bericht",
   imports: [InputModule, ButtonModule, IconModule, FormsModule, NotificationModule, CommonModule],
@@ -60,7 +58,7 @@ export class StuurBerichtComponent {
 
   ngOnInit() {
     this.iconService.registerAll([Send32]);
-    this.documentId = this.swfService.getParam(this, "documentId");
+    this.documentId = this.swfService.getParam(this.route, "documentId");
     this.retrieveActieverzoekId();
   }
 
