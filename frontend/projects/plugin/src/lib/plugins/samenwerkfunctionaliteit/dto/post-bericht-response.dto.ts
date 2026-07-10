@@ -1,6 +1,6 @@
 import {Links} from "./links.dto";
 
-export interface PostBerichtResponse {
+export interface PostBerichtResponseDto {
   _links?: Links;
   actieverzoekId: string;
   berichtId: string;
