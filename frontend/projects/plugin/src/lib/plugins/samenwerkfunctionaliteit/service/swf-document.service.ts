@@ -2,9 +2,9 @@ import {inject, Injectable, OnDestroy} from "@angular/core";
 import {BusinessKey} from "../models/business-key.model";
 import {SamenwerkingProperties} from "../models/samenwerking-properties.model";
 import {Document as ValtimoDocument, DocumentService as ValtimoDocumentService} from "@valtimo/document";
-import {RouteContext} from "../interface/route-context.interface";
 import {catchError, map, Observable, of, Subject, takeUntil, tap, throwError} from "rxjs";
 import {SamenwerkfunctionaliteitDocument} from "../interface/document-content.interface";
+import {ActivatedRoute} from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -20,12 +20,12 @@ export class SwfDocumentService implements OnDestroy {
 
   /**
    * Extracts a route parameter from the caller's ActivatedRoute.
-   * @param context The caller's context(this), which must have an ActivatedRoute injected.
+   * @param route The caller's ActivatedRoute, which the caller must have injected.
    * @param paramName The name of the route parameter to extract.
    * @returns The parameter value as a string, or null if not found.
    */
-  getParam<T extends RouteContext>(context: T, paramName: string): string | null {
-    return context.route.snapshot.paramMap.get(paramName);
+  getParam(route: ActivatedRoute, paramName: string): string | null {
+    return route.snapshot.paramMap.get(paramName);
   }
 
   /**

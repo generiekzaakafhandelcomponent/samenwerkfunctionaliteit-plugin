@@ -40,7 +40,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
-    const documentId = this.swfDocumentService.getParam(this, 'documentId');
+    const documentId = this.swfDocumentService.getParam(this.route, 'documentId');
     this.fetchAndLoadSamenwerking(documentId);
     this.destroyRef.onDestroy(() => this.destroy$.next());
   }
