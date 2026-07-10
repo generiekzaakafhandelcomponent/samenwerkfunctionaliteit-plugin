@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StuurBerichtComponent } from "../../components/widgets/berichten/stuur-bericht/stuur-bericht.component";
+import { StuurBerichtComponent } from "../../components/berichten/stuur-bericht/stuur-bericht.component";
 
 @Component({
   selector: 'berichten-custom-tab',

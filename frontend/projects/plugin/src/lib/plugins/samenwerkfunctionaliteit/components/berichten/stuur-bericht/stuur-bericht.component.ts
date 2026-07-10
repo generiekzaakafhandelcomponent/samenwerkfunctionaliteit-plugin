@@ -42,8 +42,7 @@ export class StuurBerichtComponent {
   };
 
   placeholder = "Type hier uw bericht";
-  rows = 10;
-  enableCounter = true;
+  rows = 5;
   maxLength = 512;
   message = "";
 
@@ -56,7 +55,7 @@ export class StuurBerichtComponent {
   ngOnInit() {
     this.iconService.registerAll([Send32]);
     const documentId = this.swfService.getParam(this.route, "documentId");
-    this.retrieveActieverzoekId(documentId);
+    this.retrieveActieverzoekId(documentId!);
   }
 
   onClick() {
