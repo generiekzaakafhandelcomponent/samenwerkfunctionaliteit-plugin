@@ -1,34 +1,49 @@
-<div class="stuur-bericht">
-  <textarea
-    cdsTextArea
-    class="textarea-field message-body"
-    [placeholder]="placeholder"
-    [rows]="rows"
-    [maxLength]="maxLength"
-    [(ngModel)]="message"
-  ></textarea>
-  <cds-icon-button
-    description="Bericht versturen"
-    [disabled]="isSubmitting() || !message.trim()"
-    (click)="onClick()"
-  >
-  <svg
-    cdsIcon="send"
-    size="32"
-    class="cds--btn__icon">
-  </svg>
-  </cds-icon-button>
-
-  @if(notification()) {
+@switch (documentPropertiesState()) {
+  @case ("unavailable") {
     <cds-notification
-      *ngIf="notification() as activeNotification"
-      [notificationObj]="{
-        type: activeNotification.type,
-        title: activeNotification.title,
-        message: activeNotification.message,
-        showClose: true
-      }"
-      (close)="notification.set(null)"
-    ></cds-notification>
+         [notificationObj]="{
+           type: 'info',
+           title: 'Er kan geen bericht verstuurd worden',
+           message: 'De benodigde samenwerkinggegevens zijn niet beschikbaar.',
+           showClose: false
+         }"
+       ></cds-notification>
   }
-</div>
+  @case ("available") {
+    <div class="stuur-bericht">
+      <textarea
+        cdsTextArea
+        class="textarea-field message-body"
+        [placeholder]="placeholder"
+        [rows]="rows"
+        [maxLength]="maxLength"
+        [(ngModel)]="message"
+      ></textarea>
+
+      <cds-icon-button
+        description="Bericht versturen"
+        [disabled]="isSubmitting() || !message.trim()"
+        (click)="onClick()"
+      >
+        <svg
+          cdsIcon="send"
+          size="32"
+          class="cds--btn__icon">
+        </svg>
+      </cds-icon-button>
+
+      @if (notification()) {
+        <cds-notification
+          *ngIf="notification() as activeNotification"
+          [notificationObj]="{
+            type: activeNotification.type,
+            title: activeNotification.title,
+            message: activeNotification.message,
+            showClose: true
+          }"
+          (close)="notification.set(null)"
+        ></cds-notification>
+      }
+    </div>
+  }
+}

@@ -12,6 +12,8 @@ import { CustomWidget } from "@valtimo/layout";
 import { BerichtNotification } from "../../../../interface/bericht-notification.interface";
 import { BusinessKey } from "../../../../models/business-key.model";
 
+type DocumentPropertiesState =  "available" | "unavailable";
+
 @Component({
   selector: "stuur-bericht",
   imports: [InputModule, ButtonModule, IconModule, FormsModule, NotificationModule, CommonModule],
@@ -26,6 +28,7 @@ export class StuurBerichtComponent {
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
 
+  documentPropertiesState = signal<DocumentPropertiesState>("unavailable");
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
 
@@ -92,14 +95,18 @@ export class StuurBerichtComponent {
   private retrieveActieverzoekId() {
     const valtimoBusinessKey: BusinessKey = { value: this.documentId! };
     this.swfService
-      .getSamenwerkingProperties(valtimoBusinessKey)
-      .pipe(
-        take(1),
-        tap((props) => {
-          this.actieverzoekId = props.actieverzoekId;
-        }),
-      )
-      .subscribe();
+       .getSamenwerkingProperties(valtimoBusinessKey)
+       .pipe(take(1))
+       .subscribe({
+         next: (props) => {
+           this.actieverzoekId = props.actieverzoekId;
+           this.documentPropertiesState.set("available");
+         },
+         error: (error) => {
+           this.logger.error("Unable to retrieve samenwerking properties", error);
+           this.documentPropertiesState.set("unavailable");
+         },
+       });
   }
 
   private assignNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
