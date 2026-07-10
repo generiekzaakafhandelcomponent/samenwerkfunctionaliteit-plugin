@@ -37,6 +37,7 @@ dependencies {
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.springframework.boot:spring-boot-starter-security")
+    compileOnly("org.springframework.boot:spring-boot-starter-data-jpa")
 
     implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webmvc")
 
