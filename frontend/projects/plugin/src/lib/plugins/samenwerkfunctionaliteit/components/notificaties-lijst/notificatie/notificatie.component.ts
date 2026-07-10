@@ -2,7 +2,6 @@ import {NotificatieCard, NotificatieCardInput, NotificatieCardType} from '../int
 import {Component, input} from "@angular/core";
 
 
-
 @Component({
   templateUrl: `./notificatie.component.html`,
   styleUrls: ['./notificatie.component.scss'],
@@ -11,7 +10,6 @@ import {Component, input} from "@angular/core";
 export class NotificatieComponent implements NotificatieCard {
   inputs = input<NotificatieCardInput>({
     notificatieId: "",
-    colorCode: "",
     content: "",
     eventDateTime: new Date(),
     initiatorNaam: "",
