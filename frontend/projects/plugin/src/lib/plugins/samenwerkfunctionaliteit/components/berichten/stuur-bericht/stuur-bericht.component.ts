@@ -100,7 +100,7 @@ export class StuurBerichtComponent {
           if (props.actieverzoekId) {
             this.actieverzoekId = props.actieverzoekId;
           } else {
-            throw new Error("Document content does not have samenwerking properties.");
+            throw new Error("Dossier heeft geen actieverzoekId .");
           }
         }),
       )
