@@ -27,22 +27,22 @@
 }
 
 .notificatie-type.STATUS {
-  background-color: #e3f2fd;
+  background-color: var(--cds-layer-03);
   color: #1976d2;
 }
 
 .notificatie-type.DOCUMENT {
-  background-color: #f3e5f5;
+  background-color: var(--cds-layer-03);
   color: #7b1fa2;
 }
 
 .notificatie-type.SYSTEEM {
-  background-color: #e8f5e9;
+  background-color: var(--cds-layer-03);
   color: #388e3c;
 }
 
 .notificatie-type.BERICHT {
-  background-color: #fff3e0;
+  background-color: var(--cds-layer-03);
   color: #f57c00;
 }
 
