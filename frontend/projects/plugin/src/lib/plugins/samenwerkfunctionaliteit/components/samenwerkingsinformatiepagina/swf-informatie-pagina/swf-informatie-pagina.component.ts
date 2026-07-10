@@ -53,7 +53,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
     this.swfDocumentService.getSamenwerkingProperties(valtimoBusinessKey).pipe(
       take(1),
       switchMap((samenwerkingProps) => {
-        return this.loadSamenwerking(samenwerkingProps.samenwerkingId);
+        return this.fetchSamenwerking(samenwerkingProps.samenwerkingId);
       })
     ).subscribe({
       next: (samenwerking: Samenwerking) => {
@@ -68,7 +68,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
     });
   }
 
-  private loadSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
+  private fetchSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
     return this.samenwerkingService.getSamenwerking(samenwerkingId).pipe(
       take(1)
     )
