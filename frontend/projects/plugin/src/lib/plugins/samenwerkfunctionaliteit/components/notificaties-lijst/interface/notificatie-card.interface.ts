@@ -3,6 +3,7 @@ import {InputSignal} from "@angular/core";
 export interface NotificatieCardInput {
   notificatieId: string;
   type: NotificatieCardType;
+  colorCode: string;
   title: string;
   eventDateTime: Date;
   initiatorNaam: string;

@@ -1,16 +1,16 @@
-<div class="notificatiecard" [class]="getTypeClass(inputs().type)">
+<div class="notificatiecard" [style.border-left-color]="inputs().colorCode">
   <div class="notificatie-header">
-    <h5>
+    <span class="notificatie-type" [class]="getTypeClass(inputs().type)">
       {{ inputs().type }}
-    </h5>
+    </span>
     <span class="notificatie-title">{{ inputs().title }}</span>
   </div>
 
   <div class="notificatie-meta">
-    <span>
+    <span class="notificatie-date">
       {{ inputs().eventDateTime }}
     </span>
-    <span>
+    <span class="notificatie-initiator">
       {{ inputs().initiatorNaam }}
     </span>
   </div>
