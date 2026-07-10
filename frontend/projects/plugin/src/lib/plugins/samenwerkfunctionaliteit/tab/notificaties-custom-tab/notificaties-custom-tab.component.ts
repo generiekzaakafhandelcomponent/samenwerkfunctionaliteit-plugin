@@ -1,6 +1,6 @@
 import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {NotificatieComponent} from "../../components/notificaties-lijst/notificatie/notificatie.component";
-import {NotificatieCardInput, NotificatieCardType} from "../../components/notificaties-lijst/interface/notificatie-card.interface";
+import {NotificatieCardInput} from "../../components/notificaties-lijst/interface/notificatie-card.interface";
 import {NotificatieService} from "../../service/notificatie.service";
 import {Observable, switchMap, take} from "rxjs";
 import {Notificatie} from "../../models/notificatie.model";
@@ -69,21 +69,10 @@ export class NotificatiesCustomTabComponent {
     return {
       notificatieId: notificatie.notificatieId,
       type: type,
-      colorCode: this.getColorCodeForType(type),
       title: notificatie.notificatieTitel,
       eventDateTime: eventDateTime,
       initiatorNaam: notificatie.eventInitiatorNaam,
       content: notificatie.notificatieTekst,
     };
-  }
-
-  private getColorCodeForType(type: NotificatieCardType): string {
-    const colorMap: Record<NotificatieCardType, string> = {
-      STATUS: "#1976d2",
-      DOCUMENT: "#9c27b0",
-      SYSTEEM: "#388e3c",
-      BERICHT: "#ff9800",
-    };
-    return colorMap[type];
   }
 }

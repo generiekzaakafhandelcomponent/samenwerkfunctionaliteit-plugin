@@ -1,7 +1,6 @@
 @use '@carbon/styles/scss/colors' as carbon-color;
 @use '../../../styles/_shadows' as shadows;
 
-
 .notificatiecard {
   border-left: 4px solid;
   border-radius: 4px;
@@ -9,41 +8,33 @@
   background-color: var(--cds-layer-03);
   box-shadow: shadows.$shadow-elevation-low;
   max-width: 60em;
+
+  &.status {
+    background-color: var(--cds-layer-03);
+    border-left-color: #1976d2;
+  }
+
+  &.document {
+    background-color: var(--cds-layer-03);
+    border-left-color: #7b1fa2;
+  }
+
+  &.systeem {
+    background-color: var(--cds-layer-03);
+    border-left-color: #388e3c;
+  }
+
+  &.bericht {
+    background-color: var(--cds-layer-03);
+    border-left-color: #f57c00;
+  }
 }
 
 .notificatie-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-}
-
-.notificatie-type {
-  font-size: 12px;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 12px;
-  text-transform: uppercase;
-}
-
-.notificatie-type.STATUS {
-  background-color: var(--cds-layer-03);
-  color: #1976d2;
-}
-
-.notificatie-type.DOCUMENT {
-  background-color: var(--cds-layer-03);
-  color: #7b1fa2;
-}
-
-.notificatie-type.SYSTEEM {
-  background-color: var(--cds-layer-03);
-  color: #388e3c;
-}
-
-.notificatie-type.BERICHT {
-  background-color: var(--cds-layer-03);
-  color: #f57c00;
+  margin-bottom: 1rem;
 }
 
 .notificatie-title {
@@ -54,8 +45,8 @@
 .notificatie-meta {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: #666;
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
 }
 
