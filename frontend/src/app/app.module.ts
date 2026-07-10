@@ -106,7 +106,6 @@ import {
   NotificatiesCustomTabComponent,
   SamenwerkingWidgetTabComponent,
   BerichtenCustomTabComponent,
-  StuurBerichtComponent,
 } from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
 
 export function tabsFactory() {
