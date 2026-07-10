@@ -1,12 +1,15 @@
 import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from "@angular/core";
 import {SamenwerkingsStatusComponent} from "../samenwerkingsstatus/samenwerkingsstatus.component";
 import {SamenwerkingService} from "../../../service/samenwerking.service";
-import {skipWhile, Subject, takeUntil} from "rxjs";
+import {Observable, skipWhile, Subject, switchMap, take} from "rxjs";
 import {Samenwerking} from "../../../models/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
 import {LoadingModule} from "carbon-components-angular";
 import {NgClass} from "@angular/common";
 import {DocumentenlijstComponent} from "../documentenlijst/documentenlijst.component";
+import {SwfDocumentService} from "../../../service/swf-document.service";
+import {ActivatedRoute} from "@angular/router";
+import {BusinessKey} from "../../../models/business-key.model";
 
 
 @Component({
@@ -24,6 +27,8 @@ import {DocumentenlijstComponent} from "../documentenlijst/documentenlijst.compo
 })
 export class SwfInformatiePaginaComponent implements OnInit {
   samenwerkingService = inject(SamenwerkingService);
+  swfDocumentService = inject(SwfDocumentService);
+  route = inject(ActivatedRoute);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   isLoading: WritableSignal<boolean> = signal(true);
@@ -31,30 +36,42 @@ export class SwfInformatiePaginaComponent implements OnInit {
   hasError: WritableSignal<boolean> = signal(false);
   errorMessage: WritableSignal<string> = signal("");
 
-  samenwerkingId: string = "SAM-66497"; //TODO samenwerkingId komt uit document (scheduler service)
-
   destroyRef: DestroyRef = inject(DestroyRef);
   destroy$: Subject<void> = new Subject<void>();
 
   ngOnInit() {
-    this.loadSamenwerking();
+    const documentId = this.swfDocumentService.getParam(this, 'documentId');
+    this.fetchAndLoadSamenwerking(documentId);
     this.destroyRef.onDestroy(() => this.destroy$.next());
   }
 
-  private loadSamenwerking(): void {
-    this.samenwerkingService.getSamenwerking(this.samenwerkingId).pipe(
-      skipWhile(samenwerking => samenwerking === null),
-      takeUntil(this.destroy$)
+  private fetchAndLoadSamenwerking(documentId: string): void {
+    const valtimoBusinessKey: BusinessKey = {
+      value: documentId,
+    }
+
+    this.swfDocumentService.getSamenwerkingProperties(valtimoBusinessKey).pipe(
+      take(1),
+      switchMap((samenwerkingProps) => {
+        return this.loadSamenwerking(samenwerkingProps.samenwerkingId);
+      })
     ).subscribe({
       next: (samenwerking: Samenwerking) => {
         this.isLoading.set(false);
         this.samenwerking.update(() => samenwerking)
       },
       error: (error: Error) => {
+        this.isLoading.set(false);
         this.hasError.set(true);
         this.errorMessage.set(error.message);
       }
-    })
+    });
   }
 
+  private loadSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
+    return this.samenwerkingService.getSamenwerking(samenwerkingId).pipe(
+      skipWhile(samenwerking => samenwerking === null),
+      take(1)
+    )
+  }
 }
