@@ -1,7 +1,7 @@
 import {Component, DestroyRef, inject, OnInit, signal, WritableSignal} from "@angular/core";
 import {SamenwerkingsStatusComponent} from "../samenwerkingsstatus/samenwerkingsstatus.component";
 import {SamenwerkingService} from "../../../service/samenwerking.service";
-import {Observable, skipWhile, Subject, switchMap, take} from "rxjs";
+import {Observable, Subject, switchMap, take} from "rxjs";
 import {Samenwerking} from "../../../models/samenwerking.model";
 import {SamenwerkingComponent} from "../samenwerking/samenwerking.component";
 import {LoadingModule} from "carbon-components-angular";
@@ -70,7 +70,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
 
   private loadSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
     return this.samenwerkingService.getSamenwerking(samenwerkingId).pipe(
-      skipWhile(samenwerking => samenwerking === null),
       take(1)
     )
   }
