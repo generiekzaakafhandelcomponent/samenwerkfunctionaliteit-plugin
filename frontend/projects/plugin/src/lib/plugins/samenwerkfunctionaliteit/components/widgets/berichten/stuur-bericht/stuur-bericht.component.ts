@@ -20,7 +20,6 @@ import { SamenwerkingProperties } from "../../../../models/samenwerking-properti
   styleUrl: "./stuur-bericht.component.scss",
 })
 export class StuurBerichtComponent {
-  @Input() public widgetConfiguration: CustomWidget | null = null;
 
   private documentId: string | null = null;
   private actieverzoekId: string | null | undefined;
