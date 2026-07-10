@@ -19,7 +19,7 @@ interface SamenwerkfunctionaliteitService {
     fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisationTheReceiver: Boolean
+        isOrganisationTheReceiver: Boolean,
     ): List<Actieverzoek>
 
     fun getBericht(
