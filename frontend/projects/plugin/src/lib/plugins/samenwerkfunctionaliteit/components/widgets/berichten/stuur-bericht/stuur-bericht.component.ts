@@ -21,7 +21,7 @@ import { BusinessKey } from "../../../../models/business-key.model";
 export class StuurBerichtComponent {
   @Input() public widgetConfiguration: CustomWidget | null = null;
 
-  private documentId: string | null;
+  private documentId: string | null = null;
   private actieverzoekId: string | null | undefined;
   private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
   private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
