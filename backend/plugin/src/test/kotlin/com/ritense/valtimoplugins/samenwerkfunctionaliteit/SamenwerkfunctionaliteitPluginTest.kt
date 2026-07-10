@@ -5,8 +5,8 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin.SamenwerkfunctionaliteitPlugin
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -39,7 +39,8 @@ class SamenwerkfunctionaliteitPluginTest {
 
     @Test
     @DisplayName("Should get documenten overzicht and save result to document")
-    fun shouldGetDocumentenoverzichtAndSaveResult() {
+    fun ShouldGetDocumentenoverzichtAndSaveResult() {
+
         // Arrange
         val query =
             DocumentenOverzichtQuery(
@@ -112,7 +113,8 @@ class SamenwerkfunctionaliteitPluginTest {
 
     @Test
     @DisplayName("Should default negate filters to false when not provided")
-    fun shouldDefaultNegateFiltersToFalse() {
+    fun `ShouldDefaultNegateFiltersToFalse`() {
+
         // Arrange
         val expectedQuery =
             DocumentenOverzichtQuery(

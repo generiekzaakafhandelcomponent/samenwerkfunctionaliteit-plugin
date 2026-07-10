@@ -1,7 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
@@ -38,7 +38,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         try {
             return restClient(properties = properties)
                 .get()
-                .uri("${SWF_ACTIEVERZOEK_PATH}/$actieverzoekId")
+                .uri("${SWF_ACTIEVERZOEK_PATH}/${actieverzoekId}")
                 .retrieve()
                 .body<ActieverzoekResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoek: response body was null")
@@ -52,7 +52,7 @@ class DefaultSamenwerkfunctionaliteitClient(
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        organisatie: String?,
+        organisatie: String?
     ): ActieverzoekenGetResponse {
         try {
             return restClient(properties = properties)
@@ -63,7 +63,8 @@ class DefaultSamenwerkfunctionaliteitClient(
                         .queryParam(SAMENWERKING_ID, samenwerkingId)
                         .queryParamNotNull(name = ORGANISATIE, query = organisatie)
                         .build()
-                }.retrieve()
+                }
+                .retrieve()
                 .body<ActieverzoekenGetResponse>()
                 ?: throw IllegalStateException("Error fetching Actieverzoeken: response body was null")
         } catch (e: HttpServerErrorException.InternalServerError) {
@@ -111,16 +112,19 @@ class DefaultSamenwerkfunctionaliteitClient(
                         DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
                         query.aangemaaktDoor,
                         query.negateAangemaaktDoor,
-                    ).queryParamWithNegation(
+                    )
+                    .queryParamWithNegation(
                         DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR_NAAM,
                         query.aangemaaktDoorNaam,
                         query.negateAangemaaktDoorNaam,
-                    ).queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
+                    )
+                    .queryParamIfNotNull(DocumentenOverzichtQueryParam.SORT, query.sort)
                     .queryParamIfNotNull(DocumentenOverzichtQueryParam.AANTAL, query.aantal)
                     .queryParamIfNotNull(DocumentenOverzichtQueryParam.PAGINA, query.pagina)
                     .build(samenwerkingId)
             }.retrieve()
-            .body(DocumentenOverzichtResponse::class.java) ?: error("No list of Documents received.")
+            .body(DocumentenOverzichtResponse::class.java)
+            ?: error("No list of Documents received.")
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
@@ -148,10 +152,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         value: T?,
     ) = queryParamNotNull(name.paramName, value)
 
-    private fun <T> UriBuilder.queryParamNotNull(
-        name: String,
-        query: T?,
-    ) = apply {
+    private fun <T> UriBuilder.queryParamNotNull(name: String, query: T?) = apply {
         if (query != null) {
             queryParam(name, query)
         }
@@ -174,12 +175,12 @@ class DefaultSamenwerkfunctionaliteitClient(
         AANGEMAAKT_DOOR_NAAM("aangemaaktDoorNaam"),
         SORT("_sort"),
         AANTAL("aantal"),
-        PAGINA(
-            "pagina",
-        ), ;
+        PAGINA("pagina"),
+        ;
 
         fun negated(): String = "$paramName[not]"
     }
+
 
     private fun handleInternalServerError(e: HttpServerErrorException.InternalServerError): Nothing {
         logger.warn { "Response body:  ${e.responseBodyAsString}" }
@@ -209,5 +210,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         private const val SAMENWERKING_ID = "samenwerkingId"
         private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
+
+
     }
 }

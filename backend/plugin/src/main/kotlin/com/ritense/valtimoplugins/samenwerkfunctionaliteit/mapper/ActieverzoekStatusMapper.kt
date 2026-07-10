@@ -1,7 +1,8 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.Actieverzoek as ActieverzoekDTO
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
+
 
 fun ActieverzoekDTO.ActieverzoekStatus.toModel(): Actieverzoek.ActieverzoekStatus =
     when (this) {

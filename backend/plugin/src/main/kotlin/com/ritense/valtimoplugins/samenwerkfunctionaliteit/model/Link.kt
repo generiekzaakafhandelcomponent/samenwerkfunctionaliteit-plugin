@@ -8,5 +8,5 @@ data class Link(
     val profile: String? = null,
     val templated: Boolean? = null,
     val title: String? = null,
-    val type: String? = null,
+    val type: String? = null
 )

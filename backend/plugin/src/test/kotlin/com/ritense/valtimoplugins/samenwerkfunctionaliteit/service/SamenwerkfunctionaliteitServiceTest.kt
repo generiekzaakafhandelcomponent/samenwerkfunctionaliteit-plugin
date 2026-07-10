@@ -11,9 +11,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.net.URI
-import java.util.UUID
+import java.util.*
 
 class SamenwerkfunctionaliteitServiceTest {
+
     private lateinit var service: SamenwerkfunctionaliteitService
     private lateinit var mockClient: SamenwerkfunctionaliteitClient
 
@@ -82,4 +83,5 @@ class SamenwerkfunctionaliteitServiceTest {
             mockClient.getAllActieverzoeken(properties, samenwerkingId, null)
         }
     }
+
 }

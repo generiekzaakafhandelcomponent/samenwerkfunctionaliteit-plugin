@@ -2,8 +2,8 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
@@ -20,25 +20,22 @@ class DefaultSamenwerkfunctionaliteitService(
     override fun getActieverzoek(
         properties: SamenwerkfunctionaliteitProperties,
         actieverzoekId: UUID,
-    ): Actieverzoek =
-        samenwerkfunctionaliteitClient
-            .getActieverzoek(
-                properties = properties,
-                actieverzoekId = actieverzoekId,
-            ).toModel()
+    ): Actieverzoek = samenwerkfunctionaliteitClient.getActieverzoek(
+        properties = properties,
+        actieverzoekId = actieverzoekId
+    ).toModel()
 
     override fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisationTheReceiver: Boolean,
+        isOrganisationTheReceiver: Boolean
     ): List<Actieverzoek> {
         val organisatie = if (isOrganisationTheReceiver) properties.oinNummer else null
-        return samenwerkfunctionaliteitClient
-            .getAllActieverzoeken(
-                properties = properties,
-                samenwerkingId = samenwerkingId,
-                organisatie = organisatie,
-            ).toModel()
+        return samenwerkfunctionaliteitClient.getAllActieverzoeken(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+            organisatie = organisatie
+        ).toModel()
     }
 
     override fun getBericht(
@@ -77,7 +74,8 @@ class DefaultSamenwerkfunctionaliteitService(
                 query,
             ).embedded
             ?.documenten
-            ?.map { it.toModel() } ?: emptyList()
+            ?.map { it.toModel() }
+            ?: emptyList()
 
     override fun downloadDocument(
         properties: SamenwerkfunctionaliteitProperties,
