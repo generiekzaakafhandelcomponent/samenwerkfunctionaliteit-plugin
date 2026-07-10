@@ -18,7 +18,7 @@
             ],
             "properties": {}
         },
-        "samenwerkingIds": {
+        "samenwerkingProperties": {
             "type": "object",
             "properties": {
                 "actieverzoekId": {
