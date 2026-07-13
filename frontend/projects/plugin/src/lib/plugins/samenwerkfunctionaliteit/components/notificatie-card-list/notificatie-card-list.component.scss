@@ -1,0 +1,15 @@
+.refresh-container {
+  height: 3rem;
+  transition: height 0.6s cubic-bezier(.08, .82, .17, 1);
+  transition-delay: 1200ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.notificatiecard-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
