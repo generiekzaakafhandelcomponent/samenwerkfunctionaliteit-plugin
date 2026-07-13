@@ -11,12 +11,12 @@ import {ActivatedRoute} from "@angular/router";
 import {BusinessKey} from "../../models/business-key.model";
 
 @Component({
-  templateUrl: `notificaties-custom-tab.component.html`,
-  styleUrl: './notificaties-custom-tab.component.scss',
+  templateUrl: `notificatie-card-list.component.html`,
+  styleUrl: "./notificatie-card-list.component.scss",
   imports: [NotificatieComponent, LoadingModule, SkeletonModule],
-  selector: "notificaties-custom-tab",
+  selector: "notificatie-card-list",
 })
-export class NotificatiesCustomTabComponent {
+export class NotificatieCardList {
   notificatieService: NotificatieService = inject(NotificatieService);
   swfDocumentService: SwfDocumentService = inject(SwfDocumentService);
   route: ActivatedRoute = inject(ActivatedRoute);
