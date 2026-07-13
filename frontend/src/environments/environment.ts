@@ -17,18 +17,10 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-import {NgxLoggerLevel} from "ngx-logger";
-import {
-  DefinitionColumn,
-  IncludeFunction,
-  ROLE_ADMIN,
-  ROLE_DEVELOPER,
-  ROLE_USER,
-  UploadProvider,
-  ValtimoConfig
-} from "@valtimo/shared";
-import {authenticationKeycloak} from "./auth/keycloak-config.dev";
-import {DARK_MODE_LOGO_BASE_64, LOGO_BASE_64} from "./logo";
+import { NgxLoggerLevel } from "ngx-logger";
+import { DefinitionColumn, IncludeFunction, ROLE_ADMIN, ROLE_DEVELOPER, ROLE_USER, UploadProvider, ValtimoConfig } from "@valtimo/shared";
+import { authenticationKeycloak } from "./auth/keycloak-config.dev";
+import { DARK_MODE_LOGO_BASE_64, LOGO_BASE_64 } from "./logo";
 
 const defaultDefinitionColumns: Array<DefinitionColumn> = [
   {
@@ -75,7 +67,7 @@ export const environment: ValtimoConfig = {
         iconClass: "icon mdi mdi-view-dashboard",
         sequence: 0,
       },
-      {roles: [ROLE_USER], title: "Cases", iconClass: "icon mdi mdi-layers", sequence: 1, children: []},
+      { roles: [ROLE_USER], title: "Cases", iconClass: "icon mdi mdi-layers", sequence: 1, children: [] },
       {
         roles: [ROLE_USER],
         title: "Objects",
@@ -83,7 +75,7 @@ export const environment: ValtimoConfig = {
         sequence: 2,
         includeFunction: IncludeFunction.ObjectManagementEnabled,
       },
-      {roles: [ROLE_USER], link: ["/tasks"], title: "Tasks", iconClass: "icon mdi mdi-check-all", sequence: 3},
+      { roles: [ROLE_USER], link: ["/tasks"], title: "Tasks", iconClass: "icon mdi mdi-check-all", sequence: 3 },
       {
         roles: [ROLE_USER],
         link: ["/analysis"],
@@ -104,30 +96,30 @@ export const environment: ValtimoConfig = {
         iconClass: "icon mdi mdi-tune",
         sequence: 6,
         children: [
-          {title: "Configuration", textClass: "text-dark font-weight-bold c-default", sequence: 1},
-          {link: ["/building-block-management"], title: "buildingBlockManagement.title", sequence: 2},
-          {link: ["/case-management"], title: "Cases", sequence: 3},
-          {link: ["/plugins"], title: "Plugins", sequence: 4},
-          {link: ["/dashboard-management"], title: "Dashboard", sequence: 5},
-          {link: ["/access-control"], title: "Access Control", sequence: 6},
-          {link: ["/translation-management"], title: "Translations", sequence: 7},
-          {link: ["/choice-fields"], title: "Choice fields", sequence: 8},
+          { title: "Configuration", textClass: "text-dark font-weight-bold c-default", sequence: 1 },
+          { link: ["/building-block-management"], title: "buildingBlockManagement.title", sequence: 2 },
+          { link: ["/case-management"], title: "Cases", sequence: 3 },
+          { link: ["/plugins"], title: "Plugins", sequence: 4 },
+          { link: ["/dashboard-management"], title: "Dashboard", sequence: 5 },
+          { link: ["/access-control"], title: "Access Control", sequence: 6 },
+          { link: ["/translation-management"], title: "Translations", sequence: 7 },
+          { link: ["/choice-fields"], title: "Choice fields", sequence: 8 },
 
-          {title: "Object management", textClass: "text-dark font-weight-bold c-default", sequence: 9},
-          {link: ["/object-management"], title: "Objects", sequence: 10},
-          {link: ["/form-management"], title: "Forms", sequence: 11},
+          { title: "Object management", textClass: "text-dark font-weight-bold c-default", sequence: 9 },
+          { link: ["/object-management"], title: "Objects", sequence: 10 },
+          { link: ["/form-management"], title: "Forms", sequence: 11 },
 
-          {title: "System processes", textClass: "text-dark font-weight-bold c-default", sequence: 12},
-          {link: ["/processes"], title: "Processes", sequence: 13},
-          {link: ["/decision-tables"], title: "Decision tables", sequence: 14},
+          { title: "System processes", textClass: "text-dark font-weight-bold c-default", sequence: 12 },
+          { link: ["/processes"], title: "Processes", sequence: 13 },
+          { link: ["/decision-tables"], title: "Decision tables", sequence: 14 },
 
-          {title: "Migration", textClass: "text-dark font-weight-bold c-default", sequence: 15},
-          {link: ["/case-migration"], title: "Case migration (beta)", sequence: 16},
-          {link: ["/process-migration"], title: "Process migration", sequence: 17},
+          { title: "Migration", textClass: "text-dark font-weight-bold c-default", sequence: 15 },
+          { link: ["/case-migration"], title: "Case migration (beta)", sequence: 16 },
+          { link: ["/process-migration"], title: "Process migration", sequence: 17 },
 
-          {title: "Other", textClass: "text-dark font-weight-bold c-default", sequence: 18},
-          {link: ["/logging"], title: "Logs", sequence: 19},
-          {link: ["/notifications-api/notifications/failed"], title: "Notifications", sequence: 20},
+          { title: "Other", textClass: "text-dark font-weight-bold c-default", sequence: 18 },
+          { link: ["/logging"], title: "Logs", sequence: 19 },
+          { link: ["/notifications-api/notifications/failed"], title: "Notifications", sequence: 20 },
         ],
       },
       {
@@ -135,7 +127,7 @@ export const environment: ValtimoConfig = {
         title: "Development",
         iconClass: "icon mdi mdi-code",
         sequence: 7,
-        children: [{link: ["/swagger"], title: "Swagger", iconClass: "icon mdi mdi-dot-circle", sequence: 1}],
+        children: [{ link: ["/swagger"], title: "Swagger", iconClass: "icon mdi mdi-dot-circle", sequence: 1 }],
       },
     ],
   },
