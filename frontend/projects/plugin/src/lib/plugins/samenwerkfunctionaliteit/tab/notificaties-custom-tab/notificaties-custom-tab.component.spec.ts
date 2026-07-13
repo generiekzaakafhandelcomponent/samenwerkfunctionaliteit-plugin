@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
-import { NoticatiesCardList } from "./notificaties-custom-tab.component";
+import { NotificatiesCustomTab } from "./notificaties-custom-tab.component";
 
 describe("NotificatiesCustomTabComponent", () => {
-  let component: NoticatiesCardList;
-  let fixture: ComponentFixture<NoticatiesCardList>;
+  let component: NotificatiesCustomTab;
+  let fixture: ComponentFixture<NotificatiesCustomTab>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoticatiesCardList],
+      imports: [NotificatiesCustomTab],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NoticatiesCardList);
+    fixture = TestBed.createComponent(NotificatiesCustomTab);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
