@@ -165,7 +165,7 @@ export const environment: ValtimoConfig = {
     disableCaseCount: true,
     enableObjectManagement: true,
   },
-  translationResources: ["./assets/i18n", "./assets/i18n/open-klant"],
+  translationResources: ["./assets/i18n", "./assets/i18n/samenwerkfunctionaliteit"],
 };
 
 /*
