@@ -103,7 +103,7 @@ import {
   SamenwerkfunctionaliteitPluginModule,
   samenwerkfunctionaliteitPluginSpecification,
   DocumentenlijstWidgetTabComponent,
-  NotificatiesCustomTabComponent,
+  NotificatiesCustomTab,
   SamenwerkingWidgetTabComponent,
   BerichtenCustomTabComponent
 } from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
@@ -208,7 +208,7 @@ export function tabsFactory() {
       useValue: {
         'berichten-custom-tab': BerichtenCustomTabComponent,
         'documentenlijst-widget-tab': DocumentenlijstWidgetTabComponent,
-        'notificaties-custom-tab': NotificatiesCustomTabComponent,
+        'notificaties-custom-tab': NotificatiesCustomTab,
         'samenwerking-widget-tab': SamenwerkingWidgetTabComponent,
       }
     }
