@@ -1,6 +1,6 @@
 import {Links} from "./links.model";
 
-export interface PostBerichtResponse {
+export interface Bericht {
   _links?: Links;
   actieverzoekId: string;
   berichtId: string;
