@@ -13,7 +13,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.Samenwerkfunc
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
-import java.util.UUID
+import java.util.*
 
 @Plugin(
     key = "samenwerkfunctionaliteit",
@@ -191,7 +191,27 @@ class SamenwerkfunctionaliteitPlugin(
         description = "Haal de bij de samenwerking horende notificaties van de deelnemer op.",
         activityTypes = [ActivityTypeWithEventName.SERVICE_TASK_START],
     )
-    fun getSamenwerkingNotificaties() {
+    fun getSamenwerkingNotificaties(
+        execution: DelegateExecution,
+        @PluginActionProperty resultPvName: String,
+        @PluginActionProperty samenwerkingId: String,
+    ) {
+        val properties = SamenwerkfunctionaliteitProperties(
+            baseUrl = baseUrl,
+            certificate = certificate,
+            oinNummer = oinNummer,
+        )
+
+        val notificaties = this.samenwerkfunctionaliteitService.getSamenwerkingNotificaties(
+            properties = properties,
+            samenwerkingId = samenwerkingId,
+        )
+
+        operatonService.saveToOperaton(
+            execution = execution,
+            resultPvName = resultPvName,
+            result = notificaties
+        )
     }
 
     companion object {
