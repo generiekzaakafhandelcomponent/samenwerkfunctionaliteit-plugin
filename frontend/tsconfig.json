@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "baseUrl": "./",
@@ -19,17 +20,17 @@
     "paths": {
       "@src": ["src"],
       "@src/*": ["src/*"],
-      "@valtimo-plugins/samenwerkfunctionaliteit-plugin": [
-        "projects/plugin/src/public_api.ts",
-      ],
+      "@valtimo-plugins/samenwerkfunctionaliteit-plugin": ["projects/plugin/src/public_api.ts"],
     },
   },
-  "include": ["***.tsx"],
   "exclude": ["node_modules"],
   "files": [],
   "references": [
     {
       "path": "./src/tsconfig.app.json",
+    },
+    {
+      "path": "./projects/plugin/tsconfig.lib.json",
     },
     {
       "path": "./projects/plugin/tsconfig.spec.json",
