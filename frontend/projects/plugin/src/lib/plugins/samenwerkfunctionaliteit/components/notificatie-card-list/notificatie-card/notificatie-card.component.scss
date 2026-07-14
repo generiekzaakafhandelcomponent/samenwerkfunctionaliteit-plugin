@@ -1,0 +1,52 @@
+@use '@carbon/styles/scss/colors' as carbon-color;
+@use '../../../styles/_shadows' as shadows;
+
+.notificatiecard {
+  border-left: 4px solid;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  max-width: 60em;
+
+  background-color: var(--cds-layer-03);
+  border-left-color: var(--cds-tag-border-gray);
+  box-shadow: shadows.$shadow-elevation-medium;
+
+  &.status {
+    border-left-color: var(--cds-tag-border-blue);
+  }
+
+  &.document {
+    border-left-color: var(--cds-tag-border-green);
+  }
+
+  &.system {
+    border-left-color: var(--cds-tag-border-teal);
+  }
+
+  &.message {
+    border-left-color: var(--cds-tag-border-magenta);
+  }
+}
+
+.notificatie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.notificatie-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  color: #666;
+  margin-bottom: 1rem;
+
+  ::ng-deep .cds--skeleton__text {
+    height: .75rem;
+  }
+}
+
+.notificatie-content {
+  overflow: hidden;
+}
