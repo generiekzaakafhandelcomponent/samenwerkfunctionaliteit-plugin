@@ -1,7 +1,3 @@
-// To parse the JSON, install jackson-module-kotlin and do:
-//
-//   val notificaties = Notificaties.fromJson(jsonString)
-
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
 
 import com.fasterxml.jackson.annotation.JsonInclude
