@@ -1,8 +1,8 @@
 {
-    "changesetId": "allow-all-v11",
+    "changesetId": "allow-all-v12",
     "permissions": [
         {
-            "resourceType": "com.ritense.valtimo.doorbraaklab.gateway.gatewayproperties",
+            "resourceType": "com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.GatewayProperties",
             "actions": [
                 "view",
                 "create",
