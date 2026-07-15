@@ -1,9 +1,7 @@
 import { NotificatieCardInterface } from "../interface/notificatie-card.interface";
 import { Component, computed, inject, input, Signal } from "@angular/core";
 import { NotificatieCardTypes } from "../type/notificatie-card.type";
-import { TranslateLoader, TranslatePipe, TranslateService } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader"; // Note: the path to Samenwerkfunctionaliteit's non-plugin translations was added in 'environments.ts' under 'translationResources'
-import { HttpClient } from "@angular/common/http";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SkeletonModule } from "carbon-components-angular";
 import { DatePipe } from "@angular/common";
 import { NotificatieCardInput } from "../model/notificatie-card-input.model";
@@ -14,12 +12,6 @@ import { NotificatieCardInput } from "../model/notificatie-card-input.model";
   selector: "swf-notificatie-card",
   standalone: true,
   imports: [TranslatePipe, SkeletonModule, DatePipe],
-  providers: [
-    {
-      provide: TranslateLoader,
-      useFactory: (http: HttpClient) => new TranslateHttpLoader(http, "/assets/i18n/samenwerkfunctionaliteit/", ".json"),
-    },
-  ],
 })
 export class NotificatieCardComponent implements NotificatieCardInterface {
   protected translate = inject(TranslateService);
