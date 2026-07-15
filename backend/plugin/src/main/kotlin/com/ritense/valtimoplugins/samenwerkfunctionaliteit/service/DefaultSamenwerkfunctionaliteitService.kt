@@ -3,7 +3,6 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.toModel
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.*
 import org.springframework.core.io.InputStreamResource
