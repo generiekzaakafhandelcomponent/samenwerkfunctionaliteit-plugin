@@ -3,11 +3,11 @@ import { NotificatieCardType } from "../type/notificatie-card.type";
 
 export class NotificatieCardInput implements CardInput {
   constructor(
-    public notificatieId = "",
-    public type: NotificatieCardType | null = null,
-    public title = "",
-    public eventDateTime: Date | null = null,
-    public initiatorNaam = "",
-    public content = "",
+    public readonly notificatieId = "",
+    public readonly type: NotificatieCardType | null = null,
+    public readonly title = "",
+    public readonly eventDateTime: Date | null = null,
+    public readonly initiatorNaam = "",
+    public readonly content = "",
   ) {}
 }
