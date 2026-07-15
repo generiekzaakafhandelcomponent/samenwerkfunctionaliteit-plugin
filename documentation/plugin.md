@@ -158,6 +158,35 @@ Voorbeeld `*.processlink.json`:
 ![get-alle-actieverzoeken.png](img/get-alle-actieverzoeken.png)
 ---
 
+### GET getSamenwerkingenNotificaties
+
+Sends a GET request to retrieve all **actieverzoeken** (action requests) of a **samenwerking**.
+**Usage:** Add this plugin action to an **operaton service task** in your process. The result of this request must be
+stored in an **operaton process variable**, for example **"actieverzoeken"**.
+
+| Parameter      | Type | Required | Description                                                                           |
+|----------------|------|----------|---------------------------------------------------------------------------------------|
+| resultPvName   | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in. |
+| samenwerkingId | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.             |
+
+Voorbeeld `*.processlink.json`:
+
+```json
+{
+   "activityId": "Activity_GetSamenwerkingNotificaties",
+   "activityType": "bpmn:ServiceTask:start",
+   "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
+   "pluginActionDefinitionKey": "get-samenwerking-notificaties",
+   "actionProperties": {
+      "resultPvName": "notificaties",
+      "samenwerkingId": "pv:samenwerkingId"
+   },
+   "processLinkType": "plugin"
+}
+```
+
+---
+
 ## Usage
 
 ### How to Use the Plugin in a Process
