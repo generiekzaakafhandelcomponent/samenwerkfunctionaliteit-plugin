@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule} from "@valtimo/plugin";
-import {BehaviorSubject, combineLatest, Observable, Subscription, take} from "rxjs";
-import {NotificatiesConfig} from "../../models/notificaties-config";
-import {FormModule, FormOutput, InputModule} from "@valtimo/components";
-import {AsyncPipe} from "@angular/common";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule } from "@valtimo/plugin";
+import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
+import { NotificatiesConfig } from "../../models/notificaties-config";
+import { FormModule, FormOutput, InputModule } from "@valtimo/components";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
-  selector: "app-get-samenwerking-notificaties",
+  selector: "get-samenwerking-notificaties",
   templateUrl: "./get-samenwerking-notificaties.component.html",
   standalone: true,
   styleUrl: "./get-samenwerking-notificaties.component.scss",
