@@ -5,11 +5,12 @@
   "projects": {
     "samenwerkfunctionaliteit-plugin": {
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "projects/plugin/src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
+          "path": "projects/plugin/src/lib/plugins/samenwerkfunctionaliteit/components",
           "style": "scss"
         }
       },
