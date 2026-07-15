@@ -185,6 +185,7 @@ Voorbeeld `*.processlink.json`:
 }
 ```
 
+![get-samenwerking-notificaties.png](img/get-samenwerking-notificaties.png)
 ---
 
 ## Usage
