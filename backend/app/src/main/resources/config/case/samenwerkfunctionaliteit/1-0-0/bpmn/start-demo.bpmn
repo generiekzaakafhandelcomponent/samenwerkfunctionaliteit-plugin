@@ -7,7 +7,7 @@
     <bpmn:laneSet id="LaneSet_1c7ij5t">
       <bpmn:lane id="Lane_01ittfy" name="Upload document" />
       <bpmn:lane id="Lane_01gv4n7" name="Get samenwerking functionaliteit">
-        <bpmn:flowNodeRef>Activity_00pa4t9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_GetSamenwerkingNotificaties</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1kwkfau" name="Download document">
         <bpmn:flowNodeRef>Activity_0o2g21t</bpmn:flowNodeRef>
@@ -107,7 +107,7 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1w1u9jb</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_00pa4t9" implementation="##WebService" camunda:expression="${true}">
+    <bpmn:serviceTask id="Activity_GetSamenwerkingNotificaties" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
         <camunda:inputOutput />
       </bpmn:extensionElements>
@@ -151,7 +151,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${selectedDemo == "uploadDocument"}
             </bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0bayp2m" sourceRef="Gateway_1ahkxkb" targetRef="Activity_00pa4t9">
+    <bpmn:sequenceFlow id="Flow_0bayp2m" sourceRef="Gateway_1ahkxkb" targetRef="Activity_GetSamenwerkingNotificaties">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">
                 ${selectedDemo == "getSamenwerkingNotificaties"}
             </bpmn:conditionExpression>
@@ -163,7 +163,7 @@
     <bpmn:sequenceFlow id="Flow_1xn3bpf" sourceRef="Activity_0uwens5" targetRef="Activity_09n22xl" />
     <bpmn:sequenceFlow id="Flow_0kf1q5n" sourceRef="Activity_00fynp6" targetRef="Activity_18grmoe" />
     <bpmn:sequenceFlow id="Flow_1w1u9jb" sourceRef="Activity_1ihebrj" targetRef="Gateway_1xwncml" />
-    <bpmn:sequenceFlow id="Flow_0zc7xk9" sourceRef="Activity_00pa4t9" targetRef="Gateway_1xwncml" />
+    <bpmn:sequenceFlow id="Flow_0zc7xk9" sourceRef="Activity_GetSamenwerkingNotificaties" targetRef="Gateway_1xwncml" />
     <bpmn:sequenceFlow id="Flow_1av8352" sourceRef="log_getDocumentenoverzicht_response" targetRef="Gateway_1xwncml" />
     <bpmn:sequenceFlow id="Flow_1lxh511" sourceRef="Gateway_1xwncml" targetRef="Event_0re9ycq" />
     <bpmn:sequenceFlow id="Flow_1kmhbga" sourceRef="get_documentenoverzicht" targetRef="log_getDocumentenoverzicht_response" />
@@ -280,7 +280,7 @@
       <bpmndi:BPMNShape id="BPMNShape_0sau134" bpmnElement="Activity_1ihebrj">
         <dc:Bounds x="630" y="1870" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0lv8jct" bpmnElement="Activity_00pa4t9">
+      <bpmndi:BPMNShape id="BPMNShape_0lv8jct" bpmnElement="Activity_GetSamenwerkingNotificaties">
         <dc:Bounds x="630" y="2070" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0re9ycq_di" bpmnElement="Event_0re9ycq">
