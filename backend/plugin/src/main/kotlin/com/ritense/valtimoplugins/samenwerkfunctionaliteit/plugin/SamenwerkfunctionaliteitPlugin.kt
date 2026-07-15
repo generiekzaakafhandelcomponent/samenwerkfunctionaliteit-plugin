@@ -13,7 +13,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.Samenwerkfunc
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.operaton.bpm.engine.delegate.DelegateExecution
 import java.net.URI
-import java.util.*
+import java.util.UUID
 
 @Plugin(
     key = "samenwerkfunctionaliteit",
@@ -45,21 +45,23 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty resultPvName: String,
         @PluginActionProperty actieverzoekId: UUID,
     ) {
-        val properties = SamenwerkfunctionaliteitProperties(
-            baseUrl = baseUrl,
-            certificate = certificate,
-            oinNummer = oinNummer,
-        )
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = baseUrl,
+                certificate = certificate,
+                oinNummer = oinNummer,
+            )
 
-        val actieverzoek = this.samenwerkfunctionaliteitService.getActieverzoek(
-            properties = properties,
-            actieverzoekId = actieverzoekId
-        )
+        val actieverzoek =
+            this.samenwerkfunctionaliteitService.getActieverzoek(
+                properties = properties,
+                actieverzoekId = actieverzoekId,
+            )
 
         operatonService.saveToOperaton(
             execution = execution,
             resultPvName = resultPvName,
-            result = actieverzoek
+            result = actieverzoek,
         )
     }
 
@@ -75,23 +77,24 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty samenwerkingId: String,
         @PluginActionProperty isOrganisationTheReceiver: Boolean = true,
     ) {
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = baseUrl,
+                certificate = certificate,
+                oinNummer = oinNummer,
+            )
 
-        val properties = SamenwerkfunctionaliteitProperties(
-            baseUrl = baseUrl,
-            certificate = certificate,
-            oinNummer = oinNummer,
-        )
-
-        val actieverzoeken = this.samenwerkfunctionaliteitService.getAllActieverzoeken(
-            properties = properties,
-            samenwerkingId = samenwerkingId,
-            isOrganisationTheReceiver = isOrganisationTheReceiver
-        )
+        val actieverzoeken =
+            this.samenwerkfunctionaliteitService.getAllActieverzoeken(
+                properties = properties,
+                samenwerkingId = samenwerkingId,
+                isOrganisationTheReceiver = isOrganisationTheReceiver,
+            )
 
         operatonService.saveToOperaton(
             execution = execution,
             resultPvName = resultPvName,
-            result = actieverzoeken
+            result = actieverzoeken,
         )
     }
 
@@ -196,21 +199,23 @@ class SamenwerkfunctionaliteitPlugin(
         @PluginActionProperty resultPvName: String,
         @PluginActionProperty samenwerkingId: String,
     ) {
-        val properties = SamenwerkfunctionaliteitProperties(
-            baseUrl = baseUrl,
-            certificate = certificate,
-            oinNummer = oinNummer,
-        )
+        val properties =
+            SamenwerkfunctionaliteitProperties(
+                baseUrl = baseUrl,
+                certificate = certificate,
+                oinNummer = oinNummer,
+            )
 
-        val notificaties = this.samenwerkfunctionaliteitService.getSamenwerkingNotificaties(
-            properties = properties,
-            samenwerkingId = samenwerkingId,
-        )
+        val notificaties =
+            this.samenwerkfunctionaliteitService.getSamenwerkingNotificaties(
+                properties = properties,
+                samenwerkingId = samenwerkingId,
+            )
 
         operatonService.saveToOperaton(
             execution = execution,
             resultPvName = resultPvName,
-            result = notificaties
+            result = notificaties,
         )
     }
 
