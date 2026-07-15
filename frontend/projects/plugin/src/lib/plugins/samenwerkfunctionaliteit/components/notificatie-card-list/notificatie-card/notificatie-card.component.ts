@@ -1,5 +1,5 @@
 import { NotificatieCardInterface } from "../interface/notificatie-card.interface";
-import { Component, computed, inject, input, Signal, signal } from "@angular/core";
+import { Component, computed, inject, input, Signal } from "@angular/core";
 import { NotificatieCardTypes } from "../type/notificatie-card.type";
 import { TranslateLoader, TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader"; // Note: the path to Samenwerkfunctionaliteit's non-plugin translations was added in 'environments.ts' under 'translationResources'
