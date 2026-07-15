@@ -21,22 +21,21 @@ data class NotificatieResponse(
     val properties: Map<String, String?>? = null,
     @get:JsonProperty("_links")
     val links: Links? = null,
-)
-
-fun NotificatieResponse.toModel(): Notificatie {
-    return Notificatie(
-        notificatieID = notificatieID,
-        notificatieType = notificatieType,
-        samenwerkingID = samenwerkingID,
-        samenwerkVorm = samenwerkVorm,
-        notificatieTitel = notificatieTitel,
-        notificatieTekst = notificatieTekst,
-        eventInitiator = eventInitiator,
-        eventInitiatorNaam = eventInitiatorNaam,
-        deelnemer = deelnemer,
-        deelnemerNaam = deelnemerNaam,
-        eventDatumTijd = eventDatumTijd,
-        properties = properties,
-        links = links?.toModel()
-    )
+) {
+    fun toModel(): Notificatie =
+        Notificatie(
+            notificatieID = notificatieID,
+            notificatieType = notificatieType,
+            samenwerkingID = samenwerkingID,
+            samenwerkVorm = samenwerkVorm,
+            notificatieTitel = notificatieTitel,
+            notificatieTekst = notificatieTekst,
+            eventInitiator = eventInitiator,
+            eventInitiatorNaam = eventInitiatorNaam,
+            deelnemer = deelnemer,
+            deelnemerNaam = deelnemerNaam,
+            eventDatumTijd = eventDatumTijd,
+            properties = properties,
+            links = links?.toModel(),
+        )
 }
