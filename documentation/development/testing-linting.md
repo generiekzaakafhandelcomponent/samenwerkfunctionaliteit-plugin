@@ -26,13 +26,13 @@ To improve the quality of our frontend we aim to add unit tests and adhere to th
 ### Testing
 
 In the `/frontend` folder, run:  
-> `npx ng test @valtimo-plugins/samenwerkfunctionaliteit-plugin --watch=false --browsers=ChromeHeadless`
+> `npm run test`
 
 This will run all frontend tests in a headless (no window) Chrome browser and will report the results on the command line.
 
 ### Linting
 
 In the `/frontend` folder, run:  
-> `npx ng lint @valtimo-plugins/samenwerkfunctionaliteit-plugin`
+> `npm run lint`
 
 This will run the linting and return issues to review.
