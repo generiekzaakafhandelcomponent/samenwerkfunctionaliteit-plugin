@@ -158,11 +158,60 @@ Voorbeeld `*.processlink.json`:
 ![get-alle-actieverzoeken.png](img/get-alle-actieverzoeken.png)
 ---
 
+### GET getSamenwerkingenNotificaties
+
+Sends a GET request to retrieve all **actieverzoeken** (action requests) of a **samenwerking**.
+**Usage:** Add this plugin action to an **operaton service task** in your process. The result of this request must be
+stored in an **operaton process variable**, for example **"actieverzoeken"**.
+
+| Parameter      | Type | Required | Description                                                                           |
+|----------------|------|----------|---------------------------------------------------------------------------------------|
+| resultPvName   | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in. |
+| samenwerkingId | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.             |
+
+Voorbeeld `*.processlink.json`:
+
+```json
+{
+   "activityId": "Activity_GetSamenwerkingNotificaties",
+   "activityType": "bpmn:ServiceTask:start",
+   "pluginConfigurationId": "12023724-a4bd-431d-93c0-5ba52049e9cd",
+   "pluginActionDefinitionKey": "get-samenwerking-notificaties",
+   "actionProperties": {
+      "resultPvName": "notificaties",
+      "samenwerkingId": "pv:samenwerkingId"
+   },
+   "processLinkType": "plugin"
+}
+```
+
+![get-samenwerking-notificaties.png](img/get-samenwerking-notificaties.png)
+---
+
 ## Usage
 
 ### How to Use the Plugin in a Process
 
 Explain how to use the plugin in a process, with examples if applicable.
+
+1. **Configure the Plugin**
+   Set the `apiUrl` property in the plugin configuration to the base URL of your API.
+
+2. **Add Actions to Operaton Service Tasks**
+   - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operaton service task.
+   - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operaton service task.
+
+3. **Store the Results**
+   - The result of **GET getActieverzoek** must be stored in an operaton process variable named **"actieverzoek"**.
+   - The result of **GET getAlleActieverzoeken** must be stored in an operaton process variable named **"
+      actieverzoeken"**.
+
+4. **Example Process Flow**
+    - Start the process.
+   - Add an **operaton service task** and select the **GET getActieverzoek** or **GET getAlleActieverzoeken** action.
+   - Map the result to the respective operaton process variable (**actieverzoek** or **actieverzoeken**).
+    - Proceed with the rest of the process logic using the stored data.
+
 
 #### Tabblad Config
 Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden gekoppeld aan het dossier
@@ -208,19 +257,19 @@ _Zie [toevoegen van plugins](https://docs.valtimo.nl/features/plugins/plugins/cu
 1. **Configure the Plugin**
    Set the `baseUrl` property in the plugin configuration to the base URL of your API.
 
-2. **Add Actions to Operation Service Tasks**
-   - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operation service task.
-   - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operation service task.
+2. **Add Actions to Operaton Service Tasks**
+   - For retrieving a single **actieverzoek**, use the **GET getActieverzoek** action in an operaton service task.
+   - For retrieving all **actieverzoeken**, use the **GET getAlleActieverzoeken** action in an operaton service task.
    - Set the **isOrganisationTheReceiver** variable to true or false, depending on whether you would like to receive all actieverzoeken based on if your organisation is the receiver. This variable defaults to true.
 
 3. **Store the Results**
-   - The result of **GET getActieverzoek** must be stored in an operation process variable named **"actieverzoek"**.
-   - The result of **GET getAlleActieverzoeken** must be stored in an operation process variable named **"
+   - The result of **GET getActieverzoek** must be stored in an operaton process variable named **"actieverzoek"**.
+   - The result of **GET getAlleActieverzoeken** must be stored in an operaton process variable named **"
      actieverzoeken"**.
 
 4. **Example Process Flow**
    - Start the process.
-   - Add an **operation service task** and select the **GET getActieverzoek** or **GET getAlleActieverzoeken** action.
-   - Map the result to the respective operation process variable (**actieverzoek** or **actieverzoeken**).
+   - Add an **operaton service task** and select the **GET getActieverzoek** or **GET getAlleActieverzoeken** action.
+   - Map the result to the respective operaton process variable (**actieverzoek** or **actieverzoeken**).
    - Proceed with the rest of the process logic using the stored data.
 
