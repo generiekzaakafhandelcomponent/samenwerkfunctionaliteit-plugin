@@ -8,6 +8,7 @@
       <bpmn:lane id="Lane_01ittfy" name="Upload document" />
       <bpmn:lane id="Lane_01gv4n7" name="Get samenwerking functionaliteit">
         <bpmn:flowNodeRef>Activity_GetSamenwerkingNotificaties</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0ibbxn9</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1kwkfau" name="Download document">
         <bpmn:flowNodeRef>Activity_0o2g21t</bpmn:flowNodeRef>
@@ -56,6 +57,7 @@
       <bpmn:incoming>Flow_1av8352</bpmn:incoming>
       <bpmn:incoming>Flow_1t4qje5</bpmn:incoming>
       <bpmn:incoming>Flow_1w5y4v5</bpmn:incoming>
+      <bpmn:incoming>Flow_05dkfho</bpmn:incoming>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Activity_00fynp6" name="Get actieverzoek" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
@@ -107,7 +109,7 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_1w1u9jb</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_GetSamenwerkingNotificaties" implementation="##WebService" camunda:expression="${true}">
+    <bpmn:serviceTask id="Activity_GetSamenwerkingNotificaties" name="Get samenwerking notificaties" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
         <camunda:inputOutput />
       </bpmn:extensionElements>
@@ -163,7 +165,7 @@
     <bpmn:sequenceFlow id="Flow_1xn3bpf" sourceRef="Activity_0uwens5" targetRef="Activity_09n22xl" />
     <bpmn:sequenceFlow id="Flow_0kf1q5n" sourceRef="Activity_00fynp6" targetRef="Activity_18grmoe" />
     <bpmn:sequenceFlow id="Flow_1w1u9jb" sourceRef="Activity_1ihebrj" targetRef="Gateway_1xwncml" />
-    <bpmn:sequenceFlow id="Flow_0zc7xk9" sourceRef="Activity_GetSamenwerkingNotificaties" targetRef="Gateway_1xwncml" />
+    <bpmn:sequenceFlow id="Flow_0zc7xk9" sourceRef="Activity_GetSamenwerkingNotificaties" targetRef="Activity_0ibbxn9" />
     <bpmn:sequenceFlow id="Flow_1av8352" sourceRef="log_getDocumentenoverzicht_response" targetRef="Gateway_1xwncml" />
     <bpmn:sequenceFlow id="Flow_1lxh511" sourceRef="Gateway_1xwncml" targetRef="Event_0re9ycq" />
     <bpmn:sequenceFlow id="Flow_1kmhbga" sourceRef="get_documentenoverzicht" targetRef="log_getDocumentenoverzicht_response" />
@@ -196,6 +198,14 @@
       <bpmn:incoming>Flow_1xn3bpf</bpmn:incoming>
       <bpmn:outgoing>Flow_1w5y4v5</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0ibbxn9" name="Log API Response" camunda:expression="${valueResolverDelegateService.handleValue(execution, &#34;doc:/apiResponse&#34;, notificaties)}">
+      <bpmn:extensionElements>
+        <camunda:inputOutput />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zc7xk9</bpmn:incoming>
+      <bpmn:outgoing>Flow_05dkfho</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_05dkfho" sourceRef="Activity_0ibbxn9" targetRef="Gateway_1xwncml" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="start-samenwerkfunctionaliteit-demo">
@@ -282,6 +292,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0lv8jct" bpmnElement="Activity_GetSamenwerkingNotificaties">
         <dc:Bounds x="630" y="2070" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0re9ycq_di" bpmnElement="Event_0re9ycq">
         <dc:Bounds x="1472" y="162" width="36" height="36" />
@@ -303,6 +314,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0nu9b6i_di" bpmnElement="Activity_09n22xl">
         <dc:Bounds x="840" y="560" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_088mdmo" bpmnElement="Activity_0ibbxn9">
+        <dc:Bounds x="810" y="2070" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0qj8m48_di" bpmnElement="Flow_0qj8m48">
         <di:waypoint x="248" y="180" />
@@ -396,8 +410,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zc7xk9_di" bpmnElement="Flow_0zc7xk9">
         <di:waypoint x="730" y="2110" />
-        <di:waypoint x="1370" y="2110" />
-        <di:waypoint x="1370" y="205" />
+        <di:waypoint x="810" y="2110" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1av8352_di" bpmnElement="Flow_1av8352">
         <di:waypoint x="1090" y="1480" />
@@ -424,6 +437,11 @@
       <bpmndi:BPMNEdge id="Flow_1w5y4v5_di" bpmnElement="Flow_1w5y4v5">
         <di:waypoint x="940" y="600" />
         <di:waypoint x="1370" y="600" />
+        <di:waypoint x="1370" y="205" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05dkfho_di" bpmnElement="Flow_05dkfho">
+        <di:waypoint x="910" y="2110" />
+        <di:waypoint x="1370" y="2110" />
         <di:waypoint x="1370" y="205" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
