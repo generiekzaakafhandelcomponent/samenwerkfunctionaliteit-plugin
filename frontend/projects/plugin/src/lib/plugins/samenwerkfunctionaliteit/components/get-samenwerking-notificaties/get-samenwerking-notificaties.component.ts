@@ -3,14 +3,14 @@ import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTransl
 import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
 import { NotificatiesConfig } from "../../models/notificaties-config";
 import { FormModule, FormOutput, InputModule } from "@valtimo/components";
-import { AsyncPipe } from "@angular/common";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
   selector: "get-samenwerking-notificaties",
   templateUrl: "./get-samenwerking-notificaties.component.html",
   standalone: true,
   styleUrl: "./get-samenwerking-notificaties.component.scss",
-  imports: [InputModule, FormModule, PluginTranslatePipeModule, AsyncPipe],
+  imports: [InputModule, FormModule, PluginTranslatePipeModule, AsyncPipe, NgIf],
 })
 export class GetSamenwerkingNotificatiesComponent implements FunctionConfigurationComponent {
   @Input() disabled$: Observable<boolean>;
