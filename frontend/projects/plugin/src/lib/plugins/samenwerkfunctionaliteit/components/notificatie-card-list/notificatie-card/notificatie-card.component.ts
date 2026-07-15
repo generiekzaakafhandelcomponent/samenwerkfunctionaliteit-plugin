@@ -27,8 +27,6 @@ export class NotificatieCardComponent implements NotificatieCardInterface {
 
   isSkeleton = computed(() => this.inputs().type === NotificatieCardTypes.Skeleton);
 
-  ngOnInit() {}
-
   capitalize(value: string): string {
     return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
   }
