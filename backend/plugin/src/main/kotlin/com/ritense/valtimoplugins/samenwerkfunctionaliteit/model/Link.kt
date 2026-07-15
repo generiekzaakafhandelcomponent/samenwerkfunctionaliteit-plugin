@@ -1,5 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.model
 
+import com.fasterxml.jackson.annotation.JsonInclude
+
 data class Link(
     val deprecation: String? = null,
     val href: String? = null,

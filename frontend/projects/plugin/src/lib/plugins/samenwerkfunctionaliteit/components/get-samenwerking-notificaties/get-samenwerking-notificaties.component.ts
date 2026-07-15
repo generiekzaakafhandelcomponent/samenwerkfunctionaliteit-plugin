@@ -1,18 +1,59 @@
-import {Component, EventEmitter} from '@angular/core';
-import {FunctionConfigurationComponent, FunctionConfigurationData} from '@valtimo/plugin';
-import {Observable} from 'rxjs';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule } from "@valtimo/plugin";
+import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
+import { NotificatiesConfig } from "../../models/notificaties-config";
+import { FormModule, FormOutput, InputModule } from "@valtimo/components";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
-  selector: 'app-get-samenwerking-notificaties',
-  templateUrl: './get-samenwerking-notificaties.component.html',
+  selector: "get-samenwerking-notificaties",
+  templateUrl: "./get-samenwerking-notificaties.component.html",
   standalone: true,
-  styleUrl: './get-samenwerking-notificaties.component.scss'
+  styleUrl: "./get-samenwerking-notificaties.component.scss",
+  imports: [InputModule, FormModule, PluginTranslatePipeModule, AsyncPipe, NgIf],
 })
 export class GetSamenwerkingNotificatiesComponent implements FunctionConfigurationComponent {
-  configuration: EventEmitter<FunctionConfigurationData>;
-  disabled$: Observable<boolean>;
-  pluginId: string;
-  save$: Observable<void>;
-  valid: EventEmitter<boolean>;
+  @Input() disabled$: Observable<boolean>;
+  @Input() pluginId: string;
+  @Input() save$: Observable<void>;
+  @Input() prefillConfiguration$?: Observable<NotificatiesConfig>;
+  @Output() valid: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
 
+  private saveSubscription!: Subscription;
+
+  private readonly config$ = new BehaviorSubject<NotificatiesConfig | null>(null);
+  private readonly valid$ = new BehaviorSubject<boolean>(false);
+
+  ngOnInit(): void {
+    this.openSaveSubscription();
+  }
+
+  ngOnDestroy(): void {
+    this.saveSubscription?.unsubscribe();
+  }
+
+  formValueChange(formOutput: FormOutput): void {
+    this.config$.next(formOutput as NotificatiesConfig);
+    this.handleValid(formOutput as NotificatiesConfig);
+  }
+
+  private handleValid(formOutput: NotificatiesConfig): void {
+    const valid = !!formOutput.resultPvName.trim() && !!formOutput.samenwerkingId.trim();
+
+    this.valid$.next(valid);
+    this.valid.emit(valid);
+  }
+
+  private openSaveSubscription(): void {
+    this.saveSubscription = this.save$?.subscribe((save) => {
+      combineLatest([this.config$, this.valid$])
+        .pipe(take(1))
+        .subscribe(([config, valid]) => {
+          if (valid && config) {
+            this.configuration.emit(config);
+          }
+        });
+    });
+  }
 }
