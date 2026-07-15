@@ -1,5 +1,5 @@
 import { CardInput } from "../interface/card-input.interface";
-import { NotificatieCardType, NotificatieCardTypes } from "../type/notificatie-card.type";
+import { NotificatieCardType } from "../type/notificatie-card.type";
 
 export class NotificatieCardInput implements CardInput {
   constructor(
