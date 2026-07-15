@@ -111,7 +111,9 @@
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_GetSamenwerkingNotificaties" name="Get samenwerking notificaties" implementation="##WebService" camunda:expression="${true}">
       <bpmn:extensionElements>
-        <camunda:inputOutput />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="samenwerkingId">SAM-66497</camunda:inputParameter>
+        </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0zc7xk9</bpmn:outgoing>
     </bpmn:serviceTask>
