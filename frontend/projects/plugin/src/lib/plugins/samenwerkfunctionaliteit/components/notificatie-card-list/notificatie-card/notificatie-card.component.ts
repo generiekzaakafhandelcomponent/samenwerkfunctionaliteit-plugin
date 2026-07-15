@@ -10,7 +10,6 @@ import { NotificatieCardInput } from "../model/notificatie-card-input.model";
   templateUrl: "./notificatie-card.component.html",
   styleUrls: ["./notificatie-card.component.scss"],
   selector: "swf-notificatie-card",
-  standalone: true,
   imports: [TranslatePipe, SkeletonModule, DatePipe],
 })
 export class NotificatieCardComponent implements NotificatieCardInterface {
