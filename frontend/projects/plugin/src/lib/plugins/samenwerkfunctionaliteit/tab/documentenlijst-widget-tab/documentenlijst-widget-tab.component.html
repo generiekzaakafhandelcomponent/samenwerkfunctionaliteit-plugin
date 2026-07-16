@@ -1,5 +1,5 @@
 @if (!isLoading()) {
-  <document-list [documents]="documents()" [skeleton]="isLoading()"></document-list>
+  <document-list [documents]="documents()" [isSkeleton]="isLoading()"></document-list>
 } @else {
-  <document-list [skeleton]="isLoading()"></document-list>
+  <document-list [isSkeleton]="isLoading()"></document-list>
 }

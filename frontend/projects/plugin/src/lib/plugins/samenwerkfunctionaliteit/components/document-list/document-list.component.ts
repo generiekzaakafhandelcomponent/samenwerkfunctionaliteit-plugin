@@ -12,7 +12,7 @@ import { NgIf } from "@angular/common";
 })
 export class DocumentListComponent implements OnInit {
   documents: InputSignal<Document[]> = input<Document[]>([]);
-  skeleton: InputSignal<boolean> = input<boolean>(true);
+  isSkeleton: InputSignal<boolean> = input<boolean>(true);
   public model: WritableSignal<TableModel> = signal(new TableModel());
 
   ngOnInit() {
