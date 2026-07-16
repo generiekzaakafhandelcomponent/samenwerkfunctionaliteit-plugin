@@ -18,7 +18,7 @@ import { NotificatieCardComponent } from "./notificatie-card/notificatie-card.co
   imports: [NotificatieCardComponent, LoadingModule, SkeletonModule],
   selector: "swf-notificatie-card-list",
 })
-export class NotificatieCardList implements OnInit {
+export class NotificatieCardListComponent implements OnInit {
   notificatieService: NotificatieService = inject(NotificatieService);
   swfDocumentService: SwfDocumentService = inject(SwfDocumentService);
   route: ActivatedRoute = inject(ActivatedRoute);
