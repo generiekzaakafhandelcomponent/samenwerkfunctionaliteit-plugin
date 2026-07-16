@@ -22,7 +22,7 @@ import { SamenwerkingProperties } from "../../../models/samenwerking-properties.
 export class StuurBerichtComponent {
 
   private actieverzoekId: string | null | undefined;
-  private notificationTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private notificationTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly NOTIFICATION_TIMEOUT_DURATION = 4500;
 
   notification = signal<BerichtNotification | null>(null);
@@ -98,17 +98,17 @@ export class StuurBerichtComponent {
   }
 
   private assignNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
-    if (this.notificationTimeoutId) {
-      clearTimeout(this.notificationTimeoutId);
-      this.notificationTimeoutId = null;
+    if (this.notificationTimeout) {
+      clearTimeout(this.notificationTimeout);
+      this.notificationTimeout = null;
     }
 
     this.notification.set(notification);
 
     if (shouldCloseAutomatically) {
-      this.notificationTimeoutId = setTimeout(() => {
+      this.notificationTimeout = setTimeout(() => {
         this.notification.set(null);
-        this.notificationTimeoutId = null;
+        this.notificationTimeout = null;
       }, this.NOTIFICATION_TIMEOUT_DURATION);
     }
   }
