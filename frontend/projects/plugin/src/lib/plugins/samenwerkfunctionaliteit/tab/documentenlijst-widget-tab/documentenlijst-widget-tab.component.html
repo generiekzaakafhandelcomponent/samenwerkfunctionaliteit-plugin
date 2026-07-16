@@ -1,0 +1,5 @@
+@if (!isLoading()) {
+  <document-list [documents]="documents()" [skeleton]="isLoading()"></document-list>
+} @else {
+  <document-list [skeleton]="isLoading()"></document-list>
+}
