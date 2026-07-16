@@ -15,12 +15,12 @@ export class DocumentListComponent implements OnInit {
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   public model: WritableSignal<TableModel> = signal(new TableModel());
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log(this.documents());
     this.setModelDataAndHeader(this.documents());
   }
 
-  private setModelDataAndHeader(documents: Document[]) {
+  private setModelDataAndHeader(documents: Document[]): void {
     this.model().data = this.createTableItemsForTableModel(documents);
     this.model().header = this.createTableHeadersForTableModel();
   }

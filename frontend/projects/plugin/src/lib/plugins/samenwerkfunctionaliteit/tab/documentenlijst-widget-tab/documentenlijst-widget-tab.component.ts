@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, signal, WritableSignal } from "@angular/core";
 import { DocumentListComponent } from "../../components/document-list/document-list.component";
 import { switchMap, take, tap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -14,15 +14,15 @@ import { SamenwerkingProperties } from "../../models/samenwerking-properties.mod
   imports: [DocumentListComponent],
 })
 export class DocumentenlijstWidgetTabComponent {
-  private readonly documentService = inject(DocumentService);
-  private readonly swfDocumentService = inject(SwfDocumentService);
-  readonly route = inject(ActivatedRoute);
+  private readonly documentService: DocumentService = inject(DocumentService);
+  private readonly swfDocumentService: SwfDocumentService = inject(SwfDocumentService);
+  readonly route: ActivatedRoute = inject(ActivatedRoute);
 
-  documents = signal<Document[]>([]);
-  isLoading = signal<boolean>(true);
+  documents: WritableSignal<Document[]> = signal<Document[]>([]);
+  isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
   ngOnInit() {
-    const documentId = this.swfDocumentService.getParam(this.route, "documentId");
+    const documentId: string = this.swfDocumentService.getParam(this.route, "documentId");
     this.fetchAndLoadDocumenten(documentId);
   }
 
