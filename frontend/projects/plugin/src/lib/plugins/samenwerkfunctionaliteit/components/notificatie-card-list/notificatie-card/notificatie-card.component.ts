@@ -5,6 +5,7 @@ import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SkeletonModule } from "carbon-components-angular";
 import { DatePipe } from "@angular/common";
 import { NotificatieCardInput } from "../model/notificatie-card-input.model";
+import { pluginNlTranslations } from "../../../i18n/nl";
 
 @Component({
   templateUrl: "./notificatie-card.component.html",
@@ -27,6 +28,9 @@ export class NotificatieCardComponent implements NotificatieCardInterface {
 
   isSkeleton = computed(() => this.inputs().type === NotificatieCardTypes.Skeleton);
   protected typeText: string = "";
+  constructor() {
+    this.translate.setTranslation("nl", pluginNlTranslations, true);
+  }
 
   ngOnInit() {
     this.typeText = this.getTypeText();
