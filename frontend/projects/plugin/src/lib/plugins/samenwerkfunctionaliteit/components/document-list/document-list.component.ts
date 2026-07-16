@@ -17,10 +17,10 @@ export class DocumentListComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.documents());
-    this.setModelDataAndHeader(this.documents());
+    this.setTableModelDataAndHeader(this.documents());
   }
 
-  private setModelDataAndHeader(documents: Document[]): void {
+  private setTableModelDataAndHeader(documents: Document[]): void {
     this.model().data = this.createTableItemsForTableModel(documents);
     this.model().header = this.createTableHeadersForTableModel();
   }
