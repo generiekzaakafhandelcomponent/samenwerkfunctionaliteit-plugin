@@ -69,8 +69,6 @@ export class NotificatieCardList {
   }
 
   private mapNotificatieToNotificatieCardInput(notificatie: Notificatie): CardInput {
-    const eventDateTime = new Date(notificatie.eventDateTime);
-
     return new NotificatieCardInput(
       notificatie.notificatieId,
       this.mapNotificatieTypeToNotificatieCardType(notificatie.notificatieType),
