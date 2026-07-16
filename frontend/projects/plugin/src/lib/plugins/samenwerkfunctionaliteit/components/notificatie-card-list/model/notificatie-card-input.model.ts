@@ -4,7 +4,7 @@ import { NotificatieCardType } from "../type/notificatie-card.type";
 export class NotificatieCardInput implements CardInput {
   constructor(
     public readonly notificatieId = "",
-    public readonly type: NotificatieCardType | null = null,
+    public readonly type: NotificatieCardType | undefined = undefined,
     public readonly title = "",
     public readonly eventDateTime: Date | null = null,
     public readonly initiatorNaam = "",

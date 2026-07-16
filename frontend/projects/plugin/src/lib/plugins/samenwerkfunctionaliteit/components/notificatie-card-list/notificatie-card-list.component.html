@@ -1,16 +1,12 @@
-@if (isLoading()) {
-  <div class="notificatie-card skeleton-card">
+<div class="notificatie-card-list">
+  @if (isLoading()) {
     @for (item of itemsPerPageArray; track $index) {
-      <cds-skeleton-text [maxLineWidth]="600" [minLineWidth]="100" [lines]="6"></cds-skeleton-text>
+      <swf-notificatie-card [inputs]="skeletonInput"></swf-notificatie-card>
     }
-  </div>
-}
-@if (!this.isLoading()) {
-  <div class="notificatiecard-list">
+  }
+  @if (!this.isLoading()) {
     @for (input of this.inputs(); track input.notificatieId) {
-      <swf-notificatie
-        [inputs]="input"
-      ></swf-notificatie>
+      <swf-notificatie-card [inputs]="input"></swf-notificatie-card>
     }
-  </div>
-}
+  }
+</div>
