@@ -1,0 +1,36 @@
+<cds-table-container>
+  <cds-table-toolbar [model]="model()" #toolbar>
+    <cds-table-toolbar-actions>
+      <button cdsButton="primary">
+        Verwijder
+        <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
+      </button>
+      <button cdsButton="primary">
+        Download
+        <svg cdsIcon="download" size="16" class="cds--btn__icon"></svg>
+      </button>
+    </cds-table-toolbar-actions>
+    <cds-table-toolbar-content *ngIf="!toolbar.selected">
+      <cds-table-toolbar-search [expandable]="true"></cds-table-toolbar-search>
+      <button cdsButton="ghost" class="toolbar-action">
+        <svg
+          cdsIcon="settings"
+          size="16"
+          class="cds--toolbar-action__icon"
+        ></svg>
+      </button>
+      <button cdsButton="primary" size="sm">
+        Upload document
+        <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
+      </button>
+    </cds-table-toolbar-content>
+  </cds-table-toolbar>
+
+  <cds-table
+    [model]="model()"
+    [showSelectionColumn]="true"
+    [skeleton]="isSkeleton()"
+    [striped]="false"
+  >
+  </cds-table>
+</cds-table-container>
