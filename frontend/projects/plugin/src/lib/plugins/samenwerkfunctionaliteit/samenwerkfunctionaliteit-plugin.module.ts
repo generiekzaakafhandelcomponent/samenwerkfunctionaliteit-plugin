@@ -5,6 +5,7 @@ import { PluginTranslatePipeModule } from "@valtimo/plugin";
 import { SamenwerkfunctionaliteitPluginConfigurationComponent } from "./components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component";
 import { pluginNlTranslations } from "./i18n/nl";
 import { TranslateService } from "@ngx-translate/core";
+import { take } from "rxjs";
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,12 @@ export class SamenwerkfunctionaliteitPluginModule {
   protected translate = inject(TranslateService);
 
   constructor() {
-    this.translate.setTranslation("nl", pluginNlTranslations, true);
+    this.translate.onLangChange.pipe(take(1)).subscribe(({ lang }) => {
+      switch (lang) {
+        case "nl":
+          this.translate.setTranslation(lang, pluginNlTranslations, true);
+          break;
+      }
+    });
   }
 }
