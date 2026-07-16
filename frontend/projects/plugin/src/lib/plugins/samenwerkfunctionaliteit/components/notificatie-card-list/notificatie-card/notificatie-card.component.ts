@@ -26,12 +26,17 @@ export class NotificatieCardComponent implements NotificatieCardInterface {
   });
 
   isSkeleton = computed(() => this.inputs().type === NotificatieCardTypes.Skeleton);
+  protected typeText: string = "";
+
+  ngOnInit() {
+    this.typeText = this.getTypeText();
+  }
 
   private capitalize(value: string): string {
     return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
   }
 
-  getTypeText() {
+  private getTypeText() {
     switch (this.inputs().type) {
       case NotificatieCardTypes.Document:
         return "samenwerkfunctionaliteit.notifications.types.document";
