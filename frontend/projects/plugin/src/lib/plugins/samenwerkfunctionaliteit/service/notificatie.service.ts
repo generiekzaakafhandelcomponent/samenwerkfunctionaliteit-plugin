@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { NotificatieClient } from "../client/notificatie-client.service";
 import { map, Observable } from "rxjs";
-import { mapDtosToModels, NotificatieResponse } from "../dto/notificatie.dto";
+import { mapNotificatieDtosToModels, NotificatieResponse } from "../dto/notificatie.dto";
 import { Notificatie } from "../models/notificatie.model";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class NotificatieService {
   getNotificaties(samenwerkingId: string): Observable<Notificatie[]> {
     return this.notificatieClient.getNotificaties().pipe(
       map((response: NotificatieResponse) => {
-        return mapDtosToModels(response);
+        return mapNotificatieDtosToModels(response);
       }),
       map((notificaties: Notificatie[]) => {
         return notificaties.filter((notificatie) => {

@@ -27,11 +27,11 @@ export interface NotificatieDto {
   _links: Links;
 }
 
-export function mapDtosToModels(response: NotificatieResponse): NotificatieModel[] {
-  return response._embedded.notificaties.map(mapDtoToModel);
+export function mapNotificatieDtosToModels(response: NotificatieResponse): NotificatieModel[] {
+  return response._embedded.notificaties.map(mapNotifcatieDtoToModel);
 }
 
-function mapDtoToModel(notificatie: NotificatieDto): NotificatieModel {
+function mapNotifcatieDtoToModel(notificatie: NotificatieDto): NotificatieModel {
   return {
     notificatieId: notificatie.notificatieId,
     notificatieType: mapStringToNotificatieType(notificatie.notificatieType),
