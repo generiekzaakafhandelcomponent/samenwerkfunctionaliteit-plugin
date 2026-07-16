@@ -9,6 +9,7 @@ import { finalize, take, tap } from "rxjs";
 import { BerichtenService } from "../../../service/berichten.service";
 import { SwfDocumentService } from "../../../service/swf-document.service";
 import { BerichtNotification } from "../../../interface/bericht-notification.interface";
+import { SuccessNotification, ErrorNotification } from "../../../config/bericht-notification-config";
 import { BusinessKey } from "../../../models/business-key.model";
 import { SamenwerkingProperties } from "../../../models/samenwerking-properties.model";
 
@@ -27,19 +28,6 @@ export class StuurBerichtComponent {
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
   isMissingActieverzoekId = signal<boolean>(false);
-
-  successNotification: BerichtNotification = {
-    type: "success",
-    title: "Verzonden:",
-    message: "Het bericht is succesvol verzonden.",
-  };
-
-  errorNotification: BerichtNotification = {
-    type: "error",
-    title: "Bericht kon niet worden verstuurd:",
-    message:
-      "Er ging iets mis tijdens het verzenden van het bericht. Neem contact op met uw beheerder als dit probleem zich vaker voordoet.",
-  };
 
   placeholder = "Type hier uw bericht";
   rows = 5;
@@ -61,9 +49,9 @@ export class StuurBerichtComponent {
   onClick() {
     this.notification.set(null);
 
-    if (!this.actieverzoekId?.trim()) {
+    if (!this.actieverzoekId) {
       this.logger.warn("Unable to post message: No actieverzoekId available.");
-      this.assignNotification(this.errorNotification, false);
+      this.assignNotification(ErrorNotification, false);
       return;
     }
     this.isSubmitting.set(true);
@@ -77,12 +65,12 @@ export class StuurBerichtComponent {
       )
       .subscribe({
         next: () => {
-          this.assignNotification(this.successNotification, true);
+          this.assignNotification(SuccessNotification, true);
           this.message = "";
         },
         error: (response) => {
-          this.logger.debug(response);
-          this.assignNotification(this.errorNotification, false);
+          this.logger.error(response);
+          this.assignNotification(ErrorNotification, false);
         },
       });
   }
