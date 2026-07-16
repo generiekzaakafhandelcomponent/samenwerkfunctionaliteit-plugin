@@ -1,19 +1,21 @@
 import { Component, inject, signal, WritableSignal } from "@angular/core";
-import { NotificatieComponent } from "../../components/notificaties-lijst/notificatie/notificatie.component";
-import { NotificatieCardInput } from "../../components/notificaties-lijst/interface/notificatie-card.interface";
 import { NotificatieService } from "../../service/notificatie.service";
 import { Observable, switchMap, take } from "rxjs";
 import { Notificatie } from "../../models/notificatie.model";
-import { getNotificationCardTypeByNotificationType } from "../../components/notificaties-lijst/config/notificatie-type-config";
 import { LoadingModule, SkeletonModule } from "carbon-components-angular";
 import { SwfDocumentService } from "../../service/swf-document.service";
 import { ActivatedRoute } from "@angular/router";
 import { BusinessKey } from "../../models/business-key.model";
+import { NotificatieCardInput } from "./model/notificatie-card-input.model";
+import { CardInput } from "./interface/card-input.interface";
+import { NotificatieType, NotificatieTypes } from "./type/notificatie.type";
+import { NotificatieCardType, NotificatieCardTypes } from "./type/notificatie-card.type";
+import { NotificatieCardComponent } from "./notificatie-card/notificatie-card.component";
 
 @Component({
   templateUrl: `notificatie-card-list.component.html`,
   styleUrl: "./notificatie-card-list.component.scss",
-  imports: [NotificatieComponent, LoadingModule, SkeletonModule],
+  imports: [NotificatieCardComponent, LoadingModule, SkeletonModule],
   selector: "notificatie-card-list",
 })
 export class NotificatieCardList {
@@ -21,14 +23,17 @@ export class NotificatieCardList {
   swfDocumentService: SwfDocumentService = inject(SwfDocumentService);
   route: ActivatedRoute = inject(ActivatedRoute);
   notifications: WritableSignal<Notificatie[]> = signal<Notificatie[]>([]);
-  inputs: WritableSignal<NotificatieCardInput[]> = signal<NotificatieCardInput[]>([]);
+  inputs: WritableSignal<CardInput[]> = signal<CardInput[]>([]);
+  skeletonInput = { ...new NotificatieCardInput(), type: NotificatieCardTypes.Skeleton };
   isLoading: WritableSignal<boolean> = signal(true);
   itemsPerPage = 10;
   itemsPerPageArray: number[] = Array.from({ length: this.itemsPerPage });
 
   ngOnInit() {
     const documentId = this.swfDocumentService.getParam(this.route, "documentId");
-    this.fetchAndLoadNotifications(documentId);
+    if (documentId !== null) {
+      this.fetchAndLoadNotifications(documentId);
+    }
   }
 
   private fetchAndLoadNotifications(documentId: string): void {
@@ -63,18 +68,40 @@ export class NotificatieCardList {
     this.isLoading.set(false);
   }
 
-  private mapNotificatieToNotificatieCardInput(notificatie: Notificatie): NotificatieCardInput {
-    const type = getNotificationCardTypeByNotificationType(notificatie.notificatieType);
+  private mapNotificatieToNotificatieCardInput(notificatie: Notificatie): CardInput {
+    const eventDateTime = new Date(notificatie.eventDateTime);
 
-    const eventDateTime = new Date(notificatie.eventDatumTijd);
+    return new NotificatieCardInput(
+      notificatie.notificatieId,
+      this.mapNotificatieTypeToNotificatieCardType(notificatie.notificatieType),
+      notificatie.notificatieTitel,
+      notificatie.eventDateTime,
+      notificatie.eventInitiatorName,
+      notificatie.notificatieText,
+    );
+  }
 
-    return {
-      notificatieId: notificatie.notificatieId,
-      type: type,
-      title: notificatie.notificatieTitel,
-      eventDateTime: eventDateTime,
-      initiatorNaam: notificatie.eventInitiatorNaam,
-      content: notificatie.notificatieTekst,
-    };
+  private mapNotificatieTypeToNotificatieCardType(notificatieType: NotificatieType): NotificatieCardType {
+    switch (notificatieType) {
+      case NotificatieTypes.ActieverzoekStatusChanged:
+        return NotificatieCardTypes.Status;
+      case NotificatieTypes.DocumentCreated:
+        return NotificatieCardTypes.Document;
+      case NotificatieTypes.DocumentDeleted:
+        return NotificatieCardTypes.Document;
+      case NotificatieTypes.DocumentEdited:
+        return NotificatieCardTypes.Document;
+      case NotificatieTypes.InvitationPartnerOrganization:
+        return NotificatieCardTypes.System;
+      case NotificatieTypes.MessageSent:
+        return NotificatieCardTypes.Message;
+      case NotificatieTypes.RequestRetrievalSucceeded:
+        return NotificatieCardTypes.System;
+      case NotificatieTypes.Skeleton:
+        return NotificatieCardTypes.Skeleton;
+
+      default:
+        throw new Error(`Unknown notificatie type: ${notificatieType}`);
+    }
   }
 }
