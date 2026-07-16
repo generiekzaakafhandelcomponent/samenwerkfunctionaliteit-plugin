@@ -16,23 +16,15 @@ import { pluginNlTranslations } from "../../../i18n/nl";
 export class NotificatieCardComponent implements NotificatieCardInterface {
   protected translate = inject(TranslateService);
   protected capitalizedContent: Signal<string> = computed(() => this.capitalize(this.inputs().content));
-
-  inputs = input<NotificatieCardInput>({
-    notificatieId: "",
-    content: "",
-    eventDateTime: null,
-    initiatorNaam: "",
-    title: "",
-    type: NotificatieCardTypes.Skeleton,
-  });
-
-  isSkeleton = computed(() => this.inputs().type === NotificatieCardTypes.Skeleton);
+  protected cardClass: string = "";
   protected typeText: string = "";
+
   constructor() {
     this.translate.setTranslation("nl", pluginNlTranslations, true);
   }
 
   ngOnInit() {
+    this.cardClass = this.inputs().type?.toLowerCase() ?? "";
     this.typeText = this.getTypeText();
   }
 

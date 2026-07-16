@@ -1,4 +1,4 @@
-<div class="notificatiecard" [class]="inputs().type.toLowerCase()">
+<div class="notificatiecard" [class]="cardClass">
   @if (!isSkeleton()) {
     <div class="notificatie-header">
       <h5 class="notificatie-title">{{ inputs().title }}</h5>
