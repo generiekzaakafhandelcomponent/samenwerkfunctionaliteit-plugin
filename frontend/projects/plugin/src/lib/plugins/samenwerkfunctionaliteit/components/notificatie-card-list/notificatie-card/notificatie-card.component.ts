@@ -1,11 +1,10 @@
 import { NotificatieCardInterface } from "../interface/notificatie-card.interface";
-import { Component, computed, inject, input, Signal } from "@angular/core";
+import { Component, computed, input, Signal } from "@angular/core";
 import { NotificatieCardTypes } from "../type/notificatie-card.type";
-import { TranslatePipe, TranslateService } from "@ngx-translate/core";
+import { TranslatePipe } from "@ngx-translate/core";
 import { SkeletonModule } from "carbon-components-angular";
 import { DatePipe } from "@angular/common";
 import { NotificatieCardInput } from "../model/notificatie-card-input.model";
-import { pluginNlTranslations } from "../../../i18n/nl";
 
 @Component({
   templateUrl: "./notificatie-card.component.html",
@@ -14,14 +13,11 @@ import { pluginNlTranslations } from "../../../i18n/nl";
   imports: [TranslatePipe, SkeletonModule, DatePipe],
 })
 export class NotificatieCardComponent implements NotificatieCardInterface {
-  protected translate = inject(TranslateService);
+  inputs = input<NotificatieCardInput>({ ...new NotificatieCardInput(), type: NotificatieCardTypes.Skeleton });
+
   protected capitalizedContent: Signal<string> = computed(() => this.capitalize(this.inputs().content));
   protected cardClass: string = "";
   protected typeText: string = "";
-
-  constructor() {
-    this.translate.setTranslation("nl", pluginNlTranslations, true);
-  }
 
   ngOnInit() {
     this.cardClass = this.inputs().type?.toLowerCase() ?? "";
