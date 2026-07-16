@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from "@angular/core";
+import { Component, inject, OnInit, signal, WritableSignal } from "@angular/core";
 import { NotificatieService } from "../../service/notificatie.service";
 import { Observable, switchMap, take } from "rxjs";
 import { Notificatie } from "../../models/notificatie.model";
@@ -18,7 +18,7 @@ import { NotificatieCardComponent } from "./notificatie-card/notificatie-card.co
   imports: [NotificatieCardComponent, LoadingModule, SkeletonModule],
   selector: "notificatie-card-list",
 })
-export class NotificatieCardList {
+export class NotificatieCardList implements OnInit {
   notificatieService: NotificatieService = inject(NotificatieService);
   swfDocumentService: SwfDocumentService = inject(SwfDocumentService);
   route: ActivatedRoute = inject(ActivatedRoute);
