@@ -8,4 +8,4 @@ import { NotificatieCardList } from "../../components/notificatie-card-list/noti
   styleUrl: "./notificaties-custom-tab.component.scss",
   standalone: true,
 })
-export class NotificatiesCustomTab {}
+export class NotificatiesCustomTabComponent {}
