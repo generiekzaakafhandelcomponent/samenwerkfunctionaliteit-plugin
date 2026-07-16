@@ -4,6 +4,7 @@ import { of } from "rxjs";
 import { NotificatieCardList } from "./notificatie-card-list.component";
 import { NotificatieService } from "../../service/notificatie.service";
 import { SwfDocumentService } from "../../service/swf-document.service";
+import { TranslateModule } from "@ngx-translate/core";
 
 describe("NotificatieCardList", () => {
   let component: NotificatieCardList;
@@ -11,7 +12,7 @@ describe("NotificatieCardList", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotificatieCardList],
+      imports: [NotificatieCardList, TranslateModule.forRoot()],
       providers: [
         { provide: NotificatieService, useValue: { getNotificaties: () => of([]) } },
         {

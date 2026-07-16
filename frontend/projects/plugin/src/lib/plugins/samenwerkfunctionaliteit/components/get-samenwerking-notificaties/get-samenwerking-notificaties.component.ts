@@ -39,7 +39,10 @@ export class GetSamenwerkingNotificatiesComponent implements FunctionConfigurati
   }
 
   private handleValid(formOutput: NotificatiesConfig): void {
-    const valid = !!formOutput.resultPvName.trim() && !!formOutput.samenwerkingId.trim();
+    const resultPvName = formOutput.resultPvName ?? "";
+    const samenwerkingId = formOutput.samenwerkingId ?? "";
+
+    const valid = resultPvName.trim().length > 0 && samenwerkingId.trim().length > 0;
 
     this.valid$.next(valid);
     this.valid.emit(valid);
