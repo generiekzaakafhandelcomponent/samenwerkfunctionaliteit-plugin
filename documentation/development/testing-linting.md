@@ -36,3 +36,14 @@ In the `/frontend` folder, run:
 > `npm run lint`
 
 This will run the linting and return issues to review.
+
+#### Linting Part 2: Prettier
+
+In the `/frontend` folder, run:
+> npx prettier --check "projects/plugin/**/*.ts"
+
+This will flag formatting issues, and you can fix them by running the command below:
+
+> npx prettier --write "/path/to/your/file/to/change"
+
+**!!This will make changes to your files!!**  
