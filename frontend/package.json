@@ -10,10 +10,10 @@
         "clean": "npx rimraf@6 dist .angular node_modules package-lock.json",
         "e2e": "ng e2e",
         "libs-build-all": "npm run build --workspaces",
-        "lint": "ng lint",
         "ng": "ng",
         "start": "node --max_old_space_size=5048 ./node_modules/@angular/cli/bin/ng serve --proxy-config conf/proxy.conf.json",
-        "test": "ng test"
+        "test": "ng test @valtimo-plugins/samenwerkfunctionaliteit-plugin --watch=false --browsers=ChromeHeadless",
+        "lint": "ng lint @valtimo-plugins/samenwerkfunctionaliteit-plugin"
     },
     "private": true,
     "workspaces": [
