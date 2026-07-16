@@ -103,7 +103,7 @@ import {
   SamenwerkfunctionaliteitPluginModule,
   samenwerkfunctionaliteitPluginSpecification,
   DocumentenlijstWidgetTabComponent,
-  NotificatiesCustomTab,
+  NotificatiesCustomTabComponent,
   SamenwerkingWidgetTabComponent,
   BerichtenCustomTabComponent,
 } from "@valtimo-plugins/samenwerkfunctionaliteit-plugin";
