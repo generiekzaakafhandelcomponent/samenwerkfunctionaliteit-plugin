@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, OnInit, signal, WritableSignal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input, InputSignal, OnInit, signal, WritableSignal } from "@angular/core";
 import {
   ButtonModule,
   IconModule,
@@ -19,12 +19,14 @@ import { TranslatePipe } from "@ngx-translate/core";
   imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule, PlaceholderModule, TranslatePipe],
   templateUrl: "./document-table.component.html",
   styleUrl: "./document-table.component.css",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentTableComponent implements OnInit {
   documents: InputSignal<Document[]> = input<Document[]>([]);
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   model: WritableSignal<TableModel> = signal(new TableModel());
   isUploading: WritableSignal<boolean> = signal(false);
+  searchValue: WritableSignal<string> = signal("");
 
   showSelectionColumn: boolean = true;
   striped: boolean = false;
@@ -33,9 +35,12 @@ export class DocumentTableComponent implements OnInit {
     this.setTableModelDataAndHeader(this.documents());
   }
 
-  selectPage(page: number) {
-    this.model().data = this.getPage(page);
-    this.model().currentPage = page;
+  selectPage(page: number): void {
+    this.model.update((model: TableModel) => {
+      model.data = this.getPage(page);
+      model.currentPage = page;
+      return model;
+    });
   }
 
   protected deleteDocument() {}
@@ -64,8 +69,17 @@ export class DocumentTableComponent implements OnInit {
   }
 
   private setTableModelDataAndHeader(documents: Document[]): void {
-    this.model().totalDataLength = documents.length;
-    this.model().header = this.createTableHeadersForTableModel();
+    this.model.update((model: TableModel) => {
+      model.totalDataLength = documents.length;
+      model.header = this.createTableHeadersForTableModel();
+      model.isRowFiltered = (index: number) => {
+        const fileName = model.row(index)[0].data;
+        return !fileName.toLowerCase().includes(this.searchValue().toLowerCase());
+      };
+
+      return model;
+    });
+
     this.selectPage(1);
   }
 
