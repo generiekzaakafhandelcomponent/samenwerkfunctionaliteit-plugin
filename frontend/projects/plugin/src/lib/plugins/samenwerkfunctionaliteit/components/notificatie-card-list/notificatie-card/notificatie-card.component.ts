@@ -1,7 +1,7 @@
 import { NotificatieCardInterface } from "../interface/notificatie-card.interface";
-import { Component, computed, input, Signal } from "@angular/core";
+import { Component, computed, inject, input, OnInit, Signal } from "@angular/core";
 import { NotificatieCardTypes } from "../type/notificatie-card.type";
-import { TranslatePipe } from "@ngx-translate/core";
+import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { SkeletonModule } from "carbon-components-angular";
 import { DatePipe } from "@angular/common";
 import { NotificatieCardInput } from "../model/notificatie-card-input.model";
@@ -12,10 +12,13 @@ import { NotificatieCardInput } from "../model/notificatie-card-input.model";
   selector: "swf-notificatie-card",
   imports: [TranslatePipe, SkeletonModule, DatePipe],
 })
-export class NotificatieCardComponent implements NotificatieCardInterface {
+export class NotificatieCardComponent implements OnInit, NotificatieCardInterface {
+  protected translate = inject(TranslateService);
+
   inputs = input<NotificatieCardInput>({ ...new NotificatieCardInput(), type: NotificatieCardTypes.Skeleton });
 
   protected capitalizedContent: Signal<string> = computed(() => this.capitalize(this.inputs().content));
+  protected isSkeleton = computed(() => this.inputs().type === NotificatieCardTypes.Skeleton);
   protected cardClass: string = "";
   protected typeText: string = "";
 

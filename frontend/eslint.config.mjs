@@ -39,13 +39,13 @@ export default defineConfig([globalIgnores(["projects/**/dist"]), {
     rules: {
         "@angular-eslint/component-selector": ["error", {
             type: "element",
-            prefix: "valtimo",
+            prefix: "swf",
             style: "kebab-case",
         }],
 
         "@angular-eslint/directive-selector": ["error", {
             type: "directive",
-            prefix: "valtimo",
+            prefix: "swf",
             style: "camelCase",
         }],
     },
