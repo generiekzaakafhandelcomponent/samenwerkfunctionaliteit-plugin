@@ -72,7 +72,7 @@ export class DocumentTableComponent implements OnInit {
     this.isUploading.set(true);
     setTimeout(() => {
       this.isUploading.set(false);
-    }, 3000);
+    }, 1500);
   }
 
   protected filterFileNames(fileName: string) {
