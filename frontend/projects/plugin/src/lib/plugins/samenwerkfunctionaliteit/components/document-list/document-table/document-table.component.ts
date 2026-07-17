@@ -22,7 +22,7 @@ import { NgIf } from "@angular/common";
 export class DocumentTableComponent implements OnInit {
   documents: InputSignal<Document[]> = input<Document[]>([]);
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
-  public model: WritableSignal<TableModel> = signal(new TableModel());
+  model: WritableSignal<TableModel> = signal(new TableModel());
   isUploading: WritableSignal<boolean> = signal(false);
 
   showSelectionColumn: boolean = true;
