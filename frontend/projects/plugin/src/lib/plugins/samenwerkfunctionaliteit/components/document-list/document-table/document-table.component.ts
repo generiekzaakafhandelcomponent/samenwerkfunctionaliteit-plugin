@@ -37,6 +37,10 @@ export class DocumentTableComponent implements OnInit {
     this.model().currentPage = page;
   }
 
+  protected deleteDocument() {}
+
+  protected downloadDocument() {}
+
   protected uploadDocument() {
     this.isUploading.set(true);
     setTimeout(() => {

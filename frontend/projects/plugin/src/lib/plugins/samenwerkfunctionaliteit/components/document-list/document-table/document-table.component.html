@@ -1,11 +1,11 @@
 <cds-table-container>
   <cds-table-toolbar [model]="model()" #toolbar>
     <cds-table-toolbar-actions>
-      <button cdsButton="primary">
+      <button cdsButton="primary" (click)="deleteDocument()">
         Verwijder
         <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
       </button>
-      <button cdsButton="primary">
+      <button cdsButton="primary" (click)="downloadDocument()">
         Download
         <svg cdsIcon="download" size="16" class="cds--btn__icon"></svg>
       </button>
