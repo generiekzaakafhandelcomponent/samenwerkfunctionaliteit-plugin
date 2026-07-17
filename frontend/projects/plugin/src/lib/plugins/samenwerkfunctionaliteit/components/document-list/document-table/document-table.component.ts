@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, input, InputSignal, OnInit, signal, WritableSignal } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  InputSignal,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   ButtonModule,
   IconModule,
@@ -8,17 +16,26 @@ import {
   TableItem,
   TableModel,
   TableModule,
-} from "carbon-components-angular";
-import { ReactiveFormsModule } from "@angular/forms";
-import { Document } from "../../../models/document.model";
-import { NgIf } from "@angular/common";
-import { TranslatePipe } from "@ngx-translate/core";
+} from 'carbon-components-angular';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Document } from '../../../models/document.model';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: "document-table",
-  imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule, PlaceholderModule, TranslatePipe],
-  templateUrl: "./document-table.component.html",
-  styleUrl: "./document-table.component.css",
+  selector: 'document-table',
+  imports: [
+    TableModule,
+    ReactiveFormsModule,
+    PaginationModule,
+    NgIf,
+    ButtonModule,
+    IconModule,
+    PlaceholderModule,
+    TranslatePipe,
+  ],
+  templateUrl: './document-table.component.html',
+  styleUrl: './document-table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentTableComponent implements OnInit {
@@ -26,7 +43,7 @@ export class DocumentTableComponent implements OnInit {
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   model: WritableSignal<TableModel> = signal(new TableModel());
   isUploading: WritableSignal<boolean> = signal(false);
-  searchValue: WritableSignal<string> = signal("");
+  searchValue: WritableSignal<string> = signal('');
 
   showSelectionColumn: boolean = true;
   striped: boolean = false;
@@ -63,7 +80,10 @@ export class DocumentTableComponent implements OnInit {
   private getPage(page: number): TableItem[][] {
     const documents: Document[] = this.documents();
     const startIndex: number = (page - 1) * this.model().pageLength;
-    const endIndex: number = Math.min(page * this.model().pageLength, this.model().totalDataLength);
+    const endIndex: number = Math.min(
+      page * this.model().pageLength,
+      this.model().totalDataLength,
+    );
 
     const pageDocuments: Document[] = documents.slice(startIndex, endIndex);
 
@@ -80,7 +100,9 @@ export class DocumentTableComponent implements OnInit {
       model.header = this.createTableHeadersForTableModel();
       model.isRowFiltered = (index: number) => {
         const fileName = model.row(index)[0].data;
-        return !fileName.toLowerCase().includes(this.searchValue().toLowerCase());
+        return !fileName
+          .toLowerCase()
+          .includes(this.searchValue().toLowerCase());
       };
 
       return model;
@@ -93,13 +115,13 @@ export class DocumentTableComponent implements OnInit {
   private createTableHeadersForTableModel(): TableHeaderItem[] {
     return [
       new TableHeaderItem({
-        data: "Bestandsnaam",
+        data: 'Bestandsnaam',
       }),
       new TableHeaderItem({
-        data: "Vertrouwelijkheidsaanduiding",
+        data: 'Vertrouwelijkheidsaanduiding',
       }),
       new TableHeaderItem({
-        data: "Datum aangemaakt",
+        data: 'Datum aangemaakt',
       }),
     ];
   }
