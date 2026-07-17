@@ -1,5 +1,15 @@
-@if (!isLoading()) {
+@if (!isLoading() && !hasError()) {
   <document-table [documents]="documents()" [isSkeleton]="isLoading()"></document-table>
-} @else {
+} @else if (!hasError()) {
   <document-table [isSkeleton]="isLoading()"></document-table>
+} @else {
+  <cds-notification
+    [notificationObj]="{
+              type: 'info',
+              title: 'swf.error.noSamenwerkingId.title' | translate,
+              message: errorMessage(),
+              showClose: false,
+              lowContrast: true,
+            }"
+  ></cds-notification>
 }

@@ -7,11 +7,13 @@ import { Document } from "../../models/document.model";
 import { BusinessKey } from "../../models/business-key.model";
 import { switchMap, take, tap } from "rxjs";
 import { SamenwerkingProperties } from "../../models/samenwerking-properties.model";
+import { NotificationModule } from "carbon-components-angular";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: "document-list",
   templateUrl: "./document-list.component.html",
-  imports: [DocumentTableComponent],
+  imports: [DocumentTableComponent, NotificationModule, TranslatePipe],
   standalone: true,
   styleUrl: "./document-list.component.scss",
 })
@@ -39,6 +41,11 @@ export class DocumentListComponent {
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(
         take(1),
+        tap((samenwerkingProperties) => {
+          if (!samenwerkingProperties.samenwerkingId) {
+            throw new Error("Er is geen documentenlijst beschikbaar, omdat dit dossier niet deel uitmaakt van een samenwerking.");
+          }
+        }),
         switchMap((samenwerkingProperties: SamenwerkingProperties) => {
           return this.documentService.getDocumenten(samenwerkingProperties.samenwerkingId).pipe(
             take(1),
