@@ -94,7 +94,9 @@ export class DocumentTableComponent implements OnInit {
     return pageDocuments.map((document: Document) => [
       new TableItem({ data: document.fileName }),
       new TableItem({ data: document.confidentialityLevel }),
-      new TableItem({ data: document.creationDate }),
+      new TableItem({
+        data: new Date(document.creationDate).toLocaleDateString(),
+      }),
     ]);
   }
 
