@@ -23,6 +23,7 @@ export class DocumentTableComponent implements OnInit {
   documents: InputSignal<Document[]> = input<Document[]>([]);
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   public model: WritableSignal<TableModel> = signal(new TableModel());
+  isUploading: WritableSignal<boolean> = signal(false);
 
   showSelectionColumn: boolean = true;
   striped: boolean = false;
@@ -34,6 +35,13 @@ export class DocumentTableComponent implements OnInit {
   selectPage(page: number) {
     this.model().data = this.getPage(page);
     this.model().currentPage = page;
+  }
+
+  protected uploadDocument() {
+    this.isUploading.set(true);
+    setTimeout(() => {
+      this.isUploading.set(false);
+    }, 3000);
   }
 
   private getPage(page: number): TableItem[][] {

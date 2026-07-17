@@ -19,7 +19,7 @@
           class="cds--toolbar-action__icon"
         ></svg>
       </button>
-      <button cdsButton="primary" size="sm">
+      <button cdsButton="primary" size="sm" (click)="uploadDocument()" [disabled]="isUploading()">
         Upload document
         <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
       </button>
