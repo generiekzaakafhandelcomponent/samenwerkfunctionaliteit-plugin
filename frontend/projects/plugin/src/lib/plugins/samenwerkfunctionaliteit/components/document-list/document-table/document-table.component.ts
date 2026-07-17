@@ -36,7 +36,7 @@ export class DocumentTableComponent implements OnInit {
   }
 
   selectPage(page: number): void {
-    this.model.update((model: TableModel) => {
+    this.model.update((model: TableModel): TableModel => {
       model.data = this.getPage(page);
       model.currentPage = page;
       return model;
@@ -54,6 +54,12 @@ export class DocumentTableComponent implements OnInit {
     }, 3000);
   }
 
+  protected filterFileNames(fileName: string) {
+    this.searchValue.update(() => {
+      return fileName;
+    });
+  }
+
   private getPage(page: number): TableItem[][] {
     const documents: Document[] = this.documents();
     const startIndex: number = (page - 1) * this.model().pageLength;
@@ -69,7 +75,7 @@ export class DocumentTableComponent implements OnInit {
   }
 
   private setTableModelDataAndHeader(documents: Document[]): void {
-    this.model.update((model: TableModel) => {
+    this.model.update((model: TableModel): TableModel => {
       model.totalDataLength = documents.length;
       model.header = this.createTableHeadersForTableModel();
       model.isRowFiltered = (index: number) => {

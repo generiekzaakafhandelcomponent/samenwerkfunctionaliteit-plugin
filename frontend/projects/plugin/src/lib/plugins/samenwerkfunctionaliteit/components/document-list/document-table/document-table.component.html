@@ -11,6 +11,11 @@
       </button>
     </cds-table-toolbar-actions>
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
+      <cds-table-toolbar-search
+        [expandable]="true"
+        (valueChange)="filterFileNames($event)"
+        (clear)="searchValue.set('')">
+      </cds-table-toolbar-search>
       <button cdsButton="primary" size="sm" (click)="uploadDocument()" [disabled]="isUploading()">
         Upload document
         <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
