@@ -3,7 +3,7 @@ import { DocumentListComponent } from "../../components/document-list/document-l
 
 @Component({
   templateUrl: `./documentenlijst-widget-tab.component.html`,
-  selector: "document-table-widget-tab",
+  selector: "swf-documentenlijst-widget-tab",
   imports: [DocumentListComponent],
 })
 export class DocumentenlijstWidgetTabComponent {}

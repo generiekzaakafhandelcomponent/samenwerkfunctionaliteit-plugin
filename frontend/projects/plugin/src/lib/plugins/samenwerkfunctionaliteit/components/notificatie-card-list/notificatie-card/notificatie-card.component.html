@@ -1,0 +1,33 @@
+<div class="notificatiecard" [class]="cardClass">
+  @if (!isSkeleton()) {
+    <div class="notificatie-header">
+      <h5 class="notificatie-title">{{ inputs().title }}</h5>
+      <span class="notificatie-type">
+        {{ typeText | translate }}
+      </span>
+    </div>
+    <div class="notificatie-meta">
+      <time [attr.datetime]="inputs().eventDateTime">
+        {{ inputs().eventDateTime | date: "medium" : undefined : translate.currentLang }}
+      </time>
+      <span class="initiator-name">
+        {{ inputs().initiatorNaam }}
+      </span>
+    </div>
+    <p class="notificatie-content">
+      {{ capitalizedContent() }}
+    </p>
+  } @else {
+    <div class="notificatie-header">
+      <cds-skeleton-text [minLineWidth]="500" [maxLineWidth]="250" [lines]="1"></cds-skeleton-text>
+      <cds-skeleton-text [minLineWidth]="80" [maxLineWidth]="120" [lines]="1"></cds-skeleton-text>
+    </div>
+    <div class="notificatie-meta">
+      <cds-skeleton-text [minLineWidth]="100" [maxLineWidth]="200" [lines]="1"></cds-skeleton-text>
+      <cds-skeleton-text [minLineWidth]="80" [maxLineWidth]="120" [lines]="1"></cds-skeleton-text>
+    </div>
+    <p class="notificatie-content">
+      <cds-skeleton-text [minLineWidth]="500" [maxLineWidth]="800" [lines]="2"></cds-skeleton-text>
+    </p>
+  }
+</div>

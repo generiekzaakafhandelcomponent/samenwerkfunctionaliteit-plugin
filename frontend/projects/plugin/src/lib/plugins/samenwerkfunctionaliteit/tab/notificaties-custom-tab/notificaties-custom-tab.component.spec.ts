@@ -4,6 +4,7 @@ import { of } from "rxjs";
 import { NotificatiesCustomTab } from "./notificaties-custom-tab.component";
 import { NotificatieService } from "../../service/notificatie.service";
 import { SwfDocumentService } from "../../service/swf-document.service";
+import { TranslateModule } from "@ngx-translate/core";
 
 describe("NotificatiesCustomTabComponent", () => {
   let component: NotificatiesCustomTab;
@@ -11,7 +12,7 @@ describe("NotificatiesCustomTabComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotificatiesCustomTab],
+      imports: [NotificatiesCustomTab, TranslateModule.forRoot()],
       providers: [
         { provide: NotificatieService, useValue: { getNotificaties: () => of([]) } },
         {
