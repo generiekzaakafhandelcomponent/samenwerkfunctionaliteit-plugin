@@ -28,9 +28,12 @@
 
   <cds-table
     [model]="model()"
-    [showSelectionColumn]="true"
+    [showSelectionColumn]="showSelectionColumn"
     [skeleton]="isSkeleton()"
-    [striped]="false"
+    [striped]="striped"
   >
   </cds-table>
+  <cds-pagination [model]="model()" (selectPage)="selectPage($event)"></cds-pagination>
 </cds-table-container>
+
+<cds-placeholder></cds-placeholder>

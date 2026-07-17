@@ -1,12 +1,21 @@
 import { Component, input, InputSignal, OnInit, signal, WritableSignal } from "@angular/core";
-import { ButtonModule, IconModule, PaginationModule, TableHeaderItem, TableItem, TableModel, TableModule } from "carbon-components-angular";
+import {
+  ButtonModule,
+  IconModule,
+  PaginationModule,
+  PlaceholderModule,
+  TableHeaderItem,
+  TableItem,
+  TableModel,
+  TableModule,
+} from "carbon-components-angular";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Document } from "../../../models/document.model";
 import { NgIf } from "@angular/common";
 
 @Component({
   selector: "document-table",
-  imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule],
+  imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule, PlaceholderModule],
   templateUrl: "./document-table.component.html",
   styleUrl: "./document-table.component.css",
 })
@@ -15,23 +24,38 @@ export class DocumentTableComponent implements OnInit {
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   public model: WritableSignal<TableModel> = signal(new TableModel());
 
+  showSelectionColumn: boolean = true;
+  striped: boolean = false;
+
   ngOnInit(): void {
-    console.log(this.documents());
     this.setTableModelDataAndHeader(this.documents());
   }
 
-  private setTableModelDataAndHeader(documents: Document[]): void {
-    this.model().data = this.createTableItemsForTableModel(documents);
-    this.model().header = this.createTableHeadersForTableModel();
+  selectPage(page: number) {
+    this.model().data = this.getPage(page);
+    this.model().currentPage = page;
   }
 
-  private createTableItemsForTableModel(documents: Document[]): TableItem[][] {
-    return documents.map((document: Document): TableItem[] => [
+  private getPage(page: number): TableItem[][] {
+    const documents: Document[] = this.documents();
+    const startIndex: number = (page - 1) * this.model().pageLength;
+    const endIndex: number = Math.min(page * this.model().pageLength, this.model().totalDataLength);
+
+    const pageDocuments: Document[] = documents.slice(startIndex, endIndex);
+
+    return pageDocuments.map((document: Document) => [
       new TableItem({ data: document.fileName }),
       new TableItem({ data: document.confidentialityLevel }),
       new TableItem({ data: document.creationDate }),
     ]);
   }
+
+  private setTableModelDataAndHeader(documents: Document[]): void {
+    this.model().totalDataLength = documents.length;
+    this.model().header = this.createTableHeadersForTableModel();
+    this.selectPage(1);
+  }
+
   //TODO translations
   private createTableHeadersForTableModel(): TableHeaderItem[] {
     return [
