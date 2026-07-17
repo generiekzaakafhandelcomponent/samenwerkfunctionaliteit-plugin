@@ -22,6 +22,8 @@ export class DocumentListComponent {
 
   documents: WritableSignal<Document[]> = signal<Document[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  hasError: WritableSignal<boolean> = signal<boolean>(false);
+  errorMessage: WritableSignal<string> = signal<string>("");
 
   ngOnInit() {
     const documentId: string = this.swfDocumentService.getParam(this.route, "documentId");
@@ -47,7 +49,15 @@ export class DocumentListComponent {
         }),
       )
       .subscribe({
-        next: () => this.isLoading.set(false),
+        next: () => {
+          this.isLoading.set(false);
+          this.hasError.set(false);
+        },
+        error: (error: Error) => {
+          this.isLoading.set(false);
+          this.hasError.set(true);
+          this.errorMessage.set(error.message);
+        },
       });
   }
 }

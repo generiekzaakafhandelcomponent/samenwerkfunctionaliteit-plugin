@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { DocumentClient } from "../client/document-client.service";
-import { map, Observable } from "rxjs";
+import { catchError, map, Observable, throwError } from "rxjs";
 import { DocumentInterface } from "../interface/document.interface";
 import { Documenten, DocumentenOverzichtResponse, mapDocumentenResponseToModels } from "../dto/document.dto";
 
@@ -22,6 +22,9 @@ export class DocumentService {
         return documenten.filter((document) => {
           return document.samenwerkingId === samenwerkingId;
         });
+      }),
+      catchError((error: Error) => {
+        return throwError(() => error);
       }),
     );
   }
