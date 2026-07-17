@@ -12,10 +12,11 @@ import {
 import { ReactiveFormsModule } from "@angular/forms";
 import { Document } from "../../../models/document.model";
 import { NgIf } from "@angular/common";
+import { TranslatePipe } from "@ngx-translate/core";
 
 @Component({
   selector: "document-table",
-  imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule, PlaceholderModule],
+  imports: [TableModule, ReactiveFormsModule, PaginationModule, NgIf, ButtonModule, IconModule, PlaceholderModule, TranslatePipe],
   templateUrl: "./document-table.component.html",
   styleUrl: "./document-table.component.css",
 })
