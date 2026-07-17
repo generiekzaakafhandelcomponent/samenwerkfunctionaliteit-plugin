@@ -1,8 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DocumentTableComponent } from './document-table.component';
 
-import { DocumentTableComponent } from "./document-table.component";
-
-describe("DocumentListComponent", () => {
+describe('DocumentListComponent', () => {
   let component: DocumentTableComponent;
   let fixture: ComponentFixture<DocumentTableComponent>;
 
@@ -16,7 +15,7 @@ describe("DocumentListComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
