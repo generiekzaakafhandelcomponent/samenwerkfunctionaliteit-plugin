@@ -28,10 +28,10 @@ export interface NotificatieDto {
 }
 
 export function mapNotificatieDtosToModels(response: NotificatieResponse): NotificatieModel[] {
-  return response._embedded.notificaties.map(mapNotifcatieDtoToModel);
+  return response._embedded.notificaties.map(mapNotificatieDtoToModel);
 }
 
-function mapNotifcatieDtoToModel(notificatie: NotificatieDto): NotificatieModel {
+function mapNotificatieDtoToModel(notificatie: NotificatieDto): NotificatieModel {
   return {
     notificatieId: notificatie.notificatieId,
     notificatieType: mapStringToNotificatieType(notificatie.notificatieType),
