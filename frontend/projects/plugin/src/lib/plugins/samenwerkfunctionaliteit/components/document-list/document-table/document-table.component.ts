@@ -52,9 +52,9 @@ export class DocumentTableComponent implements OnInit {
     this.setTableModelDataAndHeader(this.documents());
   }
 
-  selectPage(page: number): void {
+  protected selectPage(page: number): void {
     this.model.update((model: TableModel): TableModel => {
-      model.data = this.getPage(page);
+      model.data = this.getTableItemsForPage(page);
       model.currentPage = page;
       return model;
     });
@@ -77,7 +77,7 @@ export class DocumentTableComponent implements OnInit {
     });
   }
 
-  private getPage(page: number): TableItem[][] {
+  private getTableItemsForPage(page: number): TableItem[][] {
     const documents: Document[] = this.documents();
     const startIndex: number = (page - 1) * this.model().pageLength;
     const endIndex: number = Math.min(
