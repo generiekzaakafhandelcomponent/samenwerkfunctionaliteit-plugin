@@ -1,4 +1,10 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentService } from '../../service/document.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
@@ -22,6 +28,7 @@ import { NgTemplateOutlet } from '@angular/common';
   ],
   standalone: true,
   styleUrl: './document-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentListComponent {
   private readonly documentService: DocumentService = inject(DocumentService);

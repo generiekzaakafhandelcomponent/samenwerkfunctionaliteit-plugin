@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   InputSignal,
   OnInit,
@@ -20,7 +21,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { Document } from '../../../models/document.model';
 import { NgIf } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'document-table',
@@ -39,6 +40,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentTableComponent implements OnInit {
+  private readonly translateService: TranslateService =
+    inject(TranslateService);
+
   documents: InputSignal<Document[]> = input<Document[]>([]);
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
   model: WritableSignal<TableModel> = signal(new TableModel());
@@ -111,17 +115,22 @@ export class DocumentTableComponent implements OnInit {
     this.selectPage(1);
   }
 
-  //TODO translations
   private createTableHeadersForTableModel(): TableHeaderItem[] {
     return [
       new TableHeaderItem({
-        data: 'Bestandsnaam',
+        data: this.translateService.instant(
+          'samenwerkfunctionaliteit.documenttable.fileName',
+        ),
       }),
       new TableHeaderItem({
-        data: 'Vertrouwelijkheidsaanduiding',
+        data: this.translateService.instant(
+          'samenwerkfunctionaliteit.documenttable.confidentialityType',
+        ),
       }),
       new TableHeaderItem({
-        data: 'Datum aangemaakt',
+        data: this.translateService.instant(
+          'samenwerkfunctionaliteit.documenttable.dateCreated',
+        ),
       }),
     ];
   }

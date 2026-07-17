@@ -2,12 +2,12 @@
   <cds-table-toolbar [model]="model()" #toolbar>
     <cds-table-toolbar-actions>
       <button cdsButton="primary" (click)="deleteDocument()">
-        {{ 'swf.error.noSamenwerkingId.delete' | translate }}
-        <svg cdsIcon="delete" size="16" class="cds--btn__icon"></svg>
+        {{ 'samenwerkfunctionaliteit.documenttable.delete' | translate }}
+        <svg cdsIcon="row--delete" size="16" class="cds--btn__icon"></svg>
       </button>
       <button cdsButton="primary" (click)="downloadDocument()">
         Download
-        <svg cdsIcon="download" size="16" class="cds--btn__icon"></svg>
+        <svg cdsIcon="document--download" size="16" class="cds--btn__icon"></svg>
       </button>
     </cds-table-toolbar-actions>
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
@@ -17,7 +17,7 @@
         (clear)="searchValue.set('')">
       </cds-table-toolbar-search>
       <button cdsButton="primary" size="sm" (click)="uploadDocument()" [disabled]="isUploading()">
-        Upload document
+        Upload
         <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
       </button>
     </cds-table-toolbar-content>
