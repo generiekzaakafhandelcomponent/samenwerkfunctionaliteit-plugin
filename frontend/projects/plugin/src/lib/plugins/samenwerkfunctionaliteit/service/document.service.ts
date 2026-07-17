@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { DocumentClient } from "../client/document-client.service";
 import { catchError, map, Observable, throwError } from "rxjs";
 import { DocumentInterface } from "../interface/document.interface";
-import { Documenten, DocumentenOverzichtResponse, mapDocumentenResponseToModels } from "../dto/document.dto";
+import { DocumentenOverzichtResponse, mapDocumentenResponseToModels } from "../dto/document.dto";
 
 @Injectable({
   providedIn: "root",
@@ -13,10 +13,7 @@ export class DocumentService {
   getDocumenten(samenwerkingId: string): Observable<DocumentInterface[]> {
     return this.documentClient.getDocumenten(samenwerkingId).pipe(
       map((documentenOverzichtResponse: DocumentenOverzichtResponse) => {
-        return documentenOverzichtResponse._embedded;
-      }),
-      map((documenten: Documenten) => {
-        return mapDocumentenResponseToModels(documenten);
+        return mapDocumentenResponseToModels(documentenOverzichtResponse);
       }),
       map((documenten: DocumentInterface[]) => {
         return documenten.filter((document) => {
