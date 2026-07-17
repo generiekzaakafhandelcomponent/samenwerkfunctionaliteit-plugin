@@ -6,9 +6,11 @@ import {
   InputSignal,
   OnInit,
   signal,
+  viewChild,
   WritableSignal,
 } from '@angular/core';
 import {
+  AlertModalData,
   ButtonModule,
   IconModule,
   PaginationModule,
@@ -22,6 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Document } from '../../../models/document.model';
 import { NgIf } from '@angular/common';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { DocumentTableModal } from '../modal/document-table-modal';
+import { documentTableDeleteModalConfig } from '../config/document-table-modal-config';
 
 @Component({
   selector: 'document-table',
@@ -34,6 +38,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
     IconModule,
     PlaceholderModule,
     TranslatePipe,
+    DocumentTableModal,
   ],
   templateUrl: './document-table.component.html',
   styleUrl: './document-table.component.css',
@@ -48,6 +53,11 @@ export class DocumentTableComponent implements OnInit {
   model: WritableSignal<TableModel> = signal(new TableModel());
   isUploading: WritableSignal<boolean> = signal(false);
   searchValue: WritableSignal<string> = signal('');
+
+  private readonly documentTableModal =
+    viewChild.required<DocumentTableModal>('documentTableModal');
+  protected readonly deleteConfig: AlertModalData =
+    documentTableDeleteModalConfig;
 
   showSelectionColumn: boolean = true;
   striped: boolean = false;
@@ -64,7 +74,9 @@ export class DocumentTableComponent implements OnInit {
     });
   }
 
-  protected deleteDocument() {}
+  protected deleteDocument() {
+    this.documentTableModal().openModal();
+  }
 
   protected downloadDocument() {}
 

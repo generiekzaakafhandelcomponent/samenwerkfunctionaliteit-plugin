@@ -33,4 +33,13 @@
   <cds-pagination [model]="model()" (selectPage)="selectPage($event)"></cds-pagination>
 </cds-table-container>
 
-<cds-placeholder></cds-placeholder>
+<document-table-modal
+  #documentTableModal
+  [buttons]="deleteConfig.buttons"
+  [modalContent]="deleteConfig.content"
+  [modalTitle]="deleteConfig.title"
+  [modalType]="deleteConfig.type"
+  [showCloseButton]="deleteConfig.showCloseButton"
+  [size]="deleteConfig.size"
+>
+</document-table-modal>
