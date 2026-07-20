@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnInit,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -25,7 +26,7 @@ import { DocumentInterface } from '../../interface/document.interface';
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocumentListComponent {
+export class DocumentListComponent implements OnInit {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
