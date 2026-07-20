@@ -44,7 +44,6 @@ export class DocumentenlijstWidgetTabComponent {
         take(1),
         tap((openZaakInfo) => {
           this.openZaakUrl = openZaakInfo.searchUrl;
-          console.log(this.openZaakUrl);
         }),
         tap(() => {
           this.setHelperText(this.openZaakUrl);
