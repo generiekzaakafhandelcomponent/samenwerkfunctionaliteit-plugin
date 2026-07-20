@@ -61,9 +61,11 @@ export class DocumentTableComponent implements OnInit {
 
   showSelectionColumn: boolean = true;
   striped: boolean = false;
+  enableSingleSelect: boolean = true;
 
   ngOnInit(): void {
-    this.setTableModelDataAndHeader(this.documents());
+    this.setTableModelFilterAndHeader(this.documents());
+    this.selectPage(1);
   }
 
   protected selectPage(page: number): void {
@@ -72,6 +74,14 @@ export class DocumentTableComponent implements OnInit {
       model.currentPage = page;
       return model;
     });
+  }
+
+  protected onRowSelected(event: {
+    model: TableModel;
+    selectedRowIndex: number;
+  }): void {
+    const selectedRow = event.model.data[event.selectedRowIndex];
+    console.log(selectedRow);
   }
 
   protected deleteDocument() {
@@ -112,7 +122,7 @@ export class DocumentTableComponent implements OnInit {
     ]);
   }
 
-  private setTableModelDataAndHeader(documents: Document[]): void {
+  private setTableModelFilterAndHeader(documents: Document[]): void {
     this.model.update((model: TableModel): TableModel => {
       model.totalDataLength = documents.length;
       model.header = this.createTableHeadersForTableModel();
@@ -125,8 +135,6 @@ export class DocumentTableComponent implements OnInit {
 
       return model;
     });
-
-    this.selectPage(1);
   }
 
   private createTableHeadersForTableModel(): TableHeaderItem[] {
