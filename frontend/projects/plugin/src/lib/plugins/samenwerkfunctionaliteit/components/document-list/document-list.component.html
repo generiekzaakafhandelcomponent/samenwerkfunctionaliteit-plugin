@@ -1,8 +1,18 @@
-@if (!isLoading() && !hasError()) {
-  <document-table [documents]="documents()" [isSkeleton]="isLoading()"></document-table>
-} @else if (!hasError()) {
-  <document-table [isSkeleton]="isLoading()"></document-table>
+@if (isLightMode()) {
+  @if (!isLoading() && !hasError()) {
+    <document-table-light [documents]="documents()" [isSkeleton]="isLoading()"></document-table-light>
+  } @else if (!hasError()) {
+    <document-table-light [isSkeleton]="isLoading()"></document-table-light>
+  }
 } @else {
+  @if (!isLoading() && !hasError()) {
+    <document-table [documents]="documents()" [isSkeleton]="isLoading()"></document-table>
+  } @else if (!hasError()) {
+    <document-table [isSkeleton]="isLoading()"></document-table>
+  }
+}
+
+@if (hasError()) {
   <cds-notification
     [notificationObj]="{
               type: 'info',
@@ -13,3 +23,4 @@
             }"
   ></cds-notification>
 }
+

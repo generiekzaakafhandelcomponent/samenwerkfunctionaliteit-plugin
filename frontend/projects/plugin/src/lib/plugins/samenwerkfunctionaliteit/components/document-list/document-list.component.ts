@@ -2,6 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
+  InputSignal,
   OnInit,
   signal,
   WritableSignal,
@@ -17,11 +19,17 @@ import { SamenwerkingProperties } from '../../models/samenwerking-properties.mod
 import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DocumentInterface } from '../../interface/document.interface';
+import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
 
 @Component({
   selector: 'document-list',
   templateUrl: './document-list.component.html',
-  imports: [DocumentTableComponent, NotificationModule, TranslatePipe],
+  imports: [
+    DocumentTableComponent,
+    NotificationModule,
+    TranslatePipe,
+    DocumentTableLightComponent,
+  ],
   standalone: true,
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +39,8 @@ export class DocumentListComponent implements OnInit {
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
   readonly route: ActivatedRoute = inject(ActivatedRoute);
+
+  isLightMode: InputSignal<boolean> = input<boolean>(false);
 
   documents: WritableSignal<Document[]> = signal<Document[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
