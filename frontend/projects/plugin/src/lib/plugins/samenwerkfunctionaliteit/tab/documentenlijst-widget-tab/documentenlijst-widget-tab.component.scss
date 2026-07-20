@@ -1,0 +1,19 @@
+
+.documenten-api-text-container {
+  container-type: inline-size;
+}
+
+::ng-deep .cds--text-input__field-outer-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+::ng-deep .cds--form__helper-text {
+  grid-column: 1 / -1;
+}
+
+@container (min-width: 66rem) {
+  ::ng-deep .cds--form__helper-text {
+    grid-column: 1 / span 2;
+  }
+}
