@@ -6,6 +6,7 @@ import { OpenZaakUrlService } from '../../service/open-zaak-url.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { catchError, finalize, take, tap, throwError } from 'rxjs';
+import { BusinessKey } from '../../models/business-key.model';
 
 @Component({
   templateUrl: `./documentenlijst-widget-tab.component.html`,
@@ -25,17 +26,20 @@ export class DocumentenlijstWidgetTabComponent {
   protected helperText: string = '';
 
   ngOnInit() {
-    this.getOpenZaakInfoAndSetHelperText();
-  }
-
-  private getOpenZaakInfoAndSetHelperText() {
     const documentId = this.swfDocumentService.getParam(
       this.route,
       'documentId',
     );
+    this.getOpenZaakInfoAndSetHelperText(documentId);
+  }
+
+  private getOpenZaakInfoAndSetHelperText(documentId: string) {
+    const valtimoBusinessKey: BusinessKey = {
+      value: documentId,
+    };
 
     this.openZaakUrlService
-      .getOpenZaakInfo(documentId)
+      .getOpenZaakInfo(valtimoBusinessKey)
       .pipe(
         take(1),
         tap((openZaakInfo) => {

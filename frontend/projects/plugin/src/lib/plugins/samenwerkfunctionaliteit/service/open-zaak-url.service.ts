@@ -1,26 +1,42 @@
-import { inject, Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { inject, Injectable, OnDestroy } from '@angular/core';
+import { forkJoin, Observable, of, Subject, tap } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { OpenZaakInfo } from '../interface/open-zaak-info.interface';
 import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
 import { OpenZaakService } from '@valtimo/resource';
 import { SamenwerkfunctionaliteitDocument } from '../interface/document-content.interface';
+import { BusinessKey } from '../models/business-key.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OpenZaakUrlService {
+export class OpenZaakUrlService implements OnDestroy {
   private static readonly OPEN_ZAAK_ID_PATH = 'content.openzaak.identificatie';
   valtimoDocumentService: ValtimoDocumentService = inject(
     ValtimoDocumentService,
   );
   openZaakService: OpenZaakService = inject(OpenZaakService);
+  private openZaakInfoCache: Map<string, OpenZaakInfo> = new Map<
+    string,
+    OpenZaakInfo
+  >();
+  destroy$: Subject<void> = new Subject<void>();
 
-  getOpenZaakInfo(documentId: string): Observable<OpenZaakInfo> {
+  ngOnDestroy(): void {
+    this.destroy$.next();
+  }
+
+  getOpenZaakInfo(valtimoBusinessKey: BusinessKey): Observable<OpenZaakInfo> {
+    if (this.openZaakInfoCache.get(valtimoBusinessKey.value)) {
+      return of(this.openZaakInfoCache.get(valtimoBusinessKey.value));
+    }
     return forkJoin({
-      document: this.valtimoDocumentService.getDocument(documentId),
+      document: this.valtimoDocumentService.getDocument(
+        valtimoBusinessKey.value,
+      ),
       zaakTypes: this.openZaakService.getZaakTypes(),
     }).pipe(
+      takeUntil(this.destroy$),
       map(({ document, zaakTypes }) => {
         const documentContentWithOpenZaakProperties =
           document.content as SamenwerkfunctionaliteitDocument;
@@ -47,6 +63,16 @@ export class OpenZaakUrlService {
           searchUrl: `${baseUrl}/admin/zaken/zaak/?q=${openZaakId}`,
         };
       }),
+      tap((openZaakInfo: OpenZaakInfo) => {
+        this.loadOpenZaakInfoIntoCache(valtimoBusinessKey, openZaakInfo);
+      }),
     );
+  }
+
+  private loadOpenZaakInfoIntoCache(
+    valtimoBusinessKey: BusinessKey,
+    openZaakInfo: OpenZaakInfo,
+  ): void {
+    this.openZaakInfoCache.set(valtimoBusinessKey.value, openZaakInfo);
   }
 }
