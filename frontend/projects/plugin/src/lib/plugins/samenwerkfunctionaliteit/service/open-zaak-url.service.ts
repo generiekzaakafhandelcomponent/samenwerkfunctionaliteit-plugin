@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OpenZaakInfo } from '../interface/open-zaak-info.interface';
@@ -11,11 +11,10 @@ import { SamenwerkfunctionaliteitDocument } from '../interface/document-content.
 })
 export class OpenZaakUrlService {
   private static readonly OPEN_ZAAK_ID_PATH = 'content.openzaak.identificatie';
-
-  constructor(
-    private readonly valtimoDocumentService: ValtimoDocumentService,
-    private readonly openZaakService: OpenZaakService,
-  ) {}
+  valtimoDocumentService: ValtimoDocumentService = inject(
+    ValtimoDocumentService,
+  );
+  openZaakService: OpenZaakService = inject(OpenZaakService);
 
   getOpenZaakInfo(documentId: string): Observable<OpenZaakInfo> {
     return forkJoin({
