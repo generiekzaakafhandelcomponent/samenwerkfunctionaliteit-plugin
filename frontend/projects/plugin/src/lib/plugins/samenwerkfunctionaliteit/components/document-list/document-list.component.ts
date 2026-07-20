@@ -52,10 +52,10 @@ export class DocumentListComponent implements OnInit {
       this.route,
       'documentId',
     );
-    this.fetchAndLoadDocumenten(documentId);
+    this.fetchDocumenten(documentId);
   }
 
-  private fetchAndLoadDocumenten(documentId: string): void {
+  private fetchDocumenten(documentId: string): void {
     const valtimoBusinessKey: BusinessKey = {
       value: documentId,
     };
@@ -75,7 +75,14 @@ export class DocumentListComponent implements OnInit {
           (
             samenwerkingProperties: SamenwerkingProperties,
           ): Observable<DocumentInterface[]> => {
-            return this.loadDocumenten(samenwerkingProperties.samenwerkingId);
+            return this.documentService
+              .getDocumenten(samenwerkingProperties.samenwerkingId)
+              .pipe(
+                take(1),
+                tap((documenten: DocumentInterface[]): void => {
+                  this.documents.set(documenten);
+                }),
+              );
           },
         ),
         finalize(() => {
@@ -91,16 +98,5 @@ export class DocumentListComponent implements OnInit {
           this.errorMessage.set(error.message);
         },
       });
-  }
-
-  private loadDocumenten(
-    samenwerkingId: string,
-  ): Observable<DocumentInterface[]> {
-    return this.documentService.getDocumenten(samenwerkingId).pipe(
-      take(1),
-      tap((documenten: DocumentInterface[]): void => {
-        this.documents.set(documenten);
-      }),
-    );
   }
 }
