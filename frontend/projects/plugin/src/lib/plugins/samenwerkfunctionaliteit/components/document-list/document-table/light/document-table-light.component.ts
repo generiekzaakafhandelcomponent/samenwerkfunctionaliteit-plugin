@@ -48,6 +48,7 @@ export class DocumentTableLightComponent {
   }
 
   private getTableItems(page: number): TableItem[][] {
+    console.log(this.model().pageLength);
     const documents: Document[] = this.documents();
     const startIndex: number = (page - 1) * this.model().pageLength;
     const endIndex: number = Math.min(
@@ -65,6 +66,7 @@ export class DocumentTableLightComponent {
 
   private setTableModelHeaders(): void {
     this.model.update((model: TableModel): TableModel => {
+      model.totalDataLength = this.documents().length;
       model.header = this.createTableHeadersForTableModel();
 
       return model;
