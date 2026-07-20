@@ -64,14 +64,7 @@ export class DocumentListComponent {
           (
             samenwerkingProperties: SamenwerkingProperties,
           ): Observable<DocumentInterface[]> => {
-            return this.documentService
-              .getDocumenten(samenwerkingProperties.samenwerkingId)
-              .pipe(
-                take(1),
-                tap((documenten: DocumentInterface[]): void => {
-                  this.documents.set(documenten);
-                }),
-              );
+            return this.loadDocumenten(samenwerkingProperties.samenwerkingId);
           },
         ),
         finalize(() => {
@@ -87,5 +80,16 @@ export class DocumentListComponent {
           this.errorMessage.set(error.message);
         },
       });
+  }
+
+  private loadDocumenten(
+    samenwerkingId: string,
+  ): Observable<DocumentInterface[]> {
+    return this.documentService.getDocumenten(samenwerkingId).pipe(
+      take(1),
+      tap((documenten: DocumentInterface[]): void => {
+        this.documents.set(documenten);
+      }),
+    );
   }
 }
