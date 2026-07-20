@@ -3,11 +3,11 @@
     <cds-table-toolbar-actions>
       <button cdsButton="primary" (click)="deleteDocument()">
         {{ 'samenwerkfunctionaliteit.documenttable.delete' | translate }}
-        <svg cdsIcon="row--delete" size="16" class="cds--btn__icon"></svg>
+        <svg size="16" class="cds--btn__icon"></svg>
       </button>
       <button cdsButton="primary" (click)="downloadDocument()">
         Download
-        <svg cdsIcon="document--download" size="16" class="cds--btn__icon"></svg>
+        <svg size="16" class="cds--btn__icon"></svg>
       </button>
     </cds-table-toolbar-actions>
     <cds-table-toolbar-content *ngIf="!toolbar.selected">
@@ -28,6 +28,8 @@
     [showSelectionColumn]="showSelectionColumn"
     [skeleton]="isSkeleton()"
     [striped]="striped"
+    [enableSingleSelect]="enableSingleSelect"
+    (selectRow)="onRowSelected($event)"
   >
   </cds-table>
   <cds-pagination [model]="model()" (selectPage)="selectPage($event)"></cds-pagination>

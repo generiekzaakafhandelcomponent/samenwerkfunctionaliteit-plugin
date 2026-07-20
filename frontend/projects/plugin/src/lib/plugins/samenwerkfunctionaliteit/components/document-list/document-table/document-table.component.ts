@@ -81,7 +81,6 @@ export class DocumentTableComponent implements OnInit {
     selectedRowIndex: number;
   }): void {
     const selectedRow = event.model.data[event.selectedRowIndex];
-    console.log(selectedRow);
   }
 
   protected deleteDocument() {
