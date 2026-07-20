@@ -11,10 +11,11 @@ import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from '../../models/document.model';
 import { BusinessKey } from '../../models/business-key.model';
-import { finalize, switchMap, take, tap } from 'rxjs';
+import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
+import { DocumentInterface } from '../../interface/document.interface';
 
 @Component({
   selector: 'document-list',
@@ -35,7 +36,7 @@ export class DocumentListComponent {
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
 
-  ngOnInit() {
+  ngOnInit(): void {
     const documentId: string = this.swfDocumentService.getParam(
       this.route,
       'documentId',
@@ -43,7 +44,7 @@ export class DocumentListComponent {
     this.fetchAndLoadDocumenten(documentId);
   }
 
-  private fetchAndLoadDocumenten(documentId: string) {
+  private fetchAndLoadDocumenten(documentId: string): void {
     const valtimoBusinessKey: BusinessKey = {
       value: documentId,
     };
@@ -52,23 +53,27 @@ export class DocumentListComponent {
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(
         take(1),
-        tap((samenwerkingProperties) => {
+        tap((samenwerkingProperties: SamenwerkingProperties): void => {
           if (!samenwerkingProperties.samenwerkingId) {
             throw new Error(
               'Er is geen documentenlijst beschikbaar, omdat dit dossier niet deel uitmaakt van een samenwerking.',
             );
           }
         }),
-        switchMap((samenwerkingProperties: SamenwerkingProperties) => {
-          return this.documentService
-            .getDocumenten(samenwerkingProperties.samenwerkingId)
-            .pipe(
-              take(1),
-              tap((documenten) => {
-                this.documents.set(documenten);
-              }),
-            );
-        }),
+        switchMap(
+          (
+            samenwerkingProperties: SamenwerkingProperties,
+          ): Observable<DocumentInterface[]> => {
+            return this.documentService
+              .getDocumenten(samenwerkingProperties.samenwerkingId)
+              .pipe(
+                take(1),
+                tap((documenten: DocumentInterface[]): void => {
+                  this.documents.set(documenten);
+                }),
+              );
+          },
+        ),
         finalize(() => {
           this.isLoading.set(false);
         }),
