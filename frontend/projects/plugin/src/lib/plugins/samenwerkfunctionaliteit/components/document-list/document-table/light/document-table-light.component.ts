@@ -33,6 +33,7 @@ export class DocumentTableLightComponent {
   model: WritableSignal<TableModel> = signal(new TableModel());
 
   striped: boolean = false;
+  showSelectionColumn: boolean = false;
 
   ngOnInit(): void {
     this.setTableModelHeaders();
@@ -48,7 +49,6 @@ export class DocumentTableLightComponent {
   }
 
   private getTableItems(page: number): TableItem[][] {
-    console.log(this.model().pageLength);
     const documents: Document[] = this.documents();
     const startIndex: number = (page - 1) * this.model().pageLength;
     const endIndex: number = Math.min(
@@ -66,6 +66,7 @@ export class DocumentTableLightComponent {
 
   private setTableModelHeaders(): void {
     this.model.update((model: TableModel): TableModel => {
+      model.pageLength = 20;
       model.totalDataLength = this.documents().length;
       model.header = this.createTableHeadersForTableModel();
 
