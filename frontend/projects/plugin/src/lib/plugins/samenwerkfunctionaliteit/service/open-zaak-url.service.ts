@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import _ from 'lodash';
 import { OpenZaakInfo } from '../interface/open-zaak-info.interface';
 import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
 import { OpenZaakService } from '@valtimo/resource';
+import { SamenwerkfunctionaliteitDocument } from '../interface/document-content.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,31 +17,27 @@ export class OpenZaakUrlService {
     private readonly openZaakService: OpenZaakService,
   ) {}
 
-  getOpenZaakInfo(documentId: string): Observable<OpenZaakInfo | null> {
+  getOpenZaakInfo(documentId: string): Observable<OpenZaakInfo> {
     return forkJoin({
       document: this.valtimoDocumentService.getDocument(documentId),
       zaakTypes: this.openZaakService.getZaakTypes(),
     }).pipe(
       map(({ document, zaakTypes }) => {
-        const openZaakId = _.get(
-          document,
-          OpenZaakUrlService.OPEN_ZAAK_ID_PATH,
-        );
+        const documentContentWithOpenZaakProperties =
+          document.content as SamenwerkfunctionaliteitDocument;
+        const openZaakId =
+          documentContentWithOpenZaakProperties.openzaak.identificatie;
 
         if (!openZaakId) {
-          console.warn(
+          throw new Error(
             `OpenZaak ID is not available in the document (searching at '${OpenZaakUrlService.OPEN_ZAAK_ID_PATH}').`,
           );
-          return null;
         }
 
         const zaakTypeUrl = zaakTypes[0]?.url;
 
         if (!zaakTypeUrl) {
-          console.warn(
-            'No zaak types found to retrieve the OpenZaak URL from.',
-          );
-          return null;
+          throw new Error(`No Zaaktypes found for ${zaakTypeUrl}.`);
         }
 
         const baseUrl = new URL(zaakTypeUrl).origin;
