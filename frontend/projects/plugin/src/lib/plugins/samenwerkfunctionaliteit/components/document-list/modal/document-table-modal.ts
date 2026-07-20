@@ -1,5 +1,4 @@
 import { Component, inject, input, InputSignal } from '@angular/core';
-
 import {
   AlertModalType,
   ModalButton,
