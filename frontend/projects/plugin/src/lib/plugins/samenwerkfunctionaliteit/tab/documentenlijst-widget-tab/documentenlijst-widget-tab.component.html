@@ -2,8 +2,12 @@
 <ng-container [ngTemplateOutlet]="documentenApiText"></ng-container>
 
 <ng-template #documentenApiText>
-
-  <cds-text-label
-    [helperText]="helperText">
-  </cds-text-label>
+  <div
+    class="documenten-api-text-container">
+    <cds-text-label
+      class="documenten-api-text"
+      [skeleton]="isLoading()"
+      [helperText]="helperText">
+    </cds-text-label>
+  </div>
 </ng-template>
