@@ -66,6 +66,18 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       'get-all-actieverzoeken': "Alle actieverzoeken ophalen",
       isOrganisationTheReceiverTooltip: 'Filtert op actieverzoeken waarvan de huidige organisatie (zie OIN in de instellingen van de plugin) de ontvanger is.',
       isOrganisationTheReceiver: 'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
+      //Berichten:
+      stuurBerichtTitle: 'Stuur bericht:',
+      stuurBerichtPlaceholder: 'Type hier uw bericht',
+      stuurBerichtSendButtonDescription: 'Bericht versturen',
+      stuurBerichtMissingActieverzoekIdTitle: 'Er kan geen bericht verstuurd worden',
+      stuurBerichtMissingActieverzoekIdMessage: 'De benodigde samenwerkinggegevens zijn niet beschikbaar.',
+      stuurBerichtSuccessTitle: 'Verzonden:',
+      stuurBerichtSuccessMessage: 'Het bericht is succesvol verzonden.',
+      stuurBerichtErrorTitle: 'Bericht kon niet worden verstuurd:',
+      stuurBerichtErrorMessage:
+        'Er ging iets mis tijdens het verzenden van het bericht. Neem contact op met uw beheerder als dit probleem zich vaker voordoet.',
+
     },
 
     en: {
@@ -92,6 +104,20 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
 
       variableFieldTooltip:
         'This field accepts either a literal value or a path to a (process) variable containing the value (e.g. \'pv:/result\')',
+
+
+      // Berichten:
+      stuurBerichtTitle: 'Send message:',
+      stuurBerichtPlaceholder: 'Type your message here',
+      stuurBerichtSendButtonDescription: 'Send message',
+      stuurBerichtMissingActieverzoekIdTitle: 'A message cannot be sent',
+      stuurBerichtMissingActieverzoekIdMessage: 'The required collaboration details are not available.',
+      stuurBerichtSuccessTitle: 'Sent:',
+      stuurBerichtSuccessMessage: 'The message has been successfully sent.',
+      stuurBerichtErrorTitle: 'Unable to send message:',
+      stuurBerichtErrorMessage:
+        'Something went wrong while sending the message. Contact your administrator if this problem occurs frequently.',
+
 
       // Pluginacties
       // Actieverzoeken

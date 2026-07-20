@@ -12,14 +12,18 @@ import { BerichtNotification } from "../../../interface/bericht-notification.int
 import { SuccessNotification, ErrorNotification } from "../../../config/bericht-notification-config";
 import { BusinessKey } from "../../../models/business-key.model";
 import { SamenwerkingProperties } from "../../../models/samenwerking-properties.model";
+import { PluginTranslatePipeModule } from "@valtimo/plugin";
 
 @Component({
   selector: "stuur-bericht",
-  imports: [InputModule, ButtonModule, IconModule, FormsModule, NotificationModule, CommonModule],
+  imports: [InputModule, ButtonModule, IconModule, FormsModule, NotificationModule, CommonModule, PluginTranslatePipeModule],
+
   templateUrl: "./stuur-bericht.component.html",
   styleUrl: "./stuur-bericht.component.scss",
 })
 export class StuurBerichtComponent {
+
+  readonly pluginId = "samenwerkfunctionaliteit";
 
   private actieverzoekId: string | null | undefined;
   private notificationTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -29,7 +33,6 @@ export class StuurBerichtComponent {
   isSubmitting = signal(false);
   isMissingActieverzoekId = signal<boolean>(false);
 
-  placeholder = "Type hier uw bericht";
   rows = 5;
   maxLength = 512;
   message = "";
@@ -73,6 +76,11 @@ export class StuurBerichtComponent {
           this.assignNotification(ErrorNotification, false);
         },
       });
+  }
+
+  getNotificationTypeKey(): string {
+     const notificationType = this.notification()?.type ?? '';
+     return 'success' === notificationType ? 'success' : 'error';
   }
 
   private retrieveActieverzoekId(documentId: string) {

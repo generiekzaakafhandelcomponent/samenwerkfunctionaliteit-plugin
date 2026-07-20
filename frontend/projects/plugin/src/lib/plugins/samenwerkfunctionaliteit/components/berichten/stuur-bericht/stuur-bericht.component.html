@@ -3,8 +3,8 @@
   <cds-notification
     [notificationObj]="{
       type: 'info',
-      title: 'Er kan geen bericht verstuurd worden',
-      message: 'De benodigde samenwerkinggegevens zijn niet beschikbaar.',
+      title: ('stuurBerichtMissingActieverzoekIdTitle' | pluginTranslate: pluginId | async),
+      message: ('stuurBerichtMissingActieverzoekIdMessage' | pluginTranslate: pluginId | async),
       showClose: false
     }"
   ></cds-notification>
@@ -12,18 +12,18 @@
 @else
 {
   <div class="stuur-bericht">
-    <p>Stuur bericht:</p>
+    <p>{{ 'stuurBerichtTitle' | pluginTranslate: pluginId | async }}</p>
     <textarea
       cdsTextArea
       class="textarea-field message-body"
-      [placeholder]="placeholder"
+      [placeholder]="'stuurBerichtPlaceholder' | pluginTranslate: pluginId | async"
       [rows]="rows"
       [maxLength]="maxLength"
       [(ngModel)]="message"
     ></textarea>
 
     <cds-icon-button
-      description="Bericht versturen"
+      [description]="'stuurBerichtSendButtonDescription' | pluginTranslate: pluginId | async"
       [disabled]="isSubmitting() || !message.trim()"
       (click)="onClick()"
     >
@@ -36,14 +36,12 @@
 
     @if (notification()) {
       <cds-notification
-        *ngIf="notification() as activeNotification"
         [notificationObj]="{
-          type: activeNotification.type,
-          title: activeNotification.title,
-          message: activeNotification.message,
+          type: notification()!.type,
+          title: ((getNotificationTypeKey() === 'success' ? 'stuurBerichtSuccessTitle' : 'stuurBerichtErrorTitle') | pluginTranslate: pluginId | async),
+          message: ((getNotificationTypeKey() === 'success' ? 'stuurBerichtSuccessMessage' : 'stuurBerichtErrorMessage') | pluginTranslate: pluginId | async),
           showClose: true
         }"
-        (close)="notification.set(null)"
       ></cds-notification>
     }
   </div>
