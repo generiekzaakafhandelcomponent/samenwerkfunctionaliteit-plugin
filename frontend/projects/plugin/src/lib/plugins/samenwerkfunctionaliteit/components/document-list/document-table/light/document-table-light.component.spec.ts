@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DocumentTableLightComponent } from './document-table-light.component';
 
 describe('DocumentTableLightComponent', () => {
