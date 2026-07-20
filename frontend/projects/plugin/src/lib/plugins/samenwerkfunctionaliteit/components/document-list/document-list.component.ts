@@ -11,21 +11,15 @@ import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from '../../models/document.model';
 import { BusinessKey } from '../../models/business-key.model';
-import { switchMap, take, tap } from 'rxjs';
+import { finalize, switchMap, take, tap } from 'rxjs';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'document-list',
   templateUrl: './document-list.component.html',
-  imports: [
-    DocumentTableComponent,
-    NotificationModule,
-    TranslatePipe,
-    NgTemplateOutlet,
-  ],
+  imports: [DocumentTableComponent, NotificationModule, TranslatePipe],
   standalone: true,
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -75,14 +69,15 @@ export class DocumentListComponent {
               }),
             );
         }),
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
       )
       .subscribe({
         next: () => {
-          this.isLoading.set(false);
           this.hasError.set(false);
         },
         error: (error: Error) => {
-          this.isLoading.set(false);
           this.hasError.set(true);
           this.errorMessage.set(error.message);
         },
