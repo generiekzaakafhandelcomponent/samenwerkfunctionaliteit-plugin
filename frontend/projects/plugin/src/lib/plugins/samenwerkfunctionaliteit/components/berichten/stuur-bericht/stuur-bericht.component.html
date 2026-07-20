@@ -42,6 +42,7 @@
           message: ((getNotificationTypeKey() === 'success' ? 'stuurBerichtSuccessMessage' : 'stuurBerichtErrorMessage') | pluginTranslate: pluginId | async),
           showClose: true
         }"
+        (close)="dismissNotification()"
       ></cds-notification>
     }
   </div>

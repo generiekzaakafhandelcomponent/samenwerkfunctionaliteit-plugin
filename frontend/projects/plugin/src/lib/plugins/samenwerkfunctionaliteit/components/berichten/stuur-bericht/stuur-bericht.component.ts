@@ -83,6 +83,15 @@ export class StuurBerichtComponent {
      return 'success' === notificationType ? 'success' : 'error';
   }
 
+  dismissNotification(): void {
+    if (this.notificationTimeout) {
+      clearTimeout(this.notificationTimeout);
+      this.notificationTimeout = null;
+    }
+    this.notification.set(null);
+  }
+
+
   private retrieveActieverzoekId(documentId: string) {
     const valtimoBusinessKey: BusinessKey = { value: documentId };
     this.swfService
