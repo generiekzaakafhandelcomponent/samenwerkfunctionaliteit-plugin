@@ -68,7 +68,7 @@ export class DocumentenlijstWidgetTabComponent {
     this.helperText =
       'Documenten die vanuit GZAC naar de Samenwerkfunctionaliteit worden geüpload, worden daarnaast ook in Open Zaak ' +
       'opgeslagen. De bewaartermijn kan voor het zaaktype dat hier gebruikt worden ingesteld. Dit kan dus verschillen ' +
-      'van de vaste bewaartermijn die de Samenwerkfunctionaliteit aanhoudt.' +
+      'van de vaste bewaartermijn die de Samenwerkfunctionaliteit aanhoudt. ' +
       'In Open Zaak worden de documenten per actieverzoek, en niet — zoals in de Samenwerkfunctionaliteit — ' +
       `per samenwerking gegroepeerd. Zie ${openZaakUrl} om de lijst van documenten die zijn ` +
       'opgeslagen in te zien.';
