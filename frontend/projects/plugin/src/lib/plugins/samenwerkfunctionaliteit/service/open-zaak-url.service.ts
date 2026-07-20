@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { _ } from 'lodash';
+import _ from 'lodash';
 import { OpenZaakInfo } from '../interface/open-zaak-info.interface';
 import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
 import { OpenZaakService } from '@valtimo/resource';
@@ -9,7 +9,7 @@ import { OpenZaakService } from '@valtimo/resource';
 @Injectable({
   providedIn: 'root',
 })
-export class OpenZaakLinkService {
+export class OpenZaakUrlService {
   private static readonly OPEN_ZAAK_ID_PATH = 'content.openzaak.identificatie';
 
   constructor(
@@ -25,12 +25,12 @@ export class OpenZaakLinkService {
       map(({ document, zaakTypes }) => {
         const openZaakId = _.get(
           document,
-          OpenZaakLinkService.OPEN_ZAAK_ID_PATH,
+          OpenZaakUrlService.OPEN_ZAAK_ID_PATH,
         );
 
         if (!openZaakId) {
           console.warn(
-            `OpenZaak ID is not available in the document (searching at '${OpenZaakLinkService.OPEN_ZAAK_ID_PATH}').`,
+            `OpenZaak ID is not available in the document (searching at '${OpenZaakUrlService.OPEN_ZAAK_ID_PATH}').`,
           );
           return null;
         }
