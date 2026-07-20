@@ -60,7 +60,9 @@ export class DocumentTableLightComponent {
 
     return pageDocuments.map((document: Document): TableItem[] => [
       new TableItem({ data: document.fileName }),
-      new TableItem({ data: document.confidentialityLevel }),
+      new TableItem({
+        data: new Date(document.creationDate).toLocaleDateString(),
+      }),
     ]);
   }
 
@@ -83,7 +85,7 @@ export class DocumentTableLightComponent {
       }),
       new TableHeaderItem({
         data: this.translateService.instant(
-          'samenwerkfunctionaliteit.documenttable.confidentialityType',
+          'samenwerkfunctionaliteit.documenttable.dateCreated',
         ),
       }),
     ];
