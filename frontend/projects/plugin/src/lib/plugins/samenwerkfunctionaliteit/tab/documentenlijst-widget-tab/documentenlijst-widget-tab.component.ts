@@ -22,7 +22,7 @@ export class DocumentenlijstWidgetTabComponent {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   protected isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
-  private openZaakUrl: string = '';
+  protected openZaakUrl: string = '';
   protected helperText: string = '';
 
   ngOnInit() {
@@ -70,7 +70,7 @@ export class DocumentenlijstWidgetTabComponent {
       'opgeslagen. De bewaartermijn kan voor het zaaktype dat hier gebruikt worden ingesteld. Dit kan dus verschillen ' +
       'van de vaste bewaartermijn die de Samenwerkfunctionaliteit aanhoudt. ' +
       'In Open Zaak worden de documenten per actieverzoek, en niet — zoals in de Samenwerkfunctionaliteit — ' +
-      `per samenwerking gegroepeerd. Zie ${openZaakUrl} om de lijst van documenten die zijn ` +
+      `per samenwerking gegroepeerd. Zie de link hieronder om de lijst van documenten die zijn ` +
       'opgeslagen in te zien.';
   }
 }
