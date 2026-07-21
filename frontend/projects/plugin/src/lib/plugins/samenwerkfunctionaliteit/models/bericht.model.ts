@@ -1,4 +1,4 @@
-import {Links} from "./links.model";
+import { Links } from './links.model';
 
 export interface Bericht {
   _links?: Links;
@@ -11,4 +11,14 @@ export interface Bericht {
   samenwerkingId?: string;
   zender?: string;
   zenderNaam?: string;
+}
+
+export interface ChatBericht {
+  messageId: string;
+  createdOn: Date;
+  content: string;
+  receiver: string;
+  receiverName: string;
+  samenwerkingId: string;
+  sender: string;
 }
