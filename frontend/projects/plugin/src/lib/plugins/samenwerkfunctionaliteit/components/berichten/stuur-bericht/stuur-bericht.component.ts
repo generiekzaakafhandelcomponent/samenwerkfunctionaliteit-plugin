@@ -78,11 +78,6 @@ export class StuurBerichtComponent {
       });
   }
 
-  getNotificationTypeKey(): string {
-     const notificationType = this.notification()?.type ?? '';
-     return 'success' === notificationType ? 'success' : 'error';
-  }
-
   dismissNotification(): void {
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
@@ -102,7 +97,7 @@ export class StuurBerichtComponent {
           if (props.actieverzoekId) {
             this.actieverzoekId = props.actieverzoekId;
           } else {
-            throw new Error("Dossier heeft geen actieverzoekId .");
+            throw new Error("Dossier heeft geen actieverzoekId.");
           }
         }),
       )
