@@ -1,1 +1,8 @@
-<p>bericht works!</p>
+<div [class.sent]="isSender()" class="message-bubble-container">
+  <div class="message-bubble">
+    <div class="message-content">
+      <p class="message-text">{{ message().content }}</p>
+      <p class="message-timestamp">{{ message().createdOn | date: 'shortTime' }}</p>
+    </div>
+  </div>
+</div>
