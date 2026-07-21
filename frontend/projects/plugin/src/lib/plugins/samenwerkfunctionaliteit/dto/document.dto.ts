@@ -10,7 +10,7 @@ export interface DocumentenOverzichtResponse {
   page: Page;
 }
 
-export interface Documenten {
+interface Documenten {
   documenten: DocumentenResponse[];
 }
 
@@ -55,6 +55,6 @@ function mapVertrouwelijkheidsAanduidingToConfidentialityType(vertrouwelijkheids
   }
 }
 
-export function mapDocumentenResponseToModels(documenten: Documenten): DocumentInterface[] {
-  return documenten.documenten.map(mapDocumentenResponseToModel);
+export function mapDocumentenResponseToModels(documenten: DocumentenOverzichtResponse): DocumentInterface[] {
+  return documenten._embedded.documenten.map(mapDocumentenResponseToModel);
 }
