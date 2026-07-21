@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UploadDocumentComponent } from './upload-document.component';
 
 describe('UploadDocumentComponent', () => {

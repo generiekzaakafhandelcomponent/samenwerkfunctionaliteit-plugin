@@ -14,5 +14,4 @@ export class DeleteBerichtComponent implements FunctionConfigurationComponent {
   pluginId: string;
   save$: Observable<void>;
   valid: EventEmitter<boolean>;
-
 }

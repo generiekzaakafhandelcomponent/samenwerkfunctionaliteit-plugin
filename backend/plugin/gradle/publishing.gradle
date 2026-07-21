@@ -24,7 +24,7 @@ pluginManager.withPlugin("maven-publish") {
 
                 pom {
                     name = "Samenwerkfunctionaliteit-plugin"
-                    description = "Making the Samenwerkfunctionaliteit-API of the Digitaal Stelsel Omgevingswet available as a plugin for Valtimo"
+                    description = "Providing the Samenwerkfunctionaliteit-API of the Digitaal Stelsel Omgevingswet as a plugin for Valtimo"
                     developers {
                         developer {
                             id = "risa-it"
