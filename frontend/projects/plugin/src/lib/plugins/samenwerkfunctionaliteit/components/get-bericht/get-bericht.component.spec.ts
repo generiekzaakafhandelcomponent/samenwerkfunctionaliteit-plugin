@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GetBerichtComponent } from './get-bericht.component';
 
 describe('GetBerichtComponent', () => {

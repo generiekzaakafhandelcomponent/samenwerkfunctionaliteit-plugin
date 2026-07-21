@@ -12,7 +12,7 @@ This is a sample plugin demonstrating an API call action. It fetches data from a
 
 ```kotlin
 dependencies {
-    implementation("com.ritense.valtimoplugins:samenwerkfunctionaliteit-plugin:1.0.0")
+    implementation("com.ritense.valtimoplugins:samenwerkfunctionaliteit-plugin:0.1.0")
 }
 ```
 
@@ -21,7 +21,7 @@ dependencies {
 ```json
 {
   "dependencies": {
-    "@valtimo-plugins/samenwerkfunctionaliteit-plugin": "1.0.0"
+    "@valtimo-plugins/samenwerkfunctionaliteit-plugin": "0.1.0"
   }
 }
 ```
@@ -61,6 +61,7 @@ valtimo:
 ```
 
 Additional headers can be added to the gateway via `customHeaders`in the _"application.yml"_.
+
 ```yaml
 valtimo:
   samenwerkfunctionaliteit:
@@ -70,13 +71,40 @@ valtimo:
         header-name-2: "header-value-2"
 ```
 
-By default,  the baseurl of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
+By default, the baseurl of the API is based on the Samenwerkfunctionaliteit pluginconfiguration.
 This can be overridden in the _"application.yml"_ with the baseUrl property:
+
 ```yaml
 valtimo:
   samenwerkfunctionaliteit:
     gateway:
       baseUrl: "https://example.com/samenwerkfunctionaliteit/v5"
+```
+
+The API Gateway uses access control to manage user permissions.
+Access to the gateway can be granted on a per-user basis through PBAC. The following actions are available:
+
+| Action | Function                      |
+|--------|-------------------------------|
+| View   | GET, HEAD and OPTION requests |
+| Create | POST requests                 |
+| Modify | PUT and Patch requests        |
+| Delete | DELETE requests               |
+
+The following example grants a user role permission to perform all available actions on the API Gateway:
+
+```json
+ {
+  "resourceType": "com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.GatewayProperties",
+  "actions": [
+    "view",
+    "create",
+    "modify",
+    "delete"
+  ],
+  "roleKey": "ROLE_USER",
+  "conditions": []
+}
 ```
 
 ## Configuration
@@ -123,6 +151,7 @@ Voorbeeld `*.processlink.json`:
   "processLinkType": "plugin"
 }
 ```
+
 ![get-actieverzoek.png](img/get-actieverzoek.png)
 
 ---
@@ -133,10 +162,10 @@ Sends a GET request to retrieve all **actieverzoeken** (action requests) of a **
 **Usage:** Add this plugin action to an **operaton service task** in your process. The result of this request must be
 stored in an **operaton process variable**, for example **"actieverzoeken"**.
 
-| Parameter                | Type | Required | Description                                                                                                                    |
-|--------------------------|------|----------|--------------------------------------------------------------------------------------------------------------------------------|
-| resultPvName             | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in.                                          |
-| samenwerkingId           | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.                                                      |
+| Parameter                 | Type | Required | Description                                                                                                                    |
+|---------------------------|------|----------|--------------------------------------------------------------------------------------------------------------------------------|
+| resultPvName              | Text | Yes      | The name of the process variable you'd like to store the requested actieverzoeken in.                                          |
+| samenwerkingId            | Text | Yes      | The id of the samenwerking of which all actieverzoeken will be requested.                                                      |
 | isOrganisationTheReceiver | Text | No       | If the requested actieverzoeken should be filtered for the requesting organisatie. An optional boolean which defaults to true. |
 
 Voorbeeld `*.processlink.json`:
@@ -155,6 +184,7 @@ Voorbeeld `*.processlink.json`:
   "processLinkType": "plugin"
 }
 ```
+
 ![get-alle-actieverzoeken.png](img/get-alle-actieverzoeken.png)
 ---
 
@@ -214,45 +244,48 @@ Explain how to use the plugin in a process, with examples if applicable.
 
 
 #### Tabblad Config
+
 Onder `config/case/[...]/case/tab/[...].case-tab.json` kan het tabblad worden gekoppeld aan het dossier
+
 ```json
 {
-    "changesetId": "samenwerkingfunctionaliteit.case-tabs.1768982327099",
-    "case-definitions": [
+  "changesetId": "samenwerkingfunctionaliteit.case-tabs.1768982327099",
+  "case-definitions": [
+    {
+      "key": "samenwerkingfunctionaliteit",
+      "tabs": [
         {
-            "key": "samenwerkingfunctionaliteit",
-            "tabs": [
-                {
-                    "key": "documentenlijstwidget",
-                    "name": "Documentenlijst",
-                    "type": "custom",
-                    "contentKey": "documentenlijst-widget-tab"
-                },
-                {
-                    "key": "notificatiestab",
-                    "name": "Notificaties",
-                    "type": "custom",
-                    "contentKey": "notificaties-custom-tab"
-                },
-                {
-                    "key": "berichtentab",
-                    "name": "Berichten",
-                    "type": "custom",
-                    "contentKey": "berichten-custom-tab"
-                },
-                {
-                    "key": "samenwerkingwidget",
-                    "name": "Samenwerking",
-                    "type": "custom",
-                    "contentKey": "samenwerking-widget-tab"
-                }
-            ]
+          "key": "documentenlijstwidget",
+          "name": "Documentenlijst",
+          "type": "custom",
+          "contentKey": "documentenlijst-widget-tab"
+        },
+        {
+          "key": "notificatiestab",
+          "name": "Notificaties",
+          "type": "custom",
+          "contentKey": "notificaties-custom-tab"
+        },
+        {
+          "key": "berichtentab",
+          "name": "Berichten",
+          "type": "custom",
+          "contentKey": "berichten-custom-tab"
+        },
+        {
+          "key": "samenwerkingwidget",
+          "name": "Samenwerking",
+          "type": "custom",
+          "contentKey": "samenwerking-widget-tab"
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
 
-_Zie [toevoegen van plugins](https://docs.valtimo.nl/features/plugins/plugins/custom-plugin-definition#adding-the-plugin-module-to-the-ngmodule) en [toevoegen van case tabs](https://docs.valtimo.nl/features/case/for-developers/case-tabs) in de Valtimo docs._
+_Zie [toevoegen van plugins](https://docs.valtimo.nl/features/plugins/plugins/custom-plugin-definition#adding-the-plugin-module-to-the-ngmodule)
+en [toevoegen van case tabs](https://docs.valtimo.nl/features/case/for-developers/case-tabs) in de Valtimo docs._
 
 1. **Configure the Plugin**
    Set the `baseUrl` property in the plugin configuration to the base URL of your API.

@@ -1,7 +1,3 @@
-/*
- * Created by mika on 2026-06-03
-*/
-
 import {Component} from '@angular/core';
 import {SwfInformatiePaginaComponent} from "../../components/samenwerkingsinformatiepagina/swf-informatie-pagina/swf-informatie-pagina.component";
 

@@ -1,11 +1,11 @@
-import { Component } from "@angular/core";
-import { NotificatieCardList } from "../../components/notificatie-card-list/notificatie-card-list.component";
+import { Component } from '@angular/core';
+import { NotificatieCardListComponent } from '../../components/notificatie-card-list/notificatie-card-list.component';
 
 @Component({
-  selector: "notificaties-custom-tab",
-  imports: [NotificatieCardList],
-  templateUrl: "./notificaties-custom-tab.component.html",
-  styleUrl: "./notificaties-custom-tab.component.scss",
+  selector: 'swf-notificaties-custom-tab',
+  imports: [NotificatieCardListComponent],
+  templateUrl: './notificaties-custom-tab.component.html',
+  styleUrl: './notificaties-custom-tab.component.scss',
   standalone: true,
 })
-export class NotificatiesCustomTab {}
+export class NotificatiesCustomTabComponent {}

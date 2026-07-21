@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { PLUGINS_TOKEN } from '@valtimo/plugin';
 import { GetSamenwerkingNotificatiesComponent } from './get-samenwerking-notificaties.component';
 
 describe('GetSamenwerkingNotificatiesComponent', () => {
@@ -8,7 +9,8 @@ describe('GetSamenwerkingNotificatiesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GetSamenwerkingNotificatiesComponent]
+      imports: [GetSamenwerkingNotificatiesComponent, TranslateModule.forRoot()],
+      providers: [{ provide: PLUGINS_TOKEN, useValue: [] }]
     })
     .compileComponents();
 
