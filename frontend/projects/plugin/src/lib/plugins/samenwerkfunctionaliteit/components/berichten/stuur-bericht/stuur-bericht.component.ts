@@ -1,4 +1,4 @@
-import {Component, inject, Input, signal} from "@angular/core";
+import {Component, inject, signal} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {InputModule, ButtonModule, IconModule, IconService, NotificationModule} from "carbon-components-angular";
 import {FormsModule} from "@angular/forms";
