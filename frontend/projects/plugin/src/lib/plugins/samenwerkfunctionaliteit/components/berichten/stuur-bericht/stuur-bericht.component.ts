@@ -78,11 +78,6 @@ export class StuurBerichtComponent {
       });
   }
 
-  getNotificationTypeKey(): string {
-     const notificationType = this.notification()?.type ?? '';
-     return 'success' === notificationType ? 'success' : 'error';
-  }
-
   dismissNotification(): void {
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
