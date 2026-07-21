@@ -44,9 +44,7 @@ export class DocumentenlijstWidgetTabComponent {
         take(1),
         tap((openZaakInfo) => {
           this.openZaakUrl = openZaakInfo.searchUrl;
-        }),
-        tap(() => {
-          this.setHelperText(this.openZaakUrl);
+          this.setHelperText();
         }),
         catchError((err) => {
           return throwError(() => {
@@ -64,7 +62,7 @@ export class DocumentenlijstWidgetTabComponent {
       });
   }
 
-  private setHelperText(openZaakUrl: string) {
+  private setHelperText() {
     this.helperText =
       'Documenten die vanuit GZAC naar de Samenwerkfunctionaliteit worden geüpload, worden daarnaast ook in Open Zaak ' +
       'opgeslagen. De bewaartermijn kan voor het zaaktype dat hier gebruikt worden ingesteld. Dit kan dus verschillen ' +
