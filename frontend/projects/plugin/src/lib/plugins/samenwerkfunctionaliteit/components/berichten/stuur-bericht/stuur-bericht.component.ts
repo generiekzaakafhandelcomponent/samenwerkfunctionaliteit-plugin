@@ -1,18 +1,18 @@
-import { Component, inject, Input, signal } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { InputModule, ButtonModule, IconModule, IconService, NotificationModule } from "carbon-components-angular";
-import { FormsModule } from "@angular/forms";
-import { Send32 } from "@carbon/icons";
-import { ActivatedRoute } from "@angular/router";
-import { NGXLogger } from "ngx-logger";
-import { finalize, take, tap } from "rxjs";
-import { BerichtenService } from "../../../service/berichten.service";
-import { SwfDocumentService } from "../../../service/swf-document.service";
-import { BerichtNotification } from "../../../interface/bericht-notification.interface";
-import { SuccessNotification, ErrorNotification } from "../../../config/bericht-notification-config";
-import { BusinessKey } from "../../../models/business-key.model";
-import { SamenwerkingProperties } from "../../../models/samenwerking-properties.model";
-import { PluginTranslatePipeModule } from "@valtimo/plugin";
+import {Component, inject, Input, signal} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {InputModule, ButtonModule, IconModule, IconService, NotificationModule} from "carbon-components-angular";
+import {FormsModule} from "@angular/forms";
+import {Send32} from "@carbon/icons";
+import {ActivatedRoute} from "@angular/router";
+import {NGXLogger} from "ngx-logger";
+import {finalize, take, tap} from "rxjs";
+import {BerichtenService} from "../../../service/berichten.service";
+import {SwfDocumentService} from "../../../service/swf-document.service";
+import {BerichtNotification} from "../../../interface/bericht-notification.interface";
+import {SuccessNotification, ErrorNotification} from "../../../config/bericht-notification-config";
+import {BusinessKey} from "../../../models/business-key.model";
+import {SamenwerkingProperties} from "../../../models/samenwerking-properties.model";
+import {PluginTranslatePipeModule} from "@valtimo/plugin";
 
 @Component({
   selector: "stuur-bericht",
@@ -88,7 +88,7 @@ export class StuurBerichtComponent {
 
 
   private retrieveActieverzoekId(documentId: string) {
-    const valtimoBusinessKey: BusinessKey = { value: documentId };
+    const valtimoBusinessKey: BusinessKey = {value: documentId};
     this.swfService
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(

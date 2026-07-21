@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { StuurBerichtComponent } from './stuur-bericht.component';
+import {StuurBerichtComponent} from './stuur-bericht.component';
 
 describe('GgdSendMessageComponent', () => {
   let component: StuurBerichtComponent;
@@ -10,7 +10,7 @@ describe('GgdSendMessageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [StuurBerichtComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(StuurBerichtComponent);
     component = fixture.componentInstance;

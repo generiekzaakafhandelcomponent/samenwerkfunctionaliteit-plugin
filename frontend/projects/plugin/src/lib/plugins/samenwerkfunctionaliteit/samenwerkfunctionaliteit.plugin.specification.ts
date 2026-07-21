@@ -1,15 +1,17 @@
-import { PluginSpecification } from "@valtimo/plugin";
-import { SamenwerkfunctionaliteitPluginConfigurationComponent } from "./components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component";
-import { SAMENWERKFUNCTIONALITEIT_PLUGIN_LOGO_BASE64 } from "./assets/samenwerkfunctionaliteit-plugin-logo";
-import { GetActieverzoekComponent } from "./components/get-actieverzoek/get-actieverzoek.component";
-import { GetAllActieverzoekenComponent } from "./components/get-all-actieverzoeken/get-all-actieverzoeken.component";
-import { GetBerichtComponent } from "./components/get-bericht/get-bericht.component";
-import { PostBerichtComponent } from "./components/post-bericht/post-bericht.component";
-import { DeleteBerichtComponent } from "./components/delete-bericht/delete-bericht.component";
-import { GetDocumentenOverzichtComponent } from "./components/get-documenten-overzicht/get-documenten-overzicht.component";
-import { DownloadDocumentComponent } from "./components/download-document/download-document.component";
-import { UploadDocumentComponent } from "./components/upload-document/upload-document.component";
-import { GetSamenwerkingNotificatiesComponent } from "./components/get-samenwerking-notificaties/get-samenwerking-notificaties.component";
+import {PluginSpecification} from "@valtimo/plugin";
+import {
+  SamenwerkfunctionaliteitPluginConfigurationComponent
+} from "./components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component";
+import {SAMENWERKFUNCTIONALITEIT_PLUGIN_LOGO_BASE64} from "./assets/samenwerkfunctionaliteit-plugin-logo";
+import {GetActieverzoekComponent} from "./components/get-actieverzoek/get-actieverzoek.component";
+import {GetAllActieverzoekenComponent} from "./components/get-all-actieverzoeken/get-all-actieverzoeken.component";
+import {GetBerichtComponent} from "./components/get-bericht/get-bericht.component";
+import {PostBerichtComponent} from "./components/post-bericht/post-bericht.component";
+import {DeleteBerichtComponent} from "./components/delete-bericht/delete-bericht.component";
+import {GetDocumentenOverzichtComponent} from "./components/get-documenten-overzicht/get-documenten-overzicht.component";
+import {DownloadDocumentComponent} from "./components/download-document/download-document.component";
+import {UploadDocumentComponent} from "./components/upload-document/upload-document.component";
+import {GetSamenwerkingNotificatiesComponent} from "./components/get-samenwerking-notificaties/get-samenwerking-notificaties.component";
 
 const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
   pluginId: "samenwerkfunctionaliteit",
@@ -135,4 +137,4 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
   },
 };
 
-export { samenwerkfunctionaliteitPluginSpecification };
+export {samenwerkfunctionaliteitPluginSpecification};

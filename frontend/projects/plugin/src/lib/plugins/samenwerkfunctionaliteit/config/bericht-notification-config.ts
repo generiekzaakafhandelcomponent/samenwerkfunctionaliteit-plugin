@@ -1,4 +1,4 @@
-import { BerichtNotification } from "../interface/bericht-notification.interface"
+import {BerichtNotification} from "../interface/bericht-notification.interface"
 
 export const SuccessNotification: BerichtNotification = {
   type: "success",

@@ -1,5 +1,4 @@
-@if(this.isMissingActieverzoekId())
-{
+@if (this.isMissingActieverzoekId()) {
   <cds-notification
     [notificationObj]="{
       type: 'info',
@@ -8,9 +7,7 @@
       showClose: false
     }"
   ></cds-notification>
-}
-@else
-{
+} @else {
   <div class="stuur-bericht">
     <p>{{ 'stuurBerichtTitle' | pluginTranslate: pluginId | async }}</p>
     <textarea
