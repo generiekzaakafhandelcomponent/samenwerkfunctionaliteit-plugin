@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'lib-berichten-list',
   imports: [],
   templateUrl: './berichten-list.component.html',
-  styleUrl: './berichten-list.component.css',
+  styleUrl: './berichten-list.component.scss',
 })
 export class BerichtenListComponent {}
