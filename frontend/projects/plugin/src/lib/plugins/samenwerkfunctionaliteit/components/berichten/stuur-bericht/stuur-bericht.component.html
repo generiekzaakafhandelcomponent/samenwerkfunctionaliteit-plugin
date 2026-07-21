@@ -38,8 +38,8 @@
       <cds-notification
         [notificationObj]="{
           type: notification()!.type,
-          title: ((getNotificationTypeKey() === 'success' ? 'stuurBerichtSuccessTitle' : 'stuurBerichtErrorTitle') | pluginTranslate: pluginId | async),
-          message: ((getNotificationTypeKey() === 'success' ? 'stuurBerichtSuccessMessage' : 'stuurBerichtErrorMessage') | pluginTranslate: pluginId | async),
+          title: (notification()!.titleKey | pluginTranslate: pluginId | async),
+          message: (notification()!.messageKey | pluginTranslate: pluginId | async),
           showClose: true
         }"
         (close)="dismissNotification()"

@@ -1,5 +1,5 @@
 export interface BerichtNotification  {
   type: "success" | "error";
-  title: string;
-  message: string;
+  titleKey: string;
+  messageKey: string;
 };
