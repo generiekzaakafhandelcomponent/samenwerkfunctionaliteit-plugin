@@ -97,7 +97,7 @@ export class StuurBerichtComponent {
           if (props.actieverzoekId) {
             this.actieverzoekId = props.actieverzoekId;
           } else {
-            throw new Error("Dossier heeft geen actieverzoekId .");
+            throw new Error("Dossier heeft geen actieverzoekId.");
           }
         }),
       )
