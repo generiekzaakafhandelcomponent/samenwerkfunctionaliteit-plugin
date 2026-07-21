@@ -4,8 +4,8 @@
         "title": "OpenZaak Authentication (Autodeployed)",
         "pluginDefinitionKey": "openzaak",
         "properties": {
-            "clientId": "valtimo_client",
-            "clientSecret": "e09b8bc5-5831-4618-ab28-41411304309d"
+            "clientId": "gzac-sd2",
+            "clientSecret": "KxALanFJkQtWjq8hgf6vVD3c9UBEXTw2"
         }
     },
     {
@@ -13,7 +13,7 @@
         "title": "Zaken API (Autodeployed)",
         "pluginDefinitionKey": "zakenapi",
         "properties": {
-            "url": "http://localhost:8001/zaken/api/v1/",
+            "url": "https://openzaak-zgw.test.denhaag.nl/zaken/api/v1/",
             "authenticationPluginConfiguration": "b609a0a3-886e-4b3d-ae0d-c01effb311ee"
         }
     },
@@ -22,7 +22,7 @@
         "title": "Catalogi API (Autodeployed)",
         "pluginDefinitionKey": "catalogiapi",
         "properties": {
-            "url": "http://localhost:8001/catalogi/api/v1/",
+            "url": "https://openzaak-zgw.test.denhaag.nl/catalogi/api/v1/",
             "authenticationPluginConfiguration": "b609a0a3-886e-4b3d-ae0d-c01effb311ee"
         }
     },
@@ -31,8 +31,8 @@
         "title": "Documenten API (Autodeployed)",
         "pluginDefinitionKey": "documentenapi",
         "properties": {
-            "url": "http://localhost:8001/documenten/api/v1/",
-            "bronorganisatie": "051845623",
+            "url": "https://openzaak-zgw.test.denhaag.nl/documenten/api/v1/",
+            "bronorganisatie": "100000009",
             "authenticationPluginConfiguration": "b609a0a3-886e-4b3d-ae0d-c01effb311ee",
             "apiVersion": "1.4.2-maykin-1.13.0"
         }
