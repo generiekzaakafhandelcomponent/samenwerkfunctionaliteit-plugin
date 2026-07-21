@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { PLUGINS_TOKEN } from '@valtimo/plugin';
-
 import { GetActieverzoekComponent } from './get-actieverzoek.component';
 
 describe('GetActieverzoekComponent', () => {

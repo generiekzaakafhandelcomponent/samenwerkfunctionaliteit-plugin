@@ -1,5 +1,4 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {SamenwerkfunctionaliteitPluginConfigurationComponent} from './samenwerkfunctionaliteit-plugin-configuration.component';
 import {EMPTY, of} from 'rxjs';
 import { Config } from '../../models';

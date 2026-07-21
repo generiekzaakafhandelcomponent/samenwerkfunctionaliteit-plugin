@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DeleteBerichtComponent } from './delete-bericht.component';
 
 describe('DeleteBerichtComponent', () => {
