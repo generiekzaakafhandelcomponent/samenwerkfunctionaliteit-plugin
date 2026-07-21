@@ -1,17 +1,15 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormModule, FormOutput, InputModule} from "@valtimo/components";
-import {FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule} from '@valtimo/plugin';
-import {BehaviorSubject, combineLatest, Observable, Subscription, take} from 'rxjs';
-import {ActieverzoekConfig} from "../../models/actieverzoek-config";
-import {AsyncPipe, NgIf} from "@angular/common";
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { FormModule, FormOutput, InputModule } from "@valtimo/components";
+import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule } from "@valtimo/plugin";
+import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
+import { ActieverzoekConfig } from "../../models/actieverzoek-config";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
-  selector: 'get-actieverzoek',
-  imports: [
-    FormModule, InputModule, AsyncPipe, PluginTranslatePipeModule, NgIf
-  ],
-  templateUrl: './get-actieverzoek.component.html',
-  styleUrl: './get-actieverzoek.component.scss'
+  selector: "get-actieverzoek",
+  imports: [FormModule, InputModule, AsyncPipe, PluginTranslatePipeModule, NgIf],
+  templateUrl: "./get-actieverzoek.component.html",
+  styleUrl: "./get-actieverzoek.component.scss",
 })
 export class GetActieverzoekComponent implements FunctionConfigurationComponent, OnInit, OnDestroy {
   @Input() disabled$: Observable<boolean>;
@@ -40,16 +38,17 @@ export class GetActieverzoekComponent implements FunctionConfigurationComponent,
   }
 
   private handleValid(formOutput: ActieverzoekConfig): void {
-    const valid =
-      !!formOutput.resultPvName.trim() &&
-      !!formOutput.actieverzoekId.trim()
+    const resultPvName = formOutput.resultPvName ?? "";
+    const actieverzoekId = formOutput.actieverzoekId ?? "";
+
+    const valid = resultPvName.trim().length > 0 && actieverzoekId.trim().length > 0;
 
     this.valid$.next(valid);
     this.valid.emit(valid);
   }
 
   private openSaveSubscription(): void {
-    this.saveSubscription = this.save$?.subscribe(save => {
+    this.saveSubscription = this.save$?.subscribe((save) => {
       combineLatest([this.config$, this.valid$])
         .pipe(take(1))
         .subscribe(([config, valid]) => {

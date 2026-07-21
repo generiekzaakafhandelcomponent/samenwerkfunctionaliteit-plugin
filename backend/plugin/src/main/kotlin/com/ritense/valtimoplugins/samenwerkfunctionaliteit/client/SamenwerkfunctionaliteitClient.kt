@@ -1,12 +1,12 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import org.springframework.core.io.InputStreamResource
 import java.util.UUID
@@ -20,7 +20,7 @@ interface SamenwerkfunctionaliteitClient {
     fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        organisatie: String?
+        organisatie: String?,
     ): ActieverzoekenGetResponse
 
     fun getBericht(
@@ -60,5 +60,5 @@ interface SamenwerkfunctionaliteitClient {
     fun getSamenwerkingNotificaties(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-    ): List<NotificatieResponse>
+    ): NotificatieGetResponse
 }

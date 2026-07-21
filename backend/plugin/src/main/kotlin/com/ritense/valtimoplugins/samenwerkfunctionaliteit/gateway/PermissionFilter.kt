@@ -1,6 +1,10 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
-import org.springframework.http.HttpStatus
+import com.ritense.authorization.Action
+import com.ritense.authorization.AuthorizationService
+import com.ritense.authorization.request.EntityAuthorizationRequest
+import org.springframework.context.annotation.Lazy
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.function.HandlerFilterFunction
 import org.springframework.web.servlet.function.HandlerFunction
@@ -8,22 +12,38 @@ import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 
 @Component
-class PermissionFilter : HandlerFilterFunction<ServerResponse, ServerResponse> {
+class PermissionFilter(
+    @param:Lazy
+    private val authorizationService: AuthorizationService,
+) : HandlerFilterFunction<ServerResponse, ServerResponse> {
     override fun filter(
         request: ServerRequest,
         next: HandlerFunction<ServerResponse>,
     ): ServerResponse {
-        val isAllowed = checkPermissions(request)
+        requireGatewayPermission(request.method())
 
-        return if (isAllowed) {
-            next.handle(request)
-        } else {
-            ServerResponse
-                .status(HttpStatus.FORBIDDEN)
-                .body("Access Denied: Not allowed to route.")
-        }
+        return next.handle(request)
     }
 
-    // TODO Will be implemented in DGS-601
-    private fun checkPermissions(request: ServerRequest): Boolean = true
+    private fun requireGatewayPermission(httpMethod: HttpMethod) =
+        authorizationService.requirePermission(
+            EntityAuthorizationRequest(
+                GatewayProperties::class.java,
+                Action(getActionKeyFrom(httpMethod)),
+                null,
+            ),
+        )
+
+    private fun getActionKeyFrom(httpMethod: HttpMethod) =
+        when (httpMethod) {
+            HttpMethod.GET -> Action.VIEW
+            HttpMethod.HEAD -> Action.VIEW
+            HttpMethod.POST -> Action.CREATE
+            HttpMethod.PUT -> Action.MODIFY
+            HttpMethod.PATCH -> Action.MODIFY
+            HttpMethod.DELETE -> Action.DELETE
+            HttpMethod.OPTIONS -> Action.VIEW
+            HttpMethod.TRACE -> Action.DENY
+            else -> Action.DENY
+        }
 }

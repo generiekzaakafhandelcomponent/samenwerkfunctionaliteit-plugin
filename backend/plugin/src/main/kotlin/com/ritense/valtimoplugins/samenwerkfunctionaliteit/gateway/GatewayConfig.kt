@@ -24,7 +24,7 @@ class GatewayConfig(
     private val gatewayProperties: GatewayProperties,
     private val permissionFilter: PermissionFilter,
     private val headerProcessingFilter: HeaderProcessingFilter,
-    @Lazy
+    @param:Lazy
     private val pluginService: PluginService,
 ) {
     @Bean
