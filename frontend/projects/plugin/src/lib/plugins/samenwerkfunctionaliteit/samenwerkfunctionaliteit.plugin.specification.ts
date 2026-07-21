@@ -76,6 +76,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       stuurBerichtErrorTitle: "Bericht kon niet worden verstuurd:",
       stuurBerichtErrorMessage:
         "Er ging iets mis tijdens het verzenden van het bericht. Neem contact op met uw beheerder als dit probleem zich vaker voordoet.",
+
+      // Haal alle notificaties op van de samenwerking
+      "get-samenwerking-notificaties": "Alle notificaties van de samenwerking ophalen",
     },
 
     en: {
@@ -125,6 +128,9 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       "get-all-actieverzoeken": "Request all actieverzoeken for a given samenwerkingId.",
       isOrganisationTheReceiverTooltip: "Filters on actieverzoek of which the current organisation is the receiver.",
       isOrganisationTheReceiver: "If the actieverzoek should be filtered on organisation.",
+
+      // Get alle notifications of the samenwerking
+      "get-samenwerking-notificaties": "Request all notifications of the samenwerking",
     },
   },
 };

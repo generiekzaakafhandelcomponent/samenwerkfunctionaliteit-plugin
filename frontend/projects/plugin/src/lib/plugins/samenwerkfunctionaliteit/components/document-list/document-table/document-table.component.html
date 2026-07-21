@@ -1,0 +1,47 @@
+<cds-table-container>
+  <cds-table-toolbar [model]="model()" #toolbar>
+    <cds-table-toolbar-actions>
+      <button cdsButton="primary" (click)="deleteDocument()">
+        {{ 'samenwerkfunctionaliteit.documenttable.delete' | translate }}
+        <svg size="16" class="cds--btn__icon"></svg>
+      </button>
+      <button cdsButton="primary" (click)="downloadDocument()">
+        Download
+        <svg size="16" class="cds--btn__icon"></svg>
+      </button>
+    </cds-table-toolbar-actions>
+    <cds-table-toolbar-content *ngIf="!toolbar.selected">
+      <cds-table-toolbar-search
+        [expandable]="true"
+        (valueChange)="filterFileNames($event)"
+        (clear)="searchValue.set('')">
+      </cds-table-toolbar-search>
+      <button cdsButton="primary" size="sm" (click)="uploadDocument()" [disabled]="isUploading()">
+        Upload
+        <svg cdsIcon="add" size="20" class="cds--btn__icon"></svg>
+      </button>
+    </cds-table-toolbar-content>
+  </cds-table-toolbar>
+
+  <cds-table
+    [model]="model()"
+    [showSelectionColumn]="showSelectionColumn"
+    [skeleton]="isSkeleton()"
+    [striped]="striped"
+    [enableSingleSelect]="enableSingleSelect"
+    (selectRow)="onRowSelected($event)"
+  >
+  </cds-table>
+  <cds-pagination [model]="model()" (selectPage)="selectPage($event)"></cds-pagination>
+</cds-table-container>
+
+<document-table-modal
+  #documentTableModal
+  [buttons]="deleteConfig.buttons"
+  [modalContent]="deleteConfig.content"
+  [modalTitle]="deleteConfig.title"
+  [modalType]="deleteConfig.type"
+  [showCloseButton]="deleteConfig.showCloseButton"
+  [size]="deleteConfig.size"
+>
+</document-table-modal>
