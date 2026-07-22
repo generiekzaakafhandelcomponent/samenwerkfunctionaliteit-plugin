@@ -1,29 +1,45 @@
-import {Component, inject, signal} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {InputModule, ButtonModule, IconModule, IconService, NotificationModule} from "carbon-components-angular";
-import {FormsModule} from "@angular/forms";
-import {Send32} from "@carbon/icons";
-import {ActivatedRoute} from "@angular/router";
-import {NGXLogger} from "ngx-logger";
-import {finalize, take, tap} from "rxjs";
-import {BerichtenService} from "../../../service/berichten.service";
-import {SwfDocumentService} from "../../../service/swf-document.service";
-import {BerichtNotification} from "../../../interface/bericht-notification.interface";
-import {SuccessNotification, ErrorNotification} from "../../../config/bericht-notification-config";
-import {BusinessKey} from "../../../models/business-key.model";
-import {SamenwerkingProperties} from "../../../models/samenwerking-properties.model";
-import {PluginTranslatePipeModule} from "@valtimo/plugin";
+import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  ButtonModule,
+  IconModule,
+  IconService,
+  InputModule,
+  NotificationModule,
+} from 'carbon-components-angular';
+import { FormsModule } from '@angular/forms';
+import { Send32 } from '@carbon/icons';
+import { ActivatedRoute } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
+import { finalize, take, tap } from 'rxjs';
+import { BerichtenService } from '../../../service/berichten.service';
+import { SwfDocumentService } from '../../../service/swf-document.service';
+import { BerichtNotification } from '../../../interface/bericht-notification.interface';
+import {
+  ErrorNotification,
+  SuccessNotification,
+} from '../../../config/bericht-notification-config';
+import { BusinessKey } from '../../../models/business-key.model';
+import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
+import { PluginTranslatePipeModule } from '@valtimo/plugin';
 
 @Component({
-  selector: "stuur-bericht",
-  imports: [InputModule, ButtonModule, IconModule, FormsModule, NotificationModule, CommonModule, PluginTranslatePipeModule],
+  selector: 'stuur-bericht',
+  imports: [
+    InputModule,
+    ButtonModule,
+    IconModule,
+    FormsModule,
+    NotificationModule,
+    CommonModule,
+    PluginTranslatePipeModule,
+  ],
 
-  templateUrl: "./stuur-bericht.component.html",
-  styleUrl: "./stuur-bericht.component.scss",
+  templateUrl: './stuur-bericht.component.html',
+  styleUrl: './stuur-bericht.component.scss',
 })
 export class StuurBerichtComponent {
-
-  readonly pluginId = "samenwerkfunctionaliteit";
+  readonly pluginId = 'samenwerkfunctionaliteit';
 
   private actieverzoekId: string | null | undefined;
   private notificationTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -35,7 +51,7 @@ export class StuurBerichtComponent {
 
   rows = 5;
   maxLength = 512;
-  message = "";
+  message = '';
 
   route = inject(ActivatedRoute);
   private berichtenService = inject(BerichtenService);
@@ -45,7 +61,7 @@ export class StuurBerichtComponent {
 
   ngOnInit() {
     this.iconService.registerAll([Send32]);
-    const documentId = this.swfService.getParam(this.route, "documentId");
+    const documentId = this.swfService.getParam(this.route, 'documentId');
     this.retrieveActieverzoekId(documentId!);
   }
 
@@ -53,7 +69,7 @@ export class StuurBerichtComponent {
     this.notification.set(null);
 
     if (!this.actieverzoekId) {
-      this.logger.warn("Unable to post message: No actieverzoekId available.");
+      this.logger.warn('Unable to post message: No actieverzoekId available.');
       this.assignNotification(ErrorNotification, false);
       return;
     }
@@ -69,7 +85,7 @@ export class StuurBerichtComponent {
       .subscribe({
         next: () => {
           this.assignNotification(SuccessNotification, true);
-          this.message = "";
+          this.message = '';
         },
         error: (response) => {
           this.logger.error(response);
@@ -86,9 +102,8 @@ export class StuurBerichtComponent {
     this.notification.set(null);
   }
 
-
   private retrieveActieverzoekId(documentId: string) {
-    const valtimoBusinessKey: BusinessKey = {value: documentId};
+    const valtimoBusinessKey: BusinessKey = { value: documentId };
     this.swfService
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(
@@ -97,19 +112,25 @@ export class StuurBerichtComponent {
           if (props.actieverzoekId) {
             this.actieverzoekId = props.actieverzoekId;
           } else {
-            throw new Error("Dossier heeft geen actieverzoekId.");
+            throw new Error('Dossier heeft geen actieverzoekId.');
           }
         }),
       )
       .subscribe({
         error: (error) => {
-          this.logger.error("Unable to retrieve samenwerking properties", error);
+          this.logger.error(
+            'Unable to retrieve samenwerking properties',
+            error,
+          );
           this.isMissingActieverzoekId.set(true);
         },
       });
   }
 
-  private assignNotification(notification: BerichtNotification, shouldCloseAutomatically: boolean) {
+  private assignNotification(
+    notification: BerichtNotification,
+    shouldCloseAutomatically: boolean,
+  ) {
     if (this.notificationTimeout) {
       clearTimeout(this.notificationTimeout);
       this.notificationTimeout = null;
