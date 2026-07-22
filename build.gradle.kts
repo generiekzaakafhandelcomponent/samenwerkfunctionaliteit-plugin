@@ -72,6 +72,12 @@ subprojects {
             }
         }
 
+        dependencyManagement {
+            imports {
+                mavenBom("org.springframework.cloud:spring-cloud-dependencies:2025.0.2")
+            }
+        }
+
         dependencies {
             implementation(platform("com.ritense.valtimo:valtimo-dependency-versions:$valtimoVersion"))
             implementation("cn.lalaki.central:central:$lalakiCentralVersion")
@@ -89,7 +95,7 @@ subprojects {
         if (Os.isFamily(FAMILY_MAC)) {
             println("Configure docker compose for macOs")
             dockerCompose {
-                projectNamePrefix = "sample-plugin-"
+                projectNamePrefix = "samenwerkfunctionaliteit-plugin-"
                 setProjectName("${rootProject.name}-${project.name}")
                 executable = "/usr/local/bin/docker-compose"
                 dockerExecutable = "/usr/local/bin/docker"

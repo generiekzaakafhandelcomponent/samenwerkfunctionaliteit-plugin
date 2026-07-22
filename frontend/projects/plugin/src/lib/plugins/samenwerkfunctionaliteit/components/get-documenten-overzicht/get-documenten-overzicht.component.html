@@ -1,0 +1,71 @@
+<v-form (valueChange)="formValueChange($event)" *ngIf="{
+    disabled: disabled$ | async,
+    prefill: prefillConfiguration$ ? (prefillConfiguration$ | async) : null,
+  } as obs">
+
+  <v-input
+    name="resultPvName"
+    [title]="'resultPvName' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.resultPvName"
+    [disabled]="obs.disabled"
+    [required]="true">
+  </v-input>
+  <v-input
+    name="samenwerkingId"
+    [title]="'samenwerkingId' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.samenwerkingId"
+    [disabled]="obs.disabled"
+    [required]="true">
+  </v-input>
+  <v-input name="aangemaaktDoor"
+    [title]="'aangemaaktDoor' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.aangemaaktDoor"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="negateAangemaaktDoor"
+    [title]="'negateAangemaaktDoor' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.negateAangemaaktDoor"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="aangemaaktDoorNaam"
+    [title]="'aangemaaktDoorNaam' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.aangemaaktDoorNaam"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="negateAangemaaktDoorNaam"
+    [title]="'negateAangemaaktDoorNaam' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.negateAangemaaktDoorNaam"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="sort"
+    [title]="'sort' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.sort"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="aantal"
+    [title]="'aantal' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.aantal"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+  <v-input name="pagina"
+    [title]="'pagina' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [defaultValue]="obs.prefill?.pagina"
+    [disabled]="obs.disabled"
+    [required]="false">
+  </v-input>
+</v-form>

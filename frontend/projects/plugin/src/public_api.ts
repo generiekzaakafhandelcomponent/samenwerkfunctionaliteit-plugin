@@ -15,11 +15,14 @@
  */
 
 /*
- * Public API Surface of sample-plugin
+ * Public API Surface of samenwerkfunctionaliteit
  */
 
-export * from "./lib/plugins/sample-plugin/models";
-export * from "./lib/plugins/sample-plugin/sample-plugin-module";
-export * from "./lib/plugins/sample-plugin/sample-plugin.specification";
-export * from "./lib/plugins/sample-plugin/components/sample-plugin-configuration/sample-plugin-configuration.component";
-export * from "./lib/plugins/sample-plugin/components/sample-action-configuration/sample-action-configuration.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/models";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit-plugin.module";
+export * from "./lib/plugins/samenwerkfunctionaliteit/samenwerkfunctionaliteit.plugin.specification";
+export * from "./lib/plugins/samenwerkfunctionaliteit/components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/tab/berichten-custom-tab/berichten-custom-tab.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/tab/documentenlijst-widget-tab/documentenlijst-widget-tab.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/tab/notificaties-custom-tab/notificaties-custom-tab.component";
+export * from "./lib/plugins/samenwerkfunctionaliteit/tab/samenwerking-widget-tab/samenwerking-widget-tab.component";

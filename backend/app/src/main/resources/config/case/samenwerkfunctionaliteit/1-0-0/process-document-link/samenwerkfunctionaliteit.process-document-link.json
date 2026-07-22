@@ -1,0 +1,7 @@
+[
+    {
+        "processDefinitionKey": "start-demo",
+        "canInitializeDocument": true,
+        "startableByUser": true
+    }
+]

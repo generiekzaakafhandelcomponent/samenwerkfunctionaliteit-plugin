@@ -1,0 +1,88 @@
+<div class="samenwerking-card">
+  <div class="samenwerking-card__header-container">
+    <h4 class="samenwerking-card__header-title">Samenwerking</h4>
+  </div>
+
+  <div class="samenwerking-card__data-container">
+    <cds-text-label>
+      Samenwerkings-ID
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().samenwerkingId"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Aangemaakt door:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().aangemaaktDoorNaam"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Startdatum:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().creatieDatumTijd | date:'dd-MM-yyyy'"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Samenwerkvorm:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().samenwerkVorm"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Behandeldoel:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().samenwerkDoel"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Verzoeknummer:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().verzoeknummer"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Contactpersoon
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().contactpersoonNaam"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Emailadres:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().contactpersoonEmailadres"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Telefoonnummer:
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="samenwerking().contactpersoonTelefoonnummer"
+      >
+    </cds-text-label>
+    <cds-text-label>
+      Overige ketenpartner(s):
+      <input
+        cdsText
+        readonly="readonly"
+        [value]="'NOT YET IMPLEMENTED'"
+      >
+    </cds-text-label>
+  </div>
+</div>

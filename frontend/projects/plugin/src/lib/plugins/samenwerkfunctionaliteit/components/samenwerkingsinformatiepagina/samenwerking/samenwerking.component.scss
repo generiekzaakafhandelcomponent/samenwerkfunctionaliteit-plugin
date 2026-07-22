@@ -1,0 +1,32 @@
+@use '@carbon/styles/scss/colors' as carbon-color;
+
+.samenwerking-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  border: 2px solid carbon-color.$gray-10;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+
+  &__header-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__header-title {
+    color: var(--widget-text-color, var(--cds-text-primary));
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &__data-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+

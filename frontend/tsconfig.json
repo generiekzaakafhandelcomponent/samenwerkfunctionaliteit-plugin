@@ -1,49 +1,38 @@
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "baseUrl": "./",
-        "outDir": "./out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "module": "es2020",
-        "moduleResolution": "bundler",
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "esModuleInterop": true,
-        "target": "es2022",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "lib": [
-            "es2021",
-            "dom",
-            "dom.iterable"
-        ],
-        "useDefineForClassFields": false,
-        "paths": {
-            "@src": [
-                "src"
-            ],
-            "@src/*": [
-                "src/*"
-            ],
-            "@valtimo-plugins/sample-plugin": [
-                "projects/plugin/src/public_api.ts"
-            ]
-        }
+  "compileOnSave": false,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "outDir": "./out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "target": "es2022",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2021", "dom", "dom.iterable"],
+    "useDefineForClassFields": false,
+    "paths": {
+      "@src": ["src"],
+      "@src/*": ["src/*"],
+      "@valtimo-plugins/samenwerkfunctionaliteit-plugin": [
+        "projects/plugin/src/public_api.ts",
+      ],
     },
-    "include": [
-        "***.tsx"
-    ],
-    "exclude": [
-        "node_modules"
-    ],
-    "files": [],
-    "references": [
-        {
-            "path": "./src/tsconfig.app.json"
-        }
-    ]
+  },
+  "include": ["***.tsx"],
+  "exclude": ["node_modules"],
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json",
+    },
+    {
+      "path": "./projects/plugin/tsconfig.spec.json",
+    },
+  ],
 }

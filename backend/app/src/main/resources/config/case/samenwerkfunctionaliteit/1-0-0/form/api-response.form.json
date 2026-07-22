@@ -1,0 +1,47 @@
+{
+    "display": "form",
+    "components": [
+        {
+            "key": "apiResponse",
+            "type": "hidden",
+            "input": true,
+            "label": "apiResponse",
+            "tableView": false,
+            "attributes": {
+                "data-testid": "open-klant-api-response-apiResponse"
+            }
+        },
+        {
+            "key": "apiRequest",
+            "type": "hidden",
+            "input": true,
+            "label": "apiRequest",
+            "tableView": false,
+            "attributes": {
+                "data-testid": "open-klant-api-response-apiRequest"
+            }
+        },
+        {
+            "key": "data.apiRequest",
+            "type": "textarea",
+            "label": "API-request",
+            "disabled": true,
+            "attributes": {
+                "data-testid": "samenwerkfunctionaliteit-api-response-data.apiRequest"
+            },
+            "calculateValue": "value = `<div class=\"cds--snippet--multi\" style=\"white-space: pre-wrap;\">${JSON.stringify(data.apiRequest, null, 4)}</div>`;",
+            "customConditional": "show = data.apiRequest"
+        },
+        {
+            "key": "data.apiResponse",
+            "type": "textarea",
+            "label": "API-response",
+            "disabled": true,
+            "attributes": {
+                "data-testid": "samenwerkfunctionaliteit-api-response-data.apiResponse"
+            },
+            "calculateValue": "value = `<div class=\"cds--snippet--multi\" style=\"white-space: pre-wrap;\">${JSON.stringify(data.apiResponse, null, 4)}</div>`;",
+            "customConditional": "show = data.apiResponse"
+        }
+    ]
+}

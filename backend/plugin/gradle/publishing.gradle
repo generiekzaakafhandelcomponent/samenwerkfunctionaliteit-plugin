@@ -23,13 +23,13 @@ pluginManager.withPlugin("maven-publish") {
                 version = pluginProperties.pluginVersion
 
                 pom {
-                    name = "Sample plugin module"
-                    description = "A module containing a sample plugin"
+                    name = "Samenwerkfunctionaliteit-plugin"
+                    description = "Providing the Samenwerkfunctionaliteit-API of the Digitaal Stelsel Omgevingswet as a plugin for Valtimo"
                     developers {
                         developer {
-                            id = "team-valtimo"
-                            name = "Team Valtimo"
-                            email = "support@ritense.com"
+                            id = "risa-it"
+                            name = "RISA IT"
+                            email = "gzac@risa-it.nl"
                         }
                     }
                 }

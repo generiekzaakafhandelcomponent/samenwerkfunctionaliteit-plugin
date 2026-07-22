@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "gzac-plugin-template": {
+        "samenwerkfunctionaliteit-plugin": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -18,7 +18,7 @@
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "aot": false,
-                        "outputPath": "deployment/gzac-plugin-template",
+                        "outputPath": "deployment/samenwerkfunctionaliteit-plugin",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -107,13 +107,13 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "buildTarget": "gzac-plugin-template:build"
+                        "buildTarget": "samenwerkfunctionaliteit-plugin:build"
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "buildTarget": "gzac-plugin-template:build"
+                        "buildTarget": "samenwerkfunctionaliteit-plugin:build"
                     }
                 },
                 "test": {
@@ -147,7 +147,7 @@
                 }
             }
         },
-        "@valtimo-plugins/sample-plugin": {
+        "@valtimo-plugins/samenwerkfunctionaliteit-plugin": {
             "projectType": "library",
             "root": "projects/plugin",
             "sourceRoot": "projects/plugin/src",
@@ -172,7 +172,7 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/plugin/src/test.ts",
+                        "polyfills": ["zone.js", "zone.js/testing"],
                         "tsConfig": "projects/plugin/tsconfig.spec.json",
                         "karmaConfig": "projects/plugin/karma.conf.js"
                     }

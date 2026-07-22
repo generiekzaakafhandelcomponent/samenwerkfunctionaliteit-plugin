@@ -15,7 +15,7 @@
  */
 
 dockerCompose {
-    setProjectName("sample-plugin")
+    setProjectName("samenwerkfunctionaliteit-plugin")
     isRequiredBy(project.tasks.integrationTesting)
 
     tasks.integrationTesting {
@@ -32,9 +32,14 @@ dependencies {
     compileOnly("com.ritense.valtimo:plugin-valtimo")
     compileOnly("com.ritense.valtimo:process-document")
     compileOnly("com.ritense.valtimo:contract")
+    compileOnly("com.ritense.valtimo:authorization")
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
+    compileOnly("org.springframework.boot:spring-boot-starter-security")
+    compileOnly("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    implementation("org.springframework.cloud:spring-cloud-starter-gateway-server-webmvc")
 
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 
@@ -52,11 +57,14 @@ dependencies {
 
     testImplementation("org.mockito:mockito-core")
     testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+    testImplementation("io.mockk:mockk:1.13.9")
 
     testImplementation("org.postgresql:postgresql")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    testImplementation("org.operaton.bpm:operaton-engine:$operatonVersion")
 }
 
 apply(from = "gradle/publishing.gradle")

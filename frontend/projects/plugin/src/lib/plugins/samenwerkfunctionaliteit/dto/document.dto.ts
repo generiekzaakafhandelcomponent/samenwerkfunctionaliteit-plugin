@@ -1,0 +1,60 @@
+import { Links } from "./links.dto";
+import { Page } from "./page.dto";
+import { DocumentInterface } from "../interface/document.interface";
+import { Document } from "../models/document.model";
+import { ConfidentialityType, ConfidentialityTypes } from "../type/confidentiality.type";
+
+export interface DocumentenOverzichtResponse {
+  _embedded: Documenten | null;
+  _links: Links | null;
+  page: Page;
+}
+
+interface Documenten {
+  documenten: DocumentenResponse[];
+}
+
+interface DocumentenResponse {
+  documentId: string;
+  bestandsNaam: string;
+  kenmerkSysteem: string | null;
+  nummerBinnenSysteem: string | null;
+  samenwerkingId: string;
+  aangemaaktDoor: string;
+  aangemaaktDoorNaam: string;
+  creatieDatumTijd: string;
+  laatstAangepastDoor: string | null;
+  laatstAangepastDoorNaam: string | null;
+  laatstAangepastDatumTijd: string | null;
+  documentOmschrijving: string | null;
+  vertrouwelijkheidsAanduiding: string | null;
+  taal: string | null;
+  formaat: string | null;
+  documentHash: string | null;
+  links: Links | null;
+}
+
+function mapDocumentenResponseToModel(documentenResponse: DocumentenResponse): DocumentInterface {
+  return new Document(
+    documentenResponse.samenwerkingId,
+    documentenResponse.documentId,
+    documentenResponse.bestandsNaam,
+    mapVertrouwelijkheidsAanduidingToConfidentialityType(documentenResponse.vertrouwelijkheidsAanduiding),
+    documentenResponse.creatieDatumTijd,
+  );
+}
+
+function mapVertrouwelijkheidsAanduidingToConfidentialityType(vertrouwelijkheidsAanduiding: string): ConfidentialityType {
+  switch (vertrouwelijkheidsAanduiding) {
+    case "RV":
+      return ConfidentialityTypes.Confidential;
+    case "SV":
+      return ConfidentialityTypes.StrictlyConfidential;
+    default:
+      throw new Error(`Unknown vertrouwelijkheidsAanduiding: ${vertrouwelijkheidsAanduiding}`);
+  }
+}
+
+export function mapDocumentenResponseToModels(documenten: DocumentenOverzichtResponse): DocumentInterface[] {
+  return documenten._embedded.documenten.map(mapDocumentenResponseToModel);
+}
