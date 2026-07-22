@@ -106,7 +106,7 @@ class DefaultSamenwerkfunctionaliteitClient(
             .get()
             .uri { uriBuilder ->
                 uriBuilder
-                    .path("/samenwerkingen/{samenwerkingId}/documenten")
+                    .path("$SWF_SAMENWERKING_PATH/{samenwerkingId}/documenten")
                     .queryParamWithNegation(
                         DocumentenOverzichtQueryParam.AANGEMAAKT_DOOR,
                         query.aangemaaktDoor,
@@ -146,7 +146,7 @@ class DefaultSamenwerkfunctionaliteitClient(
                 .get()
                 .uri { uriBuilder ->
                     uriBuilder
-                        .path("/samenwerkingen/$samenwerkingId/notificaties")
+                        .path("$SWF_SAMENWERKING_PATH/$samenwerkingId/notificaties")
                         .build()
                 }.retrieve()
                 .body<NotificatieGetResponse>()
@@ -219,7 +219,8 @@ class DefaultSamenwerkfunctionaliteitClient(
     }
 
     companion object {
-        private const val SWF_ACTIEVERZOEK_PATH = "/actieverzoeken"
+        private const val SWF_SAMENWERKING_PATH = "v5/samenwerkingen"
+        private const val SWF_ACTIEVERZOEK_PATH = "v5/actieverzoeken"
         private const val SAMENWERKING_ID = "samenwerkingId"
         private const val ORGANISATIE = "organisatie"
         private val logger = KotlinLogging.logger { }
