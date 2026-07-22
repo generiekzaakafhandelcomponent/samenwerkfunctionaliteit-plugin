@@ -70,8 +70,8 @@ export class BerichtenListComponent implements OnInit {
             .pipe(
               take(1),
               tap((messages: Bericht[]) => {
-                const chatBerichten = mapBerichtenToChatBerichten(messages);
-                console.log('chatBerichten', chatBerichten);
+                const chatBerichten: ChatBericht[] =
+                  mapBerichtenToChatBerichten(messages);
                 this.messages.set(chatBerichten);
               }),
             );
