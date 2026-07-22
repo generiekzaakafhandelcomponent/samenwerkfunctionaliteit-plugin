@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DocumentenOverzichtResponse } from '../dto/document.dto';
-import { UUID } from '../types/uuid.type';
 
 @Injectable({
   providedIn: 'root',
