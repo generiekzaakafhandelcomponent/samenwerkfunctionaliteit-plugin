@@ -14,5 +14,13 @@ export const pluginNlTranslations = {
       confidentialityType: 'Vertrouwelijkheidsaanduiding',
       dateCreated: 'Datum aangemaakt',
     },
+    messages: {
+      datetimestamp: {
+        justNow: 'Zojuist',
+        today: 'Vandaag',
+        minuteSingular: '{{ minuteCount }} minuut geleden',
+        minutePlural: '{{ minuteCount }} minuten geleden',
+      },
+    },
   },
 };
