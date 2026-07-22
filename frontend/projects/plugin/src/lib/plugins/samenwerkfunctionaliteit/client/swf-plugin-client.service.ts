@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SwfPluginClientService {
+export class SwfPluginClient {
   private readonly httpClient: HttpClient = inject(HttpClient);
 
   getSwfPluginProperties(): Observable<Map<string, string>> {

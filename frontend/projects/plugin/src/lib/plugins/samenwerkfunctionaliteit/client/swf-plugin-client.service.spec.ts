@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { SwfPluginClientService } from './swf-plugin-client.service';
+import { SwfPluginClient } from './swf-plugin-client.service';
 
 describe('SwfPluginClientService', () => {
-  let service: SwfPluginClientService;
+  let service: SwfPluginClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SwfPluginClientService);
+    service = TestBed.inject(SwfPluginClient);
   });
 
   it('should be created', () => {
