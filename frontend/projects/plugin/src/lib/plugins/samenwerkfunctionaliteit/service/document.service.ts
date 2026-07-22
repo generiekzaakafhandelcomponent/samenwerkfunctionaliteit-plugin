@@ -1,11 +1,14 @@
-import { inject, Injectable } from "@angular/core";
-import { DocumentClient } from "../client/document-client.service";
-import { catchError, map, Observable, throwError } from "rxjs";
-import { DocumentInterface } from "../interface/document.interface";
-import { DocumentenOverzichtResponse, mapDocumentenResponseToModels } from "../dto/document.dto";
+import { inject, Injectable } from '@angular/core';
+import { DocumentClient } from '../client/document-client.service';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { DocumentInterface } from '../interface/document.interface';
+import {
+  DocumentenOverzichtResponse,
+  mapDocumentenResponseToModels,
+} from '../dto/document.dto';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class DocumentService {
   private readonly documentClient: DocumentClient = inject(DocumentClient);
