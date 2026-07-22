@@ -1,8 +1,11 @@
-import { Links } from "./links.dto";
-import { Page } from "./page.dto";
-import { DocumentInterface } from "../interface/document.interface";
-import { Document } from "../models/document.model";
-import { ConfidentialityType, ConfidentialityTypes } from "../type/confidentiality.type";
+import { Links } from './links.dto';
+import { Page } from './page.dto';
+import { DocumentInterface } from '../interface/document.interface';
+import { Document } from '../models/document.model';
+import {
+  ConfidentialityType,
+  ConfidentialityTypes,
+} from '../types/confidentiality.type';
 
 export interface DocumentenOverzichtResponse {
   _embedded: Documenten | null;

@@ -1,5 +1,5 @@
-import { DocumentInterface } from "../interface/document.interface";
-import { ConfidentialityType } from "../type/confidentiality.type";
+import { DocumentInterface } from '../interface/document.interface';
+import { ConfidentialityType } from '../types/confidentiality.type';
 
 export class Document implements DocumentInterface {
   constructor(
