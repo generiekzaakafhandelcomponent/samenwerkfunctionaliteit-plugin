@@ -1,4 +1,8 @@
-:host ::ng-deep .message-label .cds--label {
+:host {
+  position: sticky;
+}
+
+::ng-deep .message-label .cds--label {
   font-size: 1.5rem;
 }
 
