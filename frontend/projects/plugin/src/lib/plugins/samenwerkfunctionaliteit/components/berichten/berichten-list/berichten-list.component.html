@@ -1,6 +1,6 @@
 @if (!isLoading()) {
   <p class="receiver">
-    {{ receiver() }}
+    {{ messageReceiver() }}
   </p>
   @for (message of sortedMessages(); track message.messageId) {
     <swf-bericht [message]="message"/>
