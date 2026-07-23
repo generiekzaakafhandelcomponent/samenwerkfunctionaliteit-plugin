@@ -11,7 +11,6 @@ import { IconModule } from 'carbon-components-angular';
 })
 export class BerichtenListComponent {
   messages: InputSignal<ChatBericht[]> = input.required<ChatBericht[]>();
-  messageReceiver: InputSignal<string> = input.required<string>();
   isLoading: InputSignal<boolean> = input.required<boolean>();
   sortedMessages: Signal<ChatBericht[]> = computed((): ChatBericht[] => {
     return [...this.messages()].sort(
