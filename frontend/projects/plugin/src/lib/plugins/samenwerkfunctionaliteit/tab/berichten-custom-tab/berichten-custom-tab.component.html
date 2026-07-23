@@ -1,2 +1,5 @@
-<berichten-list [messages]="messages()" [isLoading]="isLoading()" [receiver]="receiver()"></berichten-list>
+<p class="receiver">
+  {{ messageReceiver() }}
+</p>
+<berichten-list [messages]="messages()" [isLoading]="isLoading()"></berichten-list>
 <stuur-bericht (messageSent)="refreshMessages()"></stuur-bericht>
