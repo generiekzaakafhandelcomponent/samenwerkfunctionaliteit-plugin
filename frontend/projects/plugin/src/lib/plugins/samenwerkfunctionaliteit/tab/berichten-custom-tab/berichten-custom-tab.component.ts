@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BusinessKey } from '../../models/business-key.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
+import { SamenwerkingService } from '../../service/samenwerking.service';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -21,12 +22,17 @@ export class BerichtenCustomTabComponent {
     inject(BerichtenService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  private readonly samenwerkingService: SamenwerkingService =
+    inject(SamenwerkingService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   messages: WritableSignal<ChatBericht[]> = signal([]);
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  receiver: WritableSignal<string> = signal<string>('');
+
+  actieverzoekId: string = '';
 
   ngOnInit() {
     this.fetchChatBerichten(this.getDocumentId());
@@ -36,8 +42,25 @@ export class BerichtenCustomTabComponent {
     this.fetchChatBerichten(this.getDocumentId());
   }
 
+  private capitalize(value: string): string {
+    return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+  }
+
   private getDocumentId(): string {
     return this.swfDocumentService.getParam(this.route, 'documentId');
+  }
+
+  private fetchReceiverFromActieverzoek(actieverzoekId: string) {
+    this.samenwerkingService
+      .getActieverzoek(actieverzoekId)
+      .pipe(
+        take(1),
+        tap((actieverzoek) => {
+          //TODO use oinNummer to decide receiver
+          this.receiver.set(this.capitalize(actieverzoek.senderName));
+        }),
+      )
+      .subscribe();
   }
 
   private fetchChatBerichten(documentId: string): void {
@@ -57,6 +80,9 @@ export class BerichtenCustomTabComponent {
               'Er is geen berichtenlijst beschikbaar, omdat dit dossier niet deel uitmaakt van een samenwerking.',
             );
           }
+          this.fetchReceiverFromActieverzoek(
+            samenwerkingProperties.actieverzoekId,
+          );
         }),
         switchMap((samenwerkingProperties: SamenwerkingProperties) => {
           return this.berichtenService
