@@ -61,7 +61,6 @@ export class BerichtenCustomTabComponent {
       actieverzoek: this.samenwerkingService.getActieverzoek(actieverzoekId),
     })
       .pipe(
-        take(1),
         map(({ swfPluginProperties, actieverzoek }) =>
           this.capitalize(
             swfPluginProperties.oinNummer !== actieverzoek.sender
