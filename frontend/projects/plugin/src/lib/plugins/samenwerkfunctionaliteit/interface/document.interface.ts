@@ -1,4 +1,4 @@
-import { ConfidentialityType } from "../type/confidentiality.type";
+import { ConfidentialityType } from '../types/confidentiality.type';
 
 export interface DocumentInterface {
   samenwerkingId: string;

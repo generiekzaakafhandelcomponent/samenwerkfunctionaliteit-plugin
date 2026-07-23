@@ -5,7 +5,7 @@ import { Document } from '../models/document.model';
 import {
   ConfidentialityType,
   ConfidentialityTypes,
-} from '../type/confidentiality.type';
+} from '../types/confidentiality.type';
 
 export interface DocumentenOverzichtResponse {
   _embedded: Documenten | null;

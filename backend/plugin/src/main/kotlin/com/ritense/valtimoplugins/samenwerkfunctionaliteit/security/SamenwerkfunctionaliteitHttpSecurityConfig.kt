@@ -19,6 +19,8 @@ class SamenwerkfunctionaliteitHttpSecurityConfig : HttpSecurityConfigurer {
                 requests
                     .requestMatchers("samenwerkfunctionaliteit/**")
                     .hasAnyAuthority(ADMIN, USER)
+                    .requestMatchers("plugin/samenwerkfunctionaliteit/api/**")
+                    .hasAnyAuthority(ADMIN, USER)
             }
         } catch (e: Exception) {
             throw HttpConfigurerConfigurationException(e)
