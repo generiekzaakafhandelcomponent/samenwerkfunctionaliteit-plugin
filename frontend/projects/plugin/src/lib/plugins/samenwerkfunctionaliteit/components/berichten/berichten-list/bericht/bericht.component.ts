@@ -2,6 +2,9 @@ import { Component, inject, input, signal } from '@angular/core';
 import { ChatBericht } from '../../../../models/bericht.model';
 import { LayerModule } from 'carbon-components-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { SwfPluginService } from '../../../../service/swf-plugin.service';
+import { SwfPluginProperties } from '../../../../interface/swf-plugin-properties.interface';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'swf-bericht',
@@ -12,15 +15,25 @@ import { TranslateService } from '@ngx-translate/core';
 export class BerichtComponent {
   private readonly translateService: TranslateService =
     inject(TranslateService);
+  private readonly swfPluginService: SwfPluginService =
+    inject(SwfPluginService);
   message = input<ChatBericht>();
   isSender = signal(false);
   formattedDate: string = '';
 
   ngOnInit() {
-    const random: number = Math.random() * 10;
-    if (random < 5) {
-      this.isSender.set(true);
-    }
+    this.swfPluginService
+      .getSwfPluginProperties()
+      .pipe(
+        take(1),
+        tap((swfPluginProperties: SwfPluginProperties) => {
+          if (swfPluginProperties.oinNummer === this.message().sender) {
+            this.isSender.set(true);
+          }
+        }),
+      )
+      .subscribe();
+
     this.formattedDate = this.getFormattedDate(this.message().createdOn);
   }
 
@@ -55,7 +68,8 @@ export class BerichtComponent {
       return (
         this.translateService.instant(
           'samenwerkfunctionaliteit.messages.datetimestamp.today',
-        ) + `, ${date.getHours()}:${date.getMinutes()}`
+        ) +
+        `, ${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`
       );
     }
 
