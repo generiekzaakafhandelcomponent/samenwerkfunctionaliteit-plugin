@@ -1,7 +1,7 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
-import { combineLatest, finalize, switchMap, take, tap } from 'rxjs';
+import { finalize, forkJoin, switchMap, take, tap } from 'rxjs';
 import { Bericht, ChatBericht } from '../../models/bericht.model';
 import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
@@ -11,8 +11,7 @@ import { SamenwerkingProperties } from '../../models/samenwerking-properties.mod
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
 import { SamenwerkingService } from '../../service/samenwerking.service';
 import { SwfPluginService } from '../../service/swf-plugin.service';
-import { SwfPluginProperties } from '../../interface/swf-plugin-properties.interface';
-import { Actieverzoek } from '../../models/actieverzoek.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -57,30 +56,21 @@ export class BerichtenCustomTabComponent {
   }
 
   private fetchReceiverFromActieverzoek(actieverzoekId: string) {
-    combineLatest([
-      this.swfPluginService.getSwfPluginProperties(),
-      this.samenwerkingService.getActieverzoek(actieverzoekId),
-    ])
+    forkJoin({
+      swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
+      actieverzoek: this.samenwerkingService.getActieverzoek(actieverzoekId),
+    })
       .pipe(
         take(1),
-        tap(
-          ([swfPluginProperties, actieverzoek]: [
-            SwfPluginProperties,
-            Actieverzoek,
-          ]): void => {
-            if (swfPluginProperties.oinNummer !== actieverzoek.sender) {
-              this.messageReceiver.set(
-                this.capitalize(actieverzoek.senderName),
-              );
-            } else {
-              this.messageReceiver.set(
-                this.capitalize(actieverzoek.receiverName),
-              );
-            }
-          },
+        map(({ swfPluginProperties, actieverzoek }) =>
+          this.capitalize(
+            swfPluginProperties.oinNummer !== actieverzoek.sender
+              ? actieverzoek.senderName
+              : actieverzoek.receiverName,
+          ),
         ),
       )
-      .subscribe();
+      .subscribe((receiver: string) => this.messageReceiver.set(receiver));
   }
 
   private fetchChatBerichten(documentId: string): void {
