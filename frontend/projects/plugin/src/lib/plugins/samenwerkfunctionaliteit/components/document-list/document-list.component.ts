@@ -4,6 +4,7 @@ import {
   inject,
   input,
   InputSignal,
+  OnDestroy,
   OnInit,
   signal,
   WritableSignal,
@@ -14,7 +15,15 @@ import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from '../../models/document.model';
 import { BusinessKey } from '../../models/business-key.model';
-import { finalize, Observable, switchMap, take, tap } from 'rxjs';
+import {
+  finalize,
+  Observable,
+  switchMap,
+  take,
+  tap,
+  takeUntil,
+  Subject,
+} from 'rxjs';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,6 +31,7 @@ import { DocumentInterface } from '../../interface/document.interface';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
 import { toUUID } from '../../types/uuid.type';
 import { FileDownloadService } from '../../service/file-download.service';
+import { OnDestroyService } from '../../service/on-destroy.service';
 
 @Component({
   selector: 'document-list',
@@ -36,10 +46,12 @@ import { FileDownloadService } from '../../service/file-download.service';
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocumentListComponent implements OnInit {
+export class DocumentListComponent implements OnInit, OnDestroy {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  private readonly destroy$: OnDestroyService = inject(OnDestroyService);
+
   readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly downloader: FileDownloadService =
     inject(FileDownloadService);
@@ -60,9 +72,12 @@ export class DocumentListComponent implements OnInit {
   }
 
   downloadDocument(id: string) {
-    this.documentService.downloadDocument(toUUID(id)).subscribe((file) => {
-      this.downloader.download(file);
-    });
+    this.documentService
+      .downloadDocument(toUUID(id))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((file) => {
+        this.downloader.download(file);
+      });
   }
 
   private fetchDocumenten(documentId: string): void {
