@@ -66,7 +66,7 @@ export class BerichtenCustomTabComponent {
           ([swfPluginProperties, actieverzoek]: [
             SwfPluginProperties,
             Actieverzoek,
-          ]) => {
+          ]): void => {
             if (swfPluginProperties.oinNummer !== actieverzoek.sender) {
               this.messageReceiver.set(
                 this.capitalize(actieverzoek.senderName),
