@@ -44,6 +44,7 @@ export class BerichtenCustomTabComponent {
   }
 
   protected refreshMessages(): void {
+    this.isLoading.set(true);
     this.fetchChatBerichten(this.getDocumentId());
   }
 
@@ -86,8 +87,6 @@ export class BerichtenCustomTabComponent {
     const valtimoBusinessKey: BusinessKey = {
       value: documentId,
     };
-
-    this.isLoading.set(true);
 
     this.swfDocumentService
       .getSamenwerkingProperties(valtimoBusinessKey)
