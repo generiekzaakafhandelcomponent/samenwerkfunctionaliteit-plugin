@@ -1,7 +1,7 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
-import { finalize, switchMap, take, tap } from 'rxjs';
+import { combineLatest, finalize, switchMap, take, tap } from 'rxjs';
 import { Bericht, ChatBericht } from '../../models/bericht.model';
 import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
@@ -10,6 +10,9 @@ import { BusinessKey } from '../../models/business-key.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
 import { SamenwerkingService } from '../../service/samenwerking.service';
+import { SwfPluginService } from '../../service/swf-plugin.service';
+import { SwfPluginProperties } from '../../interface/swf-plugin-properties.interface';
+import { Actieverzoek } from '../../models/actieverzoek.model';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -24,13 +27,15 @@ export class BerichtenCustomTabComponent {
     inject(SwfDocumentService);
   private readonly samenwerkingService: SamenwerkingService =
     inject(SamenwerkingService);
+  private readonly swfPluginService: SwfPluginService =
+    inject(SwfPluginService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   messages: WritableSignal<ChatBericht[]> = signal([]);
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
-  receiver: WritableSignal<string> = signal<string>('');
+  messageReceiver: WritableSignal<string> = signal<string>('');
 
   actieverzoekId: string = '';
 
@@ -51,14 +56,28 @@ export class BerichtenCustomTabComponent {
   }
 
   private fetchReceiverFromActieverzoek(actieverzoekId: string) {
-    this.samenwerkingService
-      .getActieverzoek(actieverzoekId)
+    combineLatest([
+      this.swfPluginService.getSwfPluginProperties(),
+      this.samenwerkingService.getActieverzoek(actieverzoekId),
+    ])
       .pipe(
         take(1),
-        tap((actieverzoek) => {
-          //TODO use oinNummer to decide receiver
-          this.receiver.set(this.capitalize(actieverzoek.senderName));
-        }),
+        tap(
+          ([swfPluginProperties, actieverzoek]: [
+            SwfPluginProperties,
+            Actieverzoek,
+          ]) => {
+            if (swfPluginProperties.oinNummer !== actieverzoek.sender) {
+              this.messageReceiver.set(
+                this.capitalize(actieverzoek.senderName),
+              );
+            } else {
+              this.messageReceiver.set(
+                this.capitalize(actieverzoek.receiverName),
+              );
+            }
+          },
+        ),
       )
       .subscribe();
   }
