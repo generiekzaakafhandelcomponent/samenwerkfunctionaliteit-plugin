@@ -13,7 +13,7 @@ export class BerichtenListComponent {
   messages: InputSignal<ChatBericht[]> = input.required<ChatBericht[]>();
   receiver: InputSignal<string> = input.required<string>();
   isLoading: InputSignal<boolean> = input.required<boolean>();
-  sortedMessages: Signal<ChatBericht[]> = computed(() => {
+  sortedMessages: Signal<ChatBericht[]> = computed((): ChatBericht[] => {
     return [...this.messages()].sort(
       (a, b) => a.createdOn.getTime() - b.createdOn.getTime(),
     );
