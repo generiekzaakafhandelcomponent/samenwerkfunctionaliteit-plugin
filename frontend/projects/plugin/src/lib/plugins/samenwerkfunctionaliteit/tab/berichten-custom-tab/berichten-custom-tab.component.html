@@ -1,2 +1,2 @@
-<berichten-list></berichten-list>
-<stuur-bericht></stuur-bericht>
+<berichten-list [messages]="messages()" [isLoading]="isLoading()"></berichten-list>
+<stuur-bericht (messageSent)="refreshMessages()"></stuur-bericht>
