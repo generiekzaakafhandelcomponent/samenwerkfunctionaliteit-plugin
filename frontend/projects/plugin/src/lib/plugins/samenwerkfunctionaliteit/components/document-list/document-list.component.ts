@@ -20,6 +20,8 @@ import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DocumentInterface } from '../../interface/document.interface';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
+import { toUUID } from '../../types/uuid.type';
+import { FileDownloadService } from '../../service/file-download.service';
 
 @Component({
   selector: 'document-list',
@@ -39,6 +41,8 @@ export class DocumentListComponent implements OnInit {
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
   readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly downloader: FileDownloadService =
+    inject(FileDownloadService);
 
   isLightMode: InputSignal<boolean> = input<boolean>(false);
 
@@ -53,6 +57,12 @@ export class DocumentListComponent implements OnInit {
       'documentId',
     );
     this.fetchDocumenten(documentId);
+  }
+
+  downloadDocument(id: string) {
+    this.documentService.downloadDocument(toUUID(id)).subscribe((file) => {
+      this.downloader.download(file);
+    });
   }
 
   private fetchDocumenten(documentId: string): void {
