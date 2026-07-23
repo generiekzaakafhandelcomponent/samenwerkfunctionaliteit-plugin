@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonModule,
@@ -48,6 +48,7 @@ export class StuurBerichtComponent {
   notification = signal<BerichtNotification | null>(null);
   isSubmitting = signal(false);
   isMissingActieverzoekId = signal<boolean>(false);
+  messageSent = output<void>();
 
   rows = 5;
   maxLength = 512;
@@ -86,6 +87,7 @@ export class StuurBerichtComponent {
         next: () => {
           this.assignNotification(SuccessNotification, true);
           this.message = '';
+          this.messageSent.emit();
         },
         error: (response) => {
           this.logger.error(response);
