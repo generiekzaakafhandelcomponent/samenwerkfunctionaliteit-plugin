@@ -1,10 +1,15 @@
-import { Component, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { ChatBericht } from '../../../../models/bericht.model';
 import { LayerModule } from 'carbon-components-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SwfPluginService } from '../../../../service/swf-plugin.service';
-import { SwfPluginProperties } from '../../../../interface/swf-plugin-properties.interface';
-import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'swf-bericht',
@@ -17,27 +22,18 @@ export class BerichtComponent {
     inject(TranslateService);
   private readonly swfPluginService: SwfPluginService =
     inject(SwfPluginService);
-  message = input<ChatBericht>();
-  isSender = signal(false);
+  message: InputSignal<ChatBericht> = input.required<ChatBericht>();
+  oinNumber: InputSignal<string> = input.required<string>();
+  isSender: WritableSignal<boolean> = signal(false);
   formattedDate: string = '';
 
   ngOnInit() {
-    this.checkOinNumberAndSetIsSender();
+    this.setIsSender();
     this.formattedDate = this.getFormattedDate(this.message().createdOn);
   }
 
-  private checkOinNumberAndSetIsSender(): void {
-    this.swfPluginService
-      .getSwfPluginProperties()
-      .pipe(
-        take(1),
-        tap((swfPluginProperties: SwfPluginProperties) => {
-          if (swfPluginProperties.oinNummer === this.message().sender) {
-            this.isSender.set(true);
-          }
-        }),
-      )
-      .subscribe();
+  private setIsSender(): void {
+    this.isSender.set(this.oinNumber() === this.message().sender);
   }
 
   private getFormattedDate(date: Date): string {

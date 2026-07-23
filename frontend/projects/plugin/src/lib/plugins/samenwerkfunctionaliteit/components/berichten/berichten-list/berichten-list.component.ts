@@ -10,6 +10,7 @@ import { IconModule } from 'carbon-components-angular';
   styleUrl: './berichten-list.component.scss',
 })
 export class BerichtenListComponent {
+  oinNumber: InputSignal<string> = input.required<string>();
   messages: InputSignal<ChatBericht[]> = input.required<ChatBericht[]>();
   isLoading: InputSignal<boolean> = input.required<boolean>();
   sortedMessages: Signal<ChatBericht[]> = computed((): ChatBericht[] => {
