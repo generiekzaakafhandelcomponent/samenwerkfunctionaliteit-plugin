@@ -21,4 +21,5 @@ export interface ChatBericht {
   receiverName: string;
   samenwerkingId: string;
   sender: string;
+  senderName: string;
 }
