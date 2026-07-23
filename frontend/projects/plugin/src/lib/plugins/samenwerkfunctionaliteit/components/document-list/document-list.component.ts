@@ -74,7 +74,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
   downloadDocument(id: string) {
     this.documentService
       .downloadDocument(toUUID(id))
-      .pipe(takeUntil(this.destroy$))
+      .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((file) => {
         this.downloader.download(file);
       });
