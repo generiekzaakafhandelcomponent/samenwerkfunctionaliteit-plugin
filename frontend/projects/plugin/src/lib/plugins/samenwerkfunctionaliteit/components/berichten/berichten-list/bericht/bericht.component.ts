@@ -26,7 +26,7 @@ export class BerichtComponent {
     this.formattedDate = this.getFormattedDate(this.message().createdOn);
   }
 
-  private checkOinNumberAndSetIsSender() {
+  private checkOinNumberAndSetIsSender(): void {
     this.swfPluginService
       .getSwfPluginProperties()
       .pipe(
