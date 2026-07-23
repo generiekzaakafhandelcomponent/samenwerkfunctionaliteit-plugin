@@ -66,7 +66,7 @@ export class BerichtenCustomTabComponent {
           (
             samenwerkingProperties: SamenwerkingProperties,
           ): Observable<[string, ChatBericht[]]> => {
-            return combineLatest([
+            return combineLatest<[string, ChatBericht[]]>([
               this.fetchReceiverFromActieverzoek(samenwerkingProperties),
               this.fetchChatBerichten(samenwerkingProperties),
             ]);
