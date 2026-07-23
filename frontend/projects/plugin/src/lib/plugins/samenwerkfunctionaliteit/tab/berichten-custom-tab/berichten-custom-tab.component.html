@@ -1,5 +1,5 @@
 <p class="receiver">
   {{ messageReceiver() }}
 </p>
-<berichten-list [messages]="messages()" [isLoading]="isLoading()"></berichten-list>
+<berichten-list [messages]="messages()" [isLoading]="isLoading()" [oinNumber]="oinNumber()"></berichten-list>
 <stuur-bericht (messageSent)="refreshMessages()"></stuur-bericht>
