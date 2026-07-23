@@ -22,6 +22,11 @@ export class BerichtComponent {
   formattedDate: string = '';
 
   ngOnInit() {
+    this.checkOinNumberAndSetIsSender();
+    this.formattedDate = this.getFormattedDate(this.message().createdOn);
+  }
+
+  private checkOinNumberAndSetIsSender() {
     this.swfPluginService
       .getSwfPluginProperties()
       .pipe(
@@ -33,8 +38,6 @@ export class BerichtComponent {
         }),
       )
       .subscribe();
-
-    this.formattedDate = this.getFormattedDate(this.message().createdOn);
   }
 
   private getFormattedDate(date: Date): string {
