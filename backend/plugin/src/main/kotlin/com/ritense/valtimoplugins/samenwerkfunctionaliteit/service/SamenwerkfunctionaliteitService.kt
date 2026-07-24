@@ -2,10 +2,15 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.*
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Page
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import org.springframework.core.io.InputStreamResource
 import java.time.ZonedDateTime
-import java.util.*
+import java.util.UUID
 
 interface SamenwerkfunctionaliteitService {
     fun getActieverzoek(
