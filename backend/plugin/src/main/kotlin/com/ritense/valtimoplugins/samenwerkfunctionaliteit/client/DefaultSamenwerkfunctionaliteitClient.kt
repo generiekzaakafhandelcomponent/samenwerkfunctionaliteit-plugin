@@ -1,6 +1,13 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.*
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieGetResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.PagedNotificatieGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
@@ -14,7 +21,8 @@ import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriBuilder
 import org.springframework.web.util.UriComponentsBuilder
 import java.time.ZonedDateTime
-import java.util.*
+import java.util.UUID
+import kotlin.jvm.java
 
 @Component
 class DefaultSamenwerkfunctionaliteitClient(
@@ -180,7 +188,7 @@ class DefaultSamenwerkfunctionaliteitClient(
         } catch (e: HttpServerErrorException.InternalServerError) {
             handleInternalServerError(e)
         } catch (e: RestClientResponseException) {
-            handleResponseException(e, "Error getting all notificaties.")
+            handleResponseException(e, "Error getting page $pageNumber of notificaties.")
         }
     }
 
