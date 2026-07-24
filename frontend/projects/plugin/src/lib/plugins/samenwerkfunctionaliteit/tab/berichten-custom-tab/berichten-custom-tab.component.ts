@@ -62,6 +62,11 @@ export class BerichtenCustomTabComponent {
       .getSamenwerkingProperties(valtimoBusinessKey)
       .pipe(
         take(1),
+        tap((samenwerkingProperties: SamenwerkingProperties) => {
+          if (!samenwerkingProperties.actieverzoekId) {
+            throw Error('Dossier heeft geen actieverzoekId');
+          }
+        }),
         switchMap(
           (
             samenwerkingProperties: SamenwerkingProperties,
