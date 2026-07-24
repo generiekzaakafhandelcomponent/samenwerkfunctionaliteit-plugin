@@ -4,14 +4,11 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.Samenwerkfunct
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper.toModel
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.*
 import org.springframework.core.io.InputStreamResource
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.time.ZonedDateTime
+import java.util.*
 
 @Service
 class DefaultSamenwerkfunctionaliteitService(
@@ -106,4 +103,35 @@ class DefaultSamenwerkfunctionaliteitService(
             ?.notificaties
             ?.map { it.toModel() }
             ?: emptyList()
+
+    override fun getNotificaties(
+        from: ZonedDateTime,
+        until: ZonedDateTime,
+        properties: SamenwerkfunctionaliteitProperties,
+        pageNumber: Int,
+    ): Page<List<Notificatie>> {
+        val response =
+            samenwerkfunctionaliteitClient
+                .getNotificaties(
+                    from = from,
+                    until = until,
+                    properties = properties,
+                    pageNumber = pageNumber,
+                )
+
+        val notificaties =
+            response.embedded
+                ?.notificaties
+                ?.map {
+                    it.toModel()
+                } ?: emptyList()
+
+        return Page(
+            item = notificaties,
+            number = response.page.number,
+            size = response.page.number,
+            totalElements = response.page.number,
+            totalPages = response.page.number,
+        )
+    }
 }

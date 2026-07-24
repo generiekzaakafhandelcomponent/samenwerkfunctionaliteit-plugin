@@ -2,13 +2,10 @@ package com.ritense.valtimoplugins.samenwerkfunctionaliteit.service
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.*
 import org.springframework.core.io.InputStreamResource
-import java.util.UUID
+import java.time.ZonedDateTime
+import java.util.*
 
 interface SamenwerkfunctionaliteitService {
     fun getActieverzoek(
@@ -19,7 +16,7 @@ interface SamenwerkfunctionaliteitService {
     fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisationTheReceiver: Boolean
+        isOrganisationTheReceiver: Boolean,
     ): List<Actieverzoek>
 
     fun getBericht(
@@ -60,4 +57,11 @@ interface SamenwerkfunctionaliteitService {
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
     ): List<Notificatie>
+
+    fun getNotificaties(
+        from: ZonedDateTime,
+        until: ZonedDateTime,
+        properties: SamenwerkfunctionaliteitProperties,
+        pageNumber: Int,
+    ): Page<List<Notificatie>>
 }
