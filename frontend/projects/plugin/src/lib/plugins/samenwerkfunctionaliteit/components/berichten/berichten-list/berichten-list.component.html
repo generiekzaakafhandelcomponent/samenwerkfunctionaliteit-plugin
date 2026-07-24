@@ -1,0 +1,9 @@
+@if (!isLoading()) {
+  @for (message of sortedMessages(); track message.messageId) {
+    <swf-bericht [message]="message"/>
+  }
+} @else {
+  <div class="loading-indicator">
+    Loading messages...
+  </div>
+}
