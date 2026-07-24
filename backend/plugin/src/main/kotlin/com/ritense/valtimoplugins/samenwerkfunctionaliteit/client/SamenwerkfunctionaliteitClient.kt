@@ -1,15 +1,10 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.client
 
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekenGetResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.BerichtResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequest
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieGetResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.*
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import org.springframework.core.io.InputStreamResource
-import java.util.UUID
+import java.time.ZonedDateTime
+import java.util.*
 
 interface SamenwerkfunctionaliteitClient {
     fun getActieverzoek(
@@ -61,4 +56,11 @@ interface SamenwerkfunctionaliteitClient {
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
     ): NotificatieGetResponse
+
+    fun getNotificaties(
+        from: ZonedDateTime,
+        until: ZonedDateTime,
+        properties: SamenwerkfunctionaliteitProperties,
+        pageNumber: Int,
+    ): PagedNotificatieGetResponse
 }
