@@ -67,7 +67,10 @@ export class BerichtenCustomTabComponent {
             samenwerkingProperties: SamenwerkingProperties,
           ): Observable<[string, ChatBericht[]]> => {
             return combineLatest<[string, ChatBericht[]]>([
-              this.fetchReceiverFromActieverzoek(samenwerkingProperties),
+              this.fetchReceiverFromActieverzoek(
+                samenwerkingProperties,
+                valtimoBusinessKey,
+              ),
               this.fetchChatBerichten(samenwerkingProperties),
             ]);
           },
@@ -89,11 +92,13 @@ export class BerichtenCustomTabComponent {
 
   private fetchReceiverFromActieverzoek(
     samenwerkingProperties: SamenwerkingProperties,
+    valtimoBusinessKey: BusinessKey,
   ): Observable<string> {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
       actieverzoek: this.samenwerkingService.getActieverzoek(
         samenwerkingProperties.actieverzoekId,
+        valtimoBusinessKey,
       ),
     }).pipe(
       map(({ swfPluginProperties, actieverzoek }) => {
