@@ -20,7 +20,7 @@ export class DocumentClient {
     samenwerkingId: string,
   ): Observable<DocumentenOverzichtResponse> {
     return this.http.get<DocumentenOverzichtResponse>(
-      `${SAMENWERKINGEN_URL}}/${samenwerkingId}/documenten`,
+      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
     );
   }
 
