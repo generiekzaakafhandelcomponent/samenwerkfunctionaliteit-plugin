@@ -1,7 +1,15 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
-import { combineLatest, finalize, forkJoin, Observable, take, tap } from 'rxjs';
+import {
+  combineLatest,
+  finalize,
+  forkJoin,
+  Observable,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { Bericht, ChatBericht } from '../../models/bericht.model';
 import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
@@ -11,7 +19,7 @@ import { SamenwerkingProperties } from '../../models/samenwerking-properties.mod
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
 import { SamenwerkingService } from '../../service/samenwerking.service';
 import { SwfPluginService } from '../../service/swf-plugin.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -37,49 +45,73 @@ export class BerichtenCustomTabComponent {
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
   messageReceiver: WritableSignal<string> = signal<string>('');
 
+  samenwerkingProperties: SamenwerkingProperties;
+
   ngOnInit(): void {
-    this.refreshMessages();
+    this.loadMessages();
   }
 
   protected refreshMessages(): void {
     this.isLoading.set(true);
-    const valtimoBusinessKey: BusinessKey = {
-      value: this.getDocumentId(),
-    };
-    this.combineAllRequestsAndSetIsLoading(valtimoBusinessKey);
+    this.fetchChatBerichten(this.samenwerkingProperties)
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.hasError.set(false);
+        },
+        error: (error: Error) => {
+          this.hasError.set(true);
+          this.errorMessage.set(error.message);
+        },
+      });
+  }
+
+  private loadMessages(): void {
+    this.combineAllRequestsAndSetIsLoading(this.getValtimoBusinessKey());
   }
 
   private capitalize(value: string): string {
     return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
   }
 
-  private getDocumentId(): string {
-    return this.swfDocumentService.getParam(this.route, 'documentId');
+  private getValtimoBusinessKey(): BusinessKey {
+    return {
+      value: this.swfDocumentService.getParam(this.route, 'documentId'),
+    };
   }
 
-  private combineAllRequestsAndSetIsLoading(valtimoBusinessKey: BusinessKey) {
-    this.swfDocumentService
-      .getSamenwerkingProperties(valtimoBusinessKey)
+  private fetchSamenwerkingProperties(): Observable<SamenwerkingProperties> {
+    return this.swfDocumentService
+      .getSamenwerkingProperties(this.getValtimoBusinessKey())
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties) => {
           if (!samenwerkingProperties.actieverzoekId) {
             throw Error('Dossier heeft geen actieverzoekId');
           }
+          this.samenwerkingProperties = samenwerkingProperties;
         }),
-        switchMap(
-          (
-            samenwerkingProperties: SamenwerkingProperties,
-          ): Observable<[string, ChatBericht[]]> => {
-            return combineLatest<[string, ChatBericht[]]>([
-              this.fetchReceiverFromActieverzoek(
-                samenwerkingProperties,
-                valtimoBusinessKey,
-              ),
-              this.fetchChatBerichten(samenwerkingProperties),
-            ]);
-          },
-        ),
+      );
+  }
+
+  private combineAllRequestsAndSetIsLoading(
+    valtimoBusinessKey: BusinessKey,
+  ): void {
+    this.fetchSamenwerkingProperties()
+      .pipe(
+        switchMap((samenwerkingProperties: SamenwerkingProperties) => {
+          return combineLatest<[string, ChatBericht[]]>([
+            this.fetchReceiverFromActieverzoek(
+              samenwerkingProperties,
+              valtimoBusinessKey,
+            ),
+            this.fetchChatBerichten(samenwerkingProperties),
+          ]);
+        }),
         finalize(() => {
           this.isLoading.set(false);
         }),
