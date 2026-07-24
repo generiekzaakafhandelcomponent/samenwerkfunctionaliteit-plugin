@@ -1,5 +1,9 @@
-<p class="receiver">
-  {{ messageReceiver() }}
-</p>
-<berichten-list [messages]="messages()" [isLoading]="isLoading()" [oinNumber]="oinNumber()"></berichten-list>
+@if (!isLoading()) {
+  <p class="receiver">
+    {{ messageReceiver() }}
+  </p>
+}
+@if (!hasError()) {
+  <berichten-list [messages]="messages()" [isLoading]="isLoading()" [oinNumber]="oinNumber()"></berichten-list>
+}
 <stuur-bericht (messageSent)="refreshMessages()"></stuur-bericht>
