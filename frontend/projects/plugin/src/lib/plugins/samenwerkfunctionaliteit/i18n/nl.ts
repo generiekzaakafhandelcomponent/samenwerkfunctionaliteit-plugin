@@ -24,5 +24,13 @@ export const pluginNlTranslations = {
           'Er ging iets mis tijdens het ophalen van de lijst van documenten',
       },
     },
+    messages: {
+      datetimestamp: {
+        justNow: 'Zojuist',
+        today: 'Vandaag',
+        minuteSingular: '{{ minuteCount }} minuut geleden',
+        minutePlural: '{{ minuteCount }} minuten geleden',
+      },
+    },
   },
 };
