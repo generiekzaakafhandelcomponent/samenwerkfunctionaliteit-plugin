@@ -31,7 +31,7 @@ export class DocumentClient {
         responseType: 'blob',
       })
       .pipe(
-        map((response) => {
+        map((response: HttpResponse<Blob>): FileDownload => {
           return FileResponseUtil.toFileDownload(response);
         }),
       );
