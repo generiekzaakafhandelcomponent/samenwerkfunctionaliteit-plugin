@@ -1,3 +1,5 @@
 :host {
   overflow-y: scroll;
+  display: grid;
+  gap: 1rem;
 }
