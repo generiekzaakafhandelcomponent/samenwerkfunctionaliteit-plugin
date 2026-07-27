@@ -37,7 +37,7 @@ interface DocumentenResponse {
   links: Links | null;
 }
 
-function mapDocumentenResponseToModel(
+export function mapDocumentenResponseToModel(
   documentenResponse: DocumentenResponse,
 ): DocumentInterface {
   return new Document(

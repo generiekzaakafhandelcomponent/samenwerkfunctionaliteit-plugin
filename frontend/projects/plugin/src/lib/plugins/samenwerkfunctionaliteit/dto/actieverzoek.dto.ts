@@ -1,6 +1,9 @@
 import { Links } from './links.dto';
-import { Documenten } from './document.dto';
-import { Actieverzoek } from '../models/actieverzoek.model';
+import { Documenten, mapDocumentenResponseToModel } from './document.dto';
+import {
+  Actieverzoek,
+  ActieverzoekStatus as ActieverzoekStatusModel,
+} from '../models/actieverzoek.model';
 
 export interface ActieverzoekResponse {
   _links: Links;
@@ -23,7 +26,7 @@ export interface ActieverzoekResponse {
   zenderNaam: string;
 }
 
-enum ActieverzoekStatus {
+export enum ActieverzoekStatus {
   OPEN = 'OPEN',
   IN_BEHANDELING = 'IN_BEHANDELING',
   GEWEIGERD = 'GEWEIGERD',
@@ -32,10 +35,35 @@ enum ActieverzoekStatus {
   GEREED = 'GEREED',
 }
 
+function mapActieverzoekStatusToActieverzoekStatusModel(
+  actieverzoekStatus: ActieverzoekStatus,
+): ActieverzoekStatusModel {
+  if (actieverzoekStatus as ActieverzoekStatusModel) {
+    return actieverzoekStatus as ActieverzoekStatusModel;
+  }
+
+  throw new Error(`Invalid ActieverzoekStatus value: ${actieverzoekStatus}`);
+}
+
 export function mapActieverzoekResponseToActieverzoek(
   actieverzoekResponse: ActieverzoekResponse,
 ): Actieverzoek {
   return {
+    amountOfMessages: actieverzoekResponse.aantalBerichten,
+    description: actieverzoekResponse.omschrijving,
+    documents: (actieverzoekResponse.documenten.documenten ?? []).map(
+      mapDocumentenResponseToModel,
+    ),
+    lastChangedBy: actieverzoekResponse.laatstAangepastDoor,
+    lastChangedByName: actieverzoekResponse.laatstAangepastDoorNaam,
+    lastChangedDateTime: actieverzoekResponse.laatstAangepastDatumTijd,
+    links: actieverzoekResponse._links,
+    notice: actieverzoekResponse.melding,
+    productId: actieverzoekResponse.productId,
+    samenwerkingId: actieverzoekResponse.samenwerkingId,
+    status: mapActieverzoekStatusToActieverzoekStatusModel(
+      actieverzoekResponse.status,
+    ),
     title: actieverzoekResponse.titel,
     actieverzoekId: actieverzoekResponse.actieverzoekId,
     receiver: actieverzoekResponse.ontvanger,
