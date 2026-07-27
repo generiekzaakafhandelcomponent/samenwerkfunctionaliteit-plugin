@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   input,
   InputSignal,
@@ -14,16 +15,14 @@ import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { Document } from '../../models/document.model';
 import { BusinessKey } from '../../models/business-key.model';
-import { finalize, Observable, switchMap, take, tap, takeUntil } from 'rxjs';
+import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { NotificationModule } from 'carbon-components-angular';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { DocumentInterface } from '../../interface/document.interface';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
 import { toUUID } from '../../types/uuid.type';
 import { FileDownloadService } from '../../service/file-download.service';
-import { OnDestroyService } from '../../service/on-destroy.service';
-import { GlobalNotificationService } from '@valtimo/shared';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserNotificationService } from '../../service/user-notification.service';
 
@@ -36,7 +35,6 @@ import { UserNotificationService } from '../../service/user-notification.service
     TranslatePipe,
     DocumentTableLightComponent,
   ],
-  providers: [OnDestroyService],
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -48,7 +46,7 @@ export class DocumentListComponent implements OnInit {
     UserNotificationService,
   );
 
-  private readonly destroy$: OnDestroyService = inject(OnDestroyService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly downloader: FileDownloadService =
@@ -69,11 +67,10 @@ export class DocumentListComponent implements OnInit {
   }
 
   downloadDocument(id: string): void {
-    this.documentService
+    const sub = this.documentService
       .downloadDocument(toUUID(id))
       .pipe(
         take(1),
-        takeUntil(this.destroy$),
         tap((file) => this.downloader.download(file)),
       )
       .subscribe({
@@ -85,6 +82,10 @@ export class DocumentListComponent implements OnInit {
           throw error;
         },
       });
+
+    this.destroyRef.onDestroy(() => {
+      sub.unsubscribe();
+    });
   }
 
   private fetchDocumenten(documentId: string): void {
