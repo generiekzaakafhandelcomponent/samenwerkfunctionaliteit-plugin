@@ -17,9 +17,9 @@ import { ActivatedRoute } from '@angular/router';
 import { BusinessKey } from '../../models/business-key.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
-import { SamenwerkingService } from '../../service/samenwerking.service';
 import { SwfPluginService } from '../../service/swf-plugin.service';
 import { map } from 'rxjs/operators';
+import { ActieverzoekService } from '../../service/actieverzoek.service';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -32,8 +32,8 @@ export class BerichtenCustomTabComponent {
     inject(BerichtenService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
-  private readonly samenwerkingService: SamenwerkingService =
-    inject(SamenwerkingService);
+  private readonly actieverzoekService: ActieverzoekService =
+    inject(ActieverzoekService);
   private readonly swfPluginService: SwfPluginService =
     inject(SwfPluginService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
@@ -43,7 +43,7 @@ export class BerichtenCustomTabComponent {
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
-  messageReceiver: WritableSignal<string> = signal<string>('');
+  otherParticipant: WritableSignal<string> = signal<string>('');
 
   samenwerkingProperties: SamenwerkingProperties;
 
@@ -105,7 +105,7 @@ export class BerichtenCustomTabComponent {
       .pipe(
         switchMap((samenwerkingProperties: SamenwerkingProperties) => {
           return combineLatest<[string, ChatBericht[]]>([
-            this.fetchReceiverFromActieverzoek(
+            this.fetchOtherParticipantFromActieverzoek(
               samenwerkingProperties,
               valtimoBusinessKey,
             ),
@@ -127,13 +127,13 @@ export class BerichtenCustomTabComponent {
       });
   }
 
-  private fetchReceiverFromActieverzoek(
+  private fetchOtherParticipantFromActieverzoek(
     samenwerkingProperties: SamenwerkingProperties,
     valtimoBusinessKey: BusinessKey,
   ): Observable<string> {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
-      actieverzoek: this.samenwerkingService.getActieverzoek(
+      actieverzoek: this.actieverzoekService.getActieverzoek(
         samenwerkingProperties.actieverzoekId,
         valtimoBusinessKey,
       ),
@@ -147,7 +147,7 @@ export class BerichtenCustomTabComponent {
         );
       }),
       tap((receiver) => {
-        this.messageReceiver.set(receiver);
+        this.otherParticipant.set(receiver);
       }),
     );
   }
