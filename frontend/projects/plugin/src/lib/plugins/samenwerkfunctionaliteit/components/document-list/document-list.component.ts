@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,22 +10,21 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { DocumentTableComponent } from './document-table/document-table.component';
-import { DocumentService } from '../../service/document.service';
-import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
-import { Document } from '../../models/document.model';
-import { BusinessKey } from '../../models/business-key.model';
-import { finalize, Observable, switchMap, take, tap } from 'rxjs';
-import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
-import { NotificationModule } from 'carbon-components-angular';
 import { TranslatePipe } from '@ngx-translate/core';
+import { NotificationModule } from 'carbon-components-angular';
+import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
-import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
-import { toUUID } from '../../types/uuid.type';
+import { BusinessKey } from '../../models/business-key.model';
+import { Document } from '../../models/document.model';
+import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
+import { DocumentService } from '../../service/document.service';
 import { FileDownloadService } from '../../service/file-download.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
+import { toUUID } from '../../types/uuid.type';
+import { DocumentTableComponent } from './document-table/document-table.component';
+import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
 
 @Component({
   selector: 'document-list',
