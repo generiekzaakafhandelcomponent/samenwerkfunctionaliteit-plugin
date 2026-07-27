@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalNotificationService } from '@valtimo/shared';
