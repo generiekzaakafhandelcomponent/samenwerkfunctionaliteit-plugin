@@ -20,10 +20,12 @@ import { SwfPluginService } from '../../service/swf-plugin.service';
 import { map } from 'rxjs/operators';
 import { ActieverzoekService } from '../../service/actieverzoek.service';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
+import { IconModule, IconService } from 'carbon-components-angular';
+import { Collaborate32 } from '@carbon/icons';
 
 @Component({
   selector: 'berichten-custom-tab',
-  imports: [StuurBerichtComponent, BerichtenListComponent],
+  imports: [StuurBerichtComponent, BerichtenListComponent, IconModule],
   templateUrl: './berichten-custom-tab.component.html',
   styleUrl: './berichten-custom-tab.component.css',
 })
@@ -37,6 +39,7 @@ export class BerichtenCustomTabComponent {
   private readonly swfPluginService: SwfPluginService =
     inject(SwfPluginService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly iconService: IconService = inject(IconService);
 
   messages: WritableSignal<ChatBericht[]> = signal<ChatBericht[]>([]);
   oinNumber: WritableSignal<string> = signal<string>('');
@@ -49,6 +52,7 @@ export class BerichtenCustomTabComponent {
 
   ngOnInit(): void {
     this.loadMessages();
+    this.iconService.registerAll([Collaborate32]);
   }
 
   protected refreshMessages(): void {
