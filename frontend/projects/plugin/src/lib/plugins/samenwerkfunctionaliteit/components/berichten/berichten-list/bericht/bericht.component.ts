@@ -9,7 +9,6 @@ import {
 import { ChatBericht } from '../../../../models/bericht.model';
 import { LayerModule } from 'carbon-components-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { SwfPluginService } from '../../../../service/swf-plugin.service';
 
 @Component({
   selector: 'swf-bericht',
@@ -20,20 +19,20 @@ import { SwfPluginService } from '../../../../service/swf-plugin.service';
 export class BerichtComponent {
   private readonly translateService: TranslateService =
     inject(TranslateService);
-  private readonly swfPluginService: SwfPluginService =
-    inject(SwfPluginService);
   message: InputSignal<ChatBericht> = input.required<ChatBericht>();
   oinNumber: InputSignal<string> = input.required<string>();
-  isSender: WritableSignal<boolean> = signal(false);
+  isSentByCurrentParticipant: WritableSignal<boolean> = signal(false);
   formattedDate: string = '';
 
   ngOnInit() {
-    this.setIsSender();
+    this.setIsSentByCurrentParticipant();
     this.formattedDate = this.getFormattedDate(this.message().createdOn);
   }
 
-  private setIsSender(): void {
-    this.isSender.set(this.oinNumber() === this.message().sender);
+  private setIsSentByCurrentParticipant(): void {
+    this.isSentByCurrentParticipant.set(
+      this.oinNumber() === this.message().sender,
+    );
   }
 
   private getFormattedDate(date: Date): string {
@@ -68,7 +67,9 @@ export class BerichtComponent {
         this.translateService.instant(
           'samenwerkfunctionaliteit.messages.datetimestamp.today',
         ) +
-        `, ${date.getHours()}:${date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()}`
+        `, ${new Intl.DateTimeFormat(this.translateService.currentLang, {
+          timeStyle: 'short',
+        }).format(date)}`
       );
     }
 
