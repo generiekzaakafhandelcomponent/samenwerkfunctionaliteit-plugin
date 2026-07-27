@@ -145,8 +145,10 @@ export class BerichtenCustomTabComponent {
         valtimoBusinessKey,
       ),
     }).pipe(
-      map(({ swfPluginProperties, actieverzoek }) => {
+      tap(({ swfPluginProperties }) => {
         this.oinNumber.set(swfPluginProperties.oinNummer);
+      }),
+      map(({ swfPluginProperties, actieverzoek }) => {
         return this.capitalize(
           swfPluginProperties.oinNummer !== actieverzoek.sender
             ? actieverzoek.senderName
