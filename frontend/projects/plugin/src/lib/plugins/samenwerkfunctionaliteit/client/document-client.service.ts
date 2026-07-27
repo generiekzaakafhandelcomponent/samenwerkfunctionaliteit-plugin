@@ -1,14 +1,14 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import {
+  DOCUMENTEN_URL,
+  SAMENWERKINGEN_URL,
+} from '../config/swf-plugin-config';
 import { DocumentenOverzichtResponse } from '../dto/document.dto';
+import { FileDownload } from '../interface/file-download.interface';
 import { UUID } from '../types/uuid.type';
 import { FileResponseUtil } from '../utils/file-response.util';
-import { FileDownload } from '../interface/file-download.interface';
-import {
-  SAMENWERKINGEN_URL,
-  DOCUMENTEN_URL,
-} from '../config/swf-plugin-config';
 
 @Injectable({
   providedIn: 'root',
