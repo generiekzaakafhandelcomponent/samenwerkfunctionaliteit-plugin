@@ -1,7 +1,7 @@
 @if (!isLoading()) {
-  <p class="receiver">
+  <h3 class="receiver">
     {{ otherParticipant() }}
-  </p>
+  </h3>
 }
 @if (!hasError()) {
   <berichten-list [messages]="messages()" [isLoading]="isLoading()" [oinNumber]="oinNumber()"></berichten-list>
