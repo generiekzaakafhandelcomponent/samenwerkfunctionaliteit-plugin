@@ -3,8 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { PostBerichtRequestDto } from '../dto/post-bericht-request.dto';
 import { PostBerichtResponseDto } from '../dto/post-bericht-response.dto';
 import { Observable } from 'rxjs';
-import { ACTIEVERZOEKEN_URL } from '../config/samenwerking-config';
 import { BerichtenOverzichtResponse } from '../dto/berichten.dto';
+import { ACTIEVERZOEKEN_URL } from '../config/swf-plugin-config';
 
 @Injectable({
   providedIn: 'root',
