@@ -14,12 +14,12 @@ import { Bericht, ChatBericht } from '../../models/bericht.model';
 import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
-import { BusinessKey } from '../../models/business-key.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
 import { SwfPluginService } from '../../service/swf-plugin.service';
 import { map } from 'rxjs/operators';
 import { ActieverzoekService } from '../../service/actieverzoek.service';
+import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -79,9 +79,12 @@ export class BerichtenCustomTabComponent {
   }
 
   private getValtimoBusinessKey(): BusinessKey {
-    return {
-      value: this.swfDocumentService.getParam(this.route, 'documentId'),
-    };
+    const businessKeyAsString = this.swfDocumentService.getParam(
+      this.route,
+      'documentId',
+    );
+
+    return toBusinessKey(businessKeyAsString);
   }
 
   private fetchSamenwerkingProperties(): Observable<SamenwerkingProperties> {
