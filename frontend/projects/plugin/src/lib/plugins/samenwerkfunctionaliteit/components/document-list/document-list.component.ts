@@ -55,7 +55,6 @@ export class DocumentListComponent implements OnInit {
 
   documents: WritableSignal<Document[]> = signal<Document[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
-  errorMessage: WritableSignal<string> = signal<string>('');
 
   ngOnInit(): void {
     const documentId: string = this.swfDocumentService.getParam(
