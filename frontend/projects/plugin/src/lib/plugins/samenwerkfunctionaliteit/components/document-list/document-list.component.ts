@@ -45,8 +45,7 @@ export class DocumentListComponent implements OnInit {
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
   );
-
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly downloader: FileDownloadService =
