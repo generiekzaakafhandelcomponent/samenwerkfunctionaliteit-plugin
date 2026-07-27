@@ -153,7 +153,7 @@ export class BerichtenCustomTabComponent {
             : actieverzoek.receiverName,
         );
       }),
-      tap((receiver) => {
+      tap((receiver: string) => {
         this.otherParticipant.set(receiver);
       }),
     );
