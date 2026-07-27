@@ -6,8 +6,10 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Actieverzoek
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Bericht
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Document
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Page
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import org.springframework.core.io.InputStreamResource
+import java.time.ZonedDateTime
 import java.util.UUID
 
 interface SamenwerkfunctionaliteitService {
@@ -19,7 +21,7 @@ interface SamenwerkfunctionaliteitService {
     fun getAllActieverzoeken(
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
-        isOrganisationTheReceiver: Boolean
+        isOrganisationTheReceiver: Boolean,
     ): List<Actieverzoek>
 
     fun getBericht(
@@ -60,4 +62,11 @@ interface SamenwerkfunctionaliteitService {
         properties: SamenwerkfunctionaliteitProperties,
         samenwerkingId: String,
     ): List<Notificatie>
+
+    fun getNotificaties(
+        from: ZonedDateTime,
+        until: ZonedDateTime,
+        properties: SamenwerkfunctionaliteitProperties,
+        pageNumber: Int,
+    ): Page<List<Notificatie>>
 }

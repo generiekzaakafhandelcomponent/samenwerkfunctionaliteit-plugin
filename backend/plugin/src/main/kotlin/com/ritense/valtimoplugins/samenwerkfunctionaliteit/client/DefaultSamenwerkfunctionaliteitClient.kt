@@ -7,6 +7,7 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.CreateBerichtRequ
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieGetResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.PagedNotificatieGetResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
@@ -18,7 +19,10 @@ import org.springframework.web.client.RestClientResponseException
 import org.springframework.web.client.body
 import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.util.UriBuilder
+import org.springframework.web.util.UriComponentsBuilder
+import java.time.ZonedDateTime
 import java.util.UUID
+import kotlin.jvm.java
 
 @Component
 class DefaultSamenwerkfunctionaliteitClient(
@@ -158,6 +162,36 @@ class DefaultSamenwerkfunctionaliteitClient(
         }
     }
 
+    override fun getNotificaties(
+        from: ZonedDateTime,
+        until: ZonedDateTime,
+        properties: SamenwerkfunctionaliteitProperties,
+        pageNumber: Int,
+    ): PagedNotificatieGetResponse {
+        val uri =
+            UriComponentsBuilder
+                .fromPath(NOTIFICATIES_ENDPOINT)
+                .queryParam(EVENTDATUMTIJD_FROM_PARAM, from)
+                .queryParam(EVENTDATUMTIJD_UNTIL_PARAM, until)
+                .queryParam(NOTIFICATIES_PAGE_PARAM, pageNumber)
+                .build()
+                .encode()
+                .toUriString()
+
+        try {
+            return restClient(properties = properties)
+                .get()
+                .uri(uri)
+                .retrieve()
+                .body<PagedNotificatieGetResponse>()
+                ?: throw IllegalStateException("Error fetching notificaties: response body was null")
+        } catch (e: HttpServerErrorException.InternalServerError) {
+            handleInternalServerError(e)
+        } catch (e: RestClientResponseException) {
+            handleResponseException(e, "Error getting page $pageNumber of notificaties.")
+        }
+    }
+
     private fun <T> UriBuilder.queryParamIfNotNull(
         name: DocumentenOverzichtQueryParam,
         value: T?,
@@ -219,6 +253,10 @@ class DefaultSamenwerkfunctionaliteitClient(
     }
 
     companion object {
+        private const val NOTIFICATIES_ENDPOINT = "v5/notificaties"
+        private const val EVENTDATUMTIJD_FROM_PARAM = "eventDatumTijd[gte]"
+        private const val EVENTDATUMTIJD_UNTIL_PARAM = "eventDatumTijd[lt]"
+        private const val NOTIFICATIES_PAGE_PARAM = "page"
         private const val SWF_SAMENWERKING_PATH = "v5/samenwerkingen"
         private const val SWF_ACTIEVERZOEK_PATH = "v5/actieverzoeken"
         private const val SAMENWERKING_ID = "samenwerkingId"

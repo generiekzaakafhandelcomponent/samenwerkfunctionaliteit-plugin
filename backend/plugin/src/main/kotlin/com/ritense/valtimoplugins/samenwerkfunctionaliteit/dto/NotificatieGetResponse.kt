@@ -1,6 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieGetResponse.Notificaties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Links
 
 data class NotificatieGetResponse(
@@ -13,3 +14,11 @@ data class NotificatieGetResponse(
         val notificaties: List<NotificatieResponse>,
     )
 }
+
+data class PagedNotificatieGetResponse(
+    @field:JsonProperty("_embedded")
+    val embedded: Notificaties? = null,
+    @field:JsonProperty("_links")
+    val links: Links? = null,
+    val page: Page,
+)
