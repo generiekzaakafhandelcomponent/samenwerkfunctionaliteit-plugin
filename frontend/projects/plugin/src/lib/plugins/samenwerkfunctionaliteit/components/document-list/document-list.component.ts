@@ -68,7 +68,7 @@ export class DocumentListComponent implements OnInit {
     this.fetchDocumenten(documentId);
   }
 
-  downloadDocument(id: string) {
+  downloadDocument(id: string): void {
     this.documentService
       .downloadDocument(toUUID(id))
       .pipe(
