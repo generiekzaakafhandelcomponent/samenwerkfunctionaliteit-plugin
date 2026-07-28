@@ -63,7 +63,7 @@ export class DocumentListComponent implements OnInit {
   }
 
   protected downloadDocument(id: string): void {
-    const sub = this.documentService
+    const fileDownloadSubscription = this.documentService
       .downloadDocument(toUUID(id))
       .pipe(
         take(1),
@@ -80,7 +80,7 @@ export class DocumentListComponent implements OnInit {
       });
 
     this.destroyRef.onDestroy(() => {
-      sub.unsubscribe();
+      fileDownloadSubscription.unsubscribe();
     });
   }
 
