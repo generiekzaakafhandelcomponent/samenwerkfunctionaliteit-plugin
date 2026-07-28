@@ -1,4 +1,10 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
 import {
@@ -29,7 +35,7 @@ import { Collaborate32 } from '@carbon/icons';
   templateUrl: './berichten-custom-tab.component.html',
   styleUrl: './berichten-custom-tab.component.css',
 })
-export class BerichtenCustomTabComponent {
+export class BerichtenCustomTabComponent implements OnInit {
   private readonly berichtenService: BerichtenService =
     inject(BerichtenService);
   private readonly swfDocumentService: SwfDocumentService =
