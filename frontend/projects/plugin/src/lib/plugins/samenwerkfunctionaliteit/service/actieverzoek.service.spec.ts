@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { DocumentClient } from './document-client.service';
+import { ActieverzoekService } from './actieverzoek.service';
 
-describe('DocumentClient', () => {
-  let service: DocumentClient;
+describe('ActieverzoekService', () => {
+  let service: ActieverzoekService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DocumentClient);
+    service = TestBed.inject(ActieverzoekService);
   });
 
   it('should be created', () => {

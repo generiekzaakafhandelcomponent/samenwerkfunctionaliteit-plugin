@@ -1,74 +1,124 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
-import { finalize, switchMap, take, tap } from 'rxjs';
+import {
+  combineLatest,
+  finalize,
+  forkJoin,
+  Observable,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { Bericht, ChatBericht } from '../../models/bericht.model';
 import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
-import { BusinessKey } from '../../models/business-key.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { mapBerichtenToChatBerichten } from '../../mapper/bericht.mapper';
+import { SwfPluginService } from '../../service/swf-plugin.service';
+import { map } from 'rxjs/operators';
+import { ActieverzoekService } from '../../service/actieverzoek.service';
+import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
+import { IconModule, IconService } from 'carbon-components-angular';
+import { Collaborate32 } from '@carbon/icons';
+import { capitalize } from '../../utils/capitalize';
 
 @Component({
   selector: 'berichten-custom-tab',
-  imports: [StuurBerichtComponent, BerichtenListComponent],
+  imports: [StuurBerichtComponent, BerichtenListComponent, IconModule],
   templateUrl: './berichten-custom-tab.component.html',
   styleUrl: './berichten-custom-tab.component.css',
 })
-export class BerichtenCustomTabComponent {
+export class BerichtenCustomTabComponent implements OnInit {
   private readonly berichtenService: BerichtenService =
     inject(BerichtenService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  private readonly actieverzoekService: ActieverzoekService =
+    inject(ActieverzoekService);
+  private readonly swfPluginService: SwfPluginService =
+    inject(SwfPluginService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly iconService: IconService = inject(IconService);
 
-  messages: WritableSignal<ChatBericht[]> = signal([]);
+  messages: WritableSignal<ChatBericht[]> = signal<ChatBericht[]>([]);
+  oinNumber: WritableSignal<string> = signal<string>('');
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  otherParticipant: WritableSignal<string> = signal<string>('');
 
-  ngOnInit() {
-    this.fetchChatBerichten(this.getDocumentId());
+  samenwerkingProperties: SamenwerkingProperties;
+
+  ngOnInit(): void {
+    this.loadMessages();
+    this.iconService.registerAll([Collaborate32]);
   }
 
   protected refreshMessages(): void {
-    this.fetchChatBerichten(this.getDocumentId());
-  }
-
-  private getDocumentId(): string {
-    return this.swfDocumentService.getParam(this.route, 'documentId');
-  }
-
-  private fetchChatBerichten(documentId: string): void {
-    const valtimoBusinessKey: BusinessKey = {
-      value: documentId,
-    };
-
     this.isLoading.set(true);
+    this.fetchChatBerichten(this.samenwerkingProperties)
+      .pipe(
+        finalize(() => {
+          this.isLoading.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.hasError.set(false);
+        },
+        error: (error: Error) => {
+          this.hasError.set(true);
+          this.errorMessage.set(error.message);
+        },
+      });
+  }
 
-    this.swfDocumentService
-      .getSamenwerkingProperties(valtimoBusinessKey)
+  private loadMessages(): void {
+    this.combineAllRequestsAndSetIsLoading(this.getBusinessKey());
+  }
+
+  private getBusinessKey(): BusinessKey {
+    const businessKeyAsString = this.swfDocumentService.getParam(
+      this.route,
+      'documentId',
+    );
+
+    return toBusinessKey(businessKeyAsString);
+  }
+
+  private fetchSamenwerkingProperties(): Observable<SamenwerkingProperties> {
+    return this.swfDocumentService
+      .getSamenwerkingProperties(this.getBusinessKey())
       .pipe(
         take(1),
-        tap((samenwerkingProperties: SamenwerkingProperties): void => {
-          if (!samenwerkingProperties.samenwerkingId) {
-            throw new Error(
-              'Er is geen berichtenlijst beschikbaar, omdat dit dossier niet deel uitmaakt van een samenwerking.',
-            );
+        tap((samenwerkingProperties: SamenwerkingProperties) => {
+          if (!samenwerkingProperties.actieverzoekId) {
+            throw Error('Dossier heeft geen actieverzoekId');
           }
+          this.samenwerkingProperties = samenwerkingProperties;
         }),
+      );
+  }
+
+  private combineAllRequestsAndSetIsLoading(businessKey: BusinessKey): void {
+    this.fetchSamenwerkingProperties()
+      .pipe(
         switchMap((samenwerkingProperties: SamenwerkingProperties) => {
-          return this.berichtenService
-            .getBerichten(samenwerkingProperties.actieverzoekId)
-            .pipe(
-              take(1),
-              tap((messages: Bericht[]) => {
-                const chatBerichten: ChatBericht[] =
-                  mapBerichtenToChatBerichten(messages);
-                this.messages.set(chatBerichten);
-              }),
-            );
+          return combineLatest<[string, ChatBericht[]]>([
+            this.fetchOtherParticipantFromActieverzoek(
+              samenwerkingProperties,
+              businessKey,
+            ),
+            this.fetchChatBerichten(samenwerkingProperties),
+          ]);
         }),
         finalize(() => {
           this.isLoading.set(false);
@@ -83,5 +133,48 @@ export class BerichtenCustomTabComponent {
           this.errorMessage.set(error.message);
         },
       });
+  }
+
+  private fetchOtherParticipantFromActieverzoek(
+    samenwerkingProperties: SamenwerkingProperties,
+    businessKey: BusinessKey,
+  ): Observable<string> {
+    return forkJoin({
+      swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
+      actieverzoek: this.actieverzoekService.getActieverzoek(
+        samenwerkingProperties.actieverzoekId,
+        businessKey,
+      ),
+    }).pipe(
+      tap(({ swfPluginProperties }) => {
+        this.oinNumber.set(swfPluginProperties.oinNummer);
+      }),
+      map(({ swfPluginProperties, actieverzoek }) => {
+        return capitalize(
+          swfPluginProperties.oinNummer !== actieverzoek.sender
+            ? actieverzoek.senderName
+            : actieverzoek.receiverName,
+        );
+      }),
+      tap((receiver: string) => {
+        this.otherParticipant.set(receiver);
+      }),
+    );
+  }
+
+  private fetchChatBerichten(
+    samenwerkingProperties: SamenwerkingProperties,
+  ): Observable<ChatBericht[]> {
+    return this.berichtenService
+      .getBerichten(samenwerkingProperties.actieverzoekId)
+      .pipe(
+        take(1),
+        map((messages: Bericht[]) => {
+          return mapBerichtenToChatBerichten(messages);
+        }),
+        tap((chatMessages: ChatBericht[]) => {
+          this.messages.set(chatMessages);
+        }),
+      );
   }
 }

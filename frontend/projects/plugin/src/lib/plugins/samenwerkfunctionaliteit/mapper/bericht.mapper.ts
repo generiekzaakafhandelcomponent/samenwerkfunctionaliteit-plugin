@@ -50,6 +50,7 @@ export function mapBerichtenToChatBerichten(
       receiverName: bericht.ontvangerNaam,
       samenwerkingId: bericht.samenwerkingId,
       sender: bericht.zender,
+      senderName: bericht.zenderNaam,
     };
   });
 }
