@@ -1,7 +1,10 @@
 import { Links } from './links.dto';
 import { Documenten, mapDocumentenResponseToModel } from './document.dto';
 import { Actieverzoek } from '../models/actieverzoek.model';
-import { ActieverzoekStatusType } from '../types/actieverzoek-status.type';
+import {
+  ActieverzoekStatusType,
+  ActieverzoekStatusTypes,
+} from '../types/actieverzoek-status.type';
 
 export interface ActieverzoekResponse {
   _links: Links;
@@ -38,17 +41,17 @@ function mapActieverzoekStatusToActieverzoekStatusModel(
 ): ActieverzoekStatusType {
   switch (actieverzoekStatus) {
     case ActieverzoekStatus.OPEN:
-      return 'OPEN';
+      return ActieverzoekStatusTypes.OPEN;
     case ActieverzoekStatus.IN_BEHANDELING:
-      return 'IN_PROGRESS';
+      return ActieverzoekStatusTypes.IN_PROGRESS;
     case ActieverzoekStatus.GEWEIGERD:
-      return 'REJECTED';
+      return ActieverzoekStatusTypes.REJECTED;
     case ActieverzoekStatus.INGETROKKEN:
-      return 'WITHDRAWN';
+      return ActieverzoekStatusTypes.WITHDRAWN;
     case ActieverzoekStatus.GEREEDGEMELD:
-      return 'REPORTED_READY';
+      return ActieverzoekStatusTypes.REPORTED_READY;
     case ActieverzoekStatus.GEREED:
-      return 'READY';
+      return ActieverzoekStatusTypes.READY;
     default:
       throw new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
   }
