@@ -1,6 +1,6 @@
 import { Document } from './document.model';
 import { Links } from './links.model';
-import { ActieverzoekStatus } from '../types/actieverzoek-status.type';
+import { ActieverzoekStatusType } from '../types/actieverzoek-status.type';
 
 export interface Actieverzoek {
   links: Links;
@@ -18,7 +18,7 @@ export interface Actieverzoek {
   receiverName: string;
   productId: string;
   samenwerkingId: string;
-  status: ActieverzoekStatus;
+  status: ActieverzoekStatusType;
   sender: string;
   senderName: string;
 }

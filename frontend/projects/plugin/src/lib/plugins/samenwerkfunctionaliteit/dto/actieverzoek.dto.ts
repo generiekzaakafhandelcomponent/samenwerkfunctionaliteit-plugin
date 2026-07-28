@@ -1,7 +1,7 @@
 import { Links } from './links.dto';
 import { Documenten, mapDocumentenResponseToModel } from './document.dto';
 import { Actieverzoek } from '../models/actieverzoek.model';
-import { ActieverzoekStatus as ActieverzoekStatusModel } from '../types/actieverzoek-status.type';
+import { ActieverzoekStatusType } from '../types/actieverzoek-status.type';
 
 export interface ActieverzoekResponse {
   _links: Links;
@@ -35,12 +35,23 @@ export enum ActieverzoekStatus {
 
 function mapActieverzoekStatusToActieverzoekStatusModel(
   actieverzoekStatus: ActieverzoekStatus,
-): ActieverzoekStatusModel {
-  if (actieverzoekStatus as ActieverzoekStatusModel) {
-    return actieverzoekStatus as ActieverzoekStatusModel;
+): ActieverzoekStatusType {
+  switch (actieverzoekStatus) {
+    case ActieverzoekStatus.OPEN:
+      return 'OPEN';
+    case ActieverzoekStatus.IN_BEHANDELING:
+      return 'IN_PROGRESS';
+    case ActieverzoekStatus.GEWEIGERD:
+      return 'REJECTED';
+    case ActieverzoekStatus.INGETROKKEN:
+      return 'WITHDRAWN';
+    case ActieverzoekStatus.GEREEDGEMELD:
+      return 'REPORTED_READY';
+    case ActieverzoekStatus.GEREED:
+      return 'READY';
+    default:
+      new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
   }
-
-  throw new Error(`Invalid ActieverzoekStatus value: ${actieverzoekStatus}`);
 }
 
 export function mapActieverzoekResponseToActieverzoek(
