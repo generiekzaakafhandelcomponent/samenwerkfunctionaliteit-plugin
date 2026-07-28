@@ -46,24 +46,24 @@ export class SwfDocumentService implements OnDestroy {
   /**
    * Gets the samenwerkingIds for a given documentId.
    * If the documentId is not in the cache, it fetches from source.
-   * @param valtimoBusinessKey The document ID to look up.
+   * @param businessKey The document ID to look up.
    * @returns The samenwerkingId, or null if not found.
    */
   getSamenwerkingProperties(
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
   ): Observable<SamenwerkingProperties> {
-    const samenwerkingProperties =
-      this.samenwerkingPropsCache.get(valtimoBusinessKey);
+    const samenwerkingProperties: SamenwerkingProperties =
+      this.samenwerkingPropsCache.get(businessKey);
     if (samenwerkingProperties) {
       return of(samenwerkingProperties);
     }
-    return this.fetchPropsFromDocument(valtimoBusinessKey);
+    return this.fetchPropsFromDocument(businessKey);
   }
 
   private fetchPropsFromDocument(
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
   ): Observable<SamenwerkingProperties> {
-    return this.valtimoDocumentService.getDocument(valtimoBusinessKey).pipe(
+    return this.valtimoDocumentService.getDocument(businessKey).pipe(
       takeUntil(this.destroy$),
       map((document: ValtimoDocument) => {
         const documentContentWithSamenwerkingProperties =
@@ -76,7 +76,7 @@ export class SwfDocumentService implements OnDestroy {
             'Document content does not have samenwerking properties.',
           );
         }
-        this.loadPropsIntoCache(valtimoBusinessKey, samenwerkingProperties);
+        this.loadPropsIntoCache(businessKey, samenwerkingProperties);
       }),
       catchError((error: Error) => {
         return throwError(() => error);
@@ -85,9 +85,9 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   private loadPropsIntoCache(
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
     samenwerkingProperties: SamenwerkingProperties,
   ): void {
-    this.samenwerkingPropsCache.set(valtimoBusinessKey, samenwerkingProperties);
+    this.samenwerkingPropsCache.set(businessKey, samenwerkingProperties);
   }
 }

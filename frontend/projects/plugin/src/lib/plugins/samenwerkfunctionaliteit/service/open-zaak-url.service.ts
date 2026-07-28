@@ -21,12 +21,12 @@ export class OpenZaakUrlService {
     OpenZaakInfo
   >();
 
-  getOpenZaakInfo(valtimoBusinessKey: BusinessKey): Observable<OpenZaakInfo> {
-    if (this.openZaakInfoCache.get(valtimoBusinessKey)) {
-      return of(this.openZaakInfoCache.get(valtimoBusinessKey));
+  getOpenZaakInfo(businessKey: BusinessKey): Observable<OpenZaakInfo> {
+    if (this.openZaakInfoCache.get(businessKey)) {
+      return of(this.openZaakInfoCache.get(businessKey));
     }
     return forkJoin({
-      document: this.valtimoDocumentService.getDocument(valtimoBusinessKey),
+      document: this.valtimoDocumentService.getDocument(businessKey),
       zaakTypes: this.openZaakService.getZaakTypes(),
     }).pipe(
       map(({ document, zaakTypes }) => {
@@ -56,15 +56,15 @@ export class OpenZaakUrlService {
         };
       }),
       tap((openZaakInfo: OpenZaakInfo) => {
-        this.loadOpenZaakInfoIntoCache(valtimoBusinessKey, openZaakInfo);
+        this.loadOpenZaakInfoIntoCache(businessKey, openZaakInfo);
       }),
     );
   }
 
   private loadOpenZaakInfoIntoCache(
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
     openZaakInfo: OpenZaakInfo,
   ): void {
-    this.openZaakInfoCache.set(valtimoBusinessKey, openZaakInfo);
+    this.openZaakInfoCache.set(businessKey, openZaakInfo);
   }
 }

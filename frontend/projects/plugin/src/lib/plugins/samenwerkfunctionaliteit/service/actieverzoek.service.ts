@@ -22,17 +22,17 @@ export class ActieverzoekService {
 
   getActieverzoek(
     actieverzoekId: string,
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
   ): Observable<Actieverzoek> {
-    if (this.actieverzoekCache.get(valtimoBusinessKey)) {
-      return of(this.actieverzoekCache.get(valtimoBusinessKey));
+    if (this.actieverzoekCache.get(businessKey)) {
+      return of(this.actieverzoekCache.get(businessKey));
     }
     return this.actieverzoekClient.getActieverzoek(actieverzoekId).pipe(
       map((actieverzoekResponse: ActieverzoekResponse) => {
         return mapActieverzoekResponseToActieverzoek(actieverzoekResponse);
       }),
       tap((actieverzoek: Actieverzoek) => {
-        this.actieverzoekCache.set(valtimoBusinessKey, actieverzoek);
+        this.actieverzoekCache.set(businessKey, actieverzoek);
       }),
     );
   }

@@ -82,10 +82,10 @@ export class BerichtenCustomTabComponent implements OnInit {
   }
 
   private loadMessages(): void {
-    this.combineAllRequestsAndSetIsLoading(this.getValtimoBusinessKey());
+    this.combineAllRequestsAndSetIsLoading(this.getBusinessKey());
   }
 
-  private getValtimoBusinessKey(): BusinessKey {
+  private getBusinessKey(): BusinessKey {
     const businessKeyAsString = this.swfDocumentService.getParam(
       this.route,
       'documentId',
@@ -96,7 +96,7 @@ export class BerichtenCustomTabComponent implements OnInit {
 
   private fetchSamenwerkingProperties(): Observable<SamenwerkingProperties> {
     return this.swfDocumentService
-      .getSamenwerkingProperties(this.getValtimoBusinessKey())
+      .getSamenwerkingProperties(this.getBusinessKey())
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties) => {
@@ -108,16 +108,14 @@ export class BerichtenCustomTabComponent implements OnInit {
       );
   }
 
-  private combineAllRequestsAndSetIsLoading(
-    valtimoBusinessKey: BusinessKey,
-  ): void {
+  private combineAllRequestsAndSetIsLoading(businessKey: BusinessKey): void {
     this.fetchSamenwerkingProperties()
       .pipe(
         switchMap((samenwerkingProperties: SamenwerkingProperties) => {
           return combineLatest<[string, ChatBericht[]]>([
             this.fetchOtherParticipantFromActieverzoek(
               samenwerkingProperties,
-              valtimoBusinessKey,
+              businessKey,
             ),
             this.fetchChatBerichten(samenwerkingProperties),
           ]);
@@ -139,13 +137,13 @@ export class BerichtenCustomTabComponent implements OnInit {
 
   private fetchOtherParticipantFromActieverzoek(
     samenwerkingProperties: SamenwerkingProperties,
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
   ): Observable<string> {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
       actieverzoek: this.actieverzoekService.getActieverzoek(
         samenwerkingProperties.actieverzoekId,
-        valtimoBusinessKey,
+        businessKey,
       ),
     }).pipe(
       tap(({ swfPluginProperties }) => {
