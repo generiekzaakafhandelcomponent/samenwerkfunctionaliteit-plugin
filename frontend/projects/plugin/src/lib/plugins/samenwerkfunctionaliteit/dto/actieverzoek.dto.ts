@@ -50,7 +50,7 @@ function mapActieverzoekStatusToActieverzoekStatusModel(
     case ActieverzoekStatus.GEREED:
       return 'READY';
     default:
-      new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
+      throw new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
   }
 }
 
