@@ -36,7 +36,7 @@ export enum ActieverzoekStatus {
   GEREED = 'GEREED',
 }
 
-function mapActieverzoekStatusToActieverzoekStatusModel(
+function mapActieverzoekStatusToActieverzoekStatusType(
   actieverzoekStatus: ActieverzoekStatus,
 ): ActieverzoekStatusType {
   switch (actieverzoekStatus) {
@@ -73,7 +73,7 @@ export function mapActieverzoekResponseToActieverzoek(
     notice: actieverzoekResponse.melding,
     productId: actieverzoekResponse.productId,
     samenwerkingId: actieverzoekResponse.samenwerkingId,
-    status: mapActieverzoekStatusToActieverzoekStatusModel(
+    status: mapActieverzoekStatusToActieverzoekStatusType(
       actieverzoekResponse.status,
     ),
     title: actieverzoekResponse.titel,
