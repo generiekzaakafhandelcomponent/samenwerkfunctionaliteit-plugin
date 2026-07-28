@@ -66,7 +66,7 @@ function mapVertrouwelijkheidsAanduidingToConfidentialityType(
   }
 }
 
-function mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
+export function mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
   confidentialityType: ConfidentialityType,
 ): string {
   switch (confidentialityType) {
