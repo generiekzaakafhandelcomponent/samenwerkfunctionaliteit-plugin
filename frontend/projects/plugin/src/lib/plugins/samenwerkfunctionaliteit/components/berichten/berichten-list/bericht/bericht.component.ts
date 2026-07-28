@@ -47,19 +47,14 @@ export class BerichtComponent {
     }
 
     if (diffMinutes < 60) {
-      return diffMinutes === 1
-        ? this.translateService.instant(
-            'samenwerkfunctionaliteit.messages.datetimestamp.minuteSingular',
-            {
-              minuteCount: diffMinutes,
-            },
-          )
-        : this.translateService.instant(
-            'samenwerkfunctionaliteit.messages.datetimestamp.minutePlural',
-            {
-              minuteCount: diffMinutes,
-            },
-          );
+      return this.translateService.instant(
+        diffMinutes === 1
+          ? 'samenwerkfunctionaliteit.messages.datetimestamp.minuteSingular'
+          : 'samenwerkfunctionaliteit.messages.datetimestamp.minutePlural',
+        {
+          minuteCount: diffMinutes,
+        },
+      );
     }
 
     if (date.getDate() === now.getDate()) {
