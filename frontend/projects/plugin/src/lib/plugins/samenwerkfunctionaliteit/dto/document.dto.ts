@@ -1,11 +1,11 @@
-import { Links } from './links.dto';
-import { Page } from './page.dto';
 import { DocumentInterface } from '../interface/document.interface';
 import { Document } from '../models/document.model';
 import {
   ConfidentialityType,
   ConfidentialityTypes,
 } from '../types/confidentiality.type';
+import { Links } from './links.dto';
+import { Page } from './page.dto';
 
 export interface DocumentenOverzichtResponse {
   _embedded: Documenten | null;
@@ -63,6 +63,19 @@ function mapVertrouwelijkheidsAanduidingToConfidentialityType(
       throw new Error(
         `Unknown vertrouwelijkheidsAanduiding: ${vertrouwelijkheidsAanduiding}`,
       );
+  }
+}
+
+function mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
+  confidentialityType: ConfidentialityType,
+): string {
+  switch (confidentialityType) {
+    case ConfidentialityTypes.Confidential:
+      return 'RV';
+    case ConfidentialityTypes.StrictlyConfidential:
+      return 'SV';
+    default:
+      throw new Error(`Unknown confidentialityType: ${confidentialityType}`);
   }
 }
 
