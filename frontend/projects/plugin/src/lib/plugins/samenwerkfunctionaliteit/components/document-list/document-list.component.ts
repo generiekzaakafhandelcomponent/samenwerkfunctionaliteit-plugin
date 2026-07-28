@@ -11,7 +11,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslatePipe } from '@ngx-translate/core';
 import { NotificationModule } from 'carbon-components-angular';
 import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
@@ -32,7 +31,6 @@ import { DocumentTableLightComponent } from './document-table/light/document-tab
   imports: [
     DocumentTableComponent,
     NotificationModule,
-    TranslatePipe,
     DocumentTableLightComponent,
   ],
   styleUrl: './document-list.component.scss',
