@@ -28,6 +28,7 @@ import { ActieverzoekService } from '../../service/actieverzoek.service';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { IconModule, IconService } from 'carbon-components-angular';
 import { Collaborate32 } from '@carbon/icons';
+import { capitalize } from '../../utils/capitalize';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -82,10 +83,6 @@ export class BerichtenCustomTabComponent implements OnInit {
 
   private loadMessages(): void {
     this.combineAllRequestsAndSetIsLoading(this.getValtimoBusinessKey());
-  }
-
-  private capitalize(value: string): string {
-    return value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
   }
 
   private getValtimoBusinessKey(): BusinessKey {
@@ -155,7 +152,7 @@ export class BerichtenCustomTabComponent implements OnInit {
         this.oinNumber.set(swfPluginProperties.oinNummer);
       }),
       map(({ swfPluginProperties, actieverzoek }) => {
-        return this.capitalize(
+        return capitalize(
           swfPluginProperties.oinNummer !== actieverzoek.sender
             ? actieverzoek.senderName
             : actieverzoek.receiverName,
