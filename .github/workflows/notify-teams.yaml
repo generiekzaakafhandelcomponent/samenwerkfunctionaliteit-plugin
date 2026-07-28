@@ -17,4 +17,4 @@ jobs:
                     "actor": "${{ github.actor }}",
                     "url": "${{ github.event.pull_request.html_url }}",
                     "action": "${{ github.event.action }}"
-                  }' ${{ secrets.TEAMS_WEBHOOK_URL }}
+                  }' "${{ secrets.TEAMS_WEBHOOK_URL }}"
