@@ -1,5 +1,6 @@
 import { Document } from './document.model';
 import { Links } from './links.model';
+import { ActieverzoekStatus } from '../types/actieverzoek-status.type';
 
 export interface Actieverzoek {
   links: Links;
@@ -21,11 +22,3 @@ export interface Actieverzoek {
   sender: string;
   senderName: string;
 }
-
-export type ActieverzoekStatus =
-  | 'OPEN'
-  | 'IN_BEHANDELING'
-  | 'GEWEIGERD'
-  | 'INGETROKKEN'
-  | 'GEREEDGEMELD'
-  | 'GEREED';

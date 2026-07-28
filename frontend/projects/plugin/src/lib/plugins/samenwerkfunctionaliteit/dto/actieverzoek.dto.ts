@@ -1,9 +1,7 @@
 import { Links } from './links.dto';
 import { Documenten, mapDocumentenResponseToModel } from './document.dto';
-import {
-  Actieverzoek,
-  ActieverzoekStatus as ActieverzoekStatusModel,
-} from '../models/actieverzoek.model';
+import { Actieverzoek } from '../models/actieverzoek.model';
+import { ActieverzoekStatus as ActieverzoekStatusModel } from '../types/actieverzoek-status.type';
 
 export interface ActieverzoekResponse {
   _links: Links;
