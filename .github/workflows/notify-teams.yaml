@@ -1,0 +1,20 @@
+name: Notify Teams via Power Automate
+
+on:
+    pull_request:
+        types: [opened, closed]
+
+jobs:
+    notify:
+        if: github.event.pull_request.merged == true || github.event.action == 'opened'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Notify Power Automate
+              run: |
+                  curl -X POST -H "Content-Type: application/json" -d '{
+                    "title": "${{ github.event.pull_request.title }}",
+                    "author": "${{ github.event.pull_request.user.login }}",
+                    "actor": "${{ github.actor }}",
+                    "url": "${{ github.event.pull_request.html_url }}",
+                    "action": "${{ github.event.action }}"
+                  }' ${{ secrets.TEAMS_WEBHOOK_URL }}
