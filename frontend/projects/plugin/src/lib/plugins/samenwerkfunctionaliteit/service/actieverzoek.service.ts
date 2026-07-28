@@ -25,6 +25,7 @@ export class ActieverzoekService {
     businessKey: BusinessKey,
   ): Observable<Actieverzoek> {
     if (this.actieverzoekCache.get(businessKey)) {
+      console.log(this.actieverzoekCache.get(businessKey));
       return of(this.actieverzoekCache.get(businessKey));
     }
     return this.actieverzoekClient.getActieverzoek(actieverzoekId).pipe(
@@ -32,6 +33,7 @@ export class ActieverzoekService {
         return mapActieverzoekResponseToActieverzoek(actieverzoekResponse);
       }),
       tap((actieverzoek: Actieverzoek) => {
+        console.log('actieverzoek', actieverzoek);
         this.actieverzoekCache.set(businessKey, actieverzoek);
       }),
     );

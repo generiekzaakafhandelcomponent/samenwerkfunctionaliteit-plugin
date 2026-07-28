@@ -13,11 +13,11 @@ export interface DocumentenOverzichtResponse {
   page: Page;
 }
 
-export interface Documenten {
+interface Documenten {
   documenten: DocumentenResponse[];
 }
 
-interface DocumentenResponse {
+export interface DocumentenResponse {
   documentId: string;
   bestandsNaam: string;
   kenmerkSysteem: string | null;
