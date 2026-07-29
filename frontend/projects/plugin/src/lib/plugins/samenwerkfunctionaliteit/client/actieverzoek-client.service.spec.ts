@@ -1,12 +1,20 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { ActieverzoekClientService } from './actieverzoek-client.service';
+import { ActieverzoekClient } from './actieverzoek-client.service';
 
 describe('ActieverzoekClientService', () => {
-  let service: ActieverzoekClientService;
+  let service: ActieverzoekClient;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ActieverzoekClientService);
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: HttpClient,
+          useValue: {},
+        },
+      ],
+    });
+    service = TestBed.inject(ActieverzoekClient);
   });
 
   it('should be created', () => {
