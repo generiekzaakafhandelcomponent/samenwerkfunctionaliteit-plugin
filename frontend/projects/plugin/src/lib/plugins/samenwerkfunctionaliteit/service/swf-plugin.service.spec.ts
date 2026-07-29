@@ -1,11 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { SwfPluginClient } from '../client/swf-plugin-client.service';
 import { SwfPluginService } from './swf-plugin.service';
 
 describe('SwfPluginService', () => {
   let service: SwfPluginService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [{ provide: SwfPluginClient, useValue: {} }],
+    });
     service = TestBed.inject(SwfPluginService);
   });
 

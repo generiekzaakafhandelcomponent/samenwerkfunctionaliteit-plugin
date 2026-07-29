@@ -1,13 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { ModalService } from 'carbon-components-angular';
 import { DocumentTableComponent } from './document-table.component';
 
-describe('DocumentListComponent', () => {
+describe('DocumentTableComponent', () => {
   let component: DocumentTableComponent;
   let fixture: ComponentFixture<DocumentTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DocumentTableComponent],
+      imports: [DocumentTableComponent, TranslateModule.forRoot()],
+      providers: [{ provide: ModalService, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DocumentTableComponent);
