@@ -1,18 +1,17 @@
 import { Component, inject, input, signal } from '@angular/core';
-import { ChatBericht } from '../../../../models/bericht.model';
-import { LayerModule } from 'carbon-components-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ChatBericht } from '../../../../models/bericht.model';
 
 @Component({
   selector: 'swf-bericht',
-  imports: [LayerModule],
+  imports: [],
   templateUrl: './bericht.component.html',
   styleUrl: './bericht.component.scss',
 })
 export class BerichtComponent {
   private readonly translateService: TranslateService =
     inject(TranslateService);
-  message = input<ChatBericht>();
+  message = input.required<ChatBericht>();
   isSender = signal(false);
   formattedDate: string = '';
 
