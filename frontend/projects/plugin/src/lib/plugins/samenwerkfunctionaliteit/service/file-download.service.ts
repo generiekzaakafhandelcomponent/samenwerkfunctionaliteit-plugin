@@ -11,7 +11,7 @@ export class FileDownloadService {
     try {
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = file.filename;
+      anchor.download = file.name;
       anchor.click();
     } finally {
       URL.revokeObjectURL(url);
