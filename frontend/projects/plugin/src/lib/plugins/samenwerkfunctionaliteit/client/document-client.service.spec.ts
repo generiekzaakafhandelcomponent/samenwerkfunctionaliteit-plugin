@@ -1,16 +1,18 @@
-import { TestBed } from "@angular/core/testing";
+import { HttpClient } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
+import { DocumentClient } from './document-client.service';
 
-import { DocumentClientService } from "./document-client.service";
-
-describe("DocumentClientService", () => {
-  let service: DocumentClientService;
+describe('DocumentClient', () => {
+  let service: DocumentClient;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DocumentClientService);
+    TestBed.configureTestingModule({
+      providers: [DocumentClient, { provide: HttpClient, useValue: {} }],
+    });
+    service = TestBed.inject(DocumentClient);
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

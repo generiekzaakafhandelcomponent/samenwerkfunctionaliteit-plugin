@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { SwfPluginClient } from './swf-plugin-client.service';
+import { ActieverzoekService } from './actieverzoek.service';
 
-describe('SwfPluginClient', () => {
-  let service: SwfPluginClient;
+describe('ActieverzoekService', () => {
+  let service: ActieverzoekService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SwfPluginClient, { provide: HttpClient, useValue: {} }],
+      providers: [{ provide: HttpClient, useValue: {} }],
     });
-    service = TestBed.inject(SwfPluginClient);
+    service = TestBed.inject(ActieverzoekService);
   });
 
   it('should be created', () => {

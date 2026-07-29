@@ -14,13 +14,13 @@ import { ActivatedRoute } from '@angular/router';
 import { NotificationModule } from 'carbon-components-angular';
 import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
-import { BusinessKey } from '../../models/business-key.model';
 import { Document } from '../../models/document.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { DocumentService } from '../../service/document.service';
 import { FileDownloadService } from '../../service/file-download.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
+import { toBusinessKey } from '../../types/business-key.type';
 import { toUUID } from '../../types/uuid.type';
 import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
@@ -85,12 +85,10 @@ export class DocumentListComponent implements OnInit {
   }
 
   private fetchDocumenten(documentId: string): void {
-    const valtimoBusinessKey: BusinessKey = {
-      value: documentId,
-    };
+    const businessKey = toBusinessKey(documentId);
 
     this.swfDocumentService
-      .getSamenwerkingProperties(valtimoBusinessKey)
+      .getSamenwerkingProperties(businessKey)
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties): void => {
