@@ -8,12 +8,18 @@ import {
   mapDocumentenResponseToModels,
 } from '../dto/document.dto';
 import { FileDownload } from '../interface/file-download.interface';
+import { UserNotification } from '../interface/user-notification.interface';
+import { UUID } from '../types/uuid.type';
+import { UserNotificationService } from './user-notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DocumentService {
   private readonly documentClient: DocumentClient = inject(DocumentClient);
+  private readonly notificationService: UserNotificationService = inject(
+    UserNotificationService,
+  );
 
   getDocumenten(samenwerkingId: string): Observable<DocumentInterface[]> {
     return this.documentClient.getDocumenten(samenwerkingId).pipe(
