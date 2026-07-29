@@ -2,10 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { DocumentClient } from '../client/document-client.service';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { DocumentInterface } from '../interface/document.interface';
+import { UUID } from '../types/uuid.type';
 import {
   DocumentenOverzichtResponse,
   mapDocumentenResponseToModels,
 } from '../dto/document.dto';
+import { FileDownload } from '../interface/file-download.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +29,9 @@ export class DocumentService {
         return throwError(() => error);
       }),
     );
+  }
+
+  downloadDocument(documentId: UUID): Observable<FileDownload> {
+    return this.documentClient.downloadDocument(documentId);
   }
 }

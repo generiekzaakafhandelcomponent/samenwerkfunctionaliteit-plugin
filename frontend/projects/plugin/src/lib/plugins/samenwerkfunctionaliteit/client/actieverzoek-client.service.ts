@@ -1,8 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ACTIEVERZOEKEN_URL } from '../config/swf-plugin-config';
 import { ActieverzoekResponse } from '../dto/actieverzoek.dto';
-import { ACTIEVERZOEKEN_URL } from '../config/samenwerking-config';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Samenwerking } from '../dto/samenwerking.dto';
 import { Observable } from 'rxjs';
-import { SAMENWERKINGEN_URL } from '../config/samenwerking-config';
+import { SAMENWERKINGEN_URL } from '../config/swf-plugin-config';
 
 @Injectable({
   providedIn: 'root',
