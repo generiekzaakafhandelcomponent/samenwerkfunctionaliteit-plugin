@@ -18,9 +18,9 @@ import { BusinessKey } from '../../models/business-key.model';
 import { Document } from '../../models/document.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { DocumentService } from '../../service/document.service';
-import { FileDownloadService } from '../../service/file-download.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
+import { ConfidentialityTypes } from '../../types/confidentiality.type';
 import { toUUID } from '../../types/uuid.type';
 import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
@@ -40,14 +40,11 @@ export class DocumentListComponent implements OnInit {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
   );
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
-
-  readonly route: ActivatedRoute = inject(ActivatedRoute);
-  private readonly downloader: FileDownloadService =
-    inject(FileDownloadService);
 
   isLightMode: InputSignal<boolean> = input<boolean>(false);
 
@@ -62,22 +59,32 @@ export class DocumentListComponent implements OnInit {
     this.fetchDocumenten(documentId);
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    this.documentService
+      .uploadDocument(file, 'SAM-66497', {
+        documentDescription: 'description',
+        numberWithinSystem: '',
+        systemId: '',
+        confidentialityType: ConfidentialityTypes.Confidential,
+        taal: 'Nederlands',
+      })
+      .pipe(take(1))
+      .subscribe();
+  }
+
   protected downloadDocument(documentId: string): void {
     const fileDownloadSubscription = this.documentService
       .downloadDocument(toUUID(documentId))
-      .pipe(
-        take(1),
-        tap((file) => this.downloader.download(file)),
-      )
-      .subscribe({
-        error: (error: HttpErrorResponse) => {
-          this.notificationService.showError({
-            actionDescriptionKey:
-              'samenwerkfunctionaliteit.userFeedback.message.failedToDownload',
-          });
-          throw error;
-        },
-      });
+      .pipe(take(1))
+      .subscribe();
 
     this.destroyRef.onDestroy(() => {
       fileDownloadSubscription.unsubscribe();
@@ -121,8 +128,8 @@ export class DocumentListComponent implements OnInit {
       .subscribe({
         error: (error: HttpErrorResponse) => {
           this.notificationService.showError({
-            actionDescriptionKey:
-              'samenwerkfunctionaliteit.userFeedback.message.failedToFetchDocuments',
+            titleKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.fetchDocumentFailureTitle',
           });
           throw error;
         },
