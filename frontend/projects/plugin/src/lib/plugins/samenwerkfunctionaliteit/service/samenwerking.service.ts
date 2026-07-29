@@ -1,13 +1,13 @@
-import {inject, Injectable} from "@angular/core";
-import {SamenwerkingClient} from "../client/samenwerking-client.service";
-import {Observable} from "rxjs";
-import {Samenwerking} from "../models/samenwerking.model";
+import { inject, Injectable } from '@angular/core';
+import { SamenwerkingClient } from '../client/samenwerking-client.service';
+import { Observable } from 'rxjs';
+import { Samenwerking } from '../models/samenwerking.model';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SamenwerkingService {
-  samenwerkingClient = inject(SamenwerkingClient);
+  private readonly samenwerkingClient = inject(SamenwerkingClient);
 
   getSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
     return this.samenwerkingClient.getSamenwerking(samenwerkingId).pipe();

@@ -19,9 +19,9 @@ import {
   ErrorNotification,
   SuccessNotification,
 } from '../../../config/bericht-notification-config';
-import { BusinessKey } from '../../../models/business-key.model';
 import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
 import { PluginTranslatePipeModule } from '@valtimo/plugin';
+import { toBusinessKey } from '../../../types/business-key.type';
 
 @Component({
   selector: 'stuur-bericht',
@@ -63,7 +63,7 @@ export class StuurBerichtComponent {
   ngOnInit() {
     this.iconService.registerAll([Send32]);
     const documentId = this.swfService.getParam(this.route, 'documentId');
-    this.retrieveActieverzoekId(documentId!);
+    this.retrieveActieverzoekId(documentId);
   }
 
   onClick() {
@@ -105,9 +105,9 @@ export class StuurBerichtComponent {
   }
 
   private retrieveActieverzoekId(documentId: string) {
-    const valtimoBusinessKey: BusinessKey = { value: documentId };
+    const businessKey = toBusinessKey(documentId);
     this.swfService
-      .getSamenwerkingProperties(valtimoBusinessKey)
+      .getSamenwerkingProperties(businessKey)
       .pipe(
         take(1),
         tap((props: SamenwerkingProperties) => {

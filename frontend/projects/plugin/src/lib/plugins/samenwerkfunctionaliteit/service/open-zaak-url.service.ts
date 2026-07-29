@@ -5,7 +5,7 @@ import { OpenZaakInfo } from '../interface/open-zaak-info.interface';
 import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
 import { OpenZaakService } from '@valtimo/resource';
 import { SamenwerkfunctionaliteitDocument } from '../interface/document-content.interface';
-import { BusinessKey } from '../models/business-key.model';
+import { BusinessKey } from '../types/business-key.type';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +16,17 @@ export class OpenZaakUrlService {
     ValtimoDocumentService,
   );
   openZaakService: OpenZaakService = inject(OpenZaakService);
-  private openZaakInfoCache: Map<string, OpenZaakInfo> = new Map<
-    string,
+  private openZaakInfoCache: Map<BusinessKey, OpenZaakInfo> = new Map<
+    BusinessKey,
     OpenZaakInfo
   >();
 
-  getOpenZaakInfo(valtimoBusinessKey: BusinessKey): Observable<OpenZaakInfo> {
-    if (this.openZaakInfoCache.get(valtimoBusinessKey.value)) {
-      return of(this.openZaakInfoCache.get(valtimoBusinessKey.value));
+  getOpenZaakInfo(businessKey: BusinessKey): Observable<OpenZaakInfo> {
+    if (this.openZaakInfoCache.get(businessKey)) {
+      return of(this.openZaakInfoCache.get(businessKey));
     }
     return forkJoin({
-      document: this.valtimoDocumentService.getDocument(
-        valtimoBusinessKey.value,
-      ),
+      document: this.valtimoDocumentService.getDocument(businessKey),
       zaakTypes: this.openZaakService.getZaakTypes(),
     }).pipe(
       map(({ document, zaakTypes }) => {
@@ -58,15 +56,15 @@ export class OpenZaakUrlService {
         };
       }),
       tap((openZaakInfo: OpenZaakInfo) => {
-        this.loadOpenZaakInfoIntoCache(valtimoBusinessKey, openZaakInfo);
+        this.loadOpenZaakInfoIntoCache(businessKey, openZaakInfo);
       }),
     );
   }
 
   private loadOpenZaakInfoIntoCache(
-    valtimoBusinessKey: BusinessKey,
+    businessKey: BusinessKey,
     openZaakInfo: OpenZaakInfo,
   ): void {
-    this.openZaakInfoCache.set(valtimoBusinessKey.value, openZaakInfo);
+    this.openZaakInfoCache.set(businessKey, openZaakInfo);
   }
 }

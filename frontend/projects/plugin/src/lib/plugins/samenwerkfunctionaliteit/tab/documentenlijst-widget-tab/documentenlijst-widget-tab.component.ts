@@ -10,9 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 import { InputModule } from 'carbon-components-angular';
 import { catchError, finalize, take, tap, throwError } from 'rxjs';
 import { DocumentListComponent } from '../../components/document-list/document-list.component';
-import { BusinessKey } from '../../models/business-key.model';
 import { OpenZaakUrlService } from '../../service/open-zaak-url.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
+import { toBusinessKey } from '../../types/business-key.type';
 
 @Component({
   templateUrl: `./documentenlijst-widget-tab.component.html`,
@@ -40,12 +40,10 @@ export class DocumentenlijstWidgetTabComponent implements OnInit {
   }
 
   private getOpenZaakInfoAndSetHelperText(documentId: string) {
-    const valtimoBusinessKey: BusinessKey = {
-      value: documentId,
-    };
+    const businessKey = toBusinessKey(documentId);
 
     this.openZaakUrlService
-      .getOpenZaakInfo(valtimoBusinessKey)
+      .getOpenZaakInfo(businessKey)
       .pipe(
         take(1),
         tap((openZaakInfo) => {

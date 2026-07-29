@@ -1,4 +1,11 @@
-import { Component, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ChatBericht } from '../../../../models/bericht.model';
 
@@ -11,16 +18,20 @@ import { ChatBericht } from '../../../../models/bericht.model';
 export class BerichtComponent {
   private readonly translateService: TranslateService =
     inject(TranslateService);
-  message = input.required<ChatBericht>();
-  isSender = signal(false);
+  message: InputSignal<ChatBericht> = input.required<ChatBericht>();
+  oinNumber: InputSignal<string> = input.required<string>();
+  isSentByCurrentParticipant: WritableSignal<boolean> = signal(false);
   formattedDate: string = '';
 
   ngOnInit() {
-    const random: number = Math.random() * 10;
-    if (random < 5) {
-      this.isSender.set(true);
-    }
+    this.setIsSentByCurrentParticipant();
     this.formattedDate = this.getFormattedDate(this.message().createdOn);
+  }
+
+  private setIsSentByCurrentParticipant(): void {
+    this.isSentByCurrentParticipant.set(
+      this.oinNumber() === this.message().sender,
+    );
   }
 
   private getFormattedDate(date: Date): string {
@@ -35,26 +46,24 @@ export class BerichtComponent {
     }
 
     if (diffMinutes < 60) {
-      return diffMinutes === 1
-        ? this.translateService.instant(
-            'samenwerkfunctionaliteit.messages.datetimestamp.minuteSingular',
-            {
-              minuteCount: diffMinutes,
-            },
-          )
-        : this.translateService.instant(
-            'samenwerkfunctionaliteit.messages.datetimestamp.minutePlural',
-            {
-              minuteCount: diffMinutes,
-            },
-          );
+      return this.translateService.instant(
+        diffMinutes === 1
+          ? 'samenwerkfunctionaliteit.messages.datetimestamp.minuteSingular'
+          : 'samenwerkfunctionaliteit.messages.datetimestamp.minutePlural',
+        {
+          minuteCount: diffMinutes,
+        },
+      );
     }
 
     if (date.getDate() === now.getDate()) {
       return (
         this.translateService.instant(
           'samenwerkfunctionaliteit.messages.datetimestamp.today',
-        ) + `, ${date.getHours()}:${date.getMinutes()}`
+        ) +
+        `, ${new Intl.DateTimeFormat(this.translateService.currentLang, {
+          timeStyle: 'short',
+        }).format(date)}`
       );
     }
 
