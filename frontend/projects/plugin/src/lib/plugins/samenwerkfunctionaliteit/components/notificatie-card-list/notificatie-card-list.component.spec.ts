@@ -1,25 +1,28 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ActivatedRoute, convertToParamMap } from "@angular/router";
-import { of } from "rxjs";
-import { NotificatieCardList } from "./notificatie-card-list.component";
-import { NotificatieService } from "../../service/notificatie.service";
-import { SwfDocumentService } from "../../service/swf-document.service";
-import { TranslateModule } from "@ngx-translate/core";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { NotificatieService } from '../../service/notificatie.service';
+import { SwfDocumentService } from '../../service/swf-document.service';
+import { NotificatieCardListComponent } from './notificatie-card-list.component';
 
-describe("NotificatieCardList", () => {
-  let component: NotificatieCardList;
-  let fixture: ComponentFixture<NotificatieCardList>;
+describe('NotificatieCardListComponent', () => {
+  let component: NotificatieCardListComponent;
+  let fixture: ComponentFixture<NotificatieCardListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NotificatieCardList, TranslateModule.forRoot()],
+      imports: [NotificatieCardListComponent, TranslateModule.forRoot()],
       providers: [
-        { provide: NotificatieService, useValue: { getNotificaties: () => of([]) } },
+        {
+          provide: NotificatieService,
+          useValue: { getNotificaties: () => of([]) },
+        },
         {
           provide: SwfDocumentService,
           useValue: {
             getParam: () => null,
-            getSamenwerkingProperties: () => of({ samenwerkingId: "test" }),
+            getSamenwerkingProperties: () => of({ samenwerkingId: 'test' }),
           },
         },
         {
@@ -29,12 +32,12 @@ describe("NotificatieCardList", () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NotificatieCardList);
+    fixture = TestBed.createComponent(NotificatieCardListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
