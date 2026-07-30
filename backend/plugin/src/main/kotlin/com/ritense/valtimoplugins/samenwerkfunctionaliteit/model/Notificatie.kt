@@ -34,7 +34,29 @@ data class Notificatie(
     val deelnemer: String? = null,
     val deelnemerNaam: String? = null,
     val eventDatumTijd: String? = null,
-    val properties: Map<String, String?>? = null,
+    val properties: Properties? = null,
     @get:JsonProperty("_links")@field:JsonProperty("_links")
     val links: Links? = null,
-)
+) {
+    data class Properties(
+        val actieverzoekId: String?,
+        val actieverzoekStatusNieuw: Actieverzoek.ActieverzoekStatus?,
+        val actieverzoekStatusOud: Actieverzoek.ActieverzoekStatus?,
+        val actieverzoekTitel: String?,
+        val berichtId: String?,
+        val beschrijvendeRechten: String?,
+        val deelnemer: String?,
+        val deelnemerNaam: String?,
+        val documentId: String?,
+        val documentNaam: String?,
+        val duurInactiviteit: String?,
+        val eventInitiatorNaam: String?,
+        val privilege: String?,
+        val rechten: String?,
+        val samenwerkingNaam: String?,
+        val sluitDatum: String?,
+        val toegangsNiveau: String?,
+        val verwijderDatum: String?,
+        val verzoeknummer: String?,
+    )
+}
