@@ -1,7 +1,7 @@
 {
     "key": "samenwerkfunctionaliteit",
     "name": "Samenwerkfunctionaliteit",
-    "versionTag": "0.1.0",
+    "versionTag": "0.1.1",
     "final": false,
     "canHaveAssignee": true,
     "autoAssignTasks": true
