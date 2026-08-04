@@ -48,7 +48,7 @@ class SamenwerkfunctionaliteitClientTest {
             )
         server.expect(
             ExpectedCount.once(),
-            requestTo(containsString("https://example.com/samenwerkingen/$samenwerkingId/documenten")),
+            requestTo(containsString("https://example.com/v5/samenwerkingen/$samenwerkingId/documenten")),
         ).andExpect(method(HttpMethod.GET))
         .andExpect(queryParam("aangemaaktDoor%5Bnot%5D", "user-id"))
         .andExpect(queryParam("aangemaaktDoorNaam", "Jan"))
@@ -95,7 +95,7 @@ class SamenwerkfunctionaliteitClientTest {
 
             server.expect(
                 ExpectedCount.once(),
-                requestTo(containsString("https://example.com/samenwerkingen/$samenwerkingId/documenten")),
+                requestTo(containsString("https://example.com/v5/samenwerkingen/$samenwerkingId/documenten")),
             ).andExpect(method(HttpMethod.GET))
             .andExpect(queryParam("_sort", "naam"))
             .andExpect(queryParam("aantal", "10"))
