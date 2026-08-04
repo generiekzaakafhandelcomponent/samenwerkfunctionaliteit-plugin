@@ -19,7 +19,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 
 class SamenwerkfunctionaliteitClientTest {
-
     val restClientBuilder = RestClient.builder()
     val server = MockRestServiceServer.bindTo(restClientBuilder).build()
     val client = DefaultSamenwerkfunctionaliteitClient(restClientBuilder)
@@ -34,7 +33,6 @@ class SamenwerkfunctionaliteitClientTest {
     @Test
     @DisplayName("Should call documenten endpoint with query parameters")
     fun ShouldCallEndpointWithQueryParams() {
-
         // Arrange
         val query =
             DocumentenOverzichtQuery(
@@ -46,27 +44,28 @@ class SamenwerkfunctionaliteitClientTest {
                 aantal = "10",
                 pagina = "1",
             )
-        server.expect(
-            ExpectedCount.once(),
-            requestTo(containsString("https://example.com/v5/samenwerkingen/$samenwerkingId/documenten")),
-        ).andExpect(method(HttpMethod.GET))
-        .andExpect(queryParam("aangemaaktDoor%5Bnot%5D", "user-id"))
-        .andExpect(queryParam("aangemaaktDoorNaam", "Jan"))
-        .andExpect(queryParam("_sort", "naam"))
-        .andExpect(queryParam("aantal", "10"))
-        .andExpect(queryParam("pagina", "1"))
-        .andRespond(
-            withSuccess(
-                """
-                {
-                    "_embedded": {
-                        "documenten": []
+        server
+            .expect(
+                ExpectedCount.once(),
+                requestTo(containsString("https://example.com/v5/samenwerkingen/$samenwerkingId/documenten")),
+            ).andExpect(method(HttpMethod.GET))
+            .andExpect(queryParam("aangemaaktDoor%5Bnot%5D", "user-id"))
+            .andExpect(queryParam("aangemaaktDoorNaam", "Jan"))
+            .andExpect(queryParam("_sort", "naam"))
+            .andExpect(queryParam("aantal", "10"))
+            .andExpect(queryParam("pagina", "1"))
+            .andRespond(
+                withSuccess(
+                    """
+                    {
+                        "_embedded": {
+                            "documenten": []
+                        }
                     }
-                }
-                """.trimIndent(),
-                MediaType.APPLICATION_JSON,
-            ),
-        )
+                    """.trimIndent(),
+                    MediaType.APPLICATION_JSON,
+                ),
+            )
         // Act
         client.getDocumentenOverzicht(
             properties,
@@ -80,7 +79,6 @@ class SamenwerkfunctionaliteitClientTest {
     @Test
     @DisplayName("Should not include blank or null filter query parameters")
     fun ShouldNotIncludeBlankOrNullQueryParams() {
-
         // Arrange
         val query =
             DocumentenOverzichtQuery(
@@ -93,7 +91,8 @@ class SamenwerkfunctionaliteitClientTest {
                 pagina = "1",
             )
 
-            server.expect(
+        server
+            .expect(
                 ExpectedCount.once(),
                 requestTo(containsString("https://example.com/v5/samenwerkingen/$samenwerkingId/documenten")),
             ).andExpect(method(HttpMethod.GET))
@@ -101,11 +100,10 @@ class SamenwerkfunctionaliteitClientTest {
             .andExpect(queryParam("aantal", "10"))
             .andExpect(queryParam("pagina", "1"))
             .andExpect { request ->
-                    val queryString = request.uri.query.orEmpty()
-                    assertFalse(queryString.contains("aangemaaktDoor"))
-                    assertFalse(queryString.contains("aangemaaktDoorNaam"))
-                }
-            .andRespond(
+                val queryString = request.uri.query.orEmpty()
+                assertFalse(queryString.contains("aangemaaktDoor"))
+                assertFalse(queryString.contains("aangemaaktDoorNaam"))
+            }.andRespond(
                 withSuccess(
                     """
                     {
@@ -127,6 +125,5 @@ class SamenwerkfunctionaliteitClientTest {
 
         // Assert
         server.verify()
-
     }
 }
