@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationModule } from 'carbon-components-angular';
-import { finalize, Observable, switchMap, take, tap } from 'rxjs';
+import { finalize, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
 import { Document } from '../../models/document.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
@@ -20,8 +20,9 @@ import { DocumentService } from '../../service/document.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
 
-import { toBusinessKey } from '../../types/business-key.type';
-import { ConfidentialityTypes } from '../../types/confidentiality.type';
+import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
+import { UploadWorkFlowService } from '../../service/upload-workflow.service';
+import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { toUUID } from '../../types/uuid.type';
 import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
@@ -46,6 +47,16 @@ export class DocumentListComponent implements OnInit {
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
   );
+private readonly valtimoDocumentService: ValtimoDocumentService = inject(
+    ValtimoDocumentService,
+  );
+  private readonly uploadWorkFlowService: UploadWorkFlowService = inject(
+    UploadWorkFlowService,
+  );
+
+  private businessKey?: BusinessKey;
+  private caseDefinitionKey?: string;
+  private caseDefinitionVersionTag?: string;
 
   isLightMode: InputSignal<boolean> = input<boolean>(false);
 
@@ -53,11 +64,14 @@ export class DocumentListComponent implements OnInit {
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
   ngOnInit(): void {
-    const documentId: string = this.swfDocumentService.getParam(
-      this.route,
-      'documentId',
+    this.businessKey = toBusinessKey(
+      this.swfDocumentService.getParam(this.route, 'documentId') ?? '',
     );
-    this.fetchDocumenten(documentId);
+
+    this.caseDefinitionKey =
+      this.swfDocumentService.getParam(this.route, 'caseDefinitionKey') ?? '';
+    );
+    this.fetchDocumenten(this.businessKey.toString());
   }
 
   onFileSelected(event: Event): void {
@@ -69,15 +83,30 @@ export class DocumentListComponent implements OnInit {
 
     const file = input.files[0];
 
-    this.documentService
-      .uploadDocument(file, 'SAM-66497', {
-        documentDescription: 'description',
-        numberWithinSystem: '',
-        systemId: '',
-        confidentialityType: ConfidentialityTypes.Confidential,
-        taal: 'Nederlands',
-      })
-      .pipe(take(1))
+    const businessKey = this.businessKey;
+    const caseDefinitionKey = this.caseDefinitionKey;
+
+    if (!businessKey || !caseDefinitionKey) {
+      return;
+    }
+
+    const versionTag$ = this.caseDefinitionVersionTag
+      ? of(this.caseDefinitionVersionTag)
+      : this.getCaseDefinitionVersionTag(businessKey);
+
+    versionTag$
+      .pipe(
+        switchMap((versionTag) =>
+          this.uploadWorkFlowService.startUpload({
+            file,
+            samenwerkingId: 'SAM-66497',
+            businessKey,
+            caseDefinitionKey,
+            caseDefinitionVersionTag: versionTag,
+          }),
+        ),
+        take(1),
+      )
       .subscribe();
   }
 
@@ -90,6 +119,26 @@ export class DocumentListComponent implements OnInit {
     this.destroyRef.onDestroy(() => {
       fileDownloadSubscription.unsubscribe();
     });
+  }
+
+  private getCaseDefinitionVersionTag(
+    businessKey: BusinessKey,
+  ): Observable<string> {
+    return this.valtimoDocumentService.getDocument(businessKey.toString()).pipe(
+      take(1),
+      map((document) => {
+        const versionTag =
+          document.definitionId?.blueprintId.blueprintVersionTag;
+
+        if (!versionTag) {
+          throw new Error(
+            `No version tag was found for ${document.definitionName}`,
+          );
+        }
+
+        return versionTag;
+      }),
+    );
   }
 
   private fetchDocumenten(documentId: string): void {

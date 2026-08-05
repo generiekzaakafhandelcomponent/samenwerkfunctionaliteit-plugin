@@ -42,25 +42,26 @@ export class DocumentService {
     );
   }
 
-  uploadDocument(
-    file: File,
-    samenwerkingId: string,
-    queryParams?: UploadDocumentQueryParams,
+  uploadDocumentToSWF(
+    context: UploadContext,
+    metadata?: UploadDocumentMetadata,
   ): Observable<void> {
+    console.log('Uploading to SWF');
+
     return this.documentClient
       .uploadDocument(context.file, context.samenwerkingId, metadata)
       .pipe(
         tap(() => {
           const notification: UserNotification = {
             titleKey:
-              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentSuccessTitle',
+              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWFSuccessTitle',
             messageKey:
-              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentSuccessMessage',
-            messageParam: { filename: file.name },
+              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWFSuccessMessage',
+            messageParam: { filename: context.file.name },
           };
 
-          if (file.name) {
-            notification.messageParam = { filename: file.name };
+          if (context.file.name) {
+            notification.messageParam = { filename: context.file.name };
           }
 
           this.notificationService.showSuccess(notification);
@@ -68,7 +69,7 @@ export class DocumentService {
         catchError((error: HttpErrorResponse) => {
           this.notificationService.showError({
             titleKey:
-              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentFailureTitle',
+              'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWFFailureTitle',
           });
 
           return throwError(() => error);
