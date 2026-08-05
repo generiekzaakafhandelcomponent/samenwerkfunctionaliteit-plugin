@@ -10,7 +10,7 @@ import {
   mapConfidentialityTypeToVertrouwelijkheidsaanduiding,
 } from '../dto/document.dto';
 import { FileDownload } from '../interface/file-download.interface';
-import { UploadDocumentQueryParams } from '../interface/upload-document-query-params.interface';
+import { UploadDocumentMetadata } from '../interface/upload-document-metadata.interface';
 import { UUID } from '../types/uuid.type';
 import { FileResponseUtil } from '../utils/file-response.util';
 
@@ -44,7 +44,7 @@ export class DocumentClient {
   uploadDocument(
     file: File,
     samenwerkingId: string,
-    queryParams?: UploadDocumentQueryParams,
+    queryParams?: UploadDocumentMetadata,
   ): Observable<void> {
     const formData: FormData = new FormData();
 

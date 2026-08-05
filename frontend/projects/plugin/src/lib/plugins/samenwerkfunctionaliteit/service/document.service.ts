@@ -8,7 +8,8 @@ import {
 } from '../dto/document.dto';
 import { DocumentInterface } from '../interface/document.interface';
 import { FileDownload } from '../interface/file-download.interface';
-import { UploadDocumentQueryParams } from '../interface/upload-document-query-params.interface';
+import { UploadContext } from '../interface/upload-context.interface';
+import { UploadDocumentMetadata } from '../interface/upload-document-metadata.interface';
 import { UserNotification } from '../interface/user-notification.interface';
 import { UUID } from '../types/uuid.type';
 import { FileDownloadService } from './file-download.service';
@@ -47,7 +48,7 @@ export class DocumentService {
     queryParams?: UploadDocumentQueryParams,
   ): Observable<void> {
     return this.documentClient
-      .uploadDocument(file, samenwerkingId, queryParams)
+      .uploadDocument(context.file, context.samenwerkingId, metadata)
       .pipe(
         tap(() => {
           const notification: UserNotification = {
