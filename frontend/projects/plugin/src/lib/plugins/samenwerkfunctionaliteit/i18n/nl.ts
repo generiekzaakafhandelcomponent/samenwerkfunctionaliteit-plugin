@@ -27,9 +27,15 @@ export const pluginNlTranslations = {
         fetchDocumentFailureTitle:
           'Er ging iets mis tijdens het ophalen van de lijst van documenten',
 
-        uploadDocumentSuccessTitle: 'Uploaden gelukt',
-        uploadDocumentSuccessMessage: '{{ filename }} is succesvol geüpload',
-        uploadDocumentFailureTitle: 'Uploaden mislukt',
+        uploadDocumentToSWFSuccessTitle:
+          'Uploaden naar de Samenwerkfunctionaliteit gelukt',
+        uploadDocumentToSWFSuccessMessage:
+          '{{ filename }} is succesvol aan de samenwerking toegevoegd',
+        uploadDocumentToSWFFailureTitle:
+          'Uploaden naar de samenwerking mislukt',
+
+        uploadDocumentToDocumentenAPIFailureTitle:
+          'Uploaden van archiveringskopie naar Documenten-API mislukt',
       },
     },
     messages: {
