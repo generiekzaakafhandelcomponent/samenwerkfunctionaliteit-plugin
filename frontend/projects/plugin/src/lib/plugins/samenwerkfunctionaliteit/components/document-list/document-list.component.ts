@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   input,
   InputSignal,
@@ -8,17 +10,19 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { DocumentTableComponent } from './document-table/document-table.component';
-import { DocumentService } from '../../service/document.service';
-import { SwfDocumentService } from '../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
-import { Document } from '../../models/document.model';
-import { BusinessKey } from '../../models/business-key.model';
-import { finalize, Observable, switchMap, take, tap } from 'rxjs';
-import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { NotificationModule } from 'carbon-components-angular';
-import { TranslatePipe } from '@ngx-translate/core';
+import { finalize, Observable, switchMap, take, tap } from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
+import { Document } from '../../models/document.model';
+import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
+import { DocumentService } from '../../service/document.service';
+import { FileDownloadService } from '../../service/file-download.service';
+import { SwfDocumentService } from '../../service/swf-document.service';
+import { UserNotificationService } from '../../service/user-notification.service';
+import { toBusinessKey } from '../../types/business-key.type';
+import { toUUID } from '../../types/uuid.type';
+import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
 
 @Component({
@@ -27,10 +31,8 @@ import { DocumentTableLightComponent } from './document-table/light/document-tab
   imports: [
     DocumentTableComponent,
     NotificationModule,
-    TranslatePipe,
     DocumentTableLightComponent,
   ],
-  standalone: true,
   styleUrl: './document-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -38,14 +40,19 @@ export class DocumentListComponent implements OnInit {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  private readonly notificationService: UserNotificationService = inject(
+    UserNotificationService,
+  );
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
   readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly downloader: FileDownloadService =
+    inject(FileDownloadService);
 
   isLightMode: InputSignal<boolean> = input<boolean>(false);
 
   documents: WritableSignal<Document[]> = signal<Document[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
-  hasError: WritableSignal<boolean> = signal<boolean>(false);
-  errorMessage: WritableSignal<string> = signal<string>('');
 
   ngOnInit(): void {
     const documentId: string = this.swfDocumentService.getParam(
@@ -55,13 +62,33 @@ export class DocumentListComponent implements OnInit {
     this.fetchDocumenten(documentId);
   }
 
+  protected downloadDocument(id: string): void {
+    const fileDownloadSubscription = this.documentService
+      .downloadDocument(toUUID(id))
+      .pipe(
+        take(1),
+        tap((file) => this.downloader.download(file)),
+      )
+      .subscribe({
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.showError({
+            actionDescriptionKey:
+              'samenwerkfunctionaliteit.userFeedback.message.failedToDownload',
+          });
+          throw error;
+        },
+      });
+
+    this.destroyRef.onDestroy(() => {
+      fileDownloadSubscription.unsubscribe();
+    });
+  }
+
   private fetchDocumenten(documentId: string): void {
-    const valtimoBusinessKey: BusinessKey = {
-      value: documentId,
-    };
+    const businessKey = toBusinessKey(documentId);
 
     this.swfDocumentService
-      .getSamenwerkingProperties(valtimoBusinessKey)
+      .getSamenwerkingProperties(businessKey)
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties): void => {
@@ -90,12 +117,12 @@ export class DocumentListComponent implements OnInit {
         }),
       )
       .subscribe({
-        next: () => {
-          this.hasError.set(false);
-        },
-        error: (error: Error) => {
-          this.hasError.set(true);
-          this.errorMessage.set(error.message);
+        error: (error: HttpErrorResponse) => {
+          this.notificationService.showError({
+            actionDescriptionKey:
+              'samenwerkfunctionaliteit.userFeedback.message.failedToFetchDocuments',
+          });
+          throw error;
         },
       });
   }

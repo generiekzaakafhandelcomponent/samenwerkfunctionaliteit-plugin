@@ -1,17 +1,17 @@
 {
-    "name": "@valtimo-plugins/samenwerkfunctionaliteit-plugin",
-    "license": "EUPL-1.2",
-  "version": "0.1.0",
-    "scripts": {
-        "build": "ng build @valtimo-plugins/samenwerkfunctionaliteit-plugin",
-        "watch": "ng build @valtimo-plugins/samenwerkfunctionaliteit-plugin --watch"
-    },
-    "peerDependencies": {
-        "@angular/common": "19.2.20",
-        "@angular/core": "19.2.20"
-    },
-    "dependencies": {
-        "@angular/forms": "19.2.20",
-        "tslib": "2.8.1"
-    }
+  "name": "@valtimo-plugins/samenwerkfunctionaliteit-plugin",
+  "license": "EUPL-1.2",
+  "version": "0.1.1",
+  "scripts": {
+    "build": "ng build @valtimo-plugins/samenwerkfunctionaliteit-plugin",
+    "watch": "ng build @valtimo-plugins/samenwerkfunctionaliteit-plugin --watch"
+  },
+  "peerDependencies": {
+    "@angular/common": "19.2.20",
+    "@angular/core": "19.2.20"
+  },
+  "dependencies": {
+    "@angular/forms": "19.2.20",
+    "tslib": "2.8.1"
+  }
 }

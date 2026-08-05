@@ -1,0 +1,8 @@
+<div [class.sent]="isSentByCurrentParticipant()" class="message-bubble-container">
+  <div class="message-bubble">
+    <div class="message-content">
+      <p class="message-text">{{ message().content }}</p>
+      <p class="message-timestamp">{{ formattedDate }}</p>
+    </div>
+  </div>
+</div>

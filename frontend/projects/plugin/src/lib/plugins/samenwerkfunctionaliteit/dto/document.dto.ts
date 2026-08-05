@@ -17,7 +17,7 @@ interface Documenten {
   documenten: DocumentenResponse[];
 }
 
-interface DocumentenResponse {
+export interface DocumentenResponse {
   documentId: string;
   bestandsNaam: string;
   kenmerkSysteem: string | null;
@@ -37,7 +37,7 @@ interface DocumentenResponse {
   links: Links | null;
 }
 
-function mapDocumentenResponseToModel(
+export function mapDocumentenResponseToModel(
   documentenResponse: DocumentenResponse,
 ): DocumentInterface {
   return new Document(

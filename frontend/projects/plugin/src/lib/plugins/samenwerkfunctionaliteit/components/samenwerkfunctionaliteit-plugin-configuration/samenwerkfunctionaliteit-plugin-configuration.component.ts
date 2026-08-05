@@ -5,25 +5,25 @@ import {
   OnDestroy,
   OnInit,
   Output,
-} from "@angular/core";
+} from '@angular/core';
 import {
   PluginConfigurationComponent,
   PluginConfigurationData,
   PluginTranslatePipeModule,
-} from "@valtimo/plugin";
+} from '@valtimo/plugin';
 import {
   BehaviorSubject,
   combineLatest,
   Observable,
   Subscription,
   take,
-} from "rxjs";
-import { Config } from "../../models";
-import { FormModule, InputModule } from "@valtimo/components";
-import { AsyncPipe, NgIf } from "@angular/common";
+} from 'rxjs';
+import { Config } from '../../models';
+import { FormModule, InputModule } from '@valtimo/components';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
-  selector: "samenwerkfunctionaliteit-plugin-configuration",
+  selector: 'samenwerkfunctionaliteit-plugin-configuration',
   imports: [
     FormModule,
     InputModule,
@@ -31,7 +31,7 @@ import { AsyncPipe, NgIf } from "@angular/common";
     NgIf,
     AsyncPipe,
   ],
-  templateUrl: "./samenwerkfunctionaliteit-plugin-configuration.component.html",
+  templateUrl: './samenwerkfunctionaliteit-plugin-configuration.component.html',
 })
 export class SamenwerkfunctionaliteitPluginConfigurationComponent
   implements PluginConfigurationComponent, OnInit, OnDestroy
