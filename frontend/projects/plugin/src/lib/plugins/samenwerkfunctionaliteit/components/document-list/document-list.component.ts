@@ -19,7 +19,6 @@ import { SamenwerkingProperties } from '../../models/samenwerking-properties.mod
 import { DocumentService } from '../../service/document.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
-
 import { toBusinessKey } from '../../types/business-key.type';
 import { ConfidentialityTypes } from '../../types/confidentiality.type';
 import { toUUID } from '../../types/uuid.type';
