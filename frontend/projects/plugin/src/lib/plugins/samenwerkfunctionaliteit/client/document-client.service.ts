@@ -69,8 +69,8 @@ export class DocumentClient {
         ),
       );
     }
-    if (queryParams?.taal != null) {
-      params.set('taal', queryParams.taal);
+    if (queryParams?.language != null) {
+      params.set('taal', queryParams.language);
     }
 
     return this.http.post<void>(
