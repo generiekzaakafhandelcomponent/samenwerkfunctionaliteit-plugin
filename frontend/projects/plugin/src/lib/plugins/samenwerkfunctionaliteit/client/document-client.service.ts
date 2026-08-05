@@ -50,6 +50,18 @@ export class DocumentClient {
 
     formData.append('file', file);
 
+    const params = this.convertQueryParamsToHttpParams(queryParams ?? {});
+
+    return this.http.post<void>(
+      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
+      formData,
+      { params },
+    );
+  }
+
+  private convertQueryParamsToHttpParams(
+    queryParams: UploadDocumentQueryParams,
+  ): HttpParams {
     let params = new HttpParams();
 
     if (queryParams?.documentDescription != null) {
@@ -73,10 +85,6 @@ export class DocumentClient {
       params.set('taal', queryParams.taal);
     }
 
-    return this.http.post<void>(
-      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
-      formData,
-      { params },
-    );
+    return params;
   }
 }
