@@ -21,11 +21,25 @@
         "samenwerkingProperties": {
             "type": "object",
             "properties": {
+                "samenwerkingId": {
+                    "type": "string"
+                },
                 "actieverzoekId": {
                     "type": "string"
                 },
-                "samenwerkingId": {
-                    "type": "string"
+                "actieverzoekDetails": {
+                    "type": "object",
+                    "properties": {
+                        "deelnemer": {
+                            "type": "string"
+                        },
+                        "eventDatumTijd": {
+                            "type": "string"
+                        },
+                        "eventInitiator": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         },
