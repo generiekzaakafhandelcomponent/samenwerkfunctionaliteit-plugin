@@ -100,7 +100,7 @@ export class BerichtenCustomTabComponent implements OnInit {
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties) => {
-          if (!samenwerkingProperties.actieverzoekId) {
+          if (!samenwerkingProperties.actieverzoekDetails.actieverzoekId) {
             throw Error('Dossier heeft geen actieverzoekId');
           }
           this.samenwerkingProperties = samenwerkingProperties;
@@ -142,7 +142,7 @@ export class BerichtenCustomTabComponent implements OnInit {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
       actieverzoek: this.actieverzoekService.getActieverzoek(
-        samenwerkingProperties.actieverzoekId,
+        samenwerkingProperties.actieverzoekDetails.actieverzoekId,
         businessKey,
       ),
     }).pipe(
@@ -166,7 +166,7 @@ export class BerichtenCustomTabComponent implements OnInit {
     samenwerkingProperties: SamenwerkingProperties,
   ): Observable<ChatBericht[]> {
     return this.berichtenService
-      .getBerichten(samenwerkingProperties.actieverzoekId)
+      .getBerichten(samenwerkingProperties.actieverzoekDetails.actieverzoekId)
       .pipe(
         take(1),
         map((messages: Bericht[]) => {

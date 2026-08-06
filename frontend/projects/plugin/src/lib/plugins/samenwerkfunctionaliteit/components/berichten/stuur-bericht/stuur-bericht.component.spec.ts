@@ -15,7 +15,12 @@ import { StuurBerichtComponent } from './stuur-bericht.component';
 
 const mockSamenwerkingProperties: Observable<SamenwerkingProperties> = of({
   samenwerkingId: 'SAM-12345',
-  actieverzoekId: 'a5bb80ec-baf5-4eb6-b20c-de94a269a09a',
+  actieverzoekDetails: {
+    actieverzoekId: 'a5bb80ec-baf5-4eb6-b20c-de94a269a09a',
+    deelnemer: '',
+    eventDatumTijd: '',
+    eventInitiator: '',
+  },
 });
 
 describe('StuurBerichtComponent', () => {
