@@ -24,12 +24,12 @@
                 "samenwerkingId": {
                     "type": "string"
                 },
-                "actieverzoekId": {
-                    "type": "string"
-                },
                 "actieverzoekDetails": {
                     "type": "object",
                     "properties": {
+                        "actieverzoekId": {
+                            "type": "string"
+                        },
                         "deelnemer": {
                             "type": "string"
                         },
