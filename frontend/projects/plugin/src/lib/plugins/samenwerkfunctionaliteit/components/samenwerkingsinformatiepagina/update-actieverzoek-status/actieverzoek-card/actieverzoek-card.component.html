@@ -3,28 +3,29 @@
 
   <div class="card-body">
     <div class="row">
-      <div class="label">Status</div>
+      <cds-label>Status</cds-label>
       <div class="value">{{ actieverzoek().status }}</div>
     </div>
 
 
     <div class="row">
-      <div class="label">Datum</div>
+      <cds-label>Datum</cds-label>
       <div class="value">{{ actieverzoek().createdOn | date }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Verzonden door</div>
+      <cds-label>Verzonden door</cds-label>
+
       <div class="value">{{ actieverzoek().senderName }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Productcode</div>
+      <cds-label>Productcode</cds-label>
       <div class="value">{{ actieverzoek().productId }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Omschrijving</div>
+      <cds-label>Omschrijving</cds-label>
       <div class="value description">{{ actieverzoek().description }}</div>
     </div>
   </div>
