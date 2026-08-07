@@ -19,6 +19,10 @@ import { BusinessKey, toBusinessKey } from '../../../types/business-key.type';
 import { UpdateActieverzoekStatusComponent } from '../update-actieverzoek-status/update-actieverzoek-status.component';
 import { Actieverzoek } from '../../../models/actieverzoek.model';
 import { ActieverzoekService } from '../../../service/actieverzoek.service';
+import {
+  ActieverzoekStatusType,
+  ActieverzoekStatusTypes,
+} from '../../../types/actieverzoek-status.type';
 
 @Component({
   selector: 'swf-informatie-pagina',
@@ -42,6 +46,8 @@ export class SwfInformatiePaginaComponent implements OnInit {
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   actieverzoek: WritableSignal<Actieverzoek> = signal(null);
+  actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> =
+    signal(null);
   isLoading: WritableSignal<boolean> = signal(true);
 
   hasError: WritableSignal<boolean> = signal(false);
@@ -55,6 +61,19 @@ export class SwfInformatiePaginaComponent implements OnInit {
     const businessKey = toBusinessKey(documentId);
 
     this.fetchAndLoadSamenwerking(businessKey);
+  }
+
+  private buildActieverzoekStatusList() {
+    this.actieverzoekStatusTypes.update((): ActieverzoekStatusType[] => {
+      return [
+        ActieverzoekStatusTypes.OPEN,
+        ActieverzoekStatusTypes.IN_PROGRESS,
+        ActieverzoekStatusTypes.REJECTED,
+        ActieverzoekStatusTypes.WITHDRAWN,
+        ActieverzoekStatusTypes.REPORTED_READY,
+        ActieverzoekStatusTypes.READY,
+      ];
+    });
   }
 
   private fetchAndLoadSamenwerking(businessKey: BusinessKey): void {
@@ -89,6 +108,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
         next: ({ samenwerking, actieverzoek }) => {
           this.samenwerking.update(() => samenwerking);
           this.actieverzoek.update(() => actieverzoek);
+          this.buildActieverzoekStatusList();
         },
         error: (error: Error) => {
           this.hasError.set(true);

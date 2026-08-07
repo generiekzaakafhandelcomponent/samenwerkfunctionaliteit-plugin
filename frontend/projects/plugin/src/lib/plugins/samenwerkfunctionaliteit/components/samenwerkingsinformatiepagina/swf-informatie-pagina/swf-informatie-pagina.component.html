@@ -12,22 +12,19 @@
   </div>
 }
 
-@if (!hasError()) {
+@if (!hasError() && !isLoading()) {
   <div class="sections-container">
     <section class="samenwerking-section">
-      @if (!isLoading()) {
-        <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
-        <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
-      }
+      <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
+      <samenwerking [samenwerking]="this.samenwerking()"></samenwerking>
+    </section>
+    <section class="samenwerking-section">
+      <update-actieverzoek-status [actieverzoek]="actieverzoek()"
+                                  [actieverzoekStatusTypes]="actieverzoekStatusTypes()"></update-actieverzoek-status>
     </section>
     <section class="samenwerking-section">
       <document-list [isLightMode]="true"></document-list>
     </section>
-    @if (!isLoading()) {
-      <section class="samenwerking-section">
-        <update-actieverzoek-status [actieverzoek]="actieverzoek()"></update-actieverzoek-status>
-      </section>
-    }
   </div>
 } @else {
   <p>{{ this.errorMessage() }}</p>
