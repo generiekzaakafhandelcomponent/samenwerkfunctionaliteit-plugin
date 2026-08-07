@@ -23,6 +23,7 @@ import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypes,
 } from '../../../types/actieverzoek-status.type';
+import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
 
 @Component({
   selector: 'swf-informatie-pagina',
@@ -81,13 +82,13 @@ export class SwfInformatiePaginaComponent implements OnInit {
       .getSamenwerkingProperties(businessKey)
       .pipe(
         take(1),
-        switchMap((samenwerkingProps) => {
+        switchMap((samenwerkingProps: SamenwerkingProperties) => {
           return forkJoin({
             samenwerking: this.fetchSamenwerking(
               samenwerkingProps.samenwerkingId,
             ),
             actieverzoek: this.fetchActieverzoek(
-              samenwerkingProps.actieverzoekId,
+              samenwerkingProps.actieverzoekDetails.actieverzoekId,
               businessKey,
             ),
           });
