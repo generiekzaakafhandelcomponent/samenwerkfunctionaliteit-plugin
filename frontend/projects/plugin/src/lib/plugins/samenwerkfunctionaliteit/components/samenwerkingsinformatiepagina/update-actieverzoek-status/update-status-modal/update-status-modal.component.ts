@@ -1,5 +1,15 @@
-import { Component, input, InputSignal } from '@angular/core';
-import { Actieverzoek } from '../../../../models/actieverzoek.model';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import {
+  Actieverzoek,
+  ActieverzoekUpdateData,
+} from '../../../../models/actieverzoek.model';
 import { FormsModule } from '@angular/forms';
 import {
   ButtonModule,
@@ -7,6 +17,12 @@ import {
   InputModule,
   ListItem,
 } from 'carbon-components-angular';
+import { ActieverzoekService } from '../../../../service/actieverzoek.service';
+import {
+  ActieverzoekStatusType,
+  ActieverzoekStatusTypes,
+} from '../../../../types/actieverzoek-status.type';
+import { finalize, take } from 'rxjs';
 
 @Component({
   selector: 'update-status-modal',
@@ -15,16 +31,64 @@ import {
   styleUrl: './update-status-modal.component.scss',
 })
 export class UpdateStatusModalComponent {
+  private readonly actieverzoekService: ActieverzoekService =
+    inject(ActieverzoekService);
   actieverzoek: InputSignal<Actieverzoek> = input.required<Actieverzoek>();
   statusTypeDropdownListItems: InputSignal<ListItem[]> =
     input.required<ListItem[]>();
+  hasError: WritableSignal<boolean> = signal<boolean>(false);
+  errorMessage: WritableSignal<string> = signal<string>('');
+  isSuccess: WritableSignal<boolean> = signal<boolean>(false);
+  isSending: WritableSignal<boolean> = signal<boolean>(false);
+
   updateStatus: ListItem = {
     content: '',
     selected: false,
   };
-  explanation: string = '';
+  explanation: string = ''; //TODO waar is dit voor?
 
-  onUpdateStatus(): void {
-    console.log(this.updateStatus);
+  protected onSubmit() {
+    if (!this.updateStatus.content) {
+      return;
+    }
+
+    const actieverzoekUpdateData: ActieverzoekUpdateData = {
+      notice: this.actieverzoek().notice,
+      description: this.actieverzoek().description,
+      productId: this.actieverzoek().productId,
+      status: this.mapUpdateStatusToActieverzoekStatusType(
+        this.updateStatus.content,
+      ),
+      title: this.actieverzoek().title,
+    };
+
+    this.isSending.set(true);
+
+    this.actieverzoekService
+      .updateActieverzoekStatus(
+        this.actieverzoek().actieverzoekId,
+        actieverzoekUpdateData,
+      )
+      .pipe(
+        take(1),
+        finalize(() => {
+          this.isSending.set(false);
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.isSuccess.set(true);
+        },
+        error: (error: Error) => {
+          this.hasError.set(true);
+          this.errorMessage.set(error.message);
+        },
+      });
+  }
+
+  private mapUpdateStatusToActieverzoekStatusType(
+    status: string,
+  ): ActieverzoekStatusType {
+    return ActieverzoekStatusTypes[status];
   }
 }

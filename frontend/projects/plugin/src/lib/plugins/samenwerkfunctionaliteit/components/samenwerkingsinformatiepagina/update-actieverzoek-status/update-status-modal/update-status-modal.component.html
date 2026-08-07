@@ -4,7 +4,6 @@
       <cds-label>Wijzig actieverzoek status</cds-label>
       <cds-dropdown
         [(ngModel)]="updateStatus"
-        (selected)="onUpdateStatus()"
       >
         <cds-dropdown-list
           [items]="statusTypeDropdownListItems()"
@@ -20,13 +19,19 @@
         id="explanation"
         [(ngModel)]="explanation"
         rows="5"
+        [invalid]="hasError()"
       ></textarea>
+      @if (hasError()) {
+        <p>{{ errorMessage() }}</p>
+      }
     </div>
 
     <div class="cds-actions">
       <button
         cdsButton
         type="button"
+        (click)="onSubmit()"
+        [disabled]="isSending()"
       >
         Bevestigen
       </button>
