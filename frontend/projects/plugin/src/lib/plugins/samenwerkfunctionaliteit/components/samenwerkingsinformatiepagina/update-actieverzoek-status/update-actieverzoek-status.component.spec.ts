@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UpdateActieverzoekStatusComponent } from './update-actieverzoek-status.component';
 
 describe('UpdateActieverzoekStatusComponent', () => {
@@ -8,9 +7,8 @@ describe('UpdateActieverzoekStatusComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UpdateActieverzoekStatusComponent]
-    })
-    .compileComponents();
+      imports: [UpdateActieverzoekStatusComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UpdateActieverzoekStatusComponent);
     component = fixture.componentInstance;
