@@ -81,14 +81,10 @@ export class DocumentListComponent implements OnInit {
   }
 
   protected downloadDocument(documentId: string): void {
-    const fileDownloadSubscription = this.documentService
+    this.documentService
       .downloadDocument(toUUID(documentId))
       .pipe(take(1))
       .subscribe();
-
-    this.destroyRef.onDestroy(() => {
-      fileDownloadSubscription.unsubscribe();
-    });
   }
 
   private fetchDocumenten(documentId: string): void {
