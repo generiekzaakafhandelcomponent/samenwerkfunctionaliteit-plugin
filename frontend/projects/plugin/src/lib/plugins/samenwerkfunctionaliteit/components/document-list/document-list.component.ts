@@ -74,7 +74,7 @@ export class DocumentListComponent implements OnInit {
         numberWithinSystem: '',
         systemId: '',
         confidentialityType: ConfidentialityTypes.Confidential,
-        taal: 'Nederlands',
+        language: 'Nederlands',
       })
       .pipe(take(1))
       .subscribe();
