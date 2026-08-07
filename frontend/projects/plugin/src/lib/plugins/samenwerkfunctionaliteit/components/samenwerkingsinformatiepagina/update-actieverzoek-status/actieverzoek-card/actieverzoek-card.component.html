@@ -1,7 +1,5 @@
 <div class="card">
-  <div class="card-header">
-    <h3 class="title">{{ 'Actieverzoek: ' + actieverzoek().title }}</h3>
-  </div>
+  <h4 class="card-header__header-title">{{ 'Actieverzoek: ' + actieverzoek().title }}</h4>
 
   <div class="card-body">
     <div class="row">
@@ -11,22 +9,22 @@
 
 
     <div class="row">
-      <div class="label">Date</div>
+      <div class="label">Datum</div>
       <div class="value">{{ actieverzoek().createdOn | date }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Sent by</div>
+      <div class="label">Verzonden door</div>
       <div class="value">{{ actieverzoek().senderName }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Product code</div>
+      <div class="label">Productcode</div>
       <div class="value">{{ actieverzoek().productId }}</div>
     </div>
 
     <div class="row">
-      <div class="label">Description</div>
+      <div class="label">Omschrijving</div>
       <div class="value description">{{ actieverzoek().description }}</div>
     </div>
   </div>
