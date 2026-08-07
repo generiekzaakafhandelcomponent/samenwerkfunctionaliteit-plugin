@@ -47,8 +47,9 @@ export class SwfInformatiePaginaComponent implements OnInit {
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   actieverzoek: WritableSignal<Actieverzoek> = signal(null);
-  actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> =
-    signal(null);
+  actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> = signal(
+    [],
+  );
   isLoading: WritableSignal<boolean> = signal(true);
 
   hasError: WritableSignal<boolean> = signal(false);
