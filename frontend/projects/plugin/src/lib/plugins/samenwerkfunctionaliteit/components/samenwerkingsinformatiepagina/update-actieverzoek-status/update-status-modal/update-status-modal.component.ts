@@ -45,10 +45,10 @@ export class UpdateStatusModalComponent {
     content: '',
     selected: false,
   };
-  explanation: string = ''; //TODO waar is dit voor?
+  explanation: string = ''; //TODO waar is dit voor? Voor nu als melding/notice geplaatst
 
   protected onSubmit() {
-    if (!this.updateStatus.content) {
+    if (!this.updateStatus.content && !this.explanation) {
       return;
     }
     const actieverzoekUpdateData: ActieverzoekUpdateData =
@@ -60,7 +60,7 @@ export class UpdateStatusModalComponent {
     actieverzoek: Actieverzoek,
   ): ActieverzoekUpdateData {
     return {
-      notice: actieverzoek.notice,
+      notice: this.explanation,
       description: actieverzoek.description,
       productId: actieverzoek.productId,
       status: this.mapUpdateStatusToActieverzoekStatusType(
