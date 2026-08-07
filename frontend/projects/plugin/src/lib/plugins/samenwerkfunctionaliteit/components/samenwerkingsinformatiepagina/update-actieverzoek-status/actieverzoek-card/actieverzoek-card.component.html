@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="title">{{ actieverzoek().title }}</h3>
+    <span class="status">
+    {{ actieverzoek().status }}
+    </span>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="label">Date</div>
+      <div class="value">{{ actieverzoek().createdOn | date }}</div>
+    </div>
+
+    <div class="row">
+      <div class="label">Sent by</div>
+      <div class="value">{{ actieverzoek().senderName }}</div>
+    </div>
+
+    <div class="row">
+      <div class="label">Product code</div>
+      <div class="value">{{ actieverzoek().productId }}</div>
+    </div>
+
+    <div class="row">
+      <div class="label">Description</div>
+      <div class="value description">{{ actieverzoek().description }}</div>
+    </div>
+  </div>
+</div>
