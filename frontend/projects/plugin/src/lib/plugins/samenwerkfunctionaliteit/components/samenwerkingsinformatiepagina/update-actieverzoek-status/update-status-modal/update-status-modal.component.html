@@ -1,0 +1,39 @@
+<div class="cds-panel">
+  <div class="cds-panel__content">
+
+    <div class="cds-form">
+      <div class="cds-field">
+        <cds-label>Wijzig actieverzoek status</cds-label>
+        <cds-dropdown
+          [(ngModel)]="updateStatus"
+          (selected)="onUpdateStatus()"
+        >
+          <cds-dropdown-list
+            [items]="statusTypeDropdownListItems()"
+          ></cds-dropdown-list>
+        </cds-dropdown>
+
+      </div>
+
+      <div class="cds-field">
+        <cds-label>Toelichting</cds-label>
+        <textarea
+          id="explanation"
+          class="cds-textarea"
+          [(ngModel)]="explanation"
+          rows="5"
+          placeholder="Toelichting"
+        ></textarea>
+      </div>
+
+      <div class="cds-actions">
+        <button
+          type="button"
+          class="cds-button cds-button--primary"
+        >
+          Bevestigen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
