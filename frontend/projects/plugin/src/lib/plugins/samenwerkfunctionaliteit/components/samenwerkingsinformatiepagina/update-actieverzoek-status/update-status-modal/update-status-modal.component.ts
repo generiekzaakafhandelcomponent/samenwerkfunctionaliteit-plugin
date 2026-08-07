@@ -51,17 +51,28 @@ export class UpdateStatusModalComponent {
     if (!this.updateStatus.content) {
       return;
     }
+    const actieverzoekUpdateData: ActieverzoekUpdateData =
+      this.createActieverzoekUpdateDataFrom(this.actieverzoek());
+    this.updateActieverzoekStatus(actieverzoekUpdateData);
+  }
 
-    const actieverzoekUpdateData: ActieverzoekUpdateData = {
-      notice: this.actieverzoek().notice,
-      description: this.actieverzoek().description,
-      productId: this.actieverzoek().productId,
+  private createActieverzoekUpdateDataFrom(
+    actieverzoek: Actieverzoek,
+  ): ActieverzoekUpdateData {
+    return {
+      notice: actieverzoek.notice,
+      description: actieverzoek.description,
+      productId: actieverzoek.productId,
       status: this.mapUpdateStatusToActieverzoekStatusType(
         this.updateStatus.content,
       ),
-      title: this.actieverzoek().title,
+      title: actieverzoek.title,
     };
+  }
 
+  private updateActieverzoekStatus(
+    actieverzoekUpdateData: ActieverzoekUpdateData,
+  ) {
     this.isSending.set(true);
 
     this.actieverzoekService
