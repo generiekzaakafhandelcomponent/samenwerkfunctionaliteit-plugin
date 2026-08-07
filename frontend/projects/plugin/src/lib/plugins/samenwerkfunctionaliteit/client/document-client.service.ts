@@ -65,24 +65,30 @@ export class DocumentClient {
     let params = new HttpParams();
 
     if (queryParams?.documentDescription != null) {
-      params.set('documentOmschrijving', queryParams.documentDescription);
+      params = params.set(
+        'documentOmschrijving',
+        queryParams.documentDescription,
+      );
     }
     if (queryParams?.numberWithinSystem != null) {
-      params.set('nummerBinnenSysteem', queryParams.numberWithinSystem);
+      params = params.set(
+        'nummerBinnenSysteem',
+        queryParams.numberWithinSystem,
+      );
     }
     if (queryParams?.systemId != null) {
-      params.set('kenmerkSysteem', queryParams.systemId);
+      params = params.set('kenmerkSysteem', queryParams.systemId);
     }
     if (queryParams?.confidentialityType != null) {
-      params.set(
+      params = params.set(
         'vertrouwelijkheidsAanduiding',
         mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
           queryParams.confidentialityType,
         ),
       );
     }
-    if (queryParams?.taal != null) {
-      params.set('taal', queryParams.taal);
+    if (queryParams?.language != null) {
+      params = params.set('taal', queryParams.language);
     }
 
     return params;
