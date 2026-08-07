@@ -64,7 +64,9 @@ export class SwfInformatiePaginaComponent implements OnInit {
         take(1),
         switchMap((samenwerkingProps) => {
           return forkJoin({
-            samenwerking: this.fetchSamenwerking(businessKey),
+            samenwerking: this.fetchSamenwerking(
+              samenwerkingProps.samenwerkingId,
+            ),
             actieverzoek: this.fetchActieverzoek(
               samenwerkingProps.actieverzoekId,
               businessKey,
