@@ -1,75 +1,29 @@
-@use '@carbon/styles/css/styles.css';
+@use '@carbon/styles/scss/colors' as carbon-color;
 
 .cds-panel {
-  background: #f9f9fb;
-  border: 1px solid #dfe3ea;
-  border-radius: 12px;
-  padding: 16px;
-}
-
-.cds-panel__content {
-  max-width: 640px;
-}
-
-.cds-heading {
-  margin-bottom: 12px;
+  border: 2px solid carbon-color.$gray-10;
+  border-radius: 0.25rem;
+  padding: 1rem;
 }
 
 .cds-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 2rem;
 }
 
 .cds-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.cds-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #161616;
-}
-
-.cds-input,
-.cds-textarea {
-  appearance: none;
-  width: 100%;
-  box-sizing: border-box;
-
-  background: #ffffff;
-  border: 1px solid #c7ccd6;
-  border-radius: 8px;
-
-  padding: 10px 12px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #161616;
-
-  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
-}
-
-.cds-textarea {
-  resize: vertical;
-}
-
-.cds-input:focus,
-.cds-textarea:focus {
-  outline: none;
-  border-color: #0f62fe; /* Carbon primary-ish */
-  box-shadow: 0 0 0 3px rgba(15, 98, 254, 0.25);
-  background: #ffffff;
-}
-
-.cds-input::placeholder,
-.cds-textarea::placeholder {
-  color: #6a6e7a;
+  gap: 0.5rem;
 }
 
 .cds-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 4px;
+  margin-top: 0.25rem;
+}
+
+textarea {
+  padding: 0.5rem;
 }

@@ -2,6 +2,7 @@ import { Component, input, InputSignal } from '@angular/core';
 import { Actieverzoek } from '../../../../models/actieverzoek.model';
 import { FormsModule } from '@angular/forms';
 import {
+  ButtonModule,
   DropdownModule,
   InputModule,
   ListItem,
@@ -9,7 +10,7 @@ import {
 
 @Component({
   selector: 'update-status-modal',
-  imports: [FormsModule, DropdownModule, InputModule],
+  imports: [FormsModule, DropdownModule, InputModule, ButtonModule],
   templateUrl: './update-status-modal.component.html',
   styleUrl: './update-status-modal.component.scss',
 })
