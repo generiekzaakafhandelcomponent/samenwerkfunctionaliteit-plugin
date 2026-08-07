@@ -5,5 +5,5 @@ export interface UploadDocumentQueryParams {
   numberWithinSystem?: string;
   systemId?: string;
   confidentialityType?: ConfidentialityType;
-  taal?: string;
+  language?: string;
 }
