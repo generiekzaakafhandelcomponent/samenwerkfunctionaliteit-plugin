@@ -3,7 +3,10 @@ import {
   DocumentenResponse,
   mapDocumentenResponseToModel,
 } from './document.dto';
-import { Actieverzoek } from '../models/actieverzoek.model';
+import {
+  Actieverzoek,
+  ActieverzoekUpdateData,
+} from '../models/actieverzoek.model';
 import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypes,
@@ -28,6 +31,14 @@ export interface ActieverzoekResponse {
   titel: string;
   zender: string;
   zenderNaam: string;
+}
+
+export interface UpdateActieverzoekRequest {
+  melding: string;
+  omschrijving: string;
+  productId: string;
+  status: ActieverzoekStatus;
+  titel: string;
 }
 
 export enum ActieverzoekStatus {
@@ -60,6 +71,29 @@ function mapActieverzoekStatusToActieverzoekStatusType(
   }
 }
 
+function mapActieverzoekStatusTypeToActieverzoekStatus(
+  actieverzoekStatusType: ActieverzoekStatusType,
+): ActieverzoekStatus {
+  switch (actieverzoekStatusType) {
+    case ActieverzoekStatusTypes.OPEN:
+      return ActieverzoekStatus.OPEN;
+    case ActieverzoekStatusTypes.IN_PROGRESS:
+      return ActieverzoekStatus.IN_BEHANDELING;
+    case ActieverzoekStatusTypes.REJECTED:
+      return ActieverzoekStatus.GEWEIGERD;
+    case ActieverzoekStatusTypes.WITHDRAWN:
+      return ActieverzoekStatus.INGETROKKEN;
+    case ActieverzoekStatusTypes.REPORTED_READY:
+      return ActieverzoekStatus.GEREEDGEMELD;
+    case ActieverzoekStatusTypes.READY:
+      return ActieverzoekStatus.GEREED;
+    default:
+      throw new Error(
+        `Invalid ActieverzoekStatusType: ${actieverzoekStatusType}`,
+      );
+  }
+}
+
 export function mapActieverzoekResponseToActieverzoek(
   actieverzoekResponse: ActieverzoekResponse,
 ): Actieverzoek {
@@ -86,5 +120,19 @@ export function mapActieverzoekResponseToActieverzoek(
     createdOn: new Date(actieverzoekResponse.creatieDatumTijd),
     sender: actieverzoekResponse.zender,
     senderName: actieverzoekResponse.zenderNaam,
+  };
+}
+
+export function createUpdateActieverzoekRequestFrom(
+  actieverzoekUpdateData: ActieverzoekUpdateData,
+): UpdateActieverzoekRequest {
+  return {
+    melding: actieverzoekUpdateData.notice,
+    omschrijving: actieverzoekUpdateData.description,
+    productId: actieverzoekUpdateData.productId,
+    status: mapActieverzoekStatusTypeToActieverzoekStatus(
+      actieverzoekUpdateData.status,
+    ),
+    titel: actieverzoekUpdateData.title,
   };
 }
