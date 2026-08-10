@@ -12,7 +12,7 @@
   </div>
 }
 
-@if (!hasError() && !isLoading()) {
+@if (isSamenwerkingDossier() && !isLoading()) {
   <div class="sections-container">
     <section class="samenwerking-section">
       <samenwerkingsstatus [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
