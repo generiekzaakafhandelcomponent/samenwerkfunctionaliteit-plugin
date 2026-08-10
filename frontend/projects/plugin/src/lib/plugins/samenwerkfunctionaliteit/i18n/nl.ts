@@ -32,5 +32,13 @@ export const pluginNlTranslations = {
         minutePlural: '{{ minuteCount }} minuten geleden',
       },
     },
+    actieverzoekStatusTypes: {
+      open: 'Open',
+      inProgress: 'In behandeling',
+      rejected: 'Afgewezen',
+      withdrawn: 'Ingetrokken',
+      reportedReady: 'Gereedgemeld',
+      ready: 'Gereed',
+    },
   },
 };
