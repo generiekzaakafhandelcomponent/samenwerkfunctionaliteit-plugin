@@ -12,7 +12,7 @@
   </div>
 }
 
-@if (isSamenwerkingDossier() && !isLoading()) {
+@if (isSamenwerkingDossier() && !isLoading() && !hasError()) {
   <div class="content-wrapper">
     <div class="column">
       <samenwerkingsstatus class="samenwerkingsstatus" [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
