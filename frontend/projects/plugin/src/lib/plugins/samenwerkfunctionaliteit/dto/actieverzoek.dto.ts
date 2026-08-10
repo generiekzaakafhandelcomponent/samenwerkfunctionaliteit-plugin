@@ -55,17 +55,17 @@ function mapActieverzoekStatusToActieverzoekStatusType(
 ): ActieverzoekStatusType {
   switch (actieverzoekStatus) {
     case ActieverzoekStatus.OPEN:
-      return ActieverzoekStatusTypes.OPEN;
+      return ActieverzoekStatusTypes.Open;
     case ActieverzoekStatus.IN_BEHANDELING:
-      return ActieverzoekStatusTypes.IN_PROGRESS;
+      return ActieverzoekStatusTypes.InProgress;
     case ActieverzoekStatus.GEWEIGERD:
-      return ActieverzoekStatusTypes.REJECTED;
+      return ActieverzoekStatusTypes.Rejected;
     case ActieverzoekStatus.INGETROKKEN:
-      return ActieverzoekStatusTypes.WITHDRAWN;
+      return ActieverzoekStatusTypes.Withdrawn;
     case ActieverzoekStatus.GEREEDGEMELD:
-      return ActieverzoekStatusTypes.REPORTED_READY;
+      return ActieverzoekStatusTypes.ReportedReady;
     case ActieverzoekStatus.GEREED:
-      return ActieverzoekStatusTypes.READY;
+      return ActieverzoekStatusTypes.Ready;
     default:
       throw new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
   }
@@ -75,17 +75,17 @@ function mapActieverzoekStatusTypeToActieverzoekStatus(
   actieverzoekStatusType: ActieverzoekStatusType,
 ): ActieverzoekStatus {
   switch (actieverzoekStatusType) {
-    case ActieverzoekStatusTypes.OPEN:
+    case ActieverzoekStatusTypes.Open:
       return ActieverzoekStatus.OPEN;
-    case ActieverzoekStatusTypes.IN_PROGRESS:
+    case ActieverzoekStatusTypes.InProgress:
       return ActieverzoekStatus.IN_BEHANDELING;
-    case ActieverzoekStatusTypes.REJECTED:
+    case ActieverzoekStatusTypes.Rejected:
       return ActieverzoekStatus.GEWEIGERD;
-    case ActieverzoekStatusTypes.WITHDRAWN:
+    case ActieverzoekStatusTypes.Withdrawn:
       return ActieverzoekStatus.INGETROKKEN;
-    case ActieverzoekStatusTypes.REPORTED_READY:
+    case ActieverzoekStatusTypes.ReportedReady:
       return ActieverzoekStatus.GEREEDGEMELD;
-    case ActieverzoekStatusTypes.READY:
+    case ActieverzoekStatusTypes.Ready:
       return ActieverzoekStatus.GEREED;
     default:
       throw new Error(
