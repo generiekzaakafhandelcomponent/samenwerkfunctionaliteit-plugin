@@ -45,7 +45,7 @@ export class UpdateStatusModalComponent {
     content: '',
     selected: false,
   };
-  explanation: string = ''; //TODO waar is dit voor? Voor nu als melding/notice geplaatst
+  explanation: string = '';
 
   protected onSubmit() {
     if (!this.updateStatus.content && !this.explanation) {
