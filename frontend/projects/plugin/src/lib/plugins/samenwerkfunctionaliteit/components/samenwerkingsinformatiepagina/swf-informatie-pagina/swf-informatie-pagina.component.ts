@@ -55,7 +55,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
-  isSamenwerkingDossier: WritableSignal<boolean> = signal(true);
+  isSamenwerkingDossier: WritableSignal<boolean> = signal(false);
   actieverzoek: WritableSignal<Actieverzoek> = signal(null);
   actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> = signal(
     ActieverzoekStatusList,
@@ -83,7 +83,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
     this.swfDocumentService
       .getSamenwerkingProperties(businessKey)
       .pipe(
-        take(1),
         switchMap((samenwerkingProps: SamenwerkingProperties) => {
           return forkJoin({
             samenwerking: this.fetchSamenwerking(
@@ -96,13 +95,10 @@ export class SwfInformatiePaginaComponent implements OnInit {
           });
         }),
         takeWhile(({ samenwerking, actieverzoek }) => {
-          if (!!actieverzoek.actieverzoekId || !!samenwerking.samenwerkingId) {
-            this.isSamenwerkingDossier.set(true);
-            return true;
-          } else {
-            this.isSamenwerkingDossier.set(false);
-            return false;
-          }
+          this.isSamenwerkingDossier.set(
+            !!actieverzoek.actieverzoekId && !!samenwerking.samenwerkingId,
+          );
+          return this.isSamenwerkingDossier();
         }),
         finalize(() => {
           this.isLoading.set(false);
@@ -117,6 +113,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
           this.hasError.set(true);
           this.errorMessage.set(error.message);
         },
+        complete: () => {},
       });
   }
 
