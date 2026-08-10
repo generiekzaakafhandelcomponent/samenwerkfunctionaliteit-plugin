@@ -1,16 +1,17 @@
 @use '@carbon/styles/scss/colors' as carbon-color;
 
+@use "@carbon/styles/scss/colors";
+@use '../../../styles/shadows' as shadows;
+
+
 .card {
-  padding: 24px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 1em;
-
-  border: 2px solid carbon-color.$gray-10;
+  gap: 1rem;
+  border: 2px solid #f4f4f4;
   border-radius: 0.25rem;
   box-sizing: border-box;
-
 }
 
 .card-header {
@@ -20,9 +21,6 @@
 
   &__header-title {
     color: var(--widget-text-color, var(--cds-text-primary));
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
   }
 }
 
@@ -35,12 +33,10 @@
 
 .label {
   color: #6b7280;
-  font-size: 13px;
 }
 
 .value {
   color: #111827;
-  font-size: 14px;
 }
 
 .description {
