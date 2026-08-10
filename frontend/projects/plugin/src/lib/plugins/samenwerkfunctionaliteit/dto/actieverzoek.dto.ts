@@ -50,7 +50,7 @@ export enum ActieverzoekStatus {
   GEREED = 'GEREED',
 }
 
-function mapActieverzoekStatusToActieverzoekStatusType(
+export function mapActieverzoekStatusToActieverzoekStatusType(
   actieverzoekStatus: ActieverzoekStatus,
 ): ActieverzoekStatusType {
   switch (actieverzoekStatus) {
@@ -68,6 +68,22 @@ function mapActieverzoekStatusToActieverzoekStatusType(
       return ActieverzoekStatusTypes.Ready;
     default:
       throw new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
+  }
+}
+
+export function mapLinkActionToActieverzoekStatus(
+  linkAction: string,
+): ActieverzoekStatus {
+  switch (linkAction) {
+    case 'weigeren':
+      return ActieverzoekStatus.GEWEIGERD;
+    case 'behandelen':
+      return ActieverzoekStatus.IN_BEHANDELING;
+    case 'gereedmelden':
+      return ActieverzoekStatus.GEREEDGEMELD;
+
+    default:
+      throw new Error(`Invalid link action: ${linkAction}`);
   }
 }
 
