@@ -94,11 +94,12 @@ export class SwfInformatiePaginaComponent implements OnInit {
           });
         }),
         takeWhile(({ samenwerking, actieverzoek }) => {
-          if (!!actieverzoek || !!samenwerking) {
+          if (!!actieverzoek.actieverzoekId || !!samenwerking.samenwerkingId) {
+            this.isSamenwerkingDossier.set(true);
+            return true;
+          } else {
             this.isSamenwerkingDossier.set(false);
             return false;
-          } else {
-            this.isSamenwerkingDossier.set(true);
           }
         }),
         finalize(() => {
