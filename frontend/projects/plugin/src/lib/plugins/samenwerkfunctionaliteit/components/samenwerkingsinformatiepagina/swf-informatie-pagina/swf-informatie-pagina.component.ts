@@ -58,7 +58,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
   isSamenwerkingDossier: WritableSignal<boolean> = signal(true);
   actieverzoek: WritableSignal<Actieverzoek> = signal(null);
   actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> = signal(
-    [],
+    ActieverzoekStatusList,
   );
   isLoading: WritableSignal<boolean> = signal(true);
   statusTypeDropdownListItems: WritableSignal<ListItem[]> = signal<ListItem[]>(
@@ -77,10 +77,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
 
     this.buildStatusTypeDropdownListItems();
     this.fetchAndLoadSamenwerking(businessKey);
-  }
-
-  private buildActieverzoekStatusList() {
-    this.actieverzoekStatusTypes.set(ActieverzoekStatusList);
   }
 
   private fetchAndLoadSamenwerking(businessKey: BusinessKey): void {
@@ -116,7 +112,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
         next: ({ samenwerking, actieverzoek }) => {
           this.samenwerking.update(() => samenwerking);
           this.actieverzoek.update(() => actieverzoek);
-          this.buildActieverzoekStatusList();
         },
         error: (error: Error) => {
           this.hasError.set(true);
