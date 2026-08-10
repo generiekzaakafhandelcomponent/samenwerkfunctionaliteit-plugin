@@ -9,7 +9,7 @@ import {
 import {
   Actieverzoek,
   ActieverzoekUpdateData,
-} from '../../../../models/actieverzoek.model';
+} from '../../../models/actieverzoek.model';
 import { FormsModule } from '@angular/forms';
 import {
   ButtonModule,
@@ -17,11 +17,11 @@ import {
   InputModule,
   ListItem,
 } from 'carbon-components-angular';
-import { ActieverzoekService } from '../../../../service/actieverzoek.service';
+import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypes,
-} from '../../../../types/actieverzoek-status.type';
+} from '../../../types/actieverzoek-status.type';
 import { finalize, take } from 'rxjs';
 
 @Component({
