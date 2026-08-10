@@ -36,6 +36,8 @@ export class UpdateStatusModalComponent {
   actieverzoek: InputSignal<Actieverzoek> = input.required<Actieverzoek>();
   statusTypeDropdownListItems: InputSignal<ListItem[]> =
     input.required<ListItem[]>();
+  allowedStatusTypes: InputSignal<ActieverzoekStatusType[]> =
+    input.required<ActieverzoekStatusType[]>();
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   errorMessage: WritableSignal<string> = signal<string>('');
   isSuccess: WritableSignal<boolean> = signal<boolean>(false);
@@ -72,7 +74,7 @@ export class UpdateStatusModalComponent {
 
   private updateActieverzoekStatus(
     actieverzoekUpdateData: ActieverzoekUpdateData,
-  ) {
+  ): void {
     this.isSending.set(true);
 
     this.actieverzoekService
