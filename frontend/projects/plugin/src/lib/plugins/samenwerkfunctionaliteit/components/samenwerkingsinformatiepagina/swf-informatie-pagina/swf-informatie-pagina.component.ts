@@ -7,7 +7,14 @@ import {
 } from '@angular/core';
 import { SamenwerkingsStatusComponent } from '../samenwerkingsstatus/samenwerkingsstatus.component';
 import { SamenwerkingService } from '../../../service/samenwerking.service';
-import { finalize, forkJoin, Observable, switchMap, take, tap } from 'rxjs';
+import {
+  finalize,
+  forkJoin,
+  Observable,
+  switchMap,
+  take,
+  takeWhile,
+} from 'rxjs';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { SamenwerkingComponent } from '../samenwerking/samenwerking.component';
 import { LoadingModule } from 'carbon-components-angular';
@@ -20,8 +27,8 @@ import { UpdateActieverzoekStatusComponent } from '../update-actieverzoek-status
 import { Actieverzoek } from '../../../models/actieverzoek.model';
 import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import {
+  ActieverzoekStatusList,
   ActieverzoekStatusType,
-  ActieverzoekStatusTypes,
 } from '../../../types/actieverzoek-status.type';
 import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
 
@@ -46,6 +53,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
   route = inject(ActivatedRoute);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
+  isSamenwerkingDossier: WritableSignal<boolean> = signal(true);
   actieverzoek: WritableSignal<Actieverzoek> = signal(null);
   actieverzoekStatusTypes: WritableSignal<ActieverzoekStatusType[]> = signal(
     [],
@@ -66,16 +74,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
   }
 
   private buildActieverzoekStatusList() {
-    this.actieverzoekStatusTypes.update((): ActieverzoekStatusType[] => {
-      return [
-        ActieverzoekStatusTypes.OPEN,
-        ActieverzoekStatusTypes.IN_PROGRESS,
-        ActieverzoekStatusTypes.REJECTED,
-        ActieverzoekStatusTypes.WITHDRAWN,
-        ActieverzoekStatusTypes.REPORTED_READY,
-        ActieverzoekStatusTypes.READY,
-      ];
-    });
+    this.actieverzoekStatusTypes.set(ActieverzoekStatusList);
   }
 
   private fetchAndLoadSamenwerking(businessKey: BusinessKey): void {
@@ -94,12 +93,12 @@ export class SwfInformatiePaginaComponent implements OnInit {
             ),
           });
         }),
-        tap(({ samenwerking, actieverzoek }) => {
-          if (!actieverzoek) {
-            throw new Error('Document content does not have an actieverzoek.');
-          }
-          if (!samenwerking) {
-            throw new Error('Document content does not have an samenwerking.');
+        takeWhile(({ samenwerking, actieverzoek }) => {
+          if (!!actieverzoek || !!samenwerking) {
+            this.isSamenwerkingDossier.set(false);
+            return false;
+          } else {
+            this.isSamenwerkingDossier.set(true);
           }
         }),
         finalize(() => {
