@@ -17,13 +17,12 @@ import {
 } from 'rxjs';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { SamenwerkingComponent } from '../samenwerking/samenwerking.component';
-import { LoadingModule } from 'carbon-components-angular';
+import { ListItem, LoadingModule } from 'carbon-components-angular';
 import { NgClass } from '@angular/common';
 import { DocumentListComponent } from '../../document-list/document-list.component';
 import { SwfDocumentService } from '../../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
 import { BusinessKey, toBusinessKey } from '../../../types/business-key.type';
-import { UpdateActieverzoekStatusComponent } from '../update-actieverzoek-status/update-actieverzoek-status.component';
 import { Actieverzoek } from '../../../models/actieverzoek.model';
 import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import {
@@ -31,6 +30,8 @@ import {
   ActieverzoekStatusType,
 } from '../../../types/actieverzoek-status.type';
 import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
+import { ActieverzoekCardComponent } from '../actieverzoek-card/actieverzoek-card.component';
+import { UpdateStatusModalComponent } from '../update-status-modal/update-status-modal.component';
 
 @Component({
   selector: 'swf-informatie-pagina',
@@ -42,7 +43,8 @@ import { SamenwerkingProperties } from '../../../models/samenwerking-properties.
     LoadingModule,
     NgClass,
     DocumentListComponent,
-    UpdateActieverzoekStatusComponent,
+    ActieverzoekCardComponent,
+    UpdateStatusModalComponent,
   ],
   styleUrl: './swf-informatie-pagina.component.scss',
 })
@@ -59,6 +61,9 @@ export class SwfInformatiePaginaComponent implements OnInit {
     [],
   );
   isLoading: WritableSignal<boolean> = signal(true);
+  statusTypeDropdownListItems: WritableSignal<ListItem[]> = signal<ListItem[]>(
+    [],
+  );
 
   hasError: WritableSignal<boolean> = signal(false);
   errorMessage: WritableSignal<string> = signal('');
@@ -70,6 +75,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
     );
     const businessKey = toBusinessKey(documentId);
 
+    this.buildStatusTypeDropdownListItems();
     this.fetchAndLoadSamenwerking(businessKey);
   }
 
@@ -132,5 +138,22 @@ export class SwfInformatiePaginaComponent implements OnInit {
     return this.actieverzoekService
       .getActieverzoek(actieverzoekId, businessKey)
       .pipe(take(1));
+  }
+
+  private buildStatusTypeDropdownListItems(): void {
+    this.statusTypeDropdownListItems.update(() => {
+      return this.mapActieverzoekStatusTypesToListItems();
+    });
+  }
+
+  private mapActieverzoekStatusTypesToListItems(): ListItem[] {
+    return this.actieverzoekStatusTypes().map(
+      (actieverzoekStatusType: ActieverzoekStatusType): ListItem => {
+        return {
+          content: actieverzoekStatusType,
+          selected: false,
+        };
+      },
+    );
   }
 }
