@@ -20,11 +20,13 @@
     </div>
     <div class="column">
       <actieverzoek-card [actieverzoek]="actieverzoek()"></actieverzoek-card>
-      <update-status-modal
-        [actieverzoek]="actieverzoek()"
-        [statusTypeDropdownListItems]="statusTypeDropdownListItems()"
-        [allowedStatusTypes]="actieverzoekStatusTypes()"
-      ></update-status-modal>
+      @if (statusTypeDropdownListItems().length > 0) {
+        <update-status-modal
+          [actieverzoek]="actieverzoek()"
+          [statusTypeDropdownListItems]="statusTypeDropdownListItems()"
+          [allowedStatusTypes]="actieverzoekStatusTypes()"
+        ></update-status-modal>
+      }
     </div>
     <div class="column">
       <document-list class="document-list" [isLightMode]="true"></document-list>

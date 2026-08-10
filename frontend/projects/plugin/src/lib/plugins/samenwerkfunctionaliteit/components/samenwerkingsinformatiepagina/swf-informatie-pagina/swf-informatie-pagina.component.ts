@@ -1,7 +1,9 @@
 import {
   Component,
+  computed,
   inject,
   OnInit,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -14,6 +16,7 @@ import {
   switchMap,
   take,
   takeWhile,
+  tap,
 } from 'rxjs';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { SamenwerkingComponent } from '../samenwerking/samenwerking.component';
@@ -32,6 +35,10 @@ import {
 import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
 import { ActieverzoekCardComponent } from '../actieverzoek-card/actieverzoek-card.component';
 import { UpdateStatusModalComponent } from '../update-status-modal/update-status-modal.component';
+import {
+  mapActieverzoekStatusToActieverzoekStatusType,
+  mapLinkActionToActieverzoekStatus,
+} from '../../../dto/actieverzoek.dto';
 
 @Component({
   selector: 'swf-informatie-pagina',
@@ -61,9 +68,12 @@ export class SwfInformatiePaginaComponent implements OnInit {
     ActieverzoekStatusList,
   );
   isLoading: WritableSignal<boolean> = signal(true);
-  statusTypeDropdownListItems: WritableSignal<ListItem[]> = signal<ListItem[]>(
-    [],
-  );
+  statusTypeDropdownListItems: Signal<ListItem[]> = computed(() => {
+    const actieverzoekStatusTypesList = this.actieverzoekStatusTypes();
+    return this.mapActieverzoekStatusTypesToListItems(
+      actieverzoekStatusTypesList,
+    );
+  });
 
   hasError: WritableSignal<boolean> = signal(false);
   errorMessage: WritableSignal<string> = signal('');
@@ -75,7 +85,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
     );
     const businessKey = toBusinessKey(documentId);
 
-    this.buildStatusTypeDropdownListItems();
     this.fetchAndLoadSamenwerking(businessKey);
   }
 
@@ -100,6 +109,9 @@ export class SwfInformatiePaginaComponent implements OnInit {
           );
           return this.isSamenwerkingDossier();
         }),
+        tap(({ samenwerking, actieverzoek }) => {
+          this.updateActieverzoekStatusTypes(actieverzoek);
+        }),
         finalize(() => {
           this.isLoading.set(false);
         }),
@@ -117,6 +129,31 @@ export class SwfInformatiePaginaComponent implements OnInit {
       });
   }
 
+  private updateActieverzoekStatusTypes(actieverzoek: Actieverzoek) {
+    // TODO expand link actions to include sender, keys are only for receiver at the moment.
+    if (actieverzoek.links) {
+      const keys: string[] = Object.keys(actieverzoek.links);
+
+      this.actieverzoekStatusTypes.update(
+        (statusTypes): ActieverzoekStatusType[] => {
+          const mappedKeys = keys
+            .filter((key) => {
+              return key !== 'self' && key !== 'berichtVerzenden';
+            })
+            .map((key: string) => {
+              return mapActieverzoekStatusToActieverzoekStatusType(
+                mapLinkActionToActieverzoekStatus(key),
+              );
+            });
+
+          return statusTypes.filter((statusType) => {
+            return mappedKeys.includes(statusType);
+          });
+        },
+      );
+    }
+  }
+
   private fetchSamenwerking(samenwerkingId: string): Observable<Samenwerking> {
     return this.samenwerkingService
       .getSamenwerking(samenwerkingId)
@@ -132,14 +169,10 @@ export class SwfInformatiePaginaComponent implements OnInit {
       .pipe(take(1));
   }
 
-  private buildStatusTypeDropdownListItems(): void {
-    this.statusTypeDropdownListItems.update(() => {
-      return this.mapActieverzoekStatusTypesToListItems();
-    });
-  }
-
-  private mapActieverzoekStatusTypesToListItems(): ListItem[] {
-    return this.actieverzoekStatusTypes().map(
+  private mapActieverzoekStatusTypesToListItems(
+    actieverzoekStatusTypes: ActieverzoekStatusType[],
+  ): ListItem[] {
+    return actieverzoekStatusTypes.map(
       (actieverzoekStatusType: ActieverzoekStatusType): ListItem => {
         return {
           content: actieverzoekStatusType,
