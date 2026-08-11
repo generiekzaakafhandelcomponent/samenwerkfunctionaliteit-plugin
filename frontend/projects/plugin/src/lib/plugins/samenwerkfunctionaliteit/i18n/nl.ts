@@ -48,5 +48,13 @@ export const pluginNlTranslations = {
       reportedReady: 'Gereedgemeld',
       ready: 'Gereed',
     },
+    actieverzoekStatusUpdate: {
+      failedTitle: 'Actieverzoekstatus wijzigen mislukt.',
+      failedMessage:
+        'Er ging iets mis tijdens het wijzigen van de status van het actieverzoek. Probeer het later nog eens.',
+      successTitle: 'Actieverzoekstatus succesvol gewijzigd.',
+      successMessage:
+        'De status van actieverzoek {{ name }} is succesvol gewijzigd naar {{ status }}.',
+    },
   },
 };

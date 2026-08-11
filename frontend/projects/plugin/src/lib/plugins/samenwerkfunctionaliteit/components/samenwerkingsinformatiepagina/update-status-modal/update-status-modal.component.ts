@@ -99,6 +99,7 @@ export class UpdateStatusModalComponent {
         },
         error: (error: Error) => {
           this.hasError.set(true);
+          this.showFailedNotification();
         },
       });
   }
@@ -115,10 +116,26 @@ export class UpdateStatusModalComponent {
 
   private showSuccessNotification(): void {
     const notification: UserNotification = {
-      titleKey: '',
-      messageKey: '',
+      titleKey:
+        'samenwerkfunctionaliteit.actieverzoekStatusUpdate.successTitle',
+      messageKey:
+        'samenwerkfunctionaliteit.actieverzoekStatusUpdate.successMessage',
+      messageParam: {
+        name: this.actieverzoek().title,
+        status: this.updateStatus.content,
+      },
     };
 
     this.userNotificatieService.showSuccess(notification);
+  }
+
+  private showFailedNotification(): void {
+    const notification: UserNotification = {
+      titleKey: 'samenwerkfunctionaliteit.actieverzoekStatusUpdate.failedTitle',
+      messageKey:
+        'samenwerkfunctionaliteit.actieverzoekStatusUpdate.failedMessage',
+    };
+
+    this.userNotificatieService.showError(notification);
   }
 }
