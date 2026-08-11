@@ -1,12 +1,16 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
   DOCUMENTEN_URL,
   SAMENWERKINGEN_URL,
 } from '../config/swf-plugin-config';
-import { DocumentenOverzichtResponse } from '../dto/document.dto';
+import {
+  DocumentenOverzichtResponse,
+  mapConfidentialityTypeToVertrouwelijkheidsaanduiding,
+} from '../dto/document.dto';
 import { FileDownload } from '../interface/file-download.interface';
+import { UploadDocumentQueryParams } from '../interface/upload-document-query-params.interface';
 import { UUID } from '../types/uuid.type';
 import { FileResponseUtil } from '../utils/file-response.util';
 
@@ -35,5 +39,58 @@ export class DocumentClient {
           return FileResponseUtil.toFileDownload(response);
         }),
       );
+  }
+
+  uploadDocument(
+    file: File,
+    samenwerkingId: string,
+    queryParams?: UploadDocumentQueryParams,
+  ): Observable<void> {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const params = this.convertQueryParamsToHttpParams(queryParams ?? {});
+
+    return this.http.post<void>(
+      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
+      formData,
+      { params },
+    );
+  }
+
+  private convertQueryParamsToHttpParams(
+    queryParams: UploadDocumentQueryParams,
+  ): HttpParams {
+    let params = new HttpParams();
+
+    if (queryParams?.documentDescription != null) {
+      params = params.set(
+        'documentOmschrijving',
+        queryParams.documentDescription,
+      );
+    }
+    if (queryParams?.numberWithinSystem != null) {
+      params = params.set(
+        'nummerBinnenSysteem',
+        queryParams.numberWithinSystem,
+      );
+    }
+    if (queryParams?.systemId != null) {
+      params = params.set('kenmerkSysteem', queryParams.systemId);
+    }
+    if (queryParams?.confidentialityType != null) {
+      params = params.set(
+        'vertrouwelijkheidsAanduiding',
+        mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
+          queryParams.confidentialityType,
+        ),
+      );
+    }
+    if (queryParams?.language != null) {
+      params = params.set('taal', queryParams.language);
+    }
+
+    return params;
   }
 }

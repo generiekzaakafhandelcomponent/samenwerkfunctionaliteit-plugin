@@ -14,14 +14,22 @@ export const pluginNlTranslations = {
       confidentialityType: 'Vertrouwelijkheidsaanduiding',
       dateCreated: 'Datum aangemaakt',
     },
-    userFeedback: {
-      message: {
+    feedback: {
+      userNotification: {
         contactYourAdmin:
           'Neem contact op met uw beheerder als dit probleem zich vaker voordoet.',
         failedGeneric: 'Er ging iets mis',
-        failedToDownload: 'Er ging iets mis tijdens het downloaden',
-        failedToFetchDocuments:
+        genericSuccessTitle: 'Gelukt',
+        genericSuccessMessage: 'De actie is succesvol uitgevoerd',
+
+        downloadDocumentFailureTitle: 'Er ging iets mis tijdens het downloaden',
+
+        fetchDocumentFailureTitle:
           'Er ging iets mis tijdens het ophalen van de lijst van documenten',
+
+        uploadDocumentSuccessTitle: 'Uploaden gelukt',
+        uploadDocumentSuccessMessage: '{{ filename }} is succesvol geüpload',
+        uploadDocumentFailureTitle: 'Uploaden mislukt',
       },
     },
     messages: {
