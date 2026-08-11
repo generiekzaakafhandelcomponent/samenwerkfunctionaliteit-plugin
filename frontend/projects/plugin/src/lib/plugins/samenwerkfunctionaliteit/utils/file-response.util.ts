@@ -14,7 +14,7 @@ export class FileResponseUtil {
 
     return {
       blob,
-      filename: this.extractFilename(response) ?? defaultFilename,
+      name: this.extractFilename(response) ?? defaultFilename,
     };
   }
 
