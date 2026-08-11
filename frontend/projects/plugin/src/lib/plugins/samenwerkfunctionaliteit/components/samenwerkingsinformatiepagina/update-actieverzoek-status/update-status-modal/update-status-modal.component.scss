@@ -1,0 +1,29 @@
+@use '@carbon/styles/scss/colors' as carbon-color;
+
+.cds-panel {
+  border: 2px solid carbon-color.$gray-10;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.cds-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cds-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cds-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.25rem;
+}
+
+textarea {
+  padding: 0.5rem;
+}
