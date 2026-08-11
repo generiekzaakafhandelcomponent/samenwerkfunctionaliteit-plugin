@@ -56,5 +56,12 @@ export const pluginNlTranslations = {
       successMessage:
         'De status van actieverzoek {{ name }} is succesvol gewijzigd naar {{ status }}.',
     },
+    actieverzoekCard: {
+      status: 'Status',
+      date: 'Datum aangemaakt',
+      sentBy: 'Verzonden door',
+      productCode: 'Productcode',
+      description: 'Omschrijving',
+    },
   },
 };
