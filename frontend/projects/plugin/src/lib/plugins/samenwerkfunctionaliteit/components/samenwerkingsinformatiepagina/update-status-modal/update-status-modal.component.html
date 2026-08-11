@@ -21,9 +21,6 @@
         rows="5"
         [invalid]="hasError()"
       ></textarea>
-      @if (hasError()) {
-        <p>{{ errorMessage() }}</p>
-      }
     </div>
 
     <div class="cds-actions">
@@ -34,6 +31,11 @@
         [disabled]="isSending()"
       >
         Status wijzigen
+        <svg
+          cdsIcon="save"
+          size="16"
+          class="cds--btn__icon"
+        ></svg>
       </button>
     </div>
   </div>
