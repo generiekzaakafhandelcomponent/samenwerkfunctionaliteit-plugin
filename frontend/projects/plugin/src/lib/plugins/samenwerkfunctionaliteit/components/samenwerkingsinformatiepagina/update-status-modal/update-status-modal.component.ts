@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import {
   ButtonModule,
   DropdownModule,
+  IconModule,
   InputModule,
   ListItem,
 } from 'carbon-components-angular';
@@ -21,26 +22,30 @@ import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypes,
+  ActieverzoekStatusValueToKey,
 } from '../../../types/actieverzoek-status.type';
 import { finalize, take } from 'rxjs';
+import { UserNotificationService } from '../../../service/user-notification.service';
+import { UserNotification } from '../../../interface/user-notification.interface';
 
 @Component({
   selector: 'update-status-modal',
-  imports: [FormsModule, DropdownModule, InputModule, ButtonModule],
+  imports: [FormsModule, DropdownModule, InputModule, ButtonModule, IconModule],
   templateUrl: './update-status-modal.component.html',
   styleUrl: './update-status-modal.component.scss',
 })
 export class UpdateStatusModalComponent {
   private readonly actieverzoekService: ActieverzoekService =
     inject(ActieverzoekService);
+  private readonly userNotificatieService: UserNotificationService = inject(
+    UserNotificationService,
+  );
   actieverzoek: InputSignal<Actieverzoek> = input.required<Actieverzoek>();
   statusTypeDropdownListItems: InputSignal<ListItem[]> =
     input.required<ListItem[]>();
   allowedStatusTypes: InputSignal<ActieverzoekStatusType[]> =
     input.required<ActieverzoekStatusType[]>();
   hasError: WritableSignal<boolean> = signal<boolean>(false);
-  errorMessage: WritableSignal<string> = signal<string>('');
-  isSuccess: WritableSignal<boolean> = signal<boolean>(false);
   isSending: WritableSignal<boolean> = signal<boolean>(false);
 
   updateStatus: ListItem = {
@@ -90,11 +95,10 @@ export class UpdateStatusModalComponent {
       )
       .subscribe({
         next: () => {
-          this.isSuccess.set(true);
+          this.showSuccessNotification();
         },
         error: (error: Error) => {
           this.hasError.set(true);
-          this.errorMessage.set(error.message);
         },
       });
   }
@@ -102,6 +106,19 @@ export class UpdateStatusModalComponent {
   private mapUpdateStatusToActieverzoekStatusType(
     status: string,
   ): ActieverzoekStatusType {
-    return ActieverzoekStatusTypes[status];
+    return ActieverzoekStatusTypes[
+      ActieverzoekStatusValueToKey[
+        status
+      ] as keyof typeof ActieverzoekStatusTypes
+    ];
+  }
+
+  private showSuccessNotification(): void {
+    const notification: UserNotification = {
+      titleKey: '',
+      messageKey: '',
+    };
+
+    this.userNotificatieService.showSuccess(notification);
   }
 }
