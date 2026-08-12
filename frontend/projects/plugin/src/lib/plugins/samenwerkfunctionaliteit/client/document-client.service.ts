@@ -50,7 +50,9 @@ export class DocumentClient {
 
     formData.append('file', file);
 
-    const params = this.convertQueryParamsToHttpParams(queryParams ?? {});
+    const params = this.convertUploadDocumentMetadataToHttpParams(
+      queryParams ?? {},
+    );
 
     return this.http.post<void>(
       `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
@@ -59,7 +61,7 @@ export class DocumentClient {
     );
   }
 
-  private convertQueryParamsToHttpParams(
+  private convertUploadDocumentMetadataToHttpParams(
     queryParams: UploadDocumentMetadata,
   ): HttpParams {
     let params = new HttpParams();
