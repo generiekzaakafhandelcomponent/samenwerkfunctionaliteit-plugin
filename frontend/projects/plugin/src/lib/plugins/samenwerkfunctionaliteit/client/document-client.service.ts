@@ -62,35 +62,29 @@ export class DocumentClient {
   }
 
   private convertUploadDocumentMetadataToHttpParams(
-    queryParams: UploadDocumentMetadata,
+    metadata: UploadDocumentMetadata,
   ): HttpParams {
     let params = new HttpParams();
 
-    if (queryParams?.documentDescription != null) {
-      params = params.set(
-        'documentOmschrijving',
-        queryParams.documentDescription,
-      );
+    if (metadata?.documentDescription != null) {
+      params = params.set('documentOmschrijving', metadata.documentDescription);
     }
-    if (queryParams?.numberWithinSystem != null) {
-      params = params.set(
-        'nummerBinnenSysteem',
-        queryParams.numberWithinSystem,
-      );
+    if (metadata?.numberWithinSystem != null) {
+      params = params.set('nummerBinnenSysteem', metadata.numberWithinSystem);
     }
-    if (queryParams?.systemId != null) {
-      params = params.set('kenmerkSysteem', queryParams.systemId);
+    if (metadata?.systemId != null) {
+      params = params.set('kenmerkSysteem', metadata.systemId);
     }
-    if (queryParams?.confidentialityType != null) {
+    if (metadata?.confidentialityType != null) {
       params = params.set(
         'vertrouwelijkheidsAanduiding',
         mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
-          queryParams.confidentialityType,
+          metadata.confidentialityType,
         ),
       );
     }
-    if (queryParams?.language != null) {
-      params = params.set('taal', queryParams.language);
+    if (metadata?.language != null) {
+      params = params.set('taal', metadata.language);
     }
 
     return params;
