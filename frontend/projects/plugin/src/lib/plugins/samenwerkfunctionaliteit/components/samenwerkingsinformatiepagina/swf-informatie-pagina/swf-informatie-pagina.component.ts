@@ -25,7 +25,7 @@ import {
   LoadingModule,
   NotificationModule,
 } from 'carbon-components-angular';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { DocumentListComponent } from '../../document-list/document-list.component';
 import { SwfDocumentService } from '../../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
@@ -58,7 +58,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     DocumentListComponent,
     ActieverzoekCardComponent,
     UpdateStatusModalComponent,
-    AsyncPipe,
     NotificationModule,
     PluginTranslatePipeModule,
     TranslatePipe,
@@ -142,12 +141,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
         (statusTypes): ActieverzoekStatusType[] => {
           const mappedKeys = keys
             .filter(this.filterNonStatusTypes)
-            .map((key: string) => {
-              return mapActieverzoekStatusToActieverzoekStatusType(
-                mapLinkActionToActieverzoekStatus(key),
-              );
-            });
-
+            .map(this.mapKeyToActieverzoekStatusType);
           return statusTypes.filter((statusType) => {
             return mappedKeys.includes(statusType);
           });
@@ -186,5 +180,11 @@ export class SwfInformatiePaginaComponent implements OnInit {
 
   private filterNonStatusTypes(key: string): boolean {
     return key !== 'self' && key !== 'berichtVerzenden';
+  }
+
+  private mapKeyToActieverzoekStatusType(key: string): ActieverzoekStatusType {
+    return mapActieverzoekStatusToActieverzoekStatusType(
+      mapLinkActionToActieverzoekStatus(key),
+    );
   }
 }
