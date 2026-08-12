@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   inject,
   input,
   InputSignal,
@@ -42,7 +41,6 @@ export class DocumentListComponent implements OnInit {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
   readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
