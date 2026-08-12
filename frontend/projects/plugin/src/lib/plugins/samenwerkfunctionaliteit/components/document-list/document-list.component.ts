@@ -74,7 +74,7 @@ export class DocumentListComponent implements OnInit {
     this.fetchDocumenten();
   }
 
-  onFileSelected(event: Event): void {
+  protected onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
 
     if (!input.files?.length) {
