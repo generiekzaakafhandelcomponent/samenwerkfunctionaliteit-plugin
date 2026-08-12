@@ -1,6 +1,7 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.mapper
 
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.NotificatieResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.toModel
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Notificatie
 
 fun NotificatieResponse.toModel(): Notificatie =
@@ -16,6 +17,6 @@ fun NotificatieResponse.toModel(): Notificatie =
         deelnemer = deelnemer,
         deelnemerNaam = deelnemerNaam,
         eventDatumTijd = eventDatumTijd,
-        properties = properties,
+        properties = properties?.toModel(),
         links = links?.toModel(),
     )

@@ -5,7 +5,7 @@ import {
   PluginTranslatePipeModule,
   PluginTranslationService,
 } from '@valtimo/plugin';
-import { IconService } from 'carbon-components-angular';
+import { IconDescriptor, IconService } from 'carbon-components-angular';
 import { NGXLogger } from 'ngx-logger';
 import { Observable, of } from 'rxjs';
 import { SamenwerkingProperties } from '../../../models/samenwerking-properties.model';
@@ -15,8 +15,28 @@ import { StuurBerichtComponent } from './stuur-bericht.component';
 
 const mockSamenwerkingProperties: Observable<SamenwerkingProperties> = of({
   samenwerkingId: 'SAM-12345',
-  actieverzoekId: 'a5bb80ec-baf5-4eb6-b20c-de94a269a09a',
+  actieverzoekDetails: {
+    actieverzoekId: 'a5bb80ec-baf5-4eb6-b20c-de94a269a09a',
+    deelnemer: '',
+    eventDatumTijd: '',
+    eventInitiator: '',
+  },
 });
+
+const mockIconDescriptor: IconDescriptor = {
+  elem: 'svg',
+  attrs: {
+    xmlns: 'http://www.w3.org/2000/svg',
+    viewBox: '0 0 16 16',
+    fill: 'currentColor',
+    width: '16',
+    height: '16',
+  },
+  content: [],
+  name: 'mock-icon',
+  size: 16,
+  svg: '<svg></svg>',
+};
 
 describe('StuurBerichtComponent', () => {
   let component: StuurBerichtComponent;
@@ -25,8 +45,10 @@ describe('StuurBerichtComponent', () => {
   beforeEach(async () => {
     const iconService = jasmine.createSpyObj<IconService>('IconService', [
       'registerAll',
+      'get',
     ]);
     iconService.registerAll.and.returnValue();
+    iconService.get.and.returnValue(mockIconDescriptor);
 
     const pluginTranslationService =
       jasmine.createSpyObj<PluginTranslationService>(

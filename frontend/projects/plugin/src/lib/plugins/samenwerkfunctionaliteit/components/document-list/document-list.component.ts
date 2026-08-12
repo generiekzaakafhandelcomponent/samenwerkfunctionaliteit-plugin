@@ -47,7 +47,7 @@ export class DocumentListComponent implements OnInit {
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
   );
-private readonly valtimoDocumentService: ValtimoDocumentService = inject(
+  private readonly valtimoDocumentService: ValtimoDocumentService = inject(
     ValtimoDocumentService,
   );
   private readonly uploadWorkFlowService: UploadWorkFlowService = inject(
@@ -70,6 +70,14 @@ private readonly valtimoDocumentService: ValtimoDocumentService = inject(
 
     this.caseDefinitionKey =
       this.swfDocumentService.getParam(this.route, 'caseDefinitionKey') ?? '';
+
+    console.log(
+      'businessKey: ',
+      this.businessKey,
+      'caseDefinitionKey',
+      this.caseDefinitionKey,
+      'caseDefinitionVersionTag',
+      this.caseDefinitionVersionTag,
     );
     this.fetchDocumenten(this.businessKey.toString());
   }

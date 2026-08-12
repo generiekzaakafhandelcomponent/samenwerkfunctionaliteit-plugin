@@ -50,19 +50,37 @@ export class DocumentClient {
 
     formData.append('file', file);
 
+    const params = this.convertQueryParamsToHttpParams(queryParams ?? {});
+
+    return this.http.post<void>(
+      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
+      formData,
+      { params },
+    );
+  }
+
+  private convertQueryParamsToHttpParams(
+    queryParams: UploadDocumentMetadata,
+  ): HttpParams {
     let params = new HttpParams();
 
     if (queryParams?.documentDescription != null) {
-      params.set('documentOmschrijving', queryParams.documentDescription);
+      params = params.set(
+        'documentOmschrijving',
+        queryParams.documentDescription,
+      );
     }
     if (queryParams?.numberWithinSystem != null) {
-      params.set('nummerBinnenSysteem', queryParams.numberWithinSystem);
+      params = params.set(
+        'nummerBinnenSysteem',
+        queryParams.numberWithinSystem,
+      );
     }
     if (queryParams?.systemId != null) {
-      params.set('kenmerkSysteem', queryParams.systemId);
+      params = params.set('kenmerkSysteem', queryParams.systemId);
     }
     if (queryParams?.confidentialityType != null) {
-      params.set(
+      params = params.set(
         'vertrouwelijkheidsAanduiding',
         mapConfidentialityTypeToVertrouwelijkheidsaanduiding(
           queryParams.confidentialityType,
@@ -70,13 +88,9 @@ export class DocumentClient {
       );
     }
     if (queryParams?.language != null) {
-      params.set('taal', queryParams.language);
+      params = params.set('taal', queryParams.language);
     }
 
-    return this.http.post<void>(
-      `${SAMENWERKINGEN_URL}/${samenwerkingId}/documenten`,
-      formData,
-      { params },
-    );
+    return params;
   }
 }
