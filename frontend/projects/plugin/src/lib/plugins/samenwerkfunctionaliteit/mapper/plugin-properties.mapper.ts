@@ -1,8 +1,8 @@
-import { SwfPluginPropertiesResponseDto } from '../dto/swf-plugin-properties.dto';
+import { SwfPluginPropertiesResponse } from '../dto/swf-plugin-properties.dto';
 import { SwfPluginProperties } from '../interface/sfw-properties.interface';
 
 export function mapPluginPropertiesResponseDtoToModel(
-  dto: SwfPluginPropertiesResponseDto,
+  dto: SwfPluginPropertiesResponse,
 ): SwfPluginProperties {
   return {
     baseUrl: dto.baseUrl,
