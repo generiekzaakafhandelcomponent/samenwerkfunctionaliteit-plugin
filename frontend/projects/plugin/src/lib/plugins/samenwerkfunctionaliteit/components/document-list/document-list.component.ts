@@ -90,11 +90,7 @@ export class DocumentListComponent implements OnInit {
       return;
     }
 
-    const versionTag$ = this.caseDefinitionVersionTag
-      ? of(this.caseDefinitionVersionTag)
-      : this.getCaseDefinitionVersionTag(businessKey);
-
-    versionTag$
+    this.getVersionTag()
       .pipe(
         switchMap((versionTag) =>
           this.uploadWorkFlowService.startUpload({
@@ -119,6 +115,20 @@ export class DocumentListComponent implements OnInit {
     this.destroyRef.onDestroy(() => {
       fileDownloadSubscription.unsubscribe();
     });
+  }
+
+  private getVersionTag(): Observable<string> {
+    if (this.caseDefinitionVersionTag) {
+      return of(this.caseDefinitionVersionTag);
+    }
+
+    if (!this.businessKey) {
+      throw new Error(
+        'Cannot get case definition version tag because the business key is not available.',
+      );
+    }
+
+    return this.getCaseDefinitionVersionTag(this.businessKey);
   }
 
   private getCaseDefinitionVersionTag(
