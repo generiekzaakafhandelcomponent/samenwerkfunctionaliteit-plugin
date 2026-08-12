@@ -182,9 +182,11 @@ export class SwfInformatiePaginaComponent implements OnInit {
     return key !== 'self' && key !== 'berichtVerzenden';
   }
 
-  private mapKeyToActieverzoekStatusType(key: string): ActieverzoekStatusType {
+  private mapKeyToActieverzoekStatusType(
+    linkAction: string,
+  ): ActieverzoekStatusType {
     return mapActieverzoekStatusToActieverzoekStatusType(
-      mapLinkActionToActieverzoekStatus(key),
+      mapLinkActionToActieverzoekStatus(linkAction),
     );
   }
 }
