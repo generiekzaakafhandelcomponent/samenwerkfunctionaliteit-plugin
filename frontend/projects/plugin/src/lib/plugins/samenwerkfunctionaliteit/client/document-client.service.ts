@@ -44,14 +44,14 @@ export class DocumentClient {
   uploadDocument(
     file: File,
     samenwerkingId: string,
-    queryParams?: UploadDocumentMetadata,
+    metadata?: UploadDocumentMetadata,
   ): Observable<void> {
     const formData: FormData = new FormData();
 
     formData.append('file', file);
 
     const params = this.convertUploadDocumentMetadataToHttpParams(
-      queryParams ?? {},
+      metadata ?? {},
     );
 
     return this.http.post<void>(
