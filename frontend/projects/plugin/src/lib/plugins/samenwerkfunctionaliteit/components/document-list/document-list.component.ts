@@ -71,15 +71,7 @@ export class DocumentListComponent implements OnInit {
     this.caseDefinitionKey =
       this.swfDocumentService.getParam(this.route, 'caseDefinitionKey') ?? '';
 
-    console.log(
-      'businessKey: ',
-      this.businessKey,
-      'caseDefinitionKey',
-      this.caseDefinitionKey,
-      'caseDefinitionVersionTag',
-      this.caseDefinitionVersionTag,
-    );
-    this.fetchDocumenten(this.businessKey.toString());
+    this.fetchDocumenten();
   }
 
   onFileSelected(event: Event): void {
@@ -149,11 +141,19 @@ export class DocumentListComponent implements OnInit {
     );
   }
 
-  private fetchDocumenten(documentId: string): void {
-    const businessKey = toBusinessKey(documentId);
+  private fetchDocumenten(): void {
+    if (!this.businessKey) {
+      this.notificationService.showError({
+        titleKey:
+          'samenwerkfunctionaliteit.feedback.userNotification.fetchDocumentFailureTitle',
+      });
+      throw new Error(
+        'Cannot fetch documenten because the business key is not available.',
+      );
+    }
 
     this.swfDocumentService
-      .getSamenwerkingProperties(businessKey)
+      .getSamenwerkingProperties(this.businessKey)
       .pipe(
         take(1),
         tap((samenwerkingProperties: SamenwerkingProperties): void => {
