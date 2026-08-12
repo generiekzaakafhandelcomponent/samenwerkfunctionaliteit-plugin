@@ -34,6 +34,10 @@ export const pluginNlTranslations = {
         uploadDocumentToSWFFailureTitle:
           'Uploaden naar de samenwerking mislukt',
 
+        uploadDocumentToDocumentenApiSuccessTitle:
+          'Uploaden naar de Documenten-API gelukt',
+        uploadDocumentToDocumentenApiSuccessMessage:
+          'Archiveringskopie {{ filename }} is succesvol geüpload naar de Documenten-API',
         uploadDocumentToDocumentenAPIFailureTitle:
           'Uploaden van archiveringskopie naar Documenten-API mislukt',
       },
