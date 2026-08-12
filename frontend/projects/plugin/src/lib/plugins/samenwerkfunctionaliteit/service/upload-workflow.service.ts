@@ -37,7 +37,7 @@ export class UploadWorkFlowService {
           );
           return of(metadata);
         }
-        console.log('Uploading with mock metadata:', metadata);
+        this.logger.debug('Uploading with mock metadata:', metadata);
       }),
 
       switchMap(({ metadata }) => {
