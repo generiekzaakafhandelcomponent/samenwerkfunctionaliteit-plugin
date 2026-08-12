@@ -126,8 +126,8 @@ export class SwfInformatiePaginaComponent implements OnInit {
       )
       .subscribe({
         next: ({ samenwerking, actieverzoek }) => {
-          this.samenwerking.update(() => samenwerking);
-          this.actieverzoek.update(() => actieverzoek);
+          this.samenwerking.set(samenwerking);
+          this.actieverzoek.set(actieverzoek);
         },
       });
   }
