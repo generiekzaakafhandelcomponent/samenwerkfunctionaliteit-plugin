@@ -35,8 +35,6 @@ export class ActieverzoekCardComponent {
         return 'samenwerkfunctionaliteit.actieverzoekStatusTypes.reportedReady';
       case ActieverzoekStatusTypes.Ready:
         return 'samenwerkfunctionaliteit.actieverzoekStatusTypes.ready';
-      default:
-        return '';
     }
   }
 }
