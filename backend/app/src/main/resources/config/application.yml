@@ -70,8 +70,6 @@ valtimo:
     samenwerkfunctionaliteit:
         gateway:
             enabled: true
-            custom-headers:
-                x-dienst: 'ggd-hl'
         frontend:
             documents:
                 upload-backup-to-documenten-api: true
