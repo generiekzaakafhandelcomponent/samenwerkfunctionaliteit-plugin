@@ -141,9 +141,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
       this.actieverzoekStatusTypes.update(
         (statusTypes): ActieverzoekStatusType[] => {
           const mappedKeys = keys
-            .filter((key) => {
-              return key !== 'self' && key !== 'berichtVerzenden';
-            })
+            .filter(this.filterNonStatusTypes)
             .map((key: string) => {
               return mapActieverzoekStatusToActieverzoekStatusType(
                 mapLinkActionToActieverzoekStatus(key),
@@ -184,5 +182,9 @@ export class SwfInformatiePaginaComponent implements OnInit {
         };
       },
     );
+  }
+
+  private filterNonStatusTypes(key: string): boolean {
+    return key !== 'self' && key !== 'berichtVerzenden';
   }
 }
