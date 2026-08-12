@@ -15,6 +15,13 @@ export const pluginNlTranslations = {
       dateCreated: 'Datum aangemaakt',
     },
     feedback: {
+      notAnSwfCaseMessage: {
+        genericTitle: 'Tabblad kan niet getoond worden.',
+        genericMessage:
+          'Dit dossier is niet gekoppeld aan een samenwerking in het Digitaal Stelsel Omgevingswet.',
+
+        samenwerkingTitle: 'Geen samenwerking opgehaald',
+      },
       userNotification: {
         contactYourAdmin:
           'Neem contact op met uw beheerder als dit probleem zich vaker voordoet.',
@@ -40,6 +47,7 @@ export const pluginNlTranslations = {
         minutePlural: '{{ minuteCount }} minuten geleden',
       },
     },
+
     actieverzoekStatusTypes: {
       open: 'Open',
       inProgress: 'In behandeling',

@@ -20,8 +20,12 @@ import {
 } from 'rxjs';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { SamenwerkingComponent } from '../samenwerking/samenwerking.component';
-import { ListItem, LoadingModule } from 'carbon-components-angular';
-import { NgClass } from '@angular/common';
+import {
+  ListItem,
+  LoadingModule,
+  NotificationModule,
+} from 'carbon-components-angular';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { DocumentListComponent } from '../../document-list/document-list.component';
 import { SwfDocumentService } from '../../../service/swf-document.service';
 import { ActivatedRoute } from '@angular/router';
@@ -39,6 +43,8 @@ import {
   mapActieverzoekStatusToActieverzoekStatusType,
   mapLinkActionToActieverzoekStatus,
 } from '../../../dto/actieverzoek.dto';
+import { PluginTranslatePipeModule } from '@valtimo/plugin';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'swf-informatie-pagina',
@@ -52,6 +58,10 @@ import {
     DocumentListComponent,
     ActieverzoekCardComponent,
     UpdateStatusModalComponent,
+    AsyncPipe,
+    NotificationModule,
+    PluginTranslatePipeModule,
+    TranslatePipe,
   ],
   styleUrl: './swf-informatie-pagina.component.scss',
 })
@@ -75,9 +85,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
     );
   });
 
-  hasError: WritableSignal<boolean> = signal(false);
-  errorMessage: WritableSignal<string> = signal('');
-
   ngOnInit() {
     const documentId = this.swfDocumentService.getParam(
       this.route,
@@ -92,22 +99,24 @@ export class SwfInformatiePaginaComponent implements OnInit {
     this.swfDocumentService
       .getSamenwerkingProperties(businessKey)
       .pipe(
-        switchMap((samenwerkingProps: SamenwerkingProperties) => {
-          return forkJoin({
-            samenwerking: this.fetchSamenwerking(
-              samenwerkingProps.samenwerkingId,
-            ),
-            actieverzoek: this.fetchActieverzoek(
-              samenwerkingProps.actieverzoekDetails.actieverzoekId,
-              businessKey,
-            ),
-          });
-        }),
-        takeWhile(({ samenwerking, actieverzoek }) => {
+        takeWhile((samenwerkingProps: SamenwerkingProperties) => {
           this.isSamenwerkingDossier.set(
-            !!actieverzoek.actieverzoekId && !!samenwerking.samenwerkingId,
+            !!samenwerkingProps.actieverzoekDetails.actieverzoekId &&
+              !!samenwerkingProps.samenwerkingId,
           );
           return this.isSamenwerkingDossier();
+        }),
+        switchMap((samenwerkingProps: SamenwerkingProperties) => {
+          if (samenwerkingProps.actieverzoekDetails.actieverzoekId)
+            return forkJoin({
+              samenwerking: this.fetchSamenwerking(
+                samenwerkingProps.samenwerkingId,
+              ),
+              actieverzoek: this.fetchActieverzoek(
+                samenwerkingProps.actieverzoekDetails.actieverzoekId,
+                businessKey,
+              ),
+            });
         }),
         tap(({ samenwerking, actieverzoek }) => {
           this.updateActieverzoekStatusTypes(actieverzoek);
@@ -120,10 +129,6 @@ export class SwfInformatiePaginaComponent implements OnInit {
         next: ({ samenwerking, actieverzoek }) => {
           this.samenwerking.update(() => samenwerking);
           this.actieverzoek.update(() => actieverzoek);
-        },
-        error: (error: Error) => {
-          this.hasError.set(true);
-          this.errorMessage.set(error.message);
         },
       });
   }

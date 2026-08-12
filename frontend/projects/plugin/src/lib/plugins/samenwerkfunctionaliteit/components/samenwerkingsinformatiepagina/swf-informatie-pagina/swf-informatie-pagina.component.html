@@ -12,7 +12,7 @@
   </div>
 }
 
-@if (isSamenwerkingDossier() && !isLoading() && !hasError()) {
+@if (isSamenwerkingDossier() && !isLoading()) {
   <div class="content-wrapper">
     <div class="column">
       <samenwerkingsstatus class="samenwerkingsstatus" [samenwerking]="this.samenwerking()"></samenwerkingsstatus>
@@ -33,6 +33,13 @@
     </div>
 
   </div>
-} @else {
-  <p>{{ this.errorMessage() }}</p>
+} @else if (!isSamenwerkingDossier() && !isLoading()) {
+  <cds-notification
+    [notificationObj]="{
+          type: 'info',
+          title: 'samenwerkfunctionaliteit.feedback.notAnSwfCaseMessage.samenwerkingTitle' | translate,
+          message: 'samenwerkfunctionaliteit.feedback.notAnSwfCaseMessage.genericMessage' | translate,
+          showClose: true
+        }"
+  ></cds-notification>
 }
