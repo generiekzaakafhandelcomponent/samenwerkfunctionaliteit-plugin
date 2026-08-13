@@ -177,8 +177,11 @@ export class DocumentService {
       .pipe(
         tap((processLink) => {
           if (!processLink) {
-            throw new Error(
-              `No linked Documenten API process found for caseDefinitionKey: ${context.caseDefinitionKey}, caseDefinitionVersionTag: ${context.caseDefinitionVersionTag}`,
+            return throwError(
+              () =>
+                new Error(
+                  `No linked Documenten API process found for caseDefinitionKey: ${context.caseDefinitionKey}, caseDefinitionVersionTag: ${context.caseDefinitionVersionTag}`,
+                ),
             );
           }
 
