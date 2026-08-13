@@ -44,8 +44,6 @@ export class DocumentService {
 
   private readonly logger: NGXLogger = inject(NGXLogger);
 
-  PLUGIN_DOCUMENTEN_API_PLUGIN_MANAGEMENT_KEY = 'documentenapi';
-
   getDocumenten(samenwerkingId: string): Observable<DocumentInterface[]> {
     return this.documentClient.getDocumenten(samenwerkingId).pipe(
       map((documentenOverzichtResponse: DocumentenOverzichtResponse) => {
