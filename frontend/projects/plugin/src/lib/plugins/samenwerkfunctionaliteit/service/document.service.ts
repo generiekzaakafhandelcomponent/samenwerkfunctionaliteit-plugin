@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { DocumentenApiLinkProcessService } from '@valtimo/zgw';
 import { catchError, map, Observable, switchMap, tap, throwError } from 'rxjs';
@@ -143,7 +142,7 @@ export class DocumentService {
 
           this.notificationService.showSuccess(notification);
         }),
-        catchError((error: HttpErrorResponse) => {
+        catchError((error: Error) => {
           this.notificationService.showError({
             titleKey:
               'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWFFailureTitle',
@@ -157,7 +156,7 @@ export class DocumentService {
   downloadDocument(documentId: UUID): Observable<FileDownload> {
     return this.documentClient.downloadDocument(documentId).pipe(
       tap((file) => this.downloader.download(file)),
-      catchError((error: HttpErrorResponse) => {
+      catchError((error: Error) => {
         this.notificationService.showError({
           titleKey:
             'samenwerkfunctionaliteit.feedback.userNotification.downloadDocumentFailureTitle',
