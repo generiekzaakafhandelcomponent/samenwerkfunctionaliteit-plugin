@@ -63,7 +63,7 @@ export class DocumentService {
     console.log('Uploading to Documenten API');
     console.log('context:', context, 'metadata', metadata);
 
-    return this.verifyLinkedUploadProcessOrThrow(context).pipe(
+    return this.verifyLinkedUploadProcess(context).pipe(
       switchMap(() => {
         return this.uploadProviderService.uploadTempFileWithMetadata(
           context.file,
@@ -166,9 +166,7 @@ export class DocumentService {
     );
   }
 
-  private verifyLinkedUploadProcessOrThrow(
-    context: UploadContext,
-  ): Observable<void> {
+  private verifyLinkedUploadProcess(context: UploadContext): Observable<void> {
     return this.documentenApiLinkProcessService
       .getLinkedUploadProcess(
         context.caseDefinitionKey,
