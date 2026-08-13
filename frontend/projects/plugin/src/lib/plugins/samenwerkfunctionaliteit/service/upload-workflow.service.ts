@@ -9,11 +9,14 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { NoLinkedUploadProcessError } from '../errors/no-link-upload-process.error';
 import { UploadContext } from '../interface/upload-context.interface';
 import { UploadDocumentMetadata } from '../interface/upload-document-metadata.interface';
+import { UserNotification } from '../interface/user-notification.interface';
 import { ConfidentialityTypes } from '../types/confidentiality.type';
 import { DocumentService } from './document.service';
 import { SwfPluginService } from './swf-plugin.service';
+import { UserNotificationService } from './user-notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +25,9 @@ export class UploadWorkFlowService {
   private readonly documentService = inject(DocumentService);
   private readonly swfPluginService: SwfPluginService =
     inject(SwfPluginService);
+  private readonly notificationService: UserNotificationService = inject(
+    UserNotificationService,
+  );
   private readonly logger: NGXLogger = inject(NGXLogger);
 
   startUpload(context: UploadContext): Observable<void> {
@@ -44,18 +50,62 @@ export class UploadWorkFlowService {
         return this.documentService
           .uploadDocumentToDocumentenAPI(context, metadata)
           .pipe(
+            tap(() => {
+              const notification: UserNotification = {
+                titleKey:
+                  'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenApi.success.title',
+                messageKey:
+                  'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenApi.success.message',
+                messageParam: { filename: context.file.name },
+              };
+
+              this.notificationService.showSuccess(notification);
+            }),
+
             map((reference) => ({
               ...metadata,
               systemId: reference.id,
             })),
-            catchError(() => {
+
+            catchError((error: Error) => {
+              if (error instanceof NoLinkedUploadProcessError) {
+                this.notificationService.showError({
+                  titleKey:
+                    'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWF.failure.title',
+                });
+              } else {
+                this.notificationService.showError({
+                  titleKey:
+                    'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenApi.failure.title',
+                });
+              }
               return of(metadata);
             }),
           );
       }),
 
       switchMap((metadata) =>
-        this.documentService.uploadDocumentToSWF(context, metadata),
+        this.documentService.uploadDocumentToSWF(context, metadata).pipe(
+          tap(() => {
+            const notification: UserNotification = {
+              titleKey:
+                'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWF.success.title',
+              messageKey:
+                'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWF.success.message',
+              messageParam: { filename: context.file.name },
+            };
+
+            this.notificationService.showSuccess(notification);
+          }),
+
+          catchError(() => {
+            this.notificationService.showError({
+              titleKey:
+                'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToSWF.failure.title',
+            });
+            return of(undefined);
+          }),
+        ),
       ),
     );
   }

@@ -11,7 +11,16 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationModule } from 'carbon-components-angular';
-import { finalize, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
 import { Document } from '../../models/document.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
@@ -107,7 +116,16 @@ export class DocumentListComponent implements OnInit {
   protected downloadDocument(documentId: string): void {
     this.documentService
       .downloadDocument(toUUID(documentId))
-      .pipe(take(1))
+      .pipe(
+        take(1),
+        catchError(() => {
+          this.notificationService.showError({
+            titleKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.downloadDocument.failure.title',
+          });
+          return of(undefined);
+        }),
+      )
       .subscribe();
   }
 
@@ -149,7 +167,7 @@ export class DocumentListComponent implements OnInit {
     if (!this.businessKey) {
       this.notificationService.showError({
         titleKey:
-          'samenwerkfunctionaliteit.feedback.userNotification.fetchDocumentFailureTitle',
+          'samenwerkfunctionaliteit.feedback.userNotification.fetchDocuments.failure.title',
       });
       throw new Error(
         'Cannot fetch documenten because the business key is not available.',
@@ -189,7 +207,7 @@ export class DocumentListComponent implements OnInit {
         error: (error: HttpErrorResponse) => {
           this.notificationService.showError({
             titleKey:
-              'samenwerkfunctionaliteit.feedback.userNotification.fetchDocumentFailureTitle',
+              'samenwerkfunctionaliteit.feedback.userNotification.fetchDocuments.failure.title',
           });
           throw error;
         },
