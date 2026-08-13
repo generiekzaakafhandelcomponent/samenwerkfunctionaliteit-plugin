@@ -1,9 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import {
-  DocumentenApiLinkProcessService,
-  UploadProcessLink,
-} from '@valtimo/zgw';
+import { DocumentenApiLinkProcessService } from '@valtimo/zgw';
 import { catchError, map, Observable, switchMap, tap, throwError } from 'rxjs';
 
 import {
@@ -67,10 +64,7 @@ export class DocumentService {
     console.log('Uploading to Documenten API');
     console.log('context:', context, 'metadata', metadata);
 
-    return this.getLinkedUploadProcess(context).pipe(
-      tap((processLink) => {
-        this.logger.debug('Found Documenten API process link: ', processLink);
-      }),
+    return this.verifyLinkUploadProcessOrThrow(context).pipe(
       switchMap(() => {
         return this.uploadProviderService.uploadTempFileWithMetadata(
           context.file,
@@ -173,9 +167,9 @@ export class DocumentService {
     );
   }
 
-  private getLinkedUploadProcess(
+  private verifyLinkUploadProcessOrThrow(
     context: UploadContext,
-  ): Observable<UploadProcessLink> {
+  ): Observable<void> {
     return this.documentenApiLinkProcessService
       .getLinkedUploadProcess(
         context.caseDefinitionKey,
@@ -188,12 +182,16 @@ export class DocumentService {
               `No linked Documenten API process found for caseDefinitionKey: ${context.caseDefinitionKey}, caseDefinitionVersionTag: ${context.caseDefinitionVersionTag}`,
             );
           }
+
+          this.logger.debug('Found Documenten API process link: ', processLink);
         }),
+        map(() => undefined),
         catchError((error: HttpErrorResponse) => {
           this.notificationService.showError({
             titleKey:
               'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenAPIFailureTitle',
           });
+
           return throwError(() => error);
         }),
       );
