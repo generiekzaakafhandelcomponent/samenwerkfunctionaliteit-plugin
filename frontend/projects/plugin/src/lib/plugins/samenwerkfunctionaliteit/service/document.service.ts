@@ -96,10 +96,6 @@ export class DocumentService {
           messageParam: { filename: context.file.name },
         };
 
-        if (context.file.name) {
-          notification.messageParam = { filename: context.file.name };
-        }
-
         this.notificationService.showSuccess(notification);
       }),
       catchError((error: Error) => {
