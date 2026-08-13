@@ -13,6 +13,6 @@ export class SwfPluginService {
   getSwfPluginProperties(): Observable<SwfPluginProperties> {
     return this.swfPluginClient
       .getSwfPluginProperties()
-      .pipe(map((dto) => mapPluginPropertiesResponseDtoToModel(dto)));
+      .pipe(map((response) => mapPluginPropertiesResponseDtoToModel(response)));
   }
 }
