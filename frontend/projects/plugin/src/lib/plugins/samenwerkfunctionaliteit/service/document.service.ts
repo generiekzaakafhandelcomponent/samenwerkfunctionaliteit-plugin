@@ -103,7 +103,7 @@ export class DocumentService {
 
         this.notificationService.showSuccess(notification);
       }),
-      catchError((error: HttpErrorResponse) => {
+      catchError((error: Error) => {
         this.notificationService.showError({
           titleKey:
             'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenAPIFailureTitle',
@@ -186,7 +186,7 @@ export class DocumentService {
           this.logger.debug('Found Documenten API process link: ', processLink);
         }),
         map(() => undefined),
-        catchError((error: HttpErrorResponse) => {
+        catchError((error: Error) => {
           this.notificationService.showError({
             titleKey:
               'samenwerkfunctionaliteit.feedback.userNotification.uploadDocumentToDocumentenAPIFailureTitle',
