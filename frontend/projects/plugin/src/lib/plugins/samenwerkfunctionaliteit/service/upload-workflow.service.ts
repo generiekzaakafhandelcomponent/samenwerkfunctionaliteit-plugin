@@ -31,7 +31,7 @@ export class UploadWorkFlowService {
   private readonly logger: NGXLogger = inject(NGXLogger);
 
   startUpload(context: UploadContext): Observable<void> {
-    // return some mock data to test; replace with call to modal service to collect data from user.
+    // TODO: replace with call to modal service to collect data from user. For now: return some mock data to test;
     return forkJoin({
       metadata: of<UploadDocumentMetadata>(this.mockModalData),
       config: this.swfPluginService.getSwfPluginProperties(),
