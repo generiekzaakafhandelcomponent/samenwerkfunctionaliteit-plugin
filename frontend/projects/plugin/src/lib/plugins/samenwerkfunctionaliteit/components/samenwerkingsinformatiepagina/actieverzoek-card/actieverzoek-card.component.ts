@@ -35,6 +35,8 @@ export class ActieverzoekCardComponent {
         return 'samenwerkfunctionaliteit.actieverzoekStatusTypes.reportedReady';
       case ActieverzoekStatusTypes.Ready:
         return 'samenwerkfunctionaliteit.actieverzoekStatusTypes.ready';
+      default:
+        throw Error('Unknown actieverzoek status type');
     }
   }
 }
