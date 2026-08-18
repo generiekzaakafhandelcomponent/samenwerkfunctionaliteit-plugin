@@ -26,7 +26,6 @@ import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.jvm.java
 
-@Component
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {

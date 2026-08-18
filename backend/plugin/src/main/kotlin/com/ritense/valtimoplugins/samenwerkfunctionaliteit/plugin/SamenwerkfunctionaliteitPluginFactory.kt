@@ -6,7 +6,6 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonServi
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import org.springframework.stereotype.Component
 
-@Component
 class SamenwerkfunctionaliteitPluginFactory(
     pluginService: PluginService,
     private val samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
