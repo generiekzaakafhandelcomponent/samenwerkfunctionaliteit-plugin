@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service
 import java.time.ZonedDateTime
 import java.util.UUID
 
-@Service
 class DefaultSamenwerkfunctionaliteitService(
     private val samenwerkfunctionaliteitClient: SamenwerkfunctionaliteitClient,
 ) : SamenwerkfunctionaliteitService {
