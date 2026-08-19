@@ -108,7 +108,6 @@ export class DocumentListComponent implements OnInit {
             caseDefinitionVersionTag: versionTag,
           }),
         ),
-        take(1),
       )
       .subscribe();
   }
@@ -117,7 +116,6 @@ export class DocumentListComponent implements OnInit {
     this.documentService
       .downloadDocument(toUUID(documentId))
       .pipe(
-        take(1),
         catchError(() => {
           this.notificationService.showError({
             titleKey:
@@ -147,7 +145,6 @@ export class DocumentListComponent implements OnInit {
     businessKey: BusinessKey,
   ): Observable<string> {
     return this.valtimoDocumentService.getDocument(businessKey.toString()).pipe(
-      take(1),
       map((document) => {
         const versionTag =
           document.definitionId?.blueprintId.blueprintVersionTag;
@@ -177,7 +174,6 @@ export class DocumentListComponent implements OnInit {
     this.swfDocumentService
       .getSamenwerkingProperties(this.businessKey)
       .pipe(
-        take(1),
         tap((samenwerkingProperties: SamenwerkingProperties): void => {
           if (!samenwerkingProperties.samenwerkingId) {
             throw new Error(
