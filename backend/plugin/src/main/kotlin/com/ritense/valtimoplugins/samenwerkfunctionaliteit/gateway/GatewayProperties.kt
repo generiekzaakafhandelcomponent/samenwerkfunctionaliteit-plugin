@@ -1,7 +1,6 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.stereotype.Component
 
 @ConfigurationProperties(prefix = "valtimo.samenwerkfunctionaliteit.gateway")
 class GatewayProperties {

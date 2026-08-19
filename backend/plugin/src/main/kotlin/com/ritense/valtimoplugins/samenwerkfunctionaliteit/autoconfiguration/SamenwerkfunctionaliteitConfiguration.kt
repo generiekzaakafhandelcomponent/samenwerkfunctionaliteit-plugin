@@ -17,15 +17,11 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.autoconfiguration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.ritense.authorization.Action
-import com.ritense.authorization.permission.Permission
-import com.ritense.authorization.request.AuthorizationRequest
 import com.ritense.plugin.service.PluginService
 import com.ritense.valtimo.contract.database.QueryDialectHelper
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.DefaultSamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.GatewayProperties
-import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.specification.GatewaySpecification
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.gateway.specification.GatewaySpecificationFactory
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin.SamenwerkfunctionaliteitPluginFactory
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.DefaultOperatonService
