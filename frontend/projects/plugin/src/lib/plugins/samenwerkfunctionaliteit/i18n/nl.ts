@@ -31,12 +31,34 @@ export const pluginNlTranslations = {
 
         downloadDocumentFailureTitle: 'Er ging iets mis tijdens het downloaden',
 
-        fetchDocumentFailureTitle:
-          'Er ging iets mis tijdens het ophalen van de lijst van documenten',
+        fetchDocuments: {
+          failure: {
+            title:
+              'Er ging iets mis tijdens het ophalen van de lijst van documenten',
+          },
+        },
 
-        uploadDocumentSuccessTitle: 'Uploaden gelukt',
-        uploadDocumentSuccessMessage: '{{ filename }} is succesvol geüpload',
-        uploadDocumentFailureTitle: 'Uploaden mislukt',
+        uploadDocumentToSWF: {
+          success: {
+            title: 'Uploaden naar de Samenwerkfunctionaliteit gelukt',
+            message:
+              '{{ filename }} is succesvol aan de samenwerking toegevoegd.',
+          },
+          failure: {
+            title: 'Uploaden naar de samenwerking mislukt',
+          },
+        },
+
+        uploadDocumentToDocumentenApi: {
+          success: {
+            title: 'Uploaden naar de Documenten-API gelukt',
+            message:
+              'Archiveringskopie {{ filename }} is succesvol geüpload naar de Documenten-API.',
+          },
+          failure: {
+            title: 'Uploaden van archiveringskopie naar Documenten-API mislukt',
+          },
+        },
       },
     },
     messages: {
