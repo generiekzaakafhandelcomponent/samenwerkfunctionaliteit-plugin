@@ -1,0 +1,44 @@
+@use '@carbon/styles/scss/colors' as carbon-color;
+
+@use "@carbon/styles/scss/colors";
+@use '../../../styles/shadows' as shadows;
+
+
+.card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 2px solid carbon-color.$gray-10;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  &__header-title {
+    color: var(--widget-text-color, var(--cds-text-primary));
+  }
+}
+
+.card-body .row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.label {
+  color: carbon-color.$cool-gray-40;
+}
+
+.value {
+  color: carbon-color.$blue-90;
+}
+
+.description {
+  white-space: pre-wrap;
+}

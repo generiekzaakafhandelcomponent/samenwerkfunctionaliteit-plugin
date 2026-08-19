@@ -12,7 +12,6 @@ import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.Samenwerkfuncti
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.core.io.InputStreamResource
 import org.springframework.http.HttpStatus
-import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestClientResponseException
@@ -26,7 +25,6 @@ import java.time.ZonedDateTime
 import java.util.UUID
 import kotlin.jvm.java
 
-@Component
 class DefaultSamenwerkfunctionaliteitClient(
     private val restClientBuilder: RestClient.Builder,
 ) : SamenwerkfunctionaliteitClient {
@@ -260,8 +258,8 @@ class DefaultSamenwerkfunctionaliteitClient(
     companion object {
         private const val IS_ALREADY_ENCODED = true
         private const val NOTIFICATIES_ENDPOINT = "v5/notificaties"
-        private const val EVENTDATUMTIJD_FROM_PARAM = "eventDatumTijd[gte]"
-        private const val EVENTDATUMTIJD_UNTIL_PARAM = "eventDatumTijd[lt]"
+        private const val EVENTDATUMTIJD_FROM_PARAM = "eventDatumTijd[gt]"
+        private const val EVENTDATUMTIJD_UNTIL_PARAM = "eventDatumTijd[lte]"
         private const val NOTIFICATIES_PAGE_PARAM = "page"
         private const val SWF_SAMENWERKING_PATH = "v5/samenwerkingen"
         private const val SWF_ACTIEVERZOEK_PATH = "v5/actieverzoeken"

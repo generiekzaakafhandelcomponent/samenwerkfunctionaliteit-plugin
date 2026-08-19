@@ -111,8 +111,8 @@ export class StuurBerichtComponent {
       .pipe(
         take(1),
         tap((props: SamenwerkingProperties) => {
-          if (props.actieverzoekId) {
-            this.actieverzoekId = props.actieverzoekId;
+          if (props.actieverzoekDetails.actieverzoekId) {
+            this.actieverzoekId = props.actieverzoekDetails.actieverzoekId;
           } else {
             throw new Error('Dossier heeft geen actieverzoekId.');
           }

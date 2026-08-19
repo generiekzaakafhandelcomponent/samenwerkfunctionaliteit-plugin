@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,6 +10,8 @@ import {
   viewChild,
   WritableSignal,
 } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import {
   AlertModalData,
   ButtonModule,
@@ -20,12 +23,9 @@ import {
   TableModel,
   TableModule,
 } from 'carbon-components-angular';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Document } from '../../../models/document.model';
-import { NgIf } from '@angular/common';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { DocumentTableModal } from '../modal/document-table-modal';
 import { documentTableDeleteModalConfig } from '../config/document-table-modal-config';
+import { DocumentTableModal } from '../modal/document-table-modal';
 
 @Component({
   selector: 'document-table',

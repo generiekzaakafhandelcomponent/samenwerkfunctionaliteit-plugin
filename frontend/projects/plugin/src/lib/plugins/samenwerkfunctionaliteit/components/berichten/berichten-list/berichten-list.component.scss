@@ -1,14 +1,25 @@
 @use '@carbon/styles/css/styles.css' as carbon-styles;
 
 :host {
+  transform: rotateX(180deg);
+
+  max-height: 50vh;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background-color: var(--cds-ui-02, #f4f4f4);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.messages-wrapper {
+  transform: rotateX(180deg);
+
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  overflow-y: auto;
-  background-color: var(--cds-ui-02, #f4f4f4);
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loading-indicator {

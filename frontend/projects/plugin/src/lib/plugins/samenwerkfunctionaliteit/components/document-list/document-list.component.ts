@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   inject,
   input,
   InputSignal,
@@ -12,15 +11,26 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationModule } from 'carbon-components-angular';
-import { finalize, Observable, switchMap, take, tap } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { DocumentInterface } from '../../interface/document.interface';
 import { Document } from '../../models/document.model';
 import { SamenwerkingProperties } from '../../models/samenwerking-properties.model';
 import { DocumentService } from '../../service/document.service';
-import { FileDownloadService } from '../../service/file-download.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { UserNotificationService } from '../../service/user-notification.service';
-import { toBusinessKey } from '../../types/business-key.type';
+
+import { DocumentService as ValtimoDocumentService } from '@valtimo/document';
+import { UploadWorkFlowService } from '../../service/upload-workflow.service';
+import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { toUUID } from '../../types/uuid.type';
 import { DocumentTableComponent } from './document-table/document-table.component';
 import { DocumentTableLightComponent } from './document-table/light/document-table-light.component';
@@ -40,14 +50,20 @@ export class DocumentListComponent implements OnInit {
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
+  readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly notificationService: UserNotificationService = inject(
     UserNotificationService,
   );
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  private readonly valtimoDocumentService: ValtimoDocumentService = inject(
+    ValtimoDocumentService,
+  );
+  private readonly uploadWorkFlowService: UploadWorkFlowService = inject(
+    UploadWorkFlowService,
+  );
 
-  readonly route: ActivatedRoute = inject(ActivatedRoute);
-  private readonly downloader: FileDownloadService =
-    inject(FileDownloadService);
+  private businessKey?: BusinessKey;
+  private caseDefinitionKey?: string;
+  private caseDefinitionVersionTag?: string;
 
   isLightMode: InputSignal<boolean> = input<boolean>(false);
 
@@ -55,42 +71,109 @@ export class DocumentListComponent implements OnInit {
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
 
   ngOnInit(): void {
-    const documentId: string = this.swfDocumentService.getParam(
-      this.route,
-      'documentId',
+    this.businessKey = toBusinessKey(
+      this.swfDocumentService.getParam(this.route, 'documentId') ?? '',
     );
-    this.fetchDocumenten(documentId);
+
+    this.caseDefinitionKey =
+      this.swfDocumentService.getParam(this.route, 'caseDefinitionKey') ?? '';
+
+    this.fetchDocumenten();
   }
 
-  protected downloadDocument(id: string): void {
-    const fileDownloadSubscription = this.documentService
-      .downloadDocument(toUUID(id))
+  protected onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    const file = input.files[0];
+
+    const businessKey = this.businessKey;
+    const caseDefinitionKey = this.caseDefinitionKey;
+
+    if (!businessKey || !caseDefinitionKey) {
+      return;
+    }
+
+    this.getVersionTag()
       .pipe(
-        take(1),
-        tap((file) => this.downloader.download(file)),
+        switchMap((versionTag) =>
+          this.uploadWorkFlowService.startUpload({
+            file,
+            samenwerkingId: 'SAM-66497',
+            businessKey,
+            caseDefinitionKey,
+            caseDefinitionVersionTag: versionTag,
+          }),
+        ),
       )
-      .subscribe({
-        error: (error: HttpErrorResponse) => {
-          this.notificationService.showError({
-            actionDescriptionKey:
-              'samenwerkfunctionaliteit.userFeedback.message.failedToDownload',
-          });
-          throw error;
-        },
-      });
-
-    this.destroyRef.onDestroy(() => {
-      fileDownloadSubscription.unsubscribe();
-    });
+      .subscribe();
   }
 
-  private fetchDocumenten(documentId: string): void {
-    const businessKey = toBusinessKey(documentId);
+  protected downloadDocument(documentId: string): void {
+    this.documentService
+      .downloadDocument(toUUID(documentId))
+      .pipe(
+        catchError(() => {
+          this.notificationService.showError({
+            titleKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.downloadDocument.failure.title',
+          });
+          return of(undefined);
+        }),
+      )
+      .subscribe();
+  }
+
+  private getVersionTag(): Observable<string> {
+    if (this.caseDefinitionVersionTag) {
+      return of(this.caseDefinitionVersionTag);
+    }
+
+    if (!this.businessKey) {
+      throw new Error(
+        'Cannot get case definition version tag because the business key is not available.',
+      );
+    }
+
+    return this.getCaseDefinitionVersionTag(this.businessKey);
+  }
+
+  private getCaseDefinitionVersionTag(
+    businessKey: BusinessKey,
+  ): Observable<string> {
+    return this.valtimoDocumentService.getDocument(businessKey.toString()).pipe(
+      map((document) => {
+        const versionTag =
+          document.definitionId?.blueprintId.blueprintVersionTag;
+
+        if (!versionTag) {
+          throw new Error(
+            `No version tag was found for ${document.definitionName}`,
+          );
+        }
+
+        return versionTag;
+      }),
+    );
+  }
+
+  private fetchDocumenten(): void {
+    if (!this.businessKey) {
+      this.notificationService.showError({
+        titleKey:
+          'samenwerkfunctionaliteit.feedback.userNotification.fetchDocuments.failure.title',
+      });
+      throw new Error(
+        'Cannot fetch documenten because the business key is not available.',
+      );
+    }
 
     this.swfDocumentService
-      .getSamenwerkingProperties(businessKey)
+      .getSamenwerkingProperties(this.businessKey)
       .pipe(
-        take(1),
         tap((samenwerkingProperties: SamenwerkingProperties): void => {
           if (!samenwerkingProperties.samenwerkingId) {
             throw new Error(
@@ -119,8 +202,8 @@ export class DocumentListComponent implements OnInit {
       .subscribe({
         error: (error: HttpErrorResponse) => {
           this.notificationService.showError({
-            actionDescriptionKey:
-              'samenwerkfunctionaliteit.userFeedback.message.failedToFetchDocuments',
+            titleKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.fetchDocuments.failure.title',
           });
           throw error;
         },
