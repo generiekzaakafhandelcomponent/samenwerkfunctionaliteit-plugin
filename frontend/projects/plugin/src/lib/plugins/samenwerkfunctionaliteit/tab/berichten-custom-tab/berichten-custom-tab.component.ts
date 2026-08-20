@@ -62,12 +62,16 @@ export class BerichtenCustomTabComponent implements OnInit {
   }
 
   private getBusinessKey(): BusinessKey {
-    const businessKeyAsString = this.swfDocumentService.getParam(
+    const businessKeyString = this.swfDocumentService.getParam(
       this.route,
       'documentId',
     );
 
-    return toBusinessKey(businessKeyAsString);
+    if (!businessKeyString) {
+      throw new Error('Could not retreive business key from the route');
+    }
+
+    return toBusinessKey(businessKeyString);
   }
 
   private fetchSamenwerkingProperties(): Observable<SamenwerkingProperties> {
