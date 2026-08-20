@@ -14,6 +14,12 @@ export const pluginNlTranslations = {
       confidentialityType: 'Vertrouwelijkheidsaanduiding',
       dateCreated: 'Datum aangemaakt',
     },
+    messenger: {
+      messengerTitle: 'Stuur bericht',
+      messagePlaceholder: 'Typ hier uw bericht',
+      sendMessage: 'Bericht versturen',
+      loadingMessages: 'Berichten aan het laden...',
+    },
     feedback: {
       notAnSwfCaseMessage: {
         genericTitle: 'Tabblad kan niet getoond worden.',
@@ -59,10 +65,23 @@ export const pluginNlTranslations = {
             title: 'Uploaden van archiveringskopie naar Documenten-API mislukt',
           },
         },
+
+        messenger: {
+          success: {
+            title: 'Verzonden',
+            message: 'Het bericht is succesvol verstuurd.',
+          },
+          failure: {
+            title: 'Het bericht kon niet verstuurd worden',
+          },
+          failureMissingActieverzoekId: {
+            message: 'Het actieverzoek kon niet gevonden worden.',
+          },
+        },
       },
     },
     messages: {
-      datetimestamp: {
+      dateTimeStamp: {
         justNow: 'Zojuist',
         today: 'Vandaag',
         minuteSingular: '{{ minuteCount }} minuut geleden',
