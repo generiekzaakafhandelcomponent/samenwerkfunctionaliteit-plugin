@@ -52,13 +52,13 @@ export class BerichtenCustomTabComponent implements OnInit {
     this.iconService.registerAll([Collaborate32]);
     this.getBerichten(this.getBusinessKey());
 
-    this.isLoading.set(false);
+    this.isLoading.set(true);
   }
 
   protected refreshMessages(): void {
     this.isLoading.set(true);
     this.getBerichten(this.getBusinessKey());
-    this.isLoading.set(false);
+    this.isLoading.set(true);
   }
 
   private getBusinessKey(): BusinessKey {
