@@ -44,7 +44,7 @@ export class StuurBerichtComponent {
   isSubmitting = signal(false);
   messageSent = output<void>();
 
-  rows = 5;
+  rows = 1;
   maxLength = 512;
   message = '';
 
