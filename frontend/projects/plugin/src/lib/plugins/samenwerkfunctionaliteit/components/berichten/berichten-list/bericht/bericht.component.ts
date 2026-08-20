@@ -7,7 +7,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ChatBericht } from '../../../../models/bericht.model';
+import { Message } from '../../../../models/bericht.model';
 
 @Component({
   selector: 'swf-bericht',
@@ -18,7 +18,7 @@ import { ChatBericht } from '../../../../models/bericht.model';
 export class BerichtComponent {
   private readonly translateService: TranslateService =
     inject(TranslateService);
-  message: InputSignal<ChatBericht> = input.required<ChatBericht>();
+  message: InputSignal<Message> = input.required<Message>();
   oinNumber: InputSignal<string> = input.required<string>();
   isSentByCurrentParticipant: WritableSignal<boolean> = signal(false);
   formattedDate: string = '';
