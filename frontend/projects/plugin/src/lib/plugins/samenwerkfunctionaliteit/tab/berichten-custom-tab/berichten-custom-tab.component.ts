@@ -78,7 +78,6 @@ export class BerichtenCustomTabComponent implements OnInit {
     return this.swfDocumentService
       .getSamenwerkingProperties(this.getBusinessKey())
       .pipe(
-        take(1),
         tap((samenwerkingProperties: SamenwerkingProperties) => {
           if (!samenwerkingProperties.actieverzoekDetails.actieverzoekId) {
             throw Error('Dossier heeft geen actieverzoekId');
