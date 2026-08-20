@@ -7,7 +7,7 @@ describe('SwfPluginService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: SwfPluginClient, useValue: {} }],
+      providers: [SwfPluginService, { provide: SwfPluginClient, useValue: {} }],
     });
     service = TestBed.inject(SwfPluginService);
   });

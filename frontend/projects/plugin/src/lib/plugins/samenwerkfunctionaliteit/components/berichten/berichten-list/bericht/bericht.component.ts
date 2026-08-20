@@ -6,13 +6,12 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { ChatBericht } from '../../../../models/bericht.model';
-import { LayerModule } from 'carbon-components-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { ChatBericht } from '../../../../models/bericht.model';
 
 @Component({
   selector: 'swf-bericht',
-  imports: [LayerModule],
+  imports: [],
   templateUrl: './bericht.component.html',
   styleUrl: './bericht.component.scss',
 })

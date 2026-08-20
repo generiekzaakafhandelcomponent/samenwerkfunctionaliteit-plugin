@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalNotificationService } from '@valtimo/shared';
-import { Notification } from '../interface/error-notification.interface';
+import { UserNotification } from '../interface/user-notification.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserNotificationService {
@@ -12,23 +12,48 @@ export class UserNotificationService {
     inject(TranslateService);
 
   private readonly ERROR_MESSAGE_DURATION_IN_MS: number = 20000;
+  private readonly SUCCESS_MESSAGE_DURATION_IN_MS: number = 8000;
 
-  showError(notification: Notification): void {
-    const actionDescription = this.translateService.instant(
-      notification.actionDescriptionKey ??
-        'samenwerkfunctionaliteit.userFeedback.message.failedGeneric',
+  showError(notification: UserNotification): void {
+    const title = this.translateService.instant(
+      notification.titleKey ??
+        'samenwerkfunctionaliteit.feedback.userNotification.failedGeneric',
+      notification.titleParam,
     );
 
     const message = this.translateService.instant(
       notification.messageKey ??
-        'samenwerkfunctionaliteit.userFeedback.message.contactYourAdmin',
+        'samenwerkfunctionaliteit.feedback.userNotification.contactYourAdmin',
+      notification.messageParam,
     );
 
     this.notificationService.showNotification({
       type: 'error',
-      title: actionDescription,
-      message: message,
+      title,
+      message,
       duration: this.ERROR_MESSAGE_DURATION_IN_MS,
+      showClose: true,
+    });
+  }
+
+  showSuccess(notification: UserNotification): void {
+    const title = this.translateService.instant(
+      notification.titleKey ??
+        'samenwerkfunctionaliteit.feedback.userNotification.genericSuccessTitle',
+      notification.titleParam,
+    );
+
+    const message = this.translateService.instant(
+      notification.messageKey ??
+        'samenwerkfunctionaliteit.feedback.userNotification.genericSuccessMessage',
+      notification.messageParam,
+    );
+
+    this.notificationService.showNotification({
+      type: 'success',
+      title,
+      message,
+      duration: this.SUCCESS_MESSAGE_DURATION_IN_MS,
       showClose: true,
     });
   }

@@ -3,7 +3,10 @@ import {
   DocumentenResponse,
   mapDocumentenResponseToModel,
 } from './document.dto';
-import { Actieverzoek } from '../models/actieverzoek.model';
+import {
+  Actieverzoek,
+  ActieverzoekUpdateData,
+} from '../models/actieverzoek.model';
 import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypes,
@@ -30,6 +33,14 @@ export interface ActieverzoekResponse {
   zenderNaam: string;
 }
 
+export interface UpdateActieverzoekRequest {
+  melding: string;
+  omschrijving: string;
+  productId: string;
+  status: ActieverzoekStatus;
+  titel: string;
+}
+
 export enum ActieverzoekStatus {
   OPEN = 'OPEN',
   IN_BEHANDELING = 'IN_BEHANDELING',
@@ -39,24 +50,63 @@ export enum ActieverzoekStatus {
   GEREED = 'GEREED',
 }
 
-function mapActieverzoekStatusToActieverzoekStatusType(
+export function mapActieverzoekStatusToActieverzoekStatusType(
   actieverzoekStatus: ActieverzoekStatus,
 ): ActieverzoekStatusType {
   switch (actieverzoekStatus) {
     case ActieverzoekStatus.OPEN:
-      return ActieverzoekStatusTypes.OPEN;
+      return ActieverzoekStatusTypes.Open;
     case ActieverzoekStatus.IN_BEHANDELING:
-      return ActieverzoekStatusTypes.IN_PROGRESS;
+      return ActieverzoekStatusTypes.InProgress;
     case ActieverzoekStatus.GEWEIGERD:
-      return ActieverzoekStatusTypes.REJECTED;
+      return ActieverzoekStatusTypes.Rejected;
     case ActieverzoekStatus.INGETROKKEN:
-      return ActieverzoekStatusTypes.WITHDRAWN;
+      return ActieverzoekStatusTypes.Withdrawn;
     case ActieverzoekStatus.GEREEDGEMELD:
-      return ActieverzoekStatusTypes.REPORTED_READY;
+      return ActieverzoekStatusTypes.ReportedReady;
     case ActieverzoekStatus.GEREED:
-      return ActieverzoekStatusTypes.READY;
+      return ActieverzoekStatusTypes.Ready;
     default:
       throw new Error(`Invalid ActieverzoekStatus: ${actieverzoekStatus}`);
+  }
+}
+
+export function mapLinkActionToActieverzoekStatus(
+  linkAction: string,
+): ActieverzoekStatus {
+  switch (linkAction) {
+    case 'weigeren':
+      return ActieverzoekStatus.GEWEIGERD;
+    case 'behandelen':
+      return ActieverzoekStatus.IN_BEHANDELING;
+    case 'gereedmelden':
+      return ActieverzoekStatus.GEREEDGEMELD;
+
+    default:
+      throw new Error(`Invalid link action: ${linkAction}`);
+  }
+}
+
+function mapActieverzoekStatusTypeToActieverzoekStatus(
+  actieverzoekStatusType: ActieverzoekStatusType,
+): ActieverzoekStatus {
+  switch (actieverzoekStatusType) {
+    case ActieverzoekStatusTypes.Open:
+      return ActieverzoekStatus.OPEN;
+    case ActieverzoekStatusTypes.InProgress:
+      return ActieverzoekStatus.IN_BEHANDELING;
+    case ActieverzoekStatusTypes.Rejected:
+      return ActieverzoekStatus.GEWEIGERD;
+    case ActieverzoekStatusTypes.Withdrawn:
+      return ActieverzoekStatus.INGETROKKEN;
+    case ActieverzoekStatusTypes.ReportedReady:
+      return ActieverzoekStatus.GEREEDGEMELD;
+    case ActieverzoekStatusTypes.Ready:
+      return ActieverzoekStatus.GEREED;
+    default:
+      throw new Error(
+        `Invalid ActieverzoekStatusType: ${actieverzoekStatusType}`,
+      );
   }
 }
 
@@ -86,5 +136,19 @@ export function mapActieverzoekResponseToActieverzoek(
     createdOn: new Date(actieverzoekResponse.creatieDatumTijd),
     sender: actieverzoekResponse.zender,
     senderName: actieverzoekResponse.zenderNaam,
+  };
+}
+
+export function createUpdateActieverzoekRequestFrom(
+  actieverzoekUpdateData: ActieverzoekUpdateData,
+): UpdateActieverzoekRequest {
+  return {
+    melding: actieverzoekUpdateData.notice,
+    omschrijving: actieverzoekUpdateData.description,
+    productId: actieverzoekUpdateData.productId,
+    status: mapActieverzoekStatusTypeToActieverzoekStatus(
+      actieverzoekUpdateData.status,
+    ),
+    titel: actieverzoekUpdateData.title,
   };
 }
