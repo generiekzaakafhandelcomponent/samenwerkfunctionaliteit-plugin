@@ -3,6 +3,7 @@ import {
   inject,
   input,
   InputSignal,
+  output,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -16,18 +17,16 @@ import {
   DropdownModule,
   IconModule,
   InputModule,
-  ListItem,
 } from 'carbon-components-angular';
 import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import {
   ActieverzoekStatusType,
-  ActieverzoekStatusTypes,
-  ActieverzoekStatusValueToKey,
+  ActieverzoekStatusTypeOption,
 } from '../../../types/actieverzoek-status.type';
-import { finalize, take } from 'rxjs';
 import { UserNotificationService } from '../../../service/user-notification.service';
 import { UserNotification } from '../../../interface/user-notification.interface';
 import { TranslatePipe } from '@ngx-translate/core';
+import { finalize, take } from 'rxjs';
 
 @Component({
   selector: 'update-status-modal',
@@ -49,21 +48,17 @@ export class UpdateStatusModalComponent {
     UserNotificationService,
   );
   actieverzoek: InputSignal<Actieverzoek> = input.required<Actieverzoek>();
-  statusTypeDropdownListItems: InputSignal<ListItem[]> =
-    input.required<ListItem[]>();
-  allowedStatusTypes: InputSignal<ActieverzoekStatusType[]> =
-    input.required<ActieverzoekStatusType[]>();
+  allowedStatusTypes: InputSignal<ActieverzoekStatusTypeOption[]> =
+    input.required<ActieverzoekStatusTypeOption[]>();
   hasError: WritableSignal<boolean> = signal<boolean>(false);
   isSending: WritableSignal<boolean> = signal<boolean>(false);
+  onStatusChanged = output<void>();
 
-  updateStatus: ListItem = {
-    content: '',
-    selected: false,
-  };
+  updateStatus: ActieverzoekStatusType | undefined = undefined;
   explanation: string = '';
 
   protected onSubmit() {
-    if (!this.updateStatus.content && !this.explanation) {
+    if (!this.updateStatus && !this.explanation) {
       return;
     }
     const actieverzoekUpdateData: ActieverzoekUpdateData =
@@ -78,9 +73,7 @@ export class UpdateStatusModalComponent {
       notice: this.explanation,
       description: actieverzoek.description,
       productId: actieverzoek.productId,
-      status: this.mapUpdateStatusToActieverzoekStatusType(
-        this.updateStatus.value,
-      ),
+      status: this.updateStatus,
       title: actieverzoek.title,
     };
   }
@@ -104,22 +97,15 @@ export class UpdateStatusModalComponent {
       .subscribe({
         next: () => {
           this.showSuccessNotification();
+          this.updateStatus = undefined;
+          this.explanation = '';
+          this.onStatusChanged.emit();
         },
         error: (error: Error) => {
           this.hasError.set(true);
           this.showFailedNotification();
         },
       });
-  }
-
-  private mapUpdateStatusToActieverzoekStatusType(
-    status: string,
-  ): ActieverzoekStatusType {
-    return ActieverzoekStatusTypes[
-      ActieverzoekStatusValueToKey[
-        status
-      ] as keyof typeof ActieverzoekStatusTypes
-    ];
   }
 
   private showSuccessNotification(): void {
@@ -130,7 +116,7 @@ export class UpdateStatusModalComponent {
         'samenwerkfunctionaliteit.actieverzoekStatusUpdate.successMessage',
       messageParam: {
         name: this.actieverzoek().title,
-        status: this.updateStatus.content,
+        status: this.updateStatus,
       },
     };
 
