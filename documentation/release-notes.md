@@ -2,6 +2,10 @@
 
 Overzicht van wijzigingen per versie van de Samenwerkfunctionaliteit-plugin.
 
+## 0.2.2
+
+Ondersteuning voor Valtimo 13.48.0.
+
 ## 0.1.3
 
 Ondersteuning voor Valtimo 13.42.0.
