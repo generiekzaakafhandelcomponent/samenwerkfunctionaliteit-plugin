@@ -13,6 +13,7 @@ import { Notificatie, NotificatiePage } from '../models/notificatie.model';
 export class NotificatieService {
   notificatieClient = inject(NotificatieClient);
 
+  private readonly FIRST_PAGE = 1;
   private readonly AGGREGATE_NOTIFICATIES_PAGE_SIZE = 100;
 
   getNotificaties(
@@ -32,7 +33,7 @@ export class NotificatieService {
   getAllNotificaties(samenwerkingId: string): Observable<Notificatie[]> {
     return this.getNotificaties(
       samenwerkingId,
-      1,
+      this.FIRST_PAGE,
       this.AGGREGATE_NOTIFICATIES_PAGE_SIZE,
     ).pipe(
       switchMap((firstPage) => {
