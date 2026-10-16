@@ -116,7 +116,7 @@ export class BerichtenCustomTabComponent implements OnInit {
           }
 
           return forkJoin({
-            messages: this.berichtenService.getBerichten(
+            messages: this.berichtenService.getMessages(
               swfCaseProperties.actieverzoekId,
             ),
             otherParticipant: this.fetchOtherParticipant(

@@ -3,6 +3,7 @@ import { map, Observable } from 'rxjs';
 import { BerichtenClient } from '../client/berichten.client';
 import { PostBerichtRequestDto } from '../dto/post-bericht-request.dto';
 import {
+  mapBerichtenOverzichtResponseToBerichten,
   mapBerichtenOverzichtResponseToMessages,
   mapPostBerichtResponseDtoToBericht,
 } from '../mapper/bericht.mapper';
@@ -21,9 +22,15 @@ export class BerichtenService {
       .pipe(map(mapPostBerichtResponseDtoToBericht));
   }
 
-  getBerichten(actieverzoekId: string): Observable<Message[]> {
+  getMessages(actieverzoekId: string): Observable<Message[]> {
     return this.berichtenClient
       .getBerichten(actieverzoekId)
       .pipe(map(mapBerichtenOverzichtResponseToMessages));
+  }
+
+  getBerichten(actieverzoekId: string): Observable<Bericht[]> {
+    return this.berichtenClient
+      .getBerichten(actieverzoekId)
+      .pipe(map(mapBerichtenOverzichtResponseToBerichten));
   }
 }
