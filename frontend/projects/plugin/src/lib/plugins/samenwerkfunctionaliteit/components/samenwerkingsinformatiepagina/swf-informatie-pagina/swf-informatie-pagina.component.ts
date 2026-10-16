@@ -177,9 +177,15 @@ export class SwfInformatiePaginaComponent implements OnInit {
   private fetchActieverzoek(
     actieverzoekId: ActieverzoekId,
   ): Observable<Actieverzoek> {
-    return this.actieverzoekService
-      .getActieverzoek(actieverzoekId)
-      .pipe(take(1));
+    return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
+      take(1),
+      switchMap((actieverzoek: Actieverzoek) => {
+        return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+          toBusinessKey(this.documentId),
+          actieverzoek,
+        );
+      }),
+    );
   }
 
   private actieverzoekStatusTypeOptionsFrom(

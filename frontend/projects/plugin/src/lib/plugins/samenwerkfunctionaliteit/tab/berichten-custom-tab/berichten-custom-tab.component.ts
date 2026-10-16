@@ -13,7 +13,7 @@ import {
   IconService,
   NotificationModule,
 } from 'carbon-components-angular';
-import { EMPTY, forkJoin, Observable, of, switchMap, tap } from 'rxjs';
+import { EMPTY, forkJoin, Observable, of, switchMap, take, tap } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BerichtenListComponent } from '../../components/berichten/berichten-list/berichten-list.component';
 import { StuurBerichtComponent } from '../../components/berichten/stuur-bericht/stuur-bericht.component';
@@ -27,6 +27,7 @@ import { UserNotificationService } from '../../service/user-notification.service
 import { ActieverzoekId } from '../../types/actieverzoek-id.type';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { capitalize } from '../../utils/capitalize';
+import { Actieverzoek } from '../../models/actieverzoek.model';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -151,7 +152,7 @@ export class BerichtenCustomTabComponent implements OnInit {
   ): Observable<string> {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
-      actieverzoek: this.actieverzoekService.getActieverzoek(actieverzoekId),
+      actieverzoek: this.fetchActieverzoek(actieverzoekId),
     }).pipe(
       tap(({ swfPluginProperties }) => {
         this.oinNumber.set(swfPluginProperties.oinNummer);
@@ -165,6 +166,18 @@ export class BerichtenCustomTabComponent implements OnInit {
       }),
       tap((receiver: string) => {
         this.otherParticipant.set(receiver);
+      }),
+    );
+  }
+
+  private fetchActieverzoek(actieverzoekId: ActieverzoekId) {
+    return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
+      take(1),
+      switchMap((actieverzoek: Actieverzoek) => {
+        return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+          toBusinessKey(this.getBusinessKey()),
+          actieverzoek,
+        );
       }),
     );
   }
