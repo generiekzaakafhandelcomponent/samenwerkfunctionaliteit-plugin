@@ -1,4 +1,7 @@
-import { BerichtenOverzichtResponse } from '../dto/berichten.dto';
+import {
+  BerichtenOverzichtResponse,
+  BerichtResponse,
+} from '../dto/berichten.dto';
 import { PostBerichtResponseDto } from '../dto/post-bericht-response.dto';
 import { Bericht, Message } from '../models/bericht.model';
 
@@ -29,7 +32,17 @@ export function mapBerichtenOverzichtResponseToMessages(
   );
 }
 
-function mapBerichtToMessage(bericht: Bericht): Message {
+export function mapBerichtenOverzichtResponseToBerichten(
+  dto: BerichtenOverzichtResponse | undefined,
+): Bericht[] {
+  if (!dto?._embedded?.berichten) return [];
+
+  return dto?._embedded?.berichten.map(
+    (bericht): Bericht => mapBerichtResponseToBericht(bericht),
+  );
+}
+
+function mapBerichtToMessage(bericht: BerichtResponse): Message {
   return {
     messageId: bericht.berichtId,
     createdOn: new Date(bericht.creatieDatumTijd),
@@ -39,5 +52,19 @@ function mapBerichtToMessage(bericht: Bericht): Message {
     samenwerkingId: bericht.samenwerkingId,
     sender: bericht.zender,
     senderName: bericht.zenderNaam,
+  };
+}
+
+function mapBerichtResponseToBericht(bericht: BerichtResponse): Bericht {
+  return {
+    berichtId: bericht.berichtId,
+    creatieDatumTijd: bericht.creatieDatumTijd,
+    inhoud: bericht.inhoud,
+    ontvanger: bericht.ontvanger,
+    ontvangerNaam: bericht.ontvangerNaam,
+    samenwerkingId: bericht.samenwerkingId,
+    zender: bericht.zender,
+    zenderNaam: bericht.zenderNaam,
+    actieverzoekId: bericht.actieverzoekId,
   };
 }
