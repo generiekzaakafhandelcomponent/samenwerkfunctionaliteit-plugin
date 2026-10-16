@@ -8,12 +8,16 @@ import {
   mapPostBerichtResponseDtoToBericht,
 } from '../mapper/bericht.mapper';
 import { Bericht, Message } from '../models/bericht.model';
+import { ActieverzoekId } from '../types/actieverzoek-id.type';
 
 @Injectable({ providedIn: 'root' })
 export class BerichtenService {
   berichtenClient = inject(BerichtenClient);
 
-  postBericht(actieverzoekId: string, bericht: string): Observable<Bericht> {
+  postBericht(
+    actieverzoekId: ActieverzoekId,
+    bericht: string,
+  ): Observable<Bericht> {
     const berichtBody: PostBerichtRequestDto = {
       bericht: bericht.trim(),
     };
@@ -22,13 +26,13 @@ export class BerichtenService {
       .pipe(map(mapPostBerichtResponseDtoToBericht));
   }
 
-  getMessages(actieverzoekId: string): Observable<Message[]> {
+  getMessages(actieverzoekId: ActieverzoekId): Observable<Message[]> {
     return this.berichtenClient
       .getBerichten(actieverzoekId)
       .pipe(map(mapBerichtenOverzichtResponseToMessages));
   }
 
-  getBerichten(actieverzoekId: string): Observable<Bericht[]> {
+  getBerichten(actieverzoekId: ActieverzoekId): Observable<Bericht[]> {
     return this.berichtenClient
       .getBerichten(actieverzoekId)
       .pipe(map(mapBerichtenOverzichtResponseToBerichten));
