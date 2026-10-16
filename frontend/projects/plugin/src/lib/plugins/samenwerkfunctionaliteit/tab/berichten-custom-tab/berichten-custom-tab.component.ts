@@ -28,6 +28,7 @@ import { ActieverzoekId } from '../../types/actieverzoek-id.type';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { capitalize } from '../../utils/capitalize';
 import { Actieverzoek } from '../../models/actieverzoek.model';
+import { isActieverzoekFinalStatus } from '../../types/actieverzoek-status.type';
 
 @Component({
   selector: 'berichten-custom-tab',
@@ -174,10 +175,14 @@ export class BerichtenCustomTabComponent implements OnInit {
     return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
       take(1),
       switchMap((actieverzoek: Actieverzoek) => {
-        return this.swfDocumentService.saveSwfArchiveCopyToDocument(
-          toBusinessKey(this.getBusinessKey()),
-          actieverzoek,
-        );
+        if (!isActieverzoekFinalStatus(actieverzoek.status)) {
+          return of(actieverzoek);
+        } else {
+          return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+            this.getBusinessKey(),
+            actieverzoek,
+          );
+        }
       }),
     );
   }

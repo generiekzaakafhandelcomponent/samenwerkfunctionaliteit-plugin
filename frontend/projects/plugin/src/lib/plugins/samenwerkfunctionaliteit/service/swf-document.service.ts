@@ -16,11 +16,10 @@ import { toActieverzoekId } from '../types/actieverzoek-id.type';
 import { BusinessKey } from '../types/business-key.type';
 import { toOpenZaakId } from '../types/open-zaak-id.type';
 import { toSamenwerkingId } from '../types/samenwerking-id.type';
-import { Actieverzoek } from '../models/actieverzoek.model';
 import { NotificatieService } from './notificatie.service';
 import { SamenwerkingService } from './samenwerking.service';
 import { BerichtenService } from './berichten.service';
-import { isActieverzoekFinalStatus } from '../types/actieverzoek-status.type';
+import { ActieverzoekService } from './actieverzoek.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +29,7 @@ export class SwfDocumentService implements OnDestroy {
     ValtimoDocumentService,
   );
   private readonly samenwerkingService = inject(SamenwerkingService);
+  private readonly actieverzoekService = inject(ActieverzoekService);
   private readonly notificatieService = inject(NotificatieService);
   private readonly berichtenService = inject(BerichtenService);
 
@@ -108,34 +108,27 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   /**
-   * Saves an SwfArchiveCopy to the document using the supplied businessKey and actieverzoek.
-   * this method asserts that if the actieverzoek status has reached a "final" status,
-   * otherwise returns an observable of it's supplied actieverzoek
+   * Saves an SwfArchiveCopy to the document using the given businessKey,
+   * and returns the given value as observable.
    * @param documentId The document ID, converted to BusinessKey, to look up.
-   * @param actieverzoek The actieverzoek that has reached a final status.
-   * @returns An observable of the supplied Actieverzoek, whether the copy was saved or not.
+   * @param value Value to continue as observable stream.
+   * @returns An observable, whether the copy was saved or not.
    */
-  saveSwfArchiveCopyToDocument(
+  saveSwfArchiveCopyToDocument<T>(
     documentId: BusinessKey,
-    actieverzoek: Actieverzoek,
-  ): Observable<Actieverzoek> {
-    if (!isActieverzoekFinalStatus(actieverzoek.status)) {
-      return of(actieverzoek);
-    } else {
-      return forkJoin({
-        swfArchiveCopy: this.aggregateSwfDataToSwfArchiveCopy(actieverzoek),
-        valtimoDoc: this.valtimoDocumentService.getDocument(
-          documentId.toString(),
-        ),
-      }).pipe(
-        switchMap((data) =>
-          this.modify(data.valtimoDoc, documentId, data.swfArchiveCopy),
-        ),
-        map(() => {
-          return actieverzoek;
-        }),
-      );
-    }
+    value: T,
+  ): Observable<T> {
+    return forkJoin({
+      swfArchiveCopy: this.aggregateSwfDataToSwfArchiveCopy(documentId),
+      valtimoDoc: this.valtimoDocumentService.getDocument(
+        documentId.toString(),
+      ),
+    }).pipe(
+      switchMap((data) =>
+        this.modify(data.valtimoDoc, documentId, data.swfArchiveCopy),
+      ),
+      map(() => value),
+    );
   }
 
   private mapValtimoDocumentToSwfCaseProperties(
@@ -170,26 +163,30 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   private aggregateSwfDataToSwfArchiveCopy(
-    actieverzoek: Actieverzoek,
+    documentId: BusinessKey,
   ): Observable<SwfArchiveCopy> {
-    return forkJoin({
-      samenwerking: this.samenwerkingService.getSamenwerking(
-        actieverzoek.samenwerkingId,
-      ),
-      notificaties: this.notificatieService.getAllNotificaties(
-        actieverzoek.samenwerkingId,
-      ),
-      berichten: this.berichtenService.getBerichten(
-        actieverzoek.actieverzoekId,
-      ),
-    }).pipe(
-      map((aggregate): SwfArchiveCopy => {
+    return this.getSamenwerkingProperties(documentId).pipe(
+      switchMap((data) => {
+        return forkJoin({
+          samenwerking: this.samenwerkingService.getSamenwerking(
+            data.samenwerkingId,
+          ),
+          actieverzoek: this.actieverzoekService.getActieverzoek(
+            toActieverzoekId(data.actieverzoekId),
+          ),
+          notificaties: this.notificatieService.getAllNotificaties(
+            data.samenwerkingId,
+          ),
+          berichten: this.berichtenService.getBerichten(data.actieverzoekId),
+        });
+      }),
+      map((swfArchiveCopy): SwfArchiveCopy => {
         return {
           dateTime: new Date(),
-          samenwerking: aggregate.samenwerking,
-          actieverzoek: actieverzoek,
-          notificaties: aggregate.notificaties,
-          berichten: aggregate.berichten,
+          samenwerking: swfArchiveCopy.samenwerking,
+          actieverzoek: swfArchiveCopy.actieverzoek,
+          notificaties: swfArchiveCopy.notificaties,
+          berichten: swfArchiveCopy.berichten,
         };
       }),
     );

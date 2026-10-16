@@ -16,6 +16,7 @@ import {
   finalize,
   forkJoin,
   Observable,
+  of,
   switchMap,
   take,
   takeWhile,
@@ -37,6 +38,7 @@ import {
   ActieverzoekStatusType,
   ActieverzoekStatusTypeOption,
   getActieverzoekTypeText,
+  isActieverzoekFinalStatus,
 } from '../../../types/actieverzoek-status.type';
 import { BusinessKey, toBusinessKey } from '../../../types/business-key.type';
 import { DocumentListComponent } from '../../document-list/document-list.component';
@@ -180,10 +182,14 @@ export class SwfInformatiePaginaComponent implements OnInit {
     return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
       take(1),
       switchMap((actieverzoek: Actieverzoek) => {
-        return this.swfDocumentService.saveSwfArchiveCopyToDocument(
-          toBusinessKey(this.documentId),
-          actieverzoek,
-        );
+        if (!isActieverzoekFinalStatus(actieverzoek.status)) {
+          return of(actieverzoek);
+        } else {
+          return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+            toBusinessKey(this.documentId),
+            actieverzoek,
+          );
+        }
       }),
     );
   }
