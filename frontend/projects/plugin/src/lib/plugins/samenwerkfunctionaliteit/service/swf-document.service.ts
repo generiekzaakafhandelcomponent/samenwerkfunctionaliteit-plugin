@@ -7,11 +7,11 @@ import {
   ModifyDocumentRequest,
 } from '@valtimo/document';
 import { forkJoin, map, Observable, of, Subject, switchMap, tap } from 'rxjs';
-import { SamenwerkfunctionaliteitDocument } from '../dto/document-content.dto';
 import {
+  SamenwerkfunctionaliteitDocument,
   SwfArchiveCopy,
-  SwfCaseProperties,
-} from '../interface/swf-case-properties.interface';
+} from '../dto/document-content.dto';
+import { SwfCaseProperties } from '../interface/swf-case-properties.interface';
 import { toActieverzoekId } from '../types/actieverzoek-id.type';
 import { BusinessKey } from '../types/business-key.type';
 import { toOpenZaakId } from '../types/open-zaak-id.type';
@@ -199,7 +199,7 @@ export class SwfDocumentService implements OnDestroy {
   ): Observable<DocumentResult> {
     const request: ModifyDocumentRequest = {
       content: this.mergeSwfContentWith(
-        this.contentOf(document),
+        this.swfDocumentContentOf(document),
         swfArchiveCopy,
       ),
       documentId: businessKey.toString(),
@@ -209,9 +209,9 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   private mergeSwfContentWith(
-    content: SwfCaseProperties,
+    content: SamenwerkfunctionaliteitDocument,
     data: SwfArchiveCopy,
-  ): SwfCaseProperties {
+  ): SamenwerkfunctionaliteitDocument {
     return {
       ...content,
       archiveringskopie: {
@@ -224,7 +224,9 @@ export class SwfDocumentService implements OnDestroy {
     };
   }
 
-  private contentOf(document: ValtimoDocument): SwfCaseProperties {
-    return document.content as SwfCaseProperties;
+  private swfDocumentContentOf(
+    document: ValtimoDocument,
+  ): SamenwerkfunctionaliteitDocument {
+    return document.content as SamenwerkfunctionaliteitDocument;
   }
 }
