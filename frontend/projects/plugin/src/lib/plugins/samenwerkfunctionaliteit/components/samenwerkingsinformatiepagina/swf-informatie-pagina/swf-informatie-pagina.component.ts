@@ -66,11 +66,11 @@ import { UpdateStatusModalComponent } from '../update-status-modal/update-status
   styleUrl: './swf-informatie-pagina.component.scss',
 })
 export class SwfInformatiePaginaComponent implements OnInit {
-  samenwerkingService = inject(SamenwerkingService);
-  swfDocumentService = inject(SwfDocumentService);
-  actieverzoekService = inject(ActieverzoekService);
-  translateService = inject(TranslateService);
-  route = inject(ActivatedRoute);
+  private readonly samenwerkingService = inject(SamenwerkingService);
+  private readonly swfDocumentService = inject(SwfDocumentService);
+  private readonly actieverzoekService = inject(ActieverzoekService);
+  private readonly translateService = inject(TranslateService);
+  readonly route = inject(ActivatedRoute);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   isSamenwerkingDossier: WritableSignal<boolean> = signal(false);
