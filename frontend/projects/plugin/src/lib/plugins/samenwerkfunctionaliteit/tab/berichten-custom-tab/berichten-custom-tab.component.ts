@@ -24,7 +24,6 @@ import { BerichtenService } from '../../service/berichten.service';
 import { SwfDocumentService } from '../../service/swf-document.service';
 import { SwfPluginService } from '../../service/swf-plugin.service';
 import { UserNotificationService } from '../../service/user-notification.service';
-import { ActieverzoekId } from '../../types/actieverzoek-id.type';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
 import { capitalize } from '../../utils/capitalize';
 import { Actieverzoek } from '../../models/actieverzoek.model';
@@ -121,9 +120,7 @@ export class BerichtenCustomTabComponent implements OnInit {
             messages: this.berichtenService.getMessages(
               swfCaseProperties.actieverzoekId,
             ),
-            otherParticipant: this.fetchOtherParticipant(
-              swfCaseProperties.actieverzoekId,
-            ),
+            otherParticipant: this.fetchOtherParticipant(swfCaseProperties),
           });
         }),
         tap((result) => {
@@ -149,11 +146,11 @@ export class BerichtenCustomTabComponent implements OnInit {
   }
 
   private fetchOtherParticipant(
-    actieverzoekId: ActieverzoekId,
+    swfCaseProperties: SwfCaseProperties,
   ): Observable<string> {
     return forkJoin({
       swfPluginProperties: this.swfPluginService.getSwfPluginProperties(),
-      actieverzoek: this.fetchActieverzoek(actieverzoekId),
+      actieverzoek: this.fetchActieverzoek(swfCaseProperties),
     }).pipe(
       tap(({ swfPluginProperties }) => {
         this.oinNumber.set(swfPluginProperties.oinNummer);
@@ -172,20 +169,23 @@ export class BerichtenCustomTabComponent implements OnInit {
   }
 
   private fetchActieverzoek(
-    actieverzoekId: ActieverzoekId,
+    swfCaseProperties: SwfCaseProperties,
   ): Observable<Actieverzoek> {
-    return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
-      take(1),
-      switchMap((actieverzoek: Actieverzoek) => {
-        if (!isActieverzoekFinalStatus(actieverzoek.status)) {
-          return of(actieverzoek);
-        } else {
-          return this.swfDocumentService.saveSwfArchiveCopyToDocument(
-            this.getBusinessKey(),
-            actieverzoek,
-          );
-        }
-      }),
-    );
+    return this.actieverzoekService
+      .getActieverzoek(swfCaseProperties.actieverzoekId)
+      .pipe(
+        take(1),
+        switchMap((actieverzoek: Actieverzoek) => {
+          if (!isActieverzoekFinalStatus(actieverzoek.status)) {
+            return of(actieverzoek);
+          } else {
+            return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+              this.getBusinessKey(),
+              swfCaseProperties,
+              actieverzoek,
+            );
+          }
+        }),
+      );
   }
 }

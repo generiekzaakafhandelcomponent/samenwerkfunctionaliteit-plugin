@@ -20,6 +20,8 @@ import { NotificatieService } from './notificatie.service';
 import { SamenwerkingService } from './samenwerking.service';
 import { BerichtenService } from './berichten.service';
 import { ActieverzoekService } from './actieverzoek.service';
+import { mapMessageToBericht } from '../mapper/bericht.mapper';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +34,7 @@ export class SwfDocumentService implements OnDestroy {
   private readonly actieverzoekService = inject(ActieverzoekService);
   private readonly notificatieService = inject(NotificatieService);
   private readonly berichtenService = inject(BerichtenService);
+  private readonly logger = inject(NGXLogger);
 
   private samenwerkingPropsCache: Map<BusinessKey, SwfCaseProperties> = new Map<
     BusinessKey,
@@ -109,24 +112,34 @@ export class SwfDocumentService implements OnDestroy {
 
   /**
    * Saves an SwfArchiveCopy to the document using the given businessKey,
-   * and returns the given value as observable.
+   * and returns the given value as observable. This method only saves if an
+   * archiveringskopie is not already saved in the document.
    * @param documentId The document ID, converted to BusinessKey, to look up.
+   * @param swfCaseProperties
    * @param value Value to continue as observable stream.
    * @returns An observable, whether the copy was saved or not.
    */
   saveSwfArchiveCopyToDocument<T>(
     documentId: BusinessKey,
+    swfCaseProperties: SwfCaseProperties,
     value: T,
   ): Observable<T> {
     return forkJoin({
-      swfArchiveCopy: this.aggregateSwfDataToSwfArchiveCopy(documentId),
+      swfArchiveCopy: this.aggregateSwfDataToSwfArchiveCopy(swfCaseProperties),
       valtimoDoc: this.valtimoDocumentService.getDocument(
         documentId.toString(),
       ),
     }).pipe(
-      switchMap((data) =>
-        this.modify(data.valtimoDoc, documentId, data.swfArchiveCopy),
-      ),
+      switchMap((data) => {
+        if (!this.swfDocumentContentOf(data.valtimoDoc).archiveringskopie) {
+          return this.modify(data.valtimoDoc, documentId, data.swfArchiveCopy);
+        } else {
+          this.logger.info(
+            `Skipping saving SWF archive copy for ${documentId}; already exists.`,
+          );
+          return of(value);
+        }
+      }),
       map(() => value),
     );
   }
@@ -163,30 +176,29 @@ export class SwfDocumentService implements OnDestroy {
   }
 
   private aggregateSwfDataToSwfArchiveCopy(
-    documentId: BusinessKey,
+    swfCaseProperties: SwfCaseProperties,
   ): Observable<SwfArchiveCopy> {
-    return this.getSamenwerkingProperties(documentId).pipe(
-      switchMap((data) => {
-        return forkJoin({
-          samenwerking: this.samenwerkingService.getSamenwerking(
-            data.samenwerkingId,
-          ),
-          actieverzoek: this.actieverzoekService.getActieverzoek(
-            toActieverzoekId(data.actieverzoekId),
-          ),
-          notificaties: this.notificatieService.getAllNotificaties(
-            data.samenwerkingId,
-          ),
-          berichten: this.berichtenService.getBerichten(data.actieverzoekId),
-        });
-      }),
+    return forkJoin({
+      samenwerking: this.samenwerkingService.getSamenwerking(
+        swfCaseProperties.samenwerkingId,
+      ),
+      actieverzoek: this.actieverzoekService.getActieverzoek(
+        toActieverzoekId(swfCaseProperties.actieverzoekId),
+      ),
+      notificaties: this.notificatieService.getAllNotificaties(
+        swfCaseProperties.samenwerkingId,
+      ),
+      messages: this.berichtenService.getMessages(
+        swfCaseProperties.actieverzoekId,
+      ),
+    }).pipe(
       map((swfArchiveCopy): SwfArchiveCopy => {
         return {
           dateTime: new Date(),
           samenwerking: swfArchiveCopy.samenwerking,
           actieverzoek: swfArchiveCopy.actieverzoek,
           notificaties: swfArchiveCopy.notificaties,
-          berichten: swfArchiveCopy.berichten,
+          berichten: swfArchiveCopy.messages.map(mapMessageToBericht),
         };
       }),
     );
