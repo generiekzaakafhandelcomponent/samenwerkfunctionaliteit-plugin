@@ -3,7 +3,7 @@ import { SamenwerkingProperties } from './samenwerking-properties.dto';
 import { Samenwerking } from '../models/samenwerking.model';
 import { Actieverzoek } from '../models/actieverzoek.model';
 import { Notificatie } from '../models/notificatie.model';
-import { Bericht } from '../models/bericht.model';
+import { BerichtDto } from './berichten.dto';
 
 export interface SamenwerkfunctionaliteitDocument {
   samenwerkingProperties: SamenwerkingProperties;
@@ -17,5 +17,5 @@ export interface SwfArchiveCopy {
   samenwerking: Samenwerking;
   actieverzoek: Actieverzoek;
   notificaties: Notificatie[];
-  berichten: Bericht[];
+  berichten: BerichtDto[];
 }

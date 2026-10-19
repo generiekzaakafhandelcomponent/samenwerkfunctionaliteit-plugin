@@ -1,7 +1,4 @@
-import {
-  BerichtenOverzichtResponse,
-  BerichtResponse,
-} from '../dto/berichten.dto';
+import { BerichtenOverzichtResponse, BerichtDto } from '../dto/berichten.dto';
 import { PostBerichtResponseDto } from '../dto/post-bericht-response.dto';
 import { Bericht, Message } from '../models/bericht.model';
 
@@ -42,8 +39,9 @@ export function mapBerichtenOverzichtResponseToBerichten(
   );
 }
 
-function mapBerichtToMessage(bericht: BerichtResponse): Message {
+function mapBerichtToMessage(bericht: BerichtDto): Message {
   return {
+    actieverzoekId: bericht.actieverzoekId,
     messageId: bericht.berichtId,
     createdOn: new Date(bericht.creatieDatumTijd),
     content: bericht.inhoud,
@@ -55,7 +53,21 @@ function mapBerichtToMessage(bericht: BerichtResponse): Message {
   };
 }
 
-function mapBerichtResponseToBericht(bericht: BerichtResponse): Bericht {
+export function mapMessageToBericht(message: Message): BerichtDto {
+  return {
+    actieverzoekId: message.actieverzoekId,
+    berichtId: message.messageId,
+    creatieDatumTijd: message.createdOn.toString(),
+    inhoud: message.content,
+    ontvanger: message.receiver,
+    ontvangerNaam: message.receiverName,
+    samenwerkingId: message.samenwerkingId,
+    zender: message.sender,
+    zenderNaam: message.senderName,
+  };
+}
+
+function mapBerichtResponseToBericht(bericht: BerichtDto): Bericht {
   return {
     berichtId: bericht.berichtId,
     creatieDatumTijd: bericht.creatieDatumTijd,

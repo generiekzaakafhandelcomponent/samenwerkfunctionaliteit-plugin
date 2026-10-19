@@ -8,10 +8,10 @@ export interface BerichtenOverzichtResponse {
 }
 
 interface BerichtenResponse {
-  berichten: BerichtResponse[];
+  berichten: BerichtDto[];
 }
 
-export interface BerichtResponse {
+export interface BerichtDto {
   _links?: Links;
   actieverzoekId: string;
   berichtId: string;

@@ -31,10 +31,4 @@ export class BerichtenService {
       .getBerichten(actieverzoekId)
       .pipe(map(mapBerichtenOverzichtResponseToMessages));
   }
-
-  getBerichten(actieverzoekId: ActieverzoekId): Observable<Bericht[]> {
-    return this.berichtenClient
-      .getBerichten(actieverzoekId)
-      .pipe(map(mapBerichtenOverzichtResponseToBerichten));
-  }
 }
