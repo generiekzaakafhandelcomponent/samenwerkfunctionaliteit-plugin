@@ -20,6 +20,7 @@ import { BerichtenService } from '../../../service/berichten.service';
 import { SwfDocumentService } from '../../../service/swf-document.service';
 import { UserNotificationService } from '../../../service/user-notification.service';
 import { toBusinessKey } from '../../../types/business-key.type';
+import { toActieverzoekId } from '../../../types/actieverzoek-id.type';
 
 @Component({
   selector: 'stuur-bericht',
@@ -64,7 +65,6 @@ export class StuurBerichtComponent {
   ngOnInit() {
     this.iconService.registerAll([Send32]);
 
-
     this.retrieveActieverzoekId();
   }
 
@@ -74,7 +74,7 @@ export class StuurBerichtComponent {
     }
     this.isSubmitting.set(true);
     this.berichtenService
-      .postBericht(this.actieverzoekId, this.message)
+      .postBericht(toActieverzoekId(this.actieverzoekId), this.message)
       .pipe(
         finalize(() => {
           this.isSubmitting.set(false);
@@ -110,10 +110,10 @@ export class StuurBerichtComponent {
     }
 
     this.getActieverzoekId(documentId).subscribe({
-      next: actieverzoekId => {
+      next: (actieverzoekId) => {
         this.actieverzoekId = actieverzoekId;
       },
-      error: error => {
+      error: (error) => {
         if (error instanceof NoActieverzoekIdError) {
           this.notificationService.showError({
             titleKey:
@@ -123,9 +123,11 @@ export class StuurBerichtComponent {
           });
         } else {
           this.notificationService.showError({
-            titleKey: 'samenwerkfunctionaliteit.feedback.userNotification.generic.failure.title',
-            messageKey: 'samenwerkfunctionaliteit.feedback.userNotification.generic.failure.message'
-          })
+            titleKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.generic.failure.title',
+            messageKey:
+              'samenwerkfunctionaliteit.feedback.userNotification.generic.failure.message',
+          });
         }
 
         this.logger.error(error);
