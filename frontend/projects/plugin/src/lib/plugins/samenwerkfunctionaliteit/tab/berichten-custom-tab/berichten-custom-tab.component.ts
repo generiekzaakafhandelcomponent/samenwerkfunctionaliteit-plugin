@@ -171,7 +171,9 @@ export class BerichtenCustomTabComponent implements OnInit {
     );
   }
 
-  private fetchActieverzoek(actieverzoekId: ActieverzoekId) {
+  private fetchActieverzoek(
+    actieverzoekId: ActieverzoekId,
+  ): Observable<Actieverzoek> {
     return this.actieverzoekService.getActieverzoek(actieverzoekId).pipe(
       take(1),
       switchMap((actieverzoek: Actieverzoek) => {
