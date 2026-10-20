@@ -207,7 +207,7 @@ class SamenwerkfunctionaliteitPlugin(
             )
 
         val notificaties =
-            this.samenwerkfunctionaliteitService.getSamenwerkingNotificaties(
+            samenwerkfunctionaliteitService.getSamenwerkingNotificaties(
                 properties = properties,
                 samenwerkingId = samenwerkingId,
             )
