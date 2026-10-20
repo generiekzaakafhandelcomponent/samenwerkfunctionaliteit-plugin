@@ -242,7 +242,7 @@
     <bpmn:sequenceFlow id="Flow_1myivxa" sourceRef="Gateway_1ahkxkb" targetRef="Activity_GetSamenwerking">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${selectedDemo == "getSamenwerking"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="Activity_16o0z23" name="Log API Response" camunda:expression="${valueResolverDelegateService.handleValue(execution, &#34;doc:/apiResponse&#34;, notificaties)}">
+    <bpmn:serviceTask id="Activity_16o0z23" name="Log API Response" camunda:expression="${valueResolverDelegateService.handleValue(execution, &#34;doc:/apiResponse&#34;, samenwerking)}">
       <bpmn:extensionElements>
         <camunda:inputOutput />
       </bpmn:extensionElements>
