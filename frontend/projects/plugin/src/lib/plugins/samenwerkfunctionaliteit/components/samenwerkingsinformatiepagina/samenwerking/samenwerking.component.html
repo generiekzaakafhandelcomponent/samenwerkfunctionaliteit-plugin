@@ -33,7 +33,7 @@
       <input
         cdsText
         readonly="readonly"
-        [value]="samenwerking().samenwerkVorm | titlecase"
+        [value]="removeUnderscore(samenwerking().samenwerkVorm) | titlecase"
       >
     </cds-text-label>
     <cds-text-label>
@@ -41,7 +41,7 @@
       <input
         cdsText
         readonly="readonly"
-        [value]="removeUnderscore(samenwerking().samenwerkDoel) | titlecase"
+        [value]="samenwerking().samenwerkDoel"
       >
     </cds-text-label>
     <cds-text-label>

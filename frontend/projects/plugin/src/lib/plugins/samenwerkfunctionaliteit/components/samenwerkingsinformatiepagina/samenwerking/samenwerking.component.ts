@@ -16,6 +16,6 @@ export class SamenwerkingComponent {
   capitalize = capitalize;
 
   protected removeUnderscore(text: string): string{
-    return text.replace('_', ' ');
+    return text.replaceAll('_', ' ');
   }
 }
