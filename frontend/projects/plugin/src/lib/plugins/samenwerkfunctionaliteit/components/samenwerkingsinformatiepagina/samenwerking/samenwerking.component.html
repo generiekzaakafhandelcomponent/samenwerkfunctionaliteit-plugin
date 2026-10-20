@@ -41,7 +41,7 @@
       <input
         cdsText
         readonly="readonly"
-        [value]="samenwerking().samenwerkDoel | titlecase"
+        [value]="transformToTitle(samenwerking().samenwerkDoel)"
       >
     </cds-text-label>
     <cds-text-label>
