@@ -7,8 +7,17 @@ export const ActieverzoekStatusTypes = {
   Ready: 'READY',
 } as const;
 
+export const ActieverzoekFinalStatusTypes = {
+  Rejected: 'REJECTED',
+  Withdrawn: 'WITHDRAWN',
+  Ready: 'READY',
+} as const;
+
 export type ActieverzoekStatusType =
   (typeof ActieverzoekStatusTypes)[keyof typeof ActieverzoekStatusTypes];
+
+export type ActieverzoekFinalStatusType =
+  (typeof ActieverzoekFinalStatusTypes)[keyof typeof ActieverzoekFinalStatusTypes];
 
 export type ActieverzoekStatusTypeOption = {
   value: ActieverzoekStatusType;
@@ -44,4 +53,14 @@ export function getActieverzoekTypeText(
     default:
       throw Error('Unknown actieverzoek status type');
   }
+}
+
+export function isActieverzoekFinalStatus(
+  status: ActieverzoekStatusType,
+): status is ActieverzoekFinalStatusType {
+  return (
+    status === ActieverzoekFinalStatusTypes.Rejected ||
+    status === ActieverzoekFinalStatusTypes.Withdrawn ||
+    status === ActieverzoekFinalStatusTypes.Ready
+  );
 }
