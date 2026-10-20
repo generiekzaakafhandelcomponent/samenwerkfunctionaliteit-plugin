@@ -3,26 +3,26 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormModule, FormOutput, InputModule } from "@valtimo/components";
 import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule } from "@valtimo/plugin";
 import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
-import { SamenwerkingConfig } from "../../models/plugin-action-config/samenwerking-config";
+import { NotificatiesConfig } from "../../../models/notificaties-config";
 
 @Component({
-  selector: "get-samenwerking",
-  templateUrl: "./get-samenwerking-plugin-action.component.html",
+  selector: "get-samenwerking-notificaties",
+  templateUrl: "./get-samenwerking-notificaties.component.html",
   standalone: true,
-  styleUrl: "./get-samenwerking-plugin-action.component.scss",
+  styleUrl: "./get-samenwerking-notificaties.component.scss",
   imports: [InputModule, FormModule, PluginTranslatePipeModule, AsyncPipe, NgIf],
 })
-export class GetSamenwerkingPluginActionComponent implements FunctionConfigurationComponent {
+export class GetSamenwerkingNotificatiesComponent implements FunctionConfigurationComponent {
   @Input() disabled$: Observable<boolean>;
   @Input() pluginId: string;
   @Input() save$: Observable<void>;
-  @Input() prefillConfiguration$?: Observable<SamenwerkingConfig>;
+  @Input() prefillConfiguration$?: Observable<NotificatiesConfig>;
   @Output() valid: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
 
   private saveSubscription!: Subscription;
 
-  private readonly config$ = new BehaviorSubject<SamenwerkingConfig | null>(null);
+  private readonly config$ = new BehaviorSubject<NotificatiesConfig | null>(null);
   private readonly valid$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {
@@ -34,11 +34,11 @@ export class GetSamenwerkingPluginActionComponent implements FunctionConfigurati
   }
 
   formValueChange(formOutput: FormOutput): void {
-    this.config$.next(formOutput as SamenwerkingConfig);
-    this.handleValid(formOutput as SamenwerkingConfig);
+    this.config$.next(formOutput as NotificatiesConfig);
+    this.handleValid(formOutput as NotificatiesConfig);
   }
 
-  private handleValid(formOutput: SamenwerkingConfig): void {
+  private handleValid(formOutput: NotificatiesConfig): void {
     const resultPvName = formOutput.resultPvName ?? "";
     const samenwerkingId = formOutput.samenwerkingId ?? "";
 
