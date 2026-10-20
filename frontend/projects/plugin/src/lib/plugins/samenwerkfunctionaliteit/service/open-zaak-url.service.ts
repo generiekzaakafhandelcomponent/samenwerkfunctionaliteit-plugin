@@ -33,13 +33,7 @@ export class OpenZaakUrlService {
         const documentContentWithOpenZaakProperties =
           document.content as SamenwerkfunctionaliteitDocument;
         const openZaakId =
-          documentContentWithOpenZaakProperties.openzaak.identificatie;
-
-        if (!openZaakId) {
-          throw new Error(
-            `OpenZaak ID is not available in the document (searching at '${OpenZaakUrlService.OPEN_ZAAK_ID_PATH}').`,
-          );
-        }
+          documentContentWithOpenZaakProperties.openzaak?.identificatie ?? '';
 
         const zaakTypeUrl = zaakTypes[0]?.url;
 

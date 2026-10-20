@@ -106,7 +106,7 @@ export class SwfDocumentService implements OnDestroy {
         swfDocument.samenwerkingProperties.actieverzoekDetails.actieverzoekId,
       ),
       isSwfCase: swfDocument.isAutomaticallyGenerated,
-      openZaakId: toOpenZaakId(swfDocument.openzaak.identificatie),
+      openZaakId: toOpenZaakId(swfDocument.openzaak?.identificatie ?? ''),
     };
   }
 
