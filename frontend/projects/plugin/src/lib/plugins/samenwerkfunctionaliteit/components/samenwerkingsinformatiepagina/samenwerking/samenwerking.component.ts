@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { InputModule } from 'carbon-components-angular';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { DatePipe, TitleCasePipe } from '@angular/common';
@@ -14,10 +14,8 @@ import { capitalize } from '../../../utils/capitalize';
 export class SamenwerkingComponent {
   samenwerking = input.required<Samenwerking>();
   capitalize = capitalize;
-  titleCase = inject(TitleCasePipe)
 
-  protected transformToTitle(text: string): string{
-    const titleText = this.titleCase.transform(text);
-    return titleText.replace('_', ' ');
+  protected removeUnderscore(text: string): string{
+    return text.replace('_', ' ');
   }
 }
