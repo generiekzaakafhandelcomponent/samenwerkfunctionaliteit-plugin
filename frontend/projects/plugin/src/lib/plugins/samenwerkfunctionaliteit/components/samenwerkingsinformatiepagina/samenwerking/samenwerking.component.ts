@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { InputModule } from 'carbon-components-angular';
 import { Samenwerking } from '../../../models/samenwerking.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, TitleCasePipe} from '@angular/common';
 import { capitalize } from '../../../utils/capitalize';
 
 @Component({
@@ -9,13 +9,13 @@ import { capitalize } from '../../../utils/capitalize';
   templateUrl: './samenwerking.component.html',
   standalone: true,
   styleUrl: './samenwerking.component.scss',
-  imports: [InputModule, DatePipe],
+  imports: [InputModule, DatePipe, TitleCasePipe],
 })
 export class SamenwerkingComponent {
   samenwerking = input.required<Samenwerking>();
   capitalize = capitalize;
 
-  protected setVormText(text: string): string {
+  protected transformStringToNormalCase(text: string): string {
     const allLowerCase = text.toLowerCase();
     const removeUnderscore = allLowerCase.replaceAll('_', ' ');
     return capitalize(removeUnderscore);
