@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormModule, FormOutput, InputModule } from "@valtimo/components";
 import { FunctionConfigurationComponent, FunctionConfigurationData, PluginTranslatePipeModule } from "@valtimo/plugin";
 import { BehaviorSubject, combineLatest, Observable, Subscription, take } from "rxjs";
-import { NotificatiesConfig } from "../../models/notificaties-config";
+import { SamenwerkingConfig } from "../../models/plugin-action-config/samenwerking-config";
 
 @Component({
   selector: "get-samenwerking",
@@ -16,13 +16,13 @@ export class GetSamenwerkingPluginActionComponent implements FunctionConfigurati
   @Input() disabled$: Observable<boolean>;
   @Input() pluginId: string;
   @Input() save$: Observable<void>;
-  @Input() prefillConfiguration$?: Observable<NotificatiesConfig>;
+  @Input() prefillConfiguration$?: Observable<SamenwerkingConfig>;
   @Output() valid: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() configuration: EventEmitter<FunctionConfigurationData> = new EventEmitter<FunctionConfigurationData>();
 
   private saveSubscription!: Subscription;
 
-  private readonly config$ = new BehaviorSubject<NotificatiesConfig | null>(null);
+  private readonly config$ = new BehaviorSubject<SamenwerkingConfig | null>(null);
   private readonly valid$ = new BehaviorSubject<boolean>(false);
 
   ngOnInit(): void {
@@ -34,11 +34,11 @@ export class GetSamenwerkingPluginActionComponent implements FunctionConfigurati
   }
 
   formValueChange(formOutput: FormOutput): void {
-    this.config$.next(formOutput as NotificatiesConfig);
-    this.handleValid(formOutput as NotificatiesConfig);
+    this.config$.next(formOutput as SamenwerkingConfig);
+    this.handleValid(formOutput as SamenwerkingConfig);
   }
 
-  private handleValid(formOutput: NotificatiesConfig): void {
+  private handleValid(formOutput: SamenwerkingConfig): void {
     const resultPvName = formOutput.resultPvName ?? "";
     const samenwerkingId = formOutput.samenwerkingId ?? "";
 
