@@ -32,24 +32,11 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       certificate: 'Certificaat',
       oinNummer: 'OIN-Nummer',
 
-      // Get Documents:
-      'get-documentenoverzicht': 'Documenten overzicht ophalen',
-      resultPvName: 'Naam van resultaat-procesvariabele',
-      samenwerkingId: 'Samenwerking-ID',
-      aangemaaktDoor: 'Aangemaakt door',
-      negateAangemaaktDoor: 'Aangemaakt door uitsluiten',
-      aangemaaktDoorNaam: 'Aangemaakt door naam',
-      negateAangemaaktDoorNaam: 'Aangemaakt door naam uitsluiten',
-      sort: 'Sortering',
-      aantal: 'Aantal resultaten',
-      pagina: 'Pagina',
-
       variableFieldTooltip:
         "Dit veld kan zowel de letterlijke waarde, of het pad naar een (proces)variabele bevatten welke de waarde bevat (b.v. 'pv:/resultaat')",
       samenwerkfunctionaliteitUrl: 'Samenwerkfunctionaliteit-URL',
 
       // Pluginacties
-
       // Actieverzoeken
       // Haal een specifiek actieverzoek op
       'get-actieverzoek': 'Actieverzoek ophalen',
@@ -62,6 +49,36 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       isOrganisationTheReceiver:
         'De actieverzoeken filteren op organisatie, die gedefinieerd is in the plugin configuratie.',
 
+      // Berichten
+      // Haal een specifiek bericht op
+      'get-bericht': '(Nog niet geïmplementeerd) Bericht ophalen',
+
+      // Verstuur een bericht
+      'post-bericht': '(Nog niet geïmplementeerd) Bericht versturen',
+
+      // Verwijder een bericht
+      'delete-bericht': '(Nog niet geïmplementeerd) Bericht verwijderen',
+
+      // Documenten
+      // Haal een overzicht van documenten op:
+      'get-documentenoverzicht': 'Documentenoverzicht ophalen',
+      resultPvName: 'Naam van resultaat-procesvariabele',
+      samenwerkingId: 'Samenwerking-ID',
+      aangemaaktDoor: 'Aangemaakt door',
+      negateAangemaaktDoor: 'Aangemaakt door uitsluiten',
+      aangemaaktDoorNaam: 'Aangemaakt door naam',
+      negateAangemaaktDoorNaam: 'Aangemaakt door naam uitsluiten',
+      sort: 'Sortering',
+      aantal: 'Aantal resultaten',
+      pagina: 'Pagina',
+
+      // Upload een document
+      'download-document': '(Nog niet geïmplementeerd) Document downloaden',
+
+      // Download een document
+      'upload-document': '(Nog niet geïmplementeerd) Document uploaden',
+
+      // Samenwerkingen
       // Haal alle notificaties op van de samenwerking
       'get-samenwerking-notificaties':
         'Alle notificaties van de samenwerking ophalen',
@@ -82,22 +99,10 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       certificate: 'Certificate',
       oinNummer: 'OIN-Number',
 
-      // Get Documents:
-      'get-documentenoverzicht': 'Retrieve document list',
-      resultPvName: 'Result process variable name',
-      samenwerkingId: 'Collaboration ID',
-      aangemaaktDoor: 'Created by',
-      negateAangemaaktDoor: 'Exclude created by',
-      aangemaaktDoorNaam: 'Created by name',
-      negateAangemaaktDoorNaam: 'Exclude created by name',
-      sort: 'Sort',
-      aantal: 'Number of results',
-      pagina: 'Page',
-
       variableFieldTooltip:
         "This field accepts either a literal value or a path to a (process) variable containing the value (e.g. 'pv:/result')",
 
-      // Pluginacties
+      // Plugin actions
       // Actieverzoeken
       // Get a specific actieverzoek
       'get-actieverzoek': 'Request a single actieverzoek.',
@@ -111,6 +116,36 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       isOrganisationTheReceiver:
         'If the actieverzoek should be filtered on organisation.',
 
+      // Messages
+      // Fetch a specific message
+      'get-bericht': '(Not yet implemented) Fetch a specific message',
+
+      // Send a message
+      'post-bericht': '(Not yet implemented) Send a message',
+
+      // Delete a message
+      'delete-bericht': '(Not yet implemented) Delete a message',
+
+      // Documents
+      // Get Documents
+      'get-documentenoverzicht': 'Retrieve document list',
+      resultPvName: 'Result process variable name',
+      samenwerkingId: 'Collaboration ID',
+      aangemaaktDoor: 'Created by',
+      negateAangemaaktDoor: 'Exclude created by',
+      aangemaaktDoorNaam: 'Created by name',
+      negateAangemaaktDoorNaam: 'Exclude created by name',
+      sort: 'Sort',
+      aantal: 'Number of results',
+      pagina: 'Page',
+
+      // Upload a document
+      'download-document': '(Not yet implemented) Download a document',
+
+      // Download a document
+      'upload-document': '(Not yet implemented) Upload a document',
+
+      // Samenwerkingen
       // Get all notifications of the samenwerking
       'get-samenwerking-notificaties':
         'Request all notifications of the samenwerking',
