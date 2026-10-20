@@ -5,6 +5,7 @@ import { GetActieverzoekComponent } from './components/get-actieverzoek/get-acti
 import { GetAllActieverzoekenComponent } from './components/get-all-actieverzoeken/get-all-actieverzoeken.component';
 import { GetDocumentenOverzichtComponent } from './components/get-documenten-overzicht/get-documenten-overzicht.component';
 import { GetSamenwerkingNotificatiesComponent } from './components/get-samenwerking-notificaties/get-samenwerking-notificaties.component';
+import { GetSamenwerkingPluginActionComponent } from './components/get-samenwerking-plugin-action/get-samenwerking-plugin-action.component';
 import { SamenwerkfunctionaliteitPluginConfigurationComponent } from './components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component';
 
 const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
@@ -18,6 +19,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
     'delete-bericht': DeleteBerichtComponent,
     'get-documentenoverzicht': GetDocumentenOverzichtComponent,
     'get-samenwerking-notificaties': GetSamenwerkingNotificatiesComponent,
+    'get-samenwerking': GetSamenwerkingPluginActionComponent,
   },
   pluginTranslations: {
     nl: {
@@ -63,6 +65,10 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       // Haal alle notificaties op van de samenwerking
       'get-samenwerking-notificaties':
         'Alle notificaties van de samenwerking ophalen',
+
+      // Haal een specifieke samenwerking op
+      'get-samenwerking':
+        'Een specifieke samenwerking ophalen',
     },
 
     en: {
@@ -105,9 +111,13 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
       isOrganisationTheReceiver:
         'If the actieverzoek should be filtered on organisation.',
 
-      // Get alle notifications of the samenwerking
+      // Get all notifications of the samenwerking
       'get-samenwerking-notificaties':
         'Request all notifications of the samenwerking',
+
+      // Fetch a specific samenwerking
+      'get-samenwerking':
+        'Request a specific samenwerking',
     },
   },
 };
