@@ -237,7 +237,7 @@ class SamenwerkfunctionaliteitPlugin(
                 oinNummer = oinNummer,
             )
 
-        val samenwerking = this.samenwerkfunctionaliteitService.getSamenwerking(samenwerkingId, properties)
+        val samenwerking = samenwerkfunctionaliteitService.getSamenwerking(samenwerkingId, properties)
 
         operatonService.saveToOperaton(execution, resultPvName, samenwerking)
     }
