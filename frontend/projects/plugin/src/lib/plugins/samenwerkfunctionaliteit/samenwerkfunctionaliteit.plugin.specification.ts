@@ -1,11 +1,11 @@
 import { PluginSpecification } from '@valtimo/plugin';
 import { SAMENWERKFUNCTIONALITEIT_PLUGIN_LOGO_BASE64 } from './assets/samenwerkfunctionaliteit-plugin-logo';
 import { DeleteBerichtComponent } from './components/delete-bericht/delete-bericht.component';
-import { GetActieverzoekComponent } from './components/get-actieverzoek/get-actieverzoek.component';
-import { GetAllActieverzoekenComponent } from './components/get-all-actieverzoeken/get-all-actieverzoeken.component';
-import { GetDocumentenOverzichtComponent } from './components/get-documenten-overzicht/get-documenten-overzicht.component';
-import { GetSamenwerkingNotificatiesComponent } from './components/get-samenwerking-notificaties/get-samenwerking-notificaties.component';
-import { GetSamenwerkingPluginActionComponent } from './components/get-samenwerking-plugin-action/get-samenwerking-plugin-action.component';
+import { GetActieverzoekComponent } from './components/plugin-action-configuration/get-actieverzoek/get-actieverzoek.component';
+import { GetAllActieverzoekenComponent } from './components/plugin-action-configuration/get-all-actieverzoeken/get-all-actieverzoeken.component';
+import { GetDocumentenOverzichtComponent } from './components/plugin-action-configuration/get-documenten-overzicht/get-documenten-overzicht.component';
+import { GetSamenwerkingNotificatiesComponent } from './components/plugin-action-configuration/get-samenwerking-notificaties/get-samenwerking-notificaties.component';
+import { GetSamenwerkingComponent } from './components/plugin-action-configuration/get-samenwerking/get-samenwerking.component';
 import { SamenwerkfunctionaliteitPluginConfigurationComponent } from './components/samenwerkfunctionaliteit-plugin-configuration/samenwerkfunctionaliteit-plugin-configuration.component';
 
 const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
@@ -19,7 +19,7 @@ const samenwerkfunctionaliteitPluginSpecification: PluginSpecification = {
     'delete-bericht': DeleteBerichtComponent,
     'get-documentenoverzicht': GetDocumentenOverzichtComponent,
     'get-samenwerking-notificaties': GetSamenwerkingNotificatiesComponent,
-    'get-samenwerking': GetSamenwerkingPluginActionComponent,
+    'get-samenwerking': GetSamenwerkingComponent,
   },
   pluginTranslations: {
     nl: {

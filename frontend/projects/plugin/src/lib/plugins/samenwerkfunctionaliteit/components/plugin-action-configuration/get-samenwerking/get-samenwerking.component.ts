@@ -9,7 +9,7 @@ import { SamenwerkingConfig } from "../../../models/plugin-action-config/samenwe
   selector: "get-samenwerking",
   templateUrl: "./get-samenwerking.component.html",
   standalone: true,
-  styleUrl: "./get-samenwerking-plugin-action.component.scss",
+  styleUrl: "./get-samenwerking.component.scss",
   imports: [InputModule, FormModule, PluginTranslatePipeModule, AsyncPipe, NgIf],
 })
 export class GetSamenwerkingComponent implements FunctionConfigurationComponent {
