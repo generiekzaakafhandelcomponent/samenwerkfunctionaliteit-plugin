@@ -27,17 +27,47 @@ class SamenwerkfunctionaliteitValueResolverFactory(
 ) : ValueResolverFactory {
     override fun supportedPrefix(): String = SWF_VALUE_RESOLVER_PREFIX
 
-//    override fun createResolver(
-//        processInstanceId: String,
-//        variableScope: VariableScope,
-//    ): java.util.function.Function<String, Any?> {
-//        val document = processDocumentService.getDocumentId(OperatonProcessInstanceId(processInstanceId), variableScope)
-//        return createResolver(document)
-//    }
+    override fun createResolver(documentId: String): Function<String, Any?> {
+        logger.info { "createResolver(documentId: String) called with the following documentId: $documentId" }
+        println("createResolver(documentId: String) called with the following documentId: $documentId")
+        return Function { requestedValue: String ->
+            when (requestedValue) {
+                "actieverzoek" -> getActieverzoek(documentId)
 
-//  This override is called by Formio value resolver references
+                "samenwerking" -> getSamenwerking(documentId)
+
+                else -> throw IllegalArgumentException(
+                    "Unknown requested value in Samenwerkingfunctionaliteit with name: $requestedValue",
+                )
+            }
+        }
+    }
+
+    override fun createResolver(
+        processInstanceId: String,
+        variableScope: VariableScope,
+    ): Function<String, Any?> {
+        logger.info {
+            "createResolver(processInstanceId: String, variableScope: VariableScope) called with the following processInstanceId: $processInstanceId"
+        }
+        println(
+            "createResolver(processInstanceId: String, variableScope: VariableScope) called with the following processInstanceId: $processInstanceId",
+        )
+
+        val documentId =
+            processDocumentService
+                .getDocumentId(
+                    OperatonProcessInstanceId(processInstanceId),
+                    variableScope,
+                ).toString()
+
+        return createResolver(documentId)
+    }
+
+    //  This override is called by Formio value resolver references
     override fun createResolver(properties: Map<String, Any>): Function<String, Any?> {
         logger.info { "createResolver(properties: Map<String, Any>) called with the following properties: $properties" }
+        println("createResolver(properties: Map<String, Any>) called with the following properties: $properties")
 
         val documentId = properties[DOCUMENT_ID]?.toString()
         if (documentId != null) {
