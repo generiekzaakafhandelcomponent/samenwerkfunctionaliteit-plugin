@@ -83,19 +83,12 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         throw NotImplementedError()
     }
 
-    override fun createResolver(documentId: String): Function<String, Any?> {
-        logger.info { "createResolver(documentId: String) called with the following documentId: $documentId" }
-        return Function { requestedValue: String ->
-            when (requestedValue) {
-                "actieverzoek" -> getActieverzoek(documentId)
-
-                "samenwerking" -> getSamenwerking(documentId)
-
-                else -> throw IllegalArgumentException(
-                    "Unknown requested value in Samenwerkingfunctionaliteit with name: $requestedValue",
-                )
-            }
-        }
+    override fun handleValues(
+        processInstanceId: String,
+        variableScope: VariableScope?,
+        values: Map<String, Any?>,
+    ) {
+        TODO()
     }
 
     private fun getActieverzoek(documentId: String) {
