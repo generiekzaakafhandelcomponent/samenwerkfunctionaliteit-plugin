@@ -2,6 +2,24 @@
     "display": "form",
     "components": [
         {
+            "key" : "pv:samenwerking",
+            "type" : "textfield",
+            "input" : true,
+            "label" : "hiddenSamenwerking",
+            "hidden" : false,
+            "tableView" : true,
+            "attributes" : {
+                "data-testid" : "start-demo.start-pv:samenwerking"
+            },
+            "properties" : {
+                "sourceKey" : "swf:samenwerking",
+                "targetKey" : "pv:samenwerking"
+            },
+            "applyMaskOn" : "change",
+            "clearOnHide" : false,
+            "validateWhenHidden" : true
+        },
+        {
             "label": "SamenwerkingID",
             "applyMaskOn": "change",
             "tableView": true,
