@@ -14,6 +14,7 @@ export interface Bericht {
 }
 
 export interface Message {
+  actieverzoekId: string;
   messageId: string;
   createdOn: Date;
   content: string;

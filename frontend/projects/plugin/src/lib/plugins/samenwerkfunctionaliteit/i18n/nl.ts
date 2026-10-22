@@ -84,11 +84,17 @@ export const pluginNlTranslations = {
         documentListTabTitle: 'Geen documentenlijst opgehaald',
       },
       userNotification: {
-        contactYourAdmin:
-          'Neem contact op met uw beheerder als dit probleem zich vaker voordoet.',
-        failedGeneric: 'Er ging iets mis',
-        genericSuccessTitle: 'Gelukt',
-        genericSuccessMessage: 'De actie is succesvol uitgevoerd',
+        generic: {
+          success: {
+            title: 'Gelukt',
+            message: 'De actie is succesvol uitgevoerd',
+          },
+          failure: {
+            title: 'Er ging iets mis',
+            message:
+              'Neem contact op met uw beheerder als dit probleem zich vaker voordoet.',
+          }
+        },
 
         downloadDocument: {
           failure: {
@@ -101,6 +107,10 @@ export const pluginNlTranslations = {
             title: 'Document verwijderd',
             message:
               'Het document {{ filename }} is succesvol uit de samenwerking verwijderd.',
+          },
+          forbidden: {
+            title: 'Verwijderen niet toegestaan',
+            message: 'Jouw account heeft onvoldoende rechten om een bestand te verwijderen.'
           },
           failure: {
             title: 'Er ging iets mis tijdens het verwijderen van het document',
@@ -119,6 +129,10 @@ export const pluginNlTranslations = {
             title: 'Uploaden naar de Samenwerkfunctionaliteit gelukt',
             message:
               '{{ filename }} is succesvol aan de samenwerking toegevoegd.',
+          },
+          forbidden: {
+            title: 'Uploaden niet toegestaan',
+            message: 'Jouw account heeft onvoldoende rechten om een bestand te uploaden.'
           },
           failure: {
             title: 'Uploaden naar de samenwerking mislukt',
@@ -156,7 +170,8 @@ export const pluginNlTranslations = {
             },
           },
           failureMissingActieverzoekId: {
-            message: 'Het actieverzoek kon niet gevonden worden.',
+            title: 'Actieverzoek ID kon niet worden opgehaald',
+            message: 'Controleer of dit een Samenwerkfunctionaliteit-dossier is.',
           },
         },
       },

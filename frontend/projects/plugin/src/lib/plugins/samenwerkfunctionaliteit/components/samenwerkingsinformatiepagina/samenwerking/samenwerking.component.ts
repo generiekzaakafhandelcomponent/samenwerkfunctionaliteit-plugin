@@ -14,4 +14,10 @@ import { capitalize } from '../../../utils/capitalize';
 export class SamenwerkingComponent {
   samenwerking = input.required<Samenwerking>();
   capitalize = capitalize;
+
+  protected transformStringToNormalCase(text: string): string {
+    const allLowerCase = text.toLowerCase();
+    const removeUnderscore = allLowerCase.replaceAll('_', ' ');
+    return capitalize(removeUnderscore);
+  }
 }

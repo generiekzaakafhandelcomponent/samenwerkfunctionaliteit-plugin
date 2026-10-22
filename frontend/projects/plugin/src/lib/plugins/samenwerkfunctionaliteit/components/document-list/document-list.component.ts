@@ -40,7 +40,6 @@ import { DocumentTableLightComponent } from './document-table/light/document-tab
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocumentListComponent implements OnInit {
-
   private readonly documentService: DocumentService = inject(DocumentService);
   private readonly swfDocumentService: SwfDocumentService =
     inject(SwfDocumentService);
@@ -56,6 +55,7 @@ export class DocumentListComponent implements OnInit {
 
   documents: WritableSignal<Document[]> = signal<Document[]>([]);
   isLoading: WritableSignal<boolean> = signal<boolean>(true);
+  hasOpenZaakId = signal<boolean>(false);
 
   protected readonly uploadOptions: Signal<UploadOptions> = toSignal(
     this.swfPluginProperties.pipe(
@@ -63,24 +63,23 @@ export class DocumentListComponent implements OnInit {
         if (!properties.backupUploadsToDocumentenApi) {
           return of<UploadOptions>({
             uploadToDocumentenApi: false,
-          })
+          });
         }
 
         return this.getDocumentUploadTypes().pipe(
-          map((documentTypes): UploadOptions => {
-            console.log('Document types for case in Document List Component:', documentTypes);
-            return {
+          map(
+            (documentTypes): UploadOptions => ({
               uploadToDocumentenApi: true,
               documentTypes,
-            };
-          }),
+            }),
+          ),
         );
       }),
     ),
     {
       initialValue: {
         uploadToDocumentenApi: false,
-      }
+      },
     },
   );
 
@@ -101,11 +100,16 @@ export class DocumentListComponent implements OnInit {
   }
 
   private getDocumentUploadTypes(): Observable<DocumentType[]> {
-    return this.documentService.getVersionTag(this.businessKey).pipe(
-      switchMap((versionTag) =>
-        this.documentService.getDocumentTypesForCase(this.caseDefinitionKey, versionTag)
-      )
-    )
+    return this.documentService
+      .getVersionTag(this.businessKey)
+      .pipe(
+        switchMap((versionTag) =>
+          this.documentService.getDocumentTypesForCase(
+            this.caseDefinitionKey,
+            versionTag,
+          ),
+        ),
+      );
   }
 
   private get businessKey(): BusinessKey {
@@ -121,7 +125,10 @@ export class DocumentListComponent implements OnInit {
   }
 
   private get caseDefinitionKey(): string {
-    const caseDefinitionKey = this.swfDocumentService.getParam(this.route, 'caseDefinitionKey')
+    const caseDefinitionKey = this.swfDocumentService.getParam(
+      this.route,
+      'caseDefinitionKey',
+    );
 
     if (!caseDefinitionKey) {
       throw new Error('caseDefinitionKey is required to fetch document types');
@@ -145,6 +152,7 @@ export class DocumentListComponent implements OnInit {
       .getSamenwerkingProperties(this.businessKey)
       .pipe(
         tap((swfCaseProperties: SwfCaseProperties): void => {
+          this.hasOpenZaakId.set(!!swfCaseProperties.openZaakId);
           if (!swfCaseProperties.samenwerkingId) {
             throw new Error(
               'Er is geen documentenlijst beschikbaar, omdat dit dossier niet deel uitmaakt van een samenwerking.',

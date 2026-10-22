@@ -33,27 +33,23 @@ export class DocumentenlijstWidgetTabComponent implements OnInit {
     inject(SwfDocumentService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
+  private readonly documentId = this.swfDocumentService.getParam(
+    this.route,
+    'documentId',
+  );
+
   protected isLoading: WritableSignal<boolean> = signal<boolean>(true);
   protected isSamenwerkingDossier: WritableSignal<boolean> = signal(false);
+  protected hasOpenZaakId = signal<boolean>(false);
 
   protected openZaakUrl: string = '';
-  protected helperText: string = '';
 
   ngOnInit() {
-    const documentId = this.swfDocumentService.getParam(
-      this.route,
-      'documentId',
-    );
-    if (!documentId) {
-      throw new Error("Couldn't find documentId!");
-    }
-
-    this.getOpenZaakInfoAndSetHelperText(documentId);
-
-    this.setIsSamenwerkingDossier(documentId)
+    this.getOpenZaakInfo(this.documentId);
+    this.setIsSamenwerkingDossier(this.documentId);
   }
 
-  private getOpenZaakInfoAndSetHelperText(documentId: string) {
+  private getOpenZaakInfo(documentId: string) {
     const businessKey = toBusinessKey(documentId);
 
     this.openZaakUrlService
@@ -61,8 +57,10 @@ export class DocumentenlijstWidgetTabComponent implements OnInit {
       .pipe(
         take(1),
         tap((openZaakInfo) => {
-          this.openZaakUrl = openZaakInfo.searchUrl;
-          this.setHelperText();
+          if (!!openZaakInfo.id) {
+            this.hasOpenZaakId.set(true);
+            this.openZaakUrl = openZaakInfo.searchUrl;
+          }
         }),
         catchError((err) => {
           return throwError(() => {
@@ -90,10 +88,5 @@ export class DocumentenlijstWidgetTabComponent implements OnInit {
         }),
       )
       .subscribe();
-  }
-
-  private setHelperText() {
-    this.helperText =
-      'Documenten die vanuit GZAC naar de Samenwerkfunctionaliteit worden geüpload, worden daarnaast ook in Open Zaak opgeslagen. De bewaartermijn kan voor het zaaktype dat hier gebruikt worden ingesteld. Dit kan dus verschillen van de vaste bewaartermijn die de Samenwerkfunctionaliteit aanhoudt. In Open Zaak worden de documenten per actieverzoek, en niet — zoals in de Samenwerkfunctionaliteit — per samenwerking gegroepeerd. Zie de link hieronder om de lijst van documenten die zijn opgeslagen in te zien.';
   }
 }

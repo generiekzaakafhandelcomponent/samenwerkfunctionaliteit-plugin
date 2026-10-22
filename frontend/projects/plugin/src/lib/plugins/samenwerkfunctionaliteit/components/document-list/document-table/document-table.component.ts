@@ -85,7 +85,14 @@ export class DocumentTableComponent implements OnInit {
 
   documents: InputSignal<Document[]> = input<Document[]>([]);
   isSkeleton: InputSignal<boolean> = input<boolean>(true);
-  uploadOptions: InputSignal<UploadOptions> = input<UploadOptions>({ uploadToDocumentenApi: false });
+  uploadOptions: InputSignal<UploadOptions> = input<UploadOptions>({
+    uploadToDocumentenApi: false,
+  });
+  hasOpenZaakId = input<boolean>(false);
+
+  shouldUploadButtonBeEnabled = computed(() => {
+    return !this.uploadOptions().uploadToDocumentenApi || this.hasOpenZaakId();
+  });
 
   deleted = output<string>();
   uploaded = output<void>();
@@ -250,11 +257,20 @@ export class DocumentTableComponent implements OnInit {
 
               this.deleted.emit(document.documentId);
             }),
-            catchError(() => {
-              this.notificationService.showError({
-                titleKey:
-                  'samenwerkfunctionaliteit.feedback.userNotification.deleteDocument.failure.title',
-              });
+            catchError((error) => {
+              if (error.status === 403) {
+                this.notificationService.showError({
+                  titleKey:
+                    'samenwerkfunctionaliteit.feedback.userNotification.deleteDocument.forbidden.title',
+                  messageKey:
+                    'samenwerkfunctionaliteit.feedback.userNotification.deleteDocument.forbidden.message',
+                });
+              } else {
+                this.notificationService.showError({
+                  titleKey:
+                    'samenwerkfunctionaliteit.feedback.userNotification.deleteDocument.failure.title',
+                });
+              }
               return of(undefined);
             }),
           );

@@ -54,6 +54,10 @@
                     "type": "string"
                 }
             }
+        },
+        "archiveringskopie": {
+            "type": "object",
+            "properties": {}
         }
     }
 }
