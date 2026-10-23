@@ -29,6 +29,8 @@ val valtimoVersion: String by project
 val operatonVersion: String by project
 
 dependencies {
+    compileOnly("com.ritense.valtimo:valtimo-gzac-dependencies:$valtimoVersion")
+
     compileOnly("com.ritense.valtimo:plugin-valtimo")
     compileOnly("com.ritense.valtimo:process-document")
     compileOnly("com.ritense.valtimo:contract")
@@ -42,6 +44,7 @@ dependencies {
     compileOnly("io.github.oshai:kotlin-logging:$kotlinLoggingVersion")
 
     // Testing
+    testImplementation("com.ritense.valtimo:valtimo-gzac-dependencies:$valtimoVersion")
     testImplementation("com.ritense.valtimo:plugin-valtimo")
     testImplementation("com.ritense.valtimo:process-document")
     testImplementation("com.ritense.valtimo:building-block")
