@@ -2,6 +2,7 @@ import {Component, input} from "@angular/core";
 import {InputModule} from 'carbon-components-angular';
 import {Samenwerking} from "../../../models/samenwerking.model";
 import { DatePipe, TitleCasePipe} from "@angular/common";
+import { transformStringToNormalCase } from '../../../utils/string.util';
 
 
 @Component({
@@ -13,4 +14,5 @@ import { DatePipe, TitleCasePipe} from "@angular/common";
 })
 export class SamenwerkingsStatusComponent {
   samenwerking = input.required<Samenwerking>();
+  protected readonly transformStringToNormalCase = transformStringToNormalCase;
 }
