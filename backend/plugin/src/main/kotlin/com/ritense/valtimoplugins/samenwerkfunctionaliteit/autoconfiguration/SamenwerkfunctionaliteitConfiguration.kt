@@ -80,12 +80,14 @@ class SamenwerkfunctionaliteitConfiguration {
     fun samenwerkfunctionaliteitValueResolverFactory(
         samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
         processDocumentService: ProcessDocumentService,
-        samenwerkfunctionaliteitPluginController: SamenwerkfunctionaliteitPluginController,
+        pluginService: PluginService,
         documentService: JsonSchemaDocumentService,
+        objectMapper: ObjectMapper,
     ) = SamenwerkfunctionaliteitValueResolverFactory(
         samenwerkfunctionaliteitService,
         processDocumentService,
-        samenwerkfunctionaliteitPluginController,
+        pluginService,
         documentService,
+        objectMapper,
     )
 }
