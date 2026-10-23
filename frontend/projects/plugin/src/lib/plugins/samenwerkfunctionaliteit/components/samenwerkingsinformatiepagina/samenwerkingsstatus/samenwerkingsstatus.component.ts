@@ -1,8 +1,8 @@
 import {Component, input} from "@angular/core";
 import {InputModule} from 'carbon-components-angular';
 import {Samenwerking} from "../../../models/samenwerking.model";
-import { DatePipe, TitleCasePipe} from "@angular/common";
-import { transformStringToNormalCase } from '../../../utils/string.util';
+import {DatePipe} from "@angular/common";
+import {transformStringToNormalCase} from '../../../utils/string.util';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { transformStringToNormalCase } from '../../../utils/string.util';
   templateUrl: './samenwerkingsstatus.component.html',
   standalone: true,
   styleUrl: './samenwerkingsstatus.component.scss',
-  imports: [InputModule, TitleCasePipe, DatePipe],
+  imports: [InputModule, DatePipe],
 })
 export class SamenwerkingsStatusComponent {
   samenwerking = input.required<Samenwerking>();
