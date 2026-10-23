@@ -2,7 +2,10 @@ import { Component, input } from '@angular/core';
 import { InputModule } from 'carbon-components-angular';
 import { Samenwerking } from '../../../models/samenwerking.model';
 import { DatePipe } from '@angular/common';
-import { capitalize } from '../../../utils/capitalize';
+import {
+  capitalize,
+  transformStringToNormalCase,
+} from '../../../utils/string.util';
 
 @Component({
   selector: 'samenwerking',
@@ -12,6 +15,7 @@ import { capitalize } from '../../../utils/capitalize';
   imports: [InputModule, DatePipe],
 })
 export class SamenwerkingComponent {
-  samenwerking = input.required<Samenwerking>();
-  capitalize = capitalize;
+  readonly samenwerking = input.required<Samenwerking>();
+  protected readonly capitalize = capitalize;
+  protected readonly transformStringToNormalCase = transformStringToNormalCase;
 }

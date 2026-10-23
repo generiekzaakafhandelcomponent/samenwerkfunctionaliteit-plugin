@@ -9,7 +9,7 @@ import {
 import { Actieverzoek } from '../../../models/actieverzoek.model';
 import { DatePipe } from '@angular/common';
 import { InputModule } from 'carbon-components-angular';
-import { capitalize } from '../../../utils/capitalize';
+import { capitalize } from '../../../utils/string.util';
 import { TranslatePipe } from '@ngx-translate/core';
 import { getActieverzoekTypeText } from '../../../types/actieverzoek-status.type';
 
