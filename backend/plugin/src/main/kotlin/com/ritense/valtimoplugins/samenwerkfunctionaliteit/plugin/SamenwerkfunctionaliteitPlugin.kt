@@ -6,6 +6,7 @@ import com.ritense.plugin.annotation.PluginAction
 import com.ritense.plugin.annotation.PluginActionProperty
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.processlink.domain.ActivityTypeWithEventName
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.PLUGIN_KEY
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.DocumentenOverzichtQuery
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
@@ -16,7 +17,7 @@ import java.net.URI
 import java.util.UUID
 
 @Plugin(
-    key = "samenwerkfunctionaliteit",
+    key = PLUGIN_KEY,
     title = "DSO-Samenwerkfunctionaliteit Plugin",
     description = "DSO-Samenwerkfunctionaliteit Plugin",
 )
