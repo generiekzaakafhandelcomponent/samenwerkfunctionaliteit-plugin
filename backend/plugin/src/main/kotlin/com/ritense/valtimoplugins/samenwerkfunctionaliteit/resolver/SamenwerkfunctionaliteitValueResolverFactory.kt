@@ -128,8 +128,8 @@ class SamenwerkfunctionaliteitValueResolverFactory(
                 if (it.isEmpty) {
                     logger.warn { "No value found in document under '$jsonPath'" }
                 }
-            }.orElse(null)
-            .asText("")
+            }.map { it.asText("") }
+            .orElse("")
     }
 
     private fun getProperties(): SamenwerkfunctionaliteitProperties {
