@@ -16,6 +16,7 @@ import {
   finalize,
   forkJoin,
   Observable,
+  of,
   switchMap,
   take,
   takeWhile,
@@ -31,12 +32,12 @@ import { Samenwerking } from '../../../models/samenwerking.model';
 import { ActieverzoekService } from '../../../service/actieverzoek.service';
 import { SamenwerkingService } from '../../../service/samenwerking.service';
 import { SwfDocumentService } from '../../../service/swf-document.service';
-import { ActieverzoekId } from '../../../types/actieverzoek-id.type';
 import {
   ActieverzoekStatusList,
   ActieverzoekStatusType,
   ActieverzoekStatusTypeOption,
   getActieverzoekTypeText,
+  isActieverzoekFinalStatus,
 } from '../../../types/actieverzoek-status.type';
 import { BusinessKey, toBusinessKey } from '../../../types/business-key.type';
 import { DocumentListComponent } from '../../document-list/document-list.component';
@@ -64,11 +65,11 @@ import { UpdateStatusModalComponent } from '../update-status-modal/update-status
   styleUrl: './swf-informatie-pagina.component.scss',
 })
 export class SwfInformatiePaginaComponent implements OnInit {
-  samenwerkingService = inject(SamenwerkingService);
-  swfDocumentService = inject(SwfDocumentService);
-  actieverzoekService = inject(ActieverzoekService);
-  translateService = inject(TranslateService);
-  route = inject(ActivatedRoute);
+  private readonly samenwerkingService = inject(SamenwerkingService);
+  private readonly swfDocumentService = inject(SwfDocumentService);
+  private readonly actieverzoekService = inject(ActieverzoekService);
+  private readonly translateService = inject(TranslateService);
+  readonly route = inject(ActivatedRoute);
 
   samenwerking: WritableSignal<Samenwerking> = signal(null);
   isSamenwerkingDossier: WritableSignal<boolean> = signal(false);
@@ -102,7 +103,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
       .pipe(
         take(1),
         switchMap((samenwerkingProps: SwfCaseProperties) => {
-          return this.fetchActieverzoek(samenwerkingProps.actieverzoekId);
+          return this.fetchActieverzoek(samenwerkingProps);
         }),
         tap((actieverzoek) => {
           this.updateActieverzoekStatusTypes(actieverzoek);
@@ -130,9 +131,7 @@ export class SwfInformatiePaginaComponent implements OnInit {
               samenwerking: this.fetchSamenwerking(
                 samenwerkingProps.samenwerkingId,
               ),
-              actieverzoek: this.fetchActieverzoek(
-                samenwerkingProps.actieverzoekId,
-              ),
+              actieverzoek: this.fetchActieverzoek(samenwerkingProps),
             });
         }),
         tap(({ samenwerking, actieverzoek }) => {
@@ -175,11 +174,24 @@ export class SwfInformatiePaginaComponent implements OnInit {
   }
 
   private fetchActieverzoek(
-    actieverzoekId: ActieverzoekId,
+    samenwerkingProps: SwfCaseProperties,
   ): Observable<Actieverzoek> {
     return this.actieverzoekService
-      .getActieverzoek(actieverzoekId)
-      .pipe(take(1));
+      .getActieverzoek(samenwerkingProps.actieverzoekId)
+      .pipe(
+        take(1),
+        switchMap((actieverzoek: Actieverzoek) => {
+          if (!isActieverzoekFinalStatus(actieverzoek.status)) {
+            return of(actieverzoek);
+          } else {
+            return this.swfDocumentService.saveSwfArchiveCopyToDocument(
+              toBusinessKey(this.documentId),
+              samenwerkingProps,
+              actieverzoek,
+            );
+          }
+        }),
+      );
   }
 
   private actieverzoekStatusTypeOptionsFrom(

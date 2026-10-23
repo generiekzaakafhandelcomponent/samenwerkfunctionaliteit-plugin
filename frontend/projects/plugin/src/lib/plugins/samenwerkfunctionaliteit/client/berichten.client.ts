@@ -5,6 +5,7 @@ import { PostBerichtResponseDto } from '../dto/post-bericht-response.dto';
 import { Observable } from 'rxjs';
 import { BerichtenOverzichtResponse } from '../dto/berichten.dto';
 import { ACTIEVERZOEKEN_URL } from '../config/swf-plugin-config';
+import { ActieverzoekId } from '../types/actieverzoek-id.type';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class BerichtenClient {
   private readonly http: HttpClient = inject(HttpClient);
 
   postBericht(
-    actieverzoekId: string,
+    actieverzoekId: ActieverzoekId,
     bericht: PostBerichtRequestDto,
   ): Observable<PostBerichtResponseDto> {
     return this.http.post<PostBerichtResponseDto>(
@@ -22,7 +23,9 @@ export class BerichtenClient {
     );
   }
 
-  getBerichten(actieverzoekId: string): Observable<BerichtenOverzichtResponse> {
+  getBerichten(
+    actieverzoekId: ActieverzoekId,
+  ): Observable<BerichtenOverzichtResponse> {
     return this.http.get<BerichtenOverzichtResponse>(
       `/${ACTIEVERZOEKEN_URL}/${actieverzoekId}/berichten`,
     );

@@ -36,7 +36,7 @@
         cdsButton="primary"
         size="sm"
         (click)="fileInput.click()"
-        [disabled]="isUploading()"
+        [disabled]="isUploading() || !shouldUploadButtonBeEnabled()"
       >
         <span>{{
           'samenwerkfunctionaliteit.common.actions.upload' | translate
