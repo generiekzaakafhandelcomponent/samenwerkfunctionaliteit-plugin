@@ -35,13 +35,13 @@ class SamenwerkfunctionaliteitValueResolverFactory(
             when (requestedValue) {
                 "actieverzoek" -> {
                     getActieverzoek(documentId).also {
-                        logger.info { "Resolved value ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek" }
+                        logger.info { "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek" }
                     }
                 }
 
                 "samenwerking" -> {
                     getSamenwerking(documentId).also {
-                        logger.info { "Resolved value ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking" }
+                        logger.info { "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking" }
                     }
                 }
 
