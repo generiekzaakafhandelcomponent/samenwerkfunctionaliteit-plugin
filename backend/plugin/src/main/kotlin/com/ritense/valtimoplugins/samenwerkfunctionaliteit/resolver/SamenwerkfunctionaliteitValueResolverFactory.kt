@@ -36,7 +36,7 @@ class SamenwerkfunctionaliteitValueResolverFactory(
                 "actieverzoek" -> {
                     getActieverzoek(documentId).also {
                         logger.info {
-                            "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek from document $documentId"
+                            "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek from document $documentId"
                         }
                     }
                 }
@@ -44,7 +44,7 @@ class SamenwerkfunctionaliteitValueResolverFactory(
                 "samenwerking" -> {
                     getSamenwerking(documentId).also {
                         logger.info {
-                            "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking from document $documentId"
+                            "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking from document $documentId"
                         }
                     }
                 }
