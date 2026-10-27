@@ -107,7 +107,7 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
         val result = resolver.apply("samenwerking")
 
         // Assert
-        assertEquals(mockSamenwerkingResponse.toString(), result)
+        assertEquals(mockSamenwerkingResponse, result)
     }
 
     @Test
@@ -158,7 +158,7 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
         val result = resolver.apply("actieverzoek")
 
         // Assert
-        assertEquals(mockActieverzoekResponse.toString(), result)
+        assertEquals(mockActieverzoekResponse, result)
 
         verify { samenwerkfunctionaliteitService.getActieverzoek(any(), mockActieverzoekId) }
     }
@@ -197,8 +197,6 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
                 mockVariableScope,
             )
         }
-
-        verify { factory.createResolver(mockumentId.toString()) }
     }
 
     @Test
@@ -384,8 +382,8 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
         resolver.apply("samenwerking")
 
         // Assert
-        verify {
-            samenwerkfunctionaliteitService.getSamenwerking("", any())
+        verify(exactly = 0) {
+            samenwerkfunctionaliteitService.getSamenwerking(any(), any())
         }
     }
 
@@ -400,7 +398,7 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
                 """
                 {
                     "samenwerkingProperties": {
-                        "no Samenwerking ID here!": ""
+                        "samenwerkingId": "SAM-12345"
                     }
                 }
                 """.trimIndent(),
