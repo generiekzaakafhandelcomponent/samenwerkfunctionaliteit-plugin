@@ -9,6 +9,7 @@ import com.ritense.plugin.service.PluginService
 import com.ritense.processdocument.domain.impl.OperatonProcessInstanceId
 import com.ritense.processdocument.service.ProcessDocumentService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.PLUGIN_KEY
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.SamenwerkingResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
@@ -35,7 +36,7 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         Function { requestedValue: String ->
             when (requestedValue) {
                 "actieverzoek" -> {
-                    getActieverzoek(documentId).also {
+                    getActieverzoekOrNull(documentId).also {
                         logger.info {
                             "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek from document $documentId"
                         }
@@ -96,19 +97,18 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         TODO()
     }
 
-    private fun getActieverzoek(documentId: String): String {
+    private fun getActieverzoekOrNull(documentId: String): ActieverzoekResponse? {
         val actieverzoekIdString = getValueFromJsonDocument(documentId, ACTIEVERZOEK_ID_JSON_PATH)
 
         if (actieverzoekIdString.isBlank()) {
-            return ""
+            return null
         }
 
         return samenwerkfunctionaliteitService
             .getActieverzoek(
                 getProperties(),
                 UUID.fromString(actieverzoekIdString),
-            ).toString()
-            .also { logger.debug { "Retrieved actieverzoek: $it" } }
+            ).also { logger.debug { "Retrieved actieverzoek: $it" } }
     }
 
     private fun getSamenwerkingOrNull(documentId: String): SamenwerkingResponse? {
