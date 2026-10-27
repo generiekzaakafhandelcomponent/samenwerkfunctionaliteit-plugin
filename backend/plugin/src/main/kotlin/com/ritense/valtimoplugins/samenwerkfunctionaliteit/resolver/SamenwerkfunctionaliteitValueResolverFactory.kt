@@ -9,6 +9,7 @@ import com.ritense.plugin.service.PluginService
 import com.ritense.processdocument.domain.impl.OperatonProcessInstanceId
 import com.ritense.processdocument.service.ProcessDocumentService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.PLUGIN_KEY
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.SamenwerkingResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import com.ritense.valueresolver.ValueResolverFactory
@@ -42,7 +43,7 @@ class SamenwerkfunctionaliteitValueResolverFactory(
                 }
 
                 "samenwerking" -> {
-                    getSamenwerking(documentId).also {
+                    getSamenwerkingOrNull(documentId).also {
                         logger.info {
                             "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking from document $documentId"
                         }
@@ -98,6 +99,10 @@ class SamenwerkfunctionaliteitValueResolverFactory(
     private fun getActieverzoek(documentId: String): String {
         val actieverzoekIdString = getValueFromJsonDocument(documentId, ACTIEVERZOEK_ID_JSON_PATH)
 
+        if (actieverzoekIdString.isBlank()) {
+            return ""
+        }
+
         return samenwerkfunctionaliteitService
             .getActieverzoek(
                 getProperties(),
@@ -106,15 +111,18 @@ class SamenwerkfunctionaliteitValueResolverFactory(
             .also { logger.debug { "Retrieved actieverzoek: $it" } }
     }
 
-    private fun getSamenwerking(documentId: String): String {
+    private fun getSamenwerkingOrNull(documentId: String): SamenwerkingResponse? {
         val samenwerkingId = getValueFromJsonDocument(documentId, SAMENWERKING_ID_JSON_PATH)
+
+        if (samenwerkingId.isBlank()) {
+            return null
+        }
 
         return samenwerkfunctionaliteitService
             .getSamenwerking(
                 samenwerkingId,
                 getProperties(),
-            ).toString()
-            .also { logger.debug { "Retrieved samenwerking: $it" } }
+            ).also { logger.debug { "Retrieved samenwerking: $it" } }
     }
 
     private fun getValueFromJsonDocument(
