@@ -97,32 +97,46 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         TODO()
     }
 
-    private fun getActieverzoekOrNull(documentId: String): ActieverzoekResponse? {
+    private fun getActieverzoekOrNull(documentId: String): Map<String, Any?>? {
         val actieverzoekIdString = getValueFromJsonDocument(documentId, ACTIEVERZOEK_ID_JSON_PATH)
 
         if (actieverzoekIdString.isBlank()) {
             return null
         }
 
-        return samenwerkfunctionaliteitService
-            .getActieverzoek(
-                getProperties(),
-                UUID.fromString(actieverzoekIdString),
-            ).also { logger.debug { "Retrieved actieverzoek: $it" } }
+        val actieverzoek =
+            samenwerkfunctionaliteitService
+                .getActieverzoek(
+                    getProperties(),
+                    UUID.fromString(actieverzoekIdString),
+                ).also { logger.debug { "Retrieved actieverzoek: $it" } }
+
+        return objectMapper
+            .convertValue(
+                actieverzoek,
+                object : com.fasterxml.jackson.core.type.TypeReference<Map<String, Any?>>() {},
+            )
     }
 
-    private fun getSamenwerkingOrNull(documentId: String): SamenwerkingResponse? {
+    private fun getSamenwerkingOrNull(documentId: String): Map<String, Any?>? {
         val samenwerkingId = getValueFromJsonDocument(documentId, SAMENWERKING_ID_JSON_PATH)
 
         if (samenwerkingId.isBlank()) {
             return null
         }
 
-        return samenwerkfunctionaliteitService
-            .getSamenwerking(
-                samenwerkingId,
-                getProperties(),
-            ).also { logger.debug { "Retrieved samenwerking: $it" } }
+        val samenwerking =
+            samenwerkfunctionaliteitService
+                .getSamenwerking(
+                    samenwerkingId,
+                    getProperties(),
+                ).also { logger.debug { "Retrieved samenwerking: $it" } }
+
+        return objectMapper
+            .convertValue(
+                samenwerking,
+                object : com.fasterxml.jackson.core.type.TypeReference<Map<String, Any?>>() {},
+            )
     }
 
     private fun getValueFromJsonDocument(
