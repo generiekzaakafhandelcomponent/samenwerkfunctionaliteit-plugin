@@ -9,6 +9,8 @@ import com.ritense.plugin.service.PluginService
 import com.ritense.processdocument.domain.impl.OperatonProcessInstanceId
 import com.ritense.processdocument.service.ProcessDocumentService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.config.PLUGIN_KEY
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.ActieverzoekResponse
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.dto.SamenwerkingResponse
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.model.SamenwerkfunctionaliteitProperties
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.SamenwerkfunctionaliteitService
 import com.ritense.valueresolver.ValueResolverFactory
@@ -34,17 +36,17 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         Function { requestedValue: String ->
             when (requestedValue) {
                 "actieverzoek" -> {
-                    getActieverzoek(documentId).also {
+                    getActieverzoekOrNull(documentId).also {
                         logger.info {
-                            "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek from document $documentId"
+                            "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:actieverzoek from document $documentId"
                         }
                     }
                 }
 
                 "samenwerking" -> {
-                    getSamenwerking(documentId).also {
+                    getSamenwerkingOrNull(documentId).also {
                         logger.info {
-                            "Resolved value for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking from document $documentId"
+                            "Resolver was run for ${SWF_VALUE_RESOLVER_PREFIX}:samenwerking from document $documentId"
                         }
                     }
                 }
@@ -95,26 +97,46 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         TODO()
     }
 
-    private fun getActieverzoek(documentId: String): String {
+    private fun getActieverzoekOrNull(documentId: String): Map<String, Any?>? {
         val actieverzoekIdString = getValueFromJsonDocument(documentId, ACTIEVERZOEK_ID_JSON_PATH)
 
-        return samenwerkfunctionaliteitService
-            .getActieverzoek(
-                getProperties(),
-                UUID.fromString(actieverzoekIdString),
-            ).toString()
-            .also { logger.debug { "Retrieved actieverzoek: $it" } }
+        if (actieverzoekIdString.isBlank()) {
+            return null
+        }
+
+        val actieverzoek =
+            samenwerkfunctionaliteitService
+                .getActieverzoek(
+                    getProperties(),
+                    UUID.fromString(actieverzoekIdString),
+                ).also { logger.debug { "Retrieved actieverzoek: $it" } }
+
+        return objectMapper
+            .convertValue(
+                actieverzoek,
+                object : com.fasterxml.jackson.core.type.TypeReference<Map<String, Any?>>() {},
+            )
     }
 
-    private fun getSamenwerking(documentId: String): String {
+    private fun getSamenwerkingOrNull(documentId: String): Map<String, Any?>? {
         val samenwerkingId = getValueFromJsonDocument(documentId, SAMENWERKING_ID_JSON_PATH)
 
-        return samenwerkfunctionaliteitService
-            .getSamenwerking(
-                samenwerkingId,
-                getProperties(),
-            ).toString()
-            .also { logger.debug { "Retrieved samenwerking: $it" } }
+        if (samenwerkingId.isBlank()) {
+            return null
+        }
+
+        val samenwerking =
+            samenwerkfunctionaliteitService
+                .getSamenwerking(
+                    samenwerkingId,
+                    getProperties(),
+                ).also { logger.debug { "Retrieved samenwerking: $it" } }
+
+        return objectMapper
+            .convertValue(
+                samenwerking,
+                object : com.fasterxml.jackson.core.type.TypeReference<Map<String, Any?>>() {},
+            )
     }
 
     private fun getValueFromJsonDocument(
