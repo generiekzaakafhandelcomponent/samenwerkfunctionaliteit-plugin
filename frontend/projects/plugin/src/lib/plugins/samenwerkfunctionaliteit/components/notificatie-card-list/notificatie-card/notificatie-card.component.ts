@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SkeletonModule } from 'carbon-components-angular';
-import { capitalize } from '../../../utils/capitalize';
+import { capitalize } from '../../../utils/string.util';
 import { NotificatieCardInterface } from '../interface/notificatie-card.interface';
 import { NotificatieCardInput } from '../model/notificatie-card-input.model';
 import { NotificatieCardTypes } from '../type/notificatie-card.type';

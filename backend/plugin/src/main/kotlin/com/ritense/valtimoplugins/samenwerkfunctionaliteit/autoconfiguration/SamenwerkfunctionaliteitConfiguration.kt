@@ -17,10 +17,14 @@
 package com.ritense.valtimoplugins.samenwerkfunctionaliteit.autoconfiguration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.ritense.document.service.impl.JsonSchemaDocumentService
 import com.ritense.plugin.service.PluginService
+import com.ritense.processdocument.service.ProcessDocumentService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.DefaultSamenwerkfunctionaliteitClient
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.client.SamenwerkfunctionaliteitClient
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.controller.SamenwerkfunctionaliteitPluginController
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.plugin.SamenwerkfunctionaliteitPluginFactory
+import com.ritense.valtimoplugins.samenwerkfunctionaliteit.resolver.SamenwerkfunctionaliteitValueResolverFactory
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.DefaultOperatonService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.DefaultSamenwerkfunctionaliteitService
 import com.ritense.valtimoplugins.samenwerkfunctionaliteit.service.OperatonService
@@ -71,4 +75,19 @@ class SamenwerkfunctionaliteitConfiguration {
             samenwerkfunctionaliteitService = samenwerkfunctionaliteitService,
             operatonService = operatonService,
         )
+
+    @Bean
+    fun samenwerkfunctionaliteitValueResolverFactory(
+        samenwerkfunctionaliteitService: SamenwerkfunctionaliteitService,
+        processDocumentService: ProcessDocumentService,
+        pluginService: PluginService,
+        documentService: JsonSchemaDocumentService,
+        objectMapper: ObjectMapper,
+    ) = SamenwerkfunctionaliteitValueResolverFactory(
+        samenwerkfunctionaliteitService,
+        processDocumentService,
+        pluginService,
+        documentService,
+        objectMapper,
+    )
 }

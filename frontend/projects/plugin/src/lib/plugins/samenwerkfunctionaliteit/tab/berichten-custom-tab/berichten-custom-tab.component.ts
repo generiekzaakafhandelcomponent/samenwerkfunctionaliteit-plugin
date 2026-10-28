@@ -25,7 +25,7 @@ import { SwfDocumentService } from '../../service/swf-document.service';
 import { SwfPluginService } from '../../service/swf-plugin.service';
 import { UserNotificationService } from '../../service/user-notification.service';
 import { BusinessKey, toBusinessKey } from '../../types/business-key.type';
-import { capitalize } from '../../utils/capitalize';
+import { capitalize } from '../../utils/string.util';
 import { Actieverzoek } from '../../models/actieverzoek.model';
 import { isActieverzoekFinalStatus } from '../../types/actieverzoek-status.type';
 
