@@ -87,6 +87,27 @@ class SamenwerkfunctionaliteitValueResolverFactory(
         throw NotImplementedError()
     }
 
+    override fun handleValues(
+        processInstanceId: String,
+        variableScope: VariableScope?,
+        values: Map<String, Any?>,
+    ) {
+        logger.warn {
+            "handleValues(String, VariableScope?, Map<String, Any?>) is not implemented. SWF is considered a read-only value resolver."
+        }
+        return
+    }
+
+    override fun handleValues(
+        documentId: UUID,
+        values: Map<String, Any?>,
+    ) {
+        logger.warn {
+            "handleValues(UUID, Map<String, Any?>) is not implemented. SWF is considered a read-only value resolver."
+        }
+        return
+    }
+
     private fun getActieverzoekOrNull(documentId: String): Map<String, Any?>? {
         val actieverzoekIdString = getValueFromJsonDocument(documentId, ACTIEVERZOEK_ID_JSON_PATH)
 
