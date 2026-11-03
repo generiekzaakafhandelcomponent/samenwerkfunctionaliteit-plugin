@@ -330,24 +330,6 @@ class SamenwerkfunctionaliteitValueResolverFactoryTest {
     }
 
     @Test
-    fun `handleValues should throw NotImplementedError`() {
-        // Arrange
-
-        val mockProcessInstanceId = UUID.randomUUID().toString()
-        val mockVariableScope = mockk<VariableScope>()
-        val mockValues = mapOf<String, Any?>("six seven" to "skibidy toilet")
-
-        // Act and assert
-        assertThrows<NotImplementedError> {
-            factory.handleValues(
-                processInstanceId = mockProcessInstanceId,
-                variableScope = mockVariableScope,
-                values = mockValues,
-            )
-        }
-    }
-
-    @Test
     fun `getValueFromJsonDocument should return an empty string if no value is found`() {
 //  Arrange
         val mockumentId = JsonSchemaDocumentId.existingId(UUID.randomUUID())
