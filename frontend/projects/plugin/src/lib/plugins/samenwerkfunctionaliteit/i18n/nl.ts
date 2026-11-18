@@ -29,7 +29,7 @@ export const pluginNlTranslations = {
     types: {
       confidentiality: {
         confidential: 'Vertrouwelijk',
-        strictlyConfidential: 'Strict vertrouwelijk',
+        strictlyConfidential: 'Strikt vertrouwelijk',
       },
       notification: {
         status: 'Status',
