@@ -15,6 +15,6 @@ export function confidentialityTypeToTranslationKey(
     case ConfidentialityTypes.StrictlyConfidential:
       return 'samenwerkfunctionaliteit.types.confidentiality.strictlyConfidential';
     default:
-      throw new Error(`Unknown notificatie type: ${confidentialityType}`);
+      throw new Error(`Unknown confidentiality type: ${confidentialityType}`);
   }
 }
