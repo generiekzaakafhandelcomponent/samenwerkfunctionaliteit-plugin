@@ -183,6 +183,10 @@ export class NotificatiesCustomTabComponent implements OnInit {
         return NotificatieCardTypes.Message;
       case NotificatieTypes.RequestRetrievalSucceeded:
         return NotificatieCardTypes.System;
+      case NotificatieTypes.ColaborationEnded:
+        return NotificatieCardTypes.System;
+      case NotificatieTypes.Unknown:
+        return NotificatieCardTypes.System;
       case NotificatieTypes.Skeleton:
         return NotificatieCardTypes.Skeleton;
 

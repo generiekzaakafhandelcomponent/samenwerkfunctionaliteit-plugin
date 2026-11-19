@@ -29,7 +29,7 @@ export const pluginNlTranslations = {
     types: {
       confidentiality: {
         confidential: 'Vertrouwelijk',
-        strictlyConfidential: 'Strict vertrouwelijk',
+        strictlyConfidential: 'Strikt vertrouwelijk',
       },
       notification: {
         status: 'Status',
@@ -197,7 +197,7 @@ export const pluginNlTranslations = {
     actieverzoekStatusTypes: {
       open: 'Open',
       inProgress: 'In behandeling',
-      rejected: 'Afgewezen',
+      rejected: 'Geweigerd',
       withdrawn: 'Ingetrokken',
       reportedReady: 'Gereedgemeld',
       ready: 'Gereed',
