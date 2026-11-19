@@ -6,6 +6,8 @@ export const NotificatieTypes = {
   InvitationPartnerOrganization: 'INVITATION_PARTNER_ORGANIZATION',
   MessageSent: 'MESSAGE_SENT',
   RequestRetrievalSucceeded: 'REQUEST_RETRIEVAL_SUCCEEDED',
+  ColaborationEnded: 'COLABORATION_ENDED',
+  Unknown: 'UNKNOWN',
   Skeleton: 'SKELETON',
 } as const;
 
