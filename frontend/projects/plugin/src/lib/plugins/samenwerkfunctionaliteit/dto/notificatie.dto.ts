@@ -91,8 +91,11 @@ function mapStringToNotificatieType(
       return NotificatieTypes.RequestRetrievalSucceeded;
     case 'NIEUW_BERICHT':
       return NotificatieTypes.MessageSent;
+    case 'SAMENWERKING_GESTOPT':
+      return NotificatieTypes.ColaborationEnded;
 
     default:
-      throw new Error(`Unknown notificatie type: ${notificatieTypeString}`);
+      console.error(`Unknown notificatie type: ${notificatieTypeString}`);
+      return NotificatieTypes.Unknown;
   }
 }

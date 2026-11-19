@@ -1,15 +1,15 @@
 @if (isSamenwerkingDossier()) {
   <document-list></document-list>
 
-  <cds-text-label class="documenten-api-text" [skeleton]="isLoading()">'
+  <cds-text-label class="documenten-api-text" [skeleton]="isLoading()">
     @if (hasOpenZaakId()) {
       {{
         'samenwerkfunctionaliteit.documentTable.documentenApiHelperText.before'
           | translate
       }}<a [href]="this.openZaakUrl" target="_blank">{{
-          'samenwerkfunctionaliteit.documentTable.documentenApiHelperText.link'
-            | translate
-        }}</a
+        'samenwerkfunctionaliteit.documentTable.documentenApiHelperText.link'
+          | translate
+      }}</a
       >{{
         'samenwerkfunctionaliteit.documentTable.documentenApiHelperText.after'
           | translate
